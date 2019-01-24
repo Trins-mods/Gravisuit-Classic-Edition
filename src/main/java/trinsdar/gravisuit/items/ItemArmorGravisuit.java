@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 public class ItemArmorGravisuit extends ItemArmorQuantumSuit implements IIndirectJetpack {
-    public ItemArmorGravisuit.GravisuitJetpack jetpack;
+    public ItemArmorGravisuit.GravisuitJetpack jetpack = new GravisuitJetpack(this);
 
     public ItemArmorGravisuit() {
         super(44, EntityEquipmentSlot.CHEST);
@@ -31,16 +31,19 @@ public class ItemArmorGravisuit extends ItemArmorQuantumSuit implements IIndirec
         this.setCreativeTab(IC2.tabIC2);
     }
 
+    @Override
     public String getTexture() {
         return "ic2:textures/models/armor/quantumjetpack";
     }
 
     @SideOnly(Side.CLIENT)
+    @Override
     public void onSortedItemToolTip(ItemStack stack, EntityPlayer player, boolean debugTooltip, List<String> tooltip, Map<ToolTipType, List<String>> sortedTooltip) {
         super.onSortedItemToolTip(stack, player, debugTooltip, tooltip, sortedTooltip);
         this.jetpack.onSortedItemToolTip(stack, player, debugTooltip, tooltip, sortedTooltip);
     }
 
+    @Override
     public void onArmorTick(World world, EntityPlayer player, ItemStack stack) {
         super.onArmorTick(world, player, stack);
         this.jetpack.onArmorTick(world, player, stack);
@@ -89,8 +92,8 @@ public class ItemArmorGravisuit extends ItemArmorQuantumSuit implements IIndirec
         }
 
         @Override
-        public int getMaxHeight(ItemStack itemStack, int i) {
-            return 256;
+        public int getMaxHeight(ItemStack itemStack, int worldheight) {
+            return (int)((float)worldheight * 1.171875f);
         }
 
         @Override

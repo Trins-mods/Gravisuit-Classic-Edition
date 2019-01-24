@@ -9,7 +9,7 @@ import net.minecraft.world.World;
 import trinsdar.gravisuit.GravisuitClassic;
 
 public class ItemArmorAdvancedNanoChestplate extends ItemArmorNanoSuit {
-    ItemArmorAdvancedElectricJetpack jetpack;
+    ItemArmorAdvancedElectricJetpack jetpack = new ItemArmorAdvancedElectricJetpack();
 
     public ItemArmorAdvancedNanoChestplate() {
         super(44, EntityEquipmentSlot.CHEST);
