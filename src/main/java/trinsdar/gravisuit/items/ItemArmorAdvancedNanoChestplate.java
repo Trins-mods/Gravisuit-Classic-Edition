@@ -19,6 +19,11 @@ public class ItemArmorAdvancedNanoChestplate extends ItemArmorNanoSuit {
     }
 
     @Override
+    public boolean canProvideEnergy(ItemStack stack) {
+        return true;
+    }
+
+    @Override
     public String getTexture() {
         return "ic2:textures/models/armor/nano";
     }

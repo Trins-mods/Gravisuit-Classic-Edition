@@ -36,6 +36,11 @@ public class ItemArmorGravisuit extends ItemArmorQuantumSuit implements IIndirec
         return "ic2:textures/models/armor/quantumjetpack";
     }
 
+    @Override
+    public boolean canProvideEnergy(ItemStack stack) {
+        return true;
+    }
+
     @SideOnly(Side.CLIENT)
     @Override
     public void onSortedItemToolTip(ItemStack stack, EntityPlayer player, boolean debugTooltip, List<String> tooltip, Map<ToolTipType, List<String>> sortedTooltip) {
