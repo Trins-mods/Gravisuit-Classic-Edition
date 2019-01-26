@@ -19,10 +19,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
+import net.minecraftforge.event.entity.living.LivingEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import trinsdar.gravisuit.GravisuitClassic;
+import trinsdar.gravisuit.util.Registry;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -59,6 +63,12 @@ public class ItemArmorGravisuit extends ItemArmorQuantumSuit implements IIndirec
     public void onArmorTick(World world, EntityPlayer player, ItemStack stack) {
         super.onArmorTick(world, player, stack);
         this.jetpack.onArmorTick(world, player, stack);
+    }
+
+    public static boolean hasGravisuit(EntityPlayer player){
+        ItemStack chest = player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
+
+        return !chest.isEmpty() && chest.getItem() instanceof ItemArmorGravisuit;
     }
 
     public ItemArmorJetpackBase getJetpack() {
@@ -182,7 +192,8 @@ public class ItemArmorGravisuit extends ItemArmorQuantumSuit implements IIndirec
                 }
             }
 
-            if (!disabled && ElectricItem.manager.getCharge(stack) >= 512 && player.hasItemInSlot(EntityEquipmentSlot.CHEST)){
+            Boolean hasSet = ItemArmorGravisuit.hasGravisuit(player);
+            if (!disabled && ElectricItem.manager.getCharge(stack) >= 512 && hasSet){
                 this.useEnergy(player, stack, 512);
                 player.capabilities.allowFlying = true;
                 player.stepHeight = 1.0625F;
@@ -205,8 +216,61 @@ public class ItemArmorGravisuit extends ItemArmorQuantumSuit implements IIndirec
                     }
                 }
             }else {
+                player.stepHeight = 0.6F;
                 player.capabilities.allowFlying = false;
                 player.capabilities.isFlying = false;
+            }
+        }
+
+        public static List<String> playersWithSet = new ArrayList<String>();
+
+        public static String playerKey(EntityPlayer player) {
+            return player.getGameProfile().getName() + ":" + player.getEntityWorld().isRemote;
+        }
+
+        @SubscribeEvent
+        public void updatePlayerAbilityStatus(LivingEvent.LivingUpdateEvent event) {
+            if (event.getEntityLiving() instanceof EntityPlayer) {
+                EntityPlayer player = (EntityPlayer) event.getEntityLiving();
+                String key = playerKey(player);
+                ItemStack stack = new ItemStack(Registry.gravisuit);
+                NBTTagCompound nbt = StackUtil.getOrCreateNbtData(stack);
+                boolean disabled = nbt.getBoolean("disabled");
+
+                Boolean hasSet = ItemArmorGravisuit.hasGravisuit(player);
+                if (playersWithSet.contains(key) && !disabled && ElectricItem.manager.getCharge(stack) >= 512) {
+                    if (hasSet) {
+                        player.capabilities.allowFlying = true;
+                        player.stepHeight = 1.0625F;
+                        boolean flying = player.capabilities.isFlying;
+                        if(flying){
+                            boolean sneaking = player.isSneaking();
+
+                            float speed = 0.08f
+                                    * (flying ? 0.6f : 1.0f)
+                                    * (sneaking ? 0.1f : 1.0f);
+
+                            if (player.moveForward > 0f) {
+                                player.moveRelative(0f, 0f, 1f, speed);
+                            } else if (player.moveForward < 0f) {
+                                player.moveRelative(0f, 0f, 1f, -speed * 0.3f);
+                            }
+
+                            if (player.moveStrafing != 0f) {
+                                player.moveRelative(1f, 0f, 0f, speed * 0.5f * Math.signum(player.moveStrafing));
+                            }
+                        }
+                    } else {
+                        player.stepHeight = 0.6F;
+                        if (!player.capabilities.isCreativeMode && !player.isSpectator()) {
+                            player.capabilities.allowFlying = false;
+                            player.capabilities.isFlying = false;
+                        }
+                        playersWithSet.remove(key);
+                    }
+                } else if (hasSet) {
+                    playersWithSet.add(key);
+                }
             }
         }
     }
