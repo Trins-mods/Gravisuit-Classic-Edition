@@ -5,6 +5,7 @@ import ic2.core.IC2;
 import ic2.core.item.armor.base.ItemArmorElectricJetpackBase;
 import ic2.core.item.armor.base.ItemArmorJetpackBase;
 import ic2.core.item.armor.base.ItemArmorJetpackBase.IIndirectJetpack;
+import ic2.core.item.armor.electric.ItemArmorElectricJetpack;
 import ic2.core.item.armor.electric.ItemArmorQuantumSuit;
 import ic2.core.platform.lang.storage.Ic2InfoLang;
 import ic2.core.platform.player.PlayerHandler;
@@ -75,22 +76,12 @@ public class ItemArmorGravisuit extends ItemArmorQuantumSuit implements IIndirec
         return this.jetpack;
     }
 
-    public static class GravisuitJetpack extends ItemArmorElectricJetpackBase {
+    public static class GravisuitJetpack extends ItemArmorElectricJetpack {
         Item item;
 
         public GravisuitJetpack(Item owner) {
-            super(-1, EntityEquipmentSlot.CHEST);
+            super();
             this.item = owner;
-        }
-
-        @Override
-        public boolean canDoRocketMode(ItemStack itemStack) {
-            return false;
-        }
-
-        @Override
-        public boolean canDoAdvHoverMode(ItemStack itemStack) {
-            return true;
         }
 
         @Override
@@ -99,53 +90,13 @@ public class ItemArmorGravisuit extends ItemArmorQuantumSuit implements IIndirec
         }
 
         @Override
-        public float getPower(ItemStack itemStack) {
-            return 2.5F;
-        }
-
-        @Override
-        public float getThruster(ItemStack itemStack, HoverMode hoverMode) {
-            return 3.5F;
-        }
-
-        @Override
-        public float getDropPercentage(ItemStack itemStack) {
-            return 0;
-        }
-
-        @Override
         public int getMaxHeight(ItemStack itemStack, int worldheight) {
             return (int)((float)worldheight * 1.171875f);
         }
 
         @Override
-        public int getMaxRocketCharge(ItemStack itemStack) {
-            return 0;
-        }
-
-        @Override
-        public int getFuelCost(ItemStack itemStack, HoverMode hoverMode) {
-            return 30;
-        }
-
-        @Override
-        public void useEnergy(EntityPlayer player, ItemStack stack, int amount) {
-            ElectricItem.manager.use(stack, (double)amount, player);
-        }
-
-        @Override
         public String getTexture() {
             return "";
-        }
-
-        @Override
-        public boolean canProvideEnergy(ItemStack itemStack) {
-            return false;
-        }
-
-        @Override
-        public double getMaxCharge(ItemStack stack) {
-            return ElectricItem.manager.getMaxCharge(stack);
         }
 
         @Override
