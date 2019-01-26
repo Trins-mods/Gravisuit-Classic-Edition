@@ -1,7 +1,9 @@
 package trinsdar.gravisuit.items;
 
+import ic2.api.classic.audio.PositionSpec;
 import ic2.api.item.ElectricItem;
 import ic2.core.IC2;
+import ic2.core.audio.AudioSource;
 import ic2.core.item.armor.base.ItemArmorElectricJetpackBase;
 import ic2.core.item.armor.base.ItemArmorJetpackBase;
 import ic2.core.item.armor.base.ItemArmorJetpackBase.IIndirectJetpack;
@@ -9,6 +11,7 @@ import ic2.core.item.armor.electric.ItemArmorElectricJetpack;
 import ic2.core.item.armor.electric.ItemArmorQuantumSuit;
 import ic2.core.platform.lang.storage.Ic2InfoLang;
 import ic2.core.platform.player.PlayerHandler;
+import ic2.core.platform.registry.Ic2Sounds;
 import ic2.core.util.misc.StackUtil;
 import ic2.core.util.obj.ToolTipType;
 import net.minecraft.entity.Entity;
@@ -18,6 +21,7 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingEvent;
@@ -82,6 +86,14 @@ public class ItemArmorGravisuit extends ItemArmorQuantumSuit implements IIndirec
         public GravisuitJetpack(Item owner) {
             super();
             this.item = owner;
+        }
+
+        public AudioSource createAudioSource(ItemStack stack, EntityPlayer player, ItemArmorJetpackBase.JetpackUseMode mode) {
+            if (player.capabilities.isFlying){
+                return IC2.audioManager.createSource(player, PositionSpec.Backpack, Ic2Sounds.jetpack, true, false, IC2.audioManager.getDefaultVolume());
+            }else {
+                return null;
+            }
         }
 
         @Override
