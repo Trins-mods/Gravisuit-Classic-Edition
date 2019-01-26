@@ -2,3 +2,9 @@ item.gravisuit.gravisuit.name=Gravisuit
 item.gravisuit.advancedNanoChestplate.name=Advanced Nano Chestplate
 item.gravisuit.advancedElectricJetpack.name=Advanced Electric Jetpack
 item.gravisuit.advancedLappack.name=Advanced Lappack
+item.gravisuit.gravitool.name=Gravitool
+
+itemInfo.wrench.name=Set Mode to Wrench
+itemInfo.hoe.name=Set Mode to Hoe
+itemInfo.treetap.name=Set mode to Treetap
+itemInfo.toolMode.name=Current Tool Mode: %1$s
