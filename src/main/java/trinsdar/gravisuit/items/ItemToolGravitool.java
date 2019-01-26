@@ -83,11 +83,11 @@ public class ItemToolGravitool extends ItemElectricToolPrecisionWrench{
         NBTTagCompound nbt = StackUtil.getOrCreateNbtData(player.getHeldItem(hand));
         ToolMode toolMode = ToolMode.values()[nbt.getByte("ToolMode")];
         if (toolMode == ToolMode.Wrench){
-            return super.onItemUseFirst(player, world, pos, facing, hitX, hitY, hitZ, hand);
+            return super.onItemUse(player, world, pos, hand, facing, hitX, hitY, hitZ);
         }else if (toolMode == ToolMode.Hoe){
-            return Ic2Items.electricHoe.getItem().onItemUseFirst(player, world, pos, facing, hitX, hitY, hitZ, hand);
+            return Ic2Items.electricHoe.getItem().onItemUse(player, world, pos, hand, facing, hitX, hitY, hitZ);
         }else {
-            return Ic2Items.electricTreeTap.getItem().onItemUseFirst(player, world, pos, facing, hitX, hitY, hitZ, hand);
+            return Ic2Items.electricTreeTap.getItem().onItemUse(player, world, pos, hand, facing, hitX, hitY, hitZ);
         }
     }
 
