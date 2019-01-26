@@ -238,7 +238,7 @@ public class ItemArmorGravisuit extends ItemArmorQuantumSuit implements IIndirec
                 boolean disabled = nbt.getBoolean("disabled");
 
                 Boolean hasSet = ItemArmorGravisuit.hasGravisuit(player);
-                if (playersWithSet.contains(key) && !disabled && ElectricItem.manager.getCharge(stack) >= 512) {
+                if (playersWithSet.contains(key)) {
                     if (hasSet) {
                         player.capabilities.allowFlying = true;
                         player.stepHeight = 1.0625F;
