@@ -56,21 +56,48 @@ repositories{
 }
 
 dependencies {
-    deobfCompile("RebornCore:RebornCore-${mc_version}:${reborn_core_version}:universal") {
+    deobfProvided("RebornCore:RebornCore-${mc_version}:${reborn_core_version}:universal") {
         transitive = false
     }
-    deobfCompile("TechReborn:TechReborn-${mc_version}:${tech_reborn_version}:universal") {
+    runtime("RebornCore:RebornCore-${mc_version}:${reborn_core_version}:universal") {
         transitive = false
     }
-    deobfCompile("TechReborn:TechReborn-ModCompatibility-${mc_version}:${tr_modcompatibility_version}:universal") {
+    deobfProvided("TechReborn:TechReborn-${mc_version}:${tech_reborn_version}:universal") {
+        transitive = false
+    }
+    runtime("TechReborn:TechReborn-${mc_version}:${tech_reborn_version}:universal") {
+        transitive = false
+    }
+    deobfProvided("TechReborn:TechReborn-ModCompatibility-${mc_version}:${tr_modcompatibility_version}:universal") {
+        transitive = false
+    }
+    runtime("TechReborn:TechReborn-ModCompatibility-${mc_version}:${tr_modcompatibility_version}:universal") {
         transitive = false
     }
     deobfProvided "com.mod-buildcraft:buildcraft-api:7.99.12"
     runtime "com.mod-buildcraft:buildcraft:7.99.12"
-    deobfProvided ("mrtjp:ProjectRed:${mc_version}-4.9.2.110:all") {
+    deobfProvided ("mrtjp:ProjectRed:${mc_version}-4.9.1.92:all") {
         transitive = false
     }
-    runtime ("mrtjp:ProjectRed:${mc_version}-4.9.2.110:all") {
+    runtime ("mrtjp:ProjectRed:${mc_version}-4.9.1.92:all") {
+        transitive = false
+    }
+    deobfProvided ("mrtjp:MrTJPCore:${mc_version}-2.1.3.35:universal") {
+        transitive = false
+    }
+    runtime ("mrtjp:MrTJPCore:${mc_version}-2.1.3.35:universal") {
+        transitive = false
+    }
+    deobfProvided ("codechicken:CodeChickenLib:${mc_version}-3.2.2.353:universal") {
+        transitive = false
+    }
+    runtime ("codechicken:CodeChickenLib:${mc_version}-3.2.2.353:universal") {
+        transitive = false
+    }
+    deobfProvided ("codechicken:ForgeMultipart:${mc_version}-2.6.1.81:universal") {
+        transitive = false
+    }
+    runtime ("codechicken:ForgeMultipart:${mc_version}-2.6.1.81:universal") {
         transitive = false
     }
 
