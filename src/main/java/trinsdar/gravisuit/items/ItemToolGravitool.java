@@ -105,7 +105,16 @@ public class ItemToolGravitool extends ItemElectricToolPrecisionWrench implement
     @Override
     public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
         NBTTagCompound nbt = StackUtil.getNbtData(stack);
-        tooltip.add(GravisuitLang.toolMode.getLocalizedFormatted(nbt.getByte("ToolMode")));
+        ToolMode toolMode = ToolMode.values()[nbt.getByte("ToolMode")];
+        if (toolMode == ToolMode.Wrench){
+            tooltip.add(GravisuitLang.toolMode.getLocalizedFormatted(GravisuitLang.wrench2));
+        }else if (toolMode == ToolMode.Hoe){
+            tooltip.add(GravisuitLang.toolMode.getLocalizedFormatted(GravisuitLang.hoe2));
+        }else if (toolMode == ToolMode.Treetap){
+            tooltip.add(GravisuitLang.toolMode.getLocalizedFormatted(GravisuitLang.treetap2));
+        }else if (toolMode == ToolMode.Screwdriver){
+            tooltip.add(GravisuitLang.toolMode.getLocalizedFormatted(GravisuitLang.screwdriver2));
+        }
     }
 
     @Override

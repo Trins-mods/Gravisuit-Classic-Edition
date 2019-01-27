@@ -9,7 +9,9 @@ public class GravisuitLang {
     public static LocaleComp hoe = new LocaleItemInfoComp("itemInfo.hoe.name");
     public static LocaleComp treetap = new LocaleItemInfoComp("itemInfo.treetap.name");
     public static LocaleComp screwdriver = new LocaleItemInfoComp("itemInfo.screwdriver.name");
-    public static LocaleComp bcWrench = new LocaleItemInfoComp("itemInfo.bcWrench.name");
-    public static LocaleComp trWrench = new LocaleItemInfoComp("itemInfo.trWrench.name");
     public static LocaleComp toolMode = new LocaleItemInfoComp("itemInfo.toolMode.name");
+    public static LocaleComp wrench2 = new LocaleItemInfoComp("itemInfo.wrench2.name");
+    public static LocaleComp hoe2 = new LocaleItemInfoComp("itemInfo.hoe2.name");
+    public static LocaleComp treetap2 = new LocaleItemInfoComp("itemInfo.treetap2.name");
+    public static LocaleComp screwdriver2 = new LocaleItemInfoComp("itemInfo.screwdriver2.name");
 }
