@@ -37,7 +37,8 @@ import java.util.Map;
 
 @Optional.Interface(iface = "reborncore.api.ICustomToolHandler", modid = "techreborn", striprefs = true)
 @Optional.Interface(iface = "buildcraft.api.tools.IToolWrench", modid = "buildcraftcore", striprefs = true)
-public class ItemToolGravitool extends ItemElectricToolPrecisionWrench implements ICustomToolHandler, IToolWrench {
+@Optional.Interface(iface = "mrtjp.projectred.api.IScrewdriver", modid = "projectred-core", striprefs = true)
+public class ItemToolGravitool extends ItemElectricToolPrecisionWrench implements ICustomToolHandler, IToolWrench, IScrewdriver {
     public static final String[] itemModes = new String[]{"Wrench", "Hoe", "Treetap"};
 
     public ItemToolGravitool() {
@@ -82,8 +83,6 @@ public class ItemToolGravitool extends ItemElectricToolPrecisionWrench implement
         ToolMode toolMode = ToolMode.values()[nbt.getByte("ToolMode")];
         if (toolMode == ToolMode.Wrench){
             return super.onItemUseFirst(player, world, pos, side, hitX, hitY, hitZ, hand);
-        }else if (toolMode == ToolMode.Hoe){
-            return Ic2Items.electricHoe.getItem().onItemUseFirst(player, world, pos, side, hitX, hitY, hitZ, hand);
         }else {
             return Ic2Items.electricTreeTap.getItem().onItemUseFirst(player, world, pos, side, hitX, hitY, hitZ, hand);
         }
@@ -94,12 +93,12 @@ public class ItemToolGravitool extends ItemElectricToolPrecisionWrench implement
     public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         NBTTagCompound nbt = StackUtil.getOrCreateNbtData(player.getHeldItem(hand));
         ToolMode toolMode = ToolMode.values()[nbt.getByte("ToolMode")];
-        if (toolMode == ToolMode.Wrench){
-            return super.onItemUse(player, world, pos, hand, facing, hitX, hitY, hitZ);
-        }else if (toolMode == ToolMode.Hoe){
+        if (toolMode == ToolMode.Hoe){
             return Ic2Items.electricHoe.getItem().onItemUse(player, world, pos, hand, facing, hitX, hitY, hitZ);
-        }else {
+        }else if (toolMode == ToolMode.Treetap){
             return Ic2Items.electricTreeTap.getItem().onItemUse(player, world, pos, hand, facing, hitX, hitY, hitZ);
+        }else {
+            return super.onItemUse(player, world, pos, hand, facing, hitX, hitY, hitZ);
         }
     }
 
@@ -143,6 +142,20 @@ public class ItemToolGravitool extends ItemElectricToolPrecisionWrench implement
         this.damageItem(wrench, 1, player);
     }
 
+    @Override
+    @Optional.Method(modid = "projectred-core")
+    public boolean canUse(EntityPlayer player, ItemStack stack) {
+        NBTTagCompound nbt = StackUtil.getOrCreateNbtData(stack);
+        ToolMode toolMode = ToolMode.values()[nbt.getByte("ToolMode")];
+        return toolMode == ToolMode.Screwdriver && ElectricItem.manager.getCharge(stack) >= 100;
+    }
+
+    @Override
+    @Optional.Method(modid = "projectred-core")
+    public void damageScrewdriver(EntityPlayer player, ItemStack stack) {
+        this.damageItem(stack, 1, player);
+    }
+
     public enum ToolMode {
         Wrench,
         Hoe,
@@ -158,7 +171,7 @@ public class ItemToolGravitool extends ItemElectricToolPrecisionWrench implement
             } else if (this == Hoe) {
                 return Treetap;
             } else if(this == Treetap) {
-                if (Loader.isModLoaded("projectred")){
+                if (Loader.isModLoaded("projectred-core")){
                     return Screwdriver;
                 } else {
                     return Wrench;

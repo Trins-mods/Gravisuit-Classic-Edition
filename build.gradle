@@ -79,9 +79,6 @@ dependencies {
     deobfProvided ("mrtjp:ProjectRed:${mc_version}-4.9.1.92:all") {
         transitive = false
     }
-    runtime ("mrtjp:ProjectRed:${mc_version}-4.9.1.92:all") {
-        transitive = false
-    }
     deobfProvided ("mrtjp:MrTJPCore:${mc_version}-2.1.3.35:universal") {
         transitive = false
     }
