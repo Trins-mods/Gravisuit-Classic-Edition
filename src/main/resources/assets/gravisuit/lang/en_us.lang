@@ -7,4 +7,7 @@ item.gravisuit.gravitool.name=Gravitool
 itemInfo.wrench.name=Set Mode to Wrench
 itemInfo.hoe.name=Set Mode to Hoe
 itemInfo.treetap.name=Set mode to Treetap
+itemInfo.screwdriver.name=Set mode to Project Red Screwdriver
+itemInfo.bcWrench.name=Set mode to BCWrench
+itemInfo.trWrench.name=Set mode to TRWrench
 itemInfo.toolMode.name=Current Tool Mode: %1$s

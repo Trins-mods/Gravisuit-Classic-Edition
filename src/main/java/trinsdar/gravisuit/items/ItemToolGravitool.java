@@ -1,5 +1,7 @@
 package trinsdar.gravisuit.items;
 
+import buildcraft.api.tools.IToolWrench;
+import ic2.api.item.ElectricItem;
 import ic2.core.IC2;
 import ic2.core.block.base.util.info.misc.IWrench;
 import ic2.core.item.armor.base.ItemArmorJetpackBase;
@@ -10,6 +12,7 @@ import ic2.core.platform.lang.storage.Ic2InfoLang;
 import ic2.core.platform.registry.Ic2Items;
 import ic2.core.util.misc.StackUtil;
 import ic2.core.util.obj.ToolTipType;
+import mrtjp.projectred.api.IScrewdriver;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.entity.player.EntityPlayer;
@@ -20,14 +23,21 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
+import net.minecraftforge.event.world.ChunkEvent;
+import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.common.Optional;
+import reborncore.api.ICustomToolHandler;
 import trinsdar.gravisuit.GravisuitClassic;
 import trinsdar.gravisuit.util.GravisuitLang;
 
 import java.util.List;
 import java.util.Map;
 
-public class ItemToolGravitool extends ItemElectricToolPrecisionWrench{
+@Optional.Interface(iface = "reborncore.api.ICustomToolHandler", modid = "techreborn", striprefs = true)
+@Optional.Interface(iface = "buildcraft.api.tools.IToolWrench", modid = "buildcraftcore", striprefs = true)
+public class ItemToolGravitool extends ItemElectricToolPrecisionWrench implements ICustomToolHandler, IToolWrench {
     public static final String[] itemModes = new String[]{"Wrench", "Hoe", "Treetap"};
 
     public ItemToolGravitool() {
@@ -54,8 +64,10 @@ public class ItemToolGravitool extends ItemElectricToolPrecisionWrench{
                 IC2.platform.messagePlayer(player, GravisuitLang.wrench);
             } else if (toolMode == ToolMode.Hoe){
                 IC2.platform.messagePlayer(player, GravisuitLang.hoe);
-            } else {
+            } else if (toolMode == ToolMode.Treetap){
                 IC2.platform.messagePlayer(player, GravisuitLang.treetap);
+            }else {
+                IC2.platform.messagePlayer(player, GravisuitLang.screwdriver);
             }
 
             return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
@@ -97,10 +109,45 @@ public class ItemToolGravitool extends ItemElectricToolPrecisionWrench{
         tooltip.add(GravisuitLang.toolMode.getLocalizedFormatted(nbt.getByte("ToolMode")));
     }
 
+    @Override
+    @Optional.Method(modid = "techreborn")
+    public boolean canHandleTool(ItemStack stack) {
+        NBTTagCompound nbt = StackUtil.getOrCreateNbtData(stack);
+        ToolMode toolMode = ToolMode.values()[nbt.getByte("ToolMode")];
+        return toolMode == ToolMode.Wrench;
+    }
+
+    @Override
+    @Optional.Method(modid = "techreborn")
+    public boolean handleTool(ItemStack stack, BlockPos blockPos, World world, EntityPlayer player, EnumFacing enumFacing, boolean b) {
+        NBTTagCompound nbt = StackUtil.getOrCreateNbtData(stack);
+        ToolMode toolMode = ToolMode.values()[nbt.getByte("ToolMode")];
+        if (ElectricItem.manager.getCharge(stack) >= 100 && toolMode == ToolMode.Wrench){
+            this.damageItem(stack, 1, player);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    @Optional.Method(modid = "buildcraftcore")
+    public boolean canWrench(EntityPlayer player, EnumHand hand, ItemStack wrench, RayTraceResult rayTrace) {
+        NBTTagCompound nbt = StackUtil.getOrCreateNbtData(wrench);
+        ToolMode toolMode = ToolMode.values()[nbt.getByte("ToolMode")];
+        return toolMode == ToolMode.Wrench && ElectricItem.manager.getCharge(wrench) >= 100;
+    }
+
+    @Override
+    @Optional.Method(modid = "buildcraftcore")
+    public void wrenchUsed(EntityPlayer player, EnumHand hand, ItemStack wrench, RayTraceResult rayTrace) {
+        this.damageItem(wrench, 1, player);
+    }
+
     public enum ToolMode {
         Wrench,
         Hoe,
-        Treetap;
+        Treetap,
+        Screwdriver;
 
         private ToolMode() {
         }
@@ -110,6 +157,12 @@ public class ItemToolGravitool extends ItemElectricToolPrecisionWrench{
                 return Hoe;
             } else if (this == Hoe) {
                 return Treetap;
+            } else if(this == Treetap) {
+                if (Loader.isModLoaded("projectred")){
+                    return Screwdriver;
+                } else {
+                    return Wrench;
+                }
             } else {
                 return Wrench;
             }

@@ -36,27 +36,43 @@ minecraft {
     replaceIn "GravisuitClassic.java"
 }
 
+repositories{
+    maven { // Tech Reborn
+        name 'Tech Reborn'
+        url 'https://maven.modmuss50.me/'
+    }
+    maven { // Buildcraft
+        name 'buildcraft'
+        url 'https://mod-buildcraft.com/maven/'
+    }
+    maven { // CCL, CCC, NEI
+        name 'Chickenbones Repo'
+        url 'http://chickenbones.net/maven/'
+    }
+    maven { // JEI
+        name 'DVS1 Maven FS'
+        url 'http://dvs1.progwml6.com/files/maven/'
+    }
+}
+
 dependencies {
-    // you may put jars on which you depend on in ./libs
-    // or you may define them like so..
-    //compile "some.group:artifact:version:classifier"
-    //compile "some.group:artifact:version"
-      
-    // real examples
-    //compile 'com.mod-buildcraft:buildcraft:6.0.8:dev'  // adds buildcraft to the dev env
-    //compile 'com.googlecode.efficient-java-matrix-library:ejml:0.24' // adds ejml to the dev env
-
-    // the 'provided' configuration is for optional dependencies that exist at compile-time but might not at runtime.
-    //provided 'com.mod-buildcraft:buildcraft:6.0.8:dev'
-
-    // the deobf configurations:  'deobfCompile' and 'deobfProvided' are the same as the normal compile and provided,
-    // except that these dependencies get remapped to your current MCP mappings
-    //deobfCompile 'com.mod-buildcraft:buildcraft:6.0.8:dev'
-    //deobfProvided 'com.mod-buildcraft:buildcraft:6.0.8:dev'
-
-    // for more info...
-    // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
-    // http://www.gradle.org/docs/current/userguide/dependency_management.html
+    deobfCompile("RebornCore:RebornCore-${mc_version}:${reborn_core_version}:universal") {
+        transitive = false
+    }
+    deobfCompile("TechReborn:TechReborn-${mc_version}:${tech_reborn_version}:universal") {
+        transitive = false
+    }
+    deobfCompile("TechReborn:TechReborn-ModCompatibility-${mc_version}:${tr_modcompatibility_version}:universal") {
+        transitive = false
+    }
+    deobfProvided "com.mod-buildcraft:buildcraft-api:7.99.12"
+    runtime "com.mod-buildcraft:buildcraft:7.99.12"
+    deobfProvided ("mrtjp:ProjectRed:${mc_version}-4.9.2.110:all") {
+        transitive = false
+    }
+    runtime ("mrtjp:ProjectRed:${mc_version}-4.9.2.110:all") {
+        transitive = false
+    }
 
 }
 
