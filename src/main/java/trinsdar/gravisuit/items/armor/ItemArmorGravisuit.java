@@ -1,4 +1,4 @@
-package trinsdar.gravisuit.items;
+package trinsdar.gravisuit.items.armor;
 
 import ic2.api.classic.audio.PositionSpec;
 import ic2.api.item.ElectricItem;

@@ -1,4 +1,4 @@
-package trinsdar.gravisuit.items;
+package trinsdar.gravisuit.items.tools;
 
 import buildcraft.api.tools.IToolWrench;
 import ic2.api.item.ElectricItem;
@@ -62,13 +62,13 @@ public class ItemToolGravitool extends ItemElectricToolPrecisionWrench implement
             toolMode = toolMode.getNext();
             nbt.setByte("ToolMode", (byte)toolMode.ordinal());
             if (toolMode == ToolMode.Wrench) {
-                IC2.platform.messagePlayer(player, GravisuitLang.wrench);
+                IC2.platform.messagePlayer(player, GravisuitLang.messageWrench);
             } else if (toolMode == ToolMode.Hoe){
-                IC2.platform.messagePlayer(player, GravisuitLang.hoe);
+                IC2.platform.messagePlayer(player, GravisuitLang.messageHoe);
             } else if (toolMode == ToolMode.Treetap){
-                IC2.platform.messagePlayer(player, GravisuitLang.treetap);
+                IC2.platform.messagePlayer(player, GravisuitLang.messageTreetap);
             }else {
-                IC2.platform.messagePlayer(player, GravisuitLang.screwdriver);
+                IC2.platform.messagePlayer(player, GravisuitLang.messageScrewdriver);
             }
 
             return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
@@ -107,13 +107,13 @@ public class ItemToolGravitool extends ItemElectricToolPrecisionWrench implement
         NBTTagCompound nbt = StackUtil.getNbtData(stack);
         ToolMode toolMode = ToolMode.values()[nbt.getByte("ToolMode")];
         if (toolMode == ToolMode.Wrench){
-            tooltip.add(GravisuitLang.toolMode.getLocalizedFormatted(GravisuitLang.wrench2));
+            tooltip.add(GravisuitLang.toolMode.getLocalizedFormatted(GravisuitLang.wrench));
         }else if (toolMode == ToolMode.Hoe){
-            tooltip.add(GravisuitLang.toolMode.getLocalizedFormatted(GravisuitLang.hoe2));
+            tooltip.add(GravisuitLang.toolMode.getLocalizedFormatted(GravisuitLang.hoe));
         }else if (toolMode == ToolMode.Treetap){
-            tooltip.add(GravisuitLang.toolMode.getLocalizedFormatted(GravisuitLang.treetap2));
+            tooltip.add(GravisuitLang.toolMode.getLocalizedFormatted(GravisuitLang.treetap));
         }else if (toolMode == ToolMode.Screwdriver){
-            tooltip.add(GravisuitLang.toolMode.getLocalizedFormatted(GravisuitLang.screwdriver2));
+            tooltip.add(GravisuitLang.toolMode.getLocalizedFormatted(GravisuitLang.screwdriver));
         }
     }
 

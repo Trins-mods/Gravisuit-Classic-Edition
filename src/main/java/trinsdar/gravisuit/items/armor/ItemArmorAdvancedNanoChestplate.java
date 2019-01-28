@@ -1,4 +1,4 @@
-package trinsdar.gravisuit.items;
+package trinsdar.gravisuit.items.armor;
 
 import ic2.core.IC2;
 import ic2.core.item.armor.electric.ItemArmorNanoSuit;
@@ -7,6 +7,7 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import trinsdar.gravisuit.GravisuitClassic;
+import trinsdar.gravisuit.items.armor.ItemArmorAdvancedElectricJetpack;
 
 public class ItemArmorAdvancedNanoChestplate extends ItemArmorNanoSuit {
     ItemArmorAdvancedElectricJetpack jetpack = new ItemArmorAdvancedElectricJetpack();

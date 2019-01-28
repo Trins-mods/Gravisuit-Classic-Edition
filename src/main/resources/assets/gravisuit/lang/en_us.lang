@@ -3,13 +3,25 @@ item.gravisuit.advancedNanoChestplate.name=Advanced Nano Chestplate
 item.gravisuit.advancedElectricJetpack.name=Advanced Electric Jetpack
 item.gravisuit.advancedLappack.name=Advanced Lappack
 item.gravisuit.gravitool.name=Gravitool
+item.gravisuit.advancedDrill.name=Advanced Diamond Drill
+item.gravisuit.advancedChainsaw.name=Advanced Chainsaw
 
-itemInfo.wrench.name=Set Mode to Wrench
-itemInfo.hoe.name=Set Mode to Hoe
-itemInfo.treetap.name=Set mode to Treetap
-itemInfo.screwdriver.name=Set mode to Screwdriver
+
+
 itemInfo.toolMode.name=Current Tool Mode: %1$s
-itemInfo.wrench2.name=Wrench
-itemInfo.hoe2.name=Hoe
-itemInfo.treetap2.name=Treetap
-itemInfo.screwdriver2.name=Screwdriver
+itemInfo.wrench.name=Wrench
+itemInfo.hoe.name=Hoe
+itemInfo.treetap.name=Treetap
+itemInfo.screwdriver.name=Screwdriver
+itemInfo.advancedDrillMode.name=Cycle Through the Different Modes
+itemInfo.advancedDrillNormal.name=Normal
+itemInfo.advancedDrillLowPower.name=Low Power
+itemInfo.advancedDrillBigHoles.name=Big Holes
+
+message.advancedDrillNormal.name=Set Mode to Normal
+message.advancedDrillLowPower.name=Set Mode to Low Power
+message.advancedDrillBigHoles.name=Set Mode to Big Holes
+message.wrench.name=Set Mode to Wrench
+message.hoe.name=Set Mode to Hoe
+message.treetap.name=Set mode to Treetap
+message.screwdriver.name=Set mode to Screwdriver

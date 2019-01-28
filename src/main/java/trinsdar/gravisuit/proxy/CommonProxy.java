@@ -5,10 +5,8 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import trinsdar.gravisuit.items.ItemArmorGravisuit;
+import trinsdar.gravisuit.items.armor.ItemArmorGravisuit;
 import trinsdar.gravisuit.util.Registry;
-
-import java.io.File;
 
 public class CommonProxy {
     public static Configuration config;
