@@ -10,6 +10,7 @@ item.gravisuit.vajra.name=Vajra
 
 
 itemInfo.toolMode.name=Current Tool Mode: %1$s
+itemInfo.silkMode.name=Silk Touch Mode: %1$s
 itemInfo.wrench.name=Wrench
 itemInfo.hoe.name=Hoe
 itemInfo.treetap.name=Treetap
@@ -18,6 +19,9 @@ itemInfo.advancedDrillMode.name=Cycle Through the Different Modes
 itemInfo.advancedDrillNormal.name=Normal
 itemInfo.advancedDrillLowPower.name=Low Power
 itemInfo.advancedDrillBigHoles.name=Big Holes
+itemInfo.vajraSilktouchToggle.name=Enable/Disable Silktouch
+itemInfo.vajraSilktouchOn.name=Enabled
+itemInfo.vajraSilktouchOff.name=Disabled
 
 message.advancedDrillNormal.name=Set Mode to Normal
 message.advancedDrillLowPower.name=Set Mode to Low Power
@@ -28,6 +32,9 @@ message.treetap.name=Set mode to Treetap
 message.screwdriver.name=Set mode to Screwdriver
 message.graviEngineOn.name=Gravitation Engine Enabled
 message.graviEngineOff.name=Gravitation Engine Disabled
+message.silkTouchOn.name=Silk Touch Enabled
+message.silkTouchOff.name=Silk Touch Disabled
+
 
 miscInfo.doubleJump.name=Double %1$s
 itemInfo.graviEngineToggle.name=Enable/Disable the Gravitation Engine

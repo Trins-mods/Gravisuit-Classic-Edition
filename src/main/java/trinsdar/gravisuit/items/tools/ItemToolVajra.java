@@ -1,28 +1,43 @@
 package trinsdar.gravisuit.items.tools;
 
+import com.google.common.collect.HashMultimap;
 import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Multimap;
 import ic2.api.classic.item.IMiningDrill;
 import ic2.api.item.ElectricItem;
 import ic2.core.IC2;
 import ic2.core.item.armor.electric.ItemArmorNanoSuit;
 import ic2.core.item.armor.electric.ItemArmorQuantumSuit;
 import ic2.core.item.base.ItemElectricTool;
+import ic2.core.platform.player.PlayerHandler;
+import ic2.core.platform.registry.Ic2Lang;
 import ic2.core.platform.registry.Ic2Sounds;
 import ic2.core.platform.textures.Ic2Icons;
 import ic2.core.platform.textures.obj.IStaticTexturedItem;
+import ic2.core.util.misc.StackUtil;
+import ic2.core.util.obj.ToolTipType;
+import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnumEnchantmentType;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -30,9 +45,11 @@ import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import trinsdar.gravisuit.GravisuitClassic;
+import trinsdar.gravisuit.util.GravisuitLang;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public class ItemToolVajra extends ItemElectricTool implements IStaticTexturedItem, IMiningDrill {
@@ -50,7 +67,7 @@ public class ItemToolVajra extends ItemElectricTool implements IStaticTexturedIt
 
     @Override
     public boolean canHarvestBlock(IBlockState state, ItemStack stack) {
-        return Items.DIAMOND_PICKAXE.canHarvestBlock(state) || Items.DIAMOND_SHOVEL.canHarvestBlock(state);
+        return Items.DIAMOND_PICKAXE.canHarvestBlock(state) || Items.DIAMOND_SHOVEL.canHarvestBlock(state) || Items.DIAMOND_AXE.canHarvestBlock(state) || Items.DIAMOND_SWORD.canHarvestBlock(state);
     }
 
     @Override
@@ -65,21 +82,85 @@ public class ItemToolVajra extends ItemElectricTool implements IStaticTexturedIt
 
     @Override
     public float getMiningSpeed(ItemStack stack) {
-        return 48.0F;
+        return 8192.0F;
     }
 
     @Override
     public Set<String> getToolClasses(ItemStack stack) {
-        return ImmutableSet.of("pickaxe", "shovel");
+        return ImmutableSet.of("pickaxe", "shovel", "axe", "sword");
     }
 
     @Override
-    public boolean onBlockDestroyed(ItemStack stack, World worldIn, IBlockState blockIn, BlockPos pos,
-                                    EntityLivingBase entityLiving) {
+    public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer player, EnumHand handIn) {
+        ItemStack stack = player.getHeldItem(handIn);
+        NBTTagCompound nbt = StackUtil.getOrCreateNbtData(stack);
+        boolean silkTouch = nbt.getBoolean("silkTouch");
+        if (IC2.platform.isSimulating() && IC2.keyboard.isModeSwitchKeyDown(player)) {
+            if (silkTouch){
+                nbt.setBoolean("silkTouch", false);
+                IC2.platform.messagePlayer(player, GravisuitLang.silkTouchOff);
+            }else {
+                nbt.setBoolean("silkTouch", true);
+                IC2.platform.messagePlayer(player, GravisuitLang.silkTouchOn);
+            }
+            return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
+        } else {
+            return super.onItemRightClick(worldIn, player, handIn);
+        }
+    }
+
+    @Override
+    public void onSortedItemToolTip(ItemStack stack, EntityPlayer player, boolean debugTooltip, List<String> tooltip, Map<ToolTipType, List<String>> sortedTooltip) {
+        NBTTagCompound nbt = StackUtil.getNbtData(stack);
+        boolean silkTouch = nbt.getBoolean("silkTouch");
+        if (silkTouch){
+            tooltip.add(GravisuitLang.silkMode.getLocalizedFormatted(GravisuitLang.vajraSilktouchOn));
+        }else{
+            tooltip.add(GravisuitLang.silkMode.getLocalizedFormatted(GravisuitLang.vajraSilktouchOff));
+        }
+        List<String> ctrlTip = sortedTooltip.get(ToolTipType.Ctrl);
+        ctrlTip.add(Ic2Lang.onItemRightClick.getLocalized());
+        ctrlTip.add(Ic2Lang.pressTo.getLocalizedFormatted(IC2.keyboard.getKeyName(2), GravisuitLang.vajraSilktouchToggle.getLocalized()));
+    }
+
+    private boolean shouldBreak(EntityPlayer playerIn, World worldIn, BlockPos pos) {
+        IBlockState blockState = worldIn.getBlockState(pos);
+        if (blockState.getMaterial() == Material.AIR) {
+            return false;
+        }
+        if (blockState.getMaterial().isLiquid()) {
+            return false;
+        }
+        float blockHardness = blockState.getPlayerRelativeBlockHardness(playerIn, worldIn, pos);
+        if (blockHardness == -1.0F) {
+            return false;
+        }
+        if (!blockState.getBlock().canHarvestBlock(worldIn, pos, playerIn)){
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+        ItemStack stack = player.getHeldItem(hand);
+        IBlockState blockState = world.getBlockState(pos);
+        if (ElectricItem.manager.getCharge(stack) >= getEnergyCost(stack) && shouldBreak(player, world, pos)){
+            ElectricItem.manager.use(stack, this.getEnergyCost(stack), player);
+            blockState.getBlock().harvestBlock(world, player, pos, blockState, world.getTileEntity(pos), stack);
+            world.setBlockToAir(pos);
+            world.removeTileEntity(pos);
+            return EnumActionResult.SUCCESS;
+        }
+        return super.onItemUse(player, world, pos, hand, facing, hitX, hitY, hitZ);
+    }
+
+    @Override
+    public boolean onBlockDestroyed(ItemStack stack, World worldIn, IBlockState blockIn, BlockPos pos, EntityLivingBase entityLiving) {
         if (entityLiving instanceof EntityPlayer) {
             IC2.achievements.issueStat((EntityPlayer) entityLiving, "blocksDrilled");
         }
-        IC2.audioManager.playOnce(entityLiving, Ic2Sounds.drillHard);
         return super.onBlockDestroyed(stack, worldIn, blockIn, pos, entityLiving);
     }
 
@@ -135,13 +216,22 @@ public class ItemToolVajra extends ItemElectricTool implements IStaticTexturedIt
     }
 
     @Override
-    public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker) {
-        if (ElectricItem.manager.use(stack, this.getEnergyCost(stack) * 2, attacker)) {
-            target.attackEntityFrom(DamageSource.causeMobDamage(attacker), 26.0F);
-        } else {
-            target.attackEntityFrom(DamageSource.causeMobDamage(attacker), 4.0F);
+    public Multimap<String, AttributeModifier> getAttributeModifiers(EntityEquipmentSlot slot, ItemStack stack) {
+        Multimap<String, AttributeModifier> multimap = HashMultimap.create();
+        if (slot == EntityEquipmentSlot.MAINHAND) {
+            if (ElectricItem.manager.getCharge(stack) >= getEnergyCost(stack) * 2){
+                multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Vajra Powered Damage", 25, 0));
+            }else {
+                multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Vajra Unpowered Damage", 3, 0));
+            }
         }
-        return false;
+        return multimap;
+    }
+
+    @Override
+    public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker) {
+        ElectricItem.manager.use(stack, (double)getEnergyCost(stack) * 2, attacker);
+        return true;
     }
 
     @Override
