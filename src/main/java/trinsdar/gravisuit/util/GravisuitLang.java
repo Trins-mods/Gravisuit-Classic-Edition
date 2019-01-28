@@ -5,10 +5,11 @@ import ic2.core.platform.lang.components.base.LangComponentHolder.LocaleItemInfo
 import ic2.core.platform.lang.components.base.LocaleComp;
 
 public class GravisuitLang {
-    public static LocaleComp messageWrench = new LocaleItemInfoComp("message.wrench.name");
-    public static LocaleComp messageHoe = new LocaleItemInfoComp("message.hoe.name");
-    public static LocaleComp messageTreetap = new LocaleItemInfoComp("message.treetap.name");
-    public static LocaleComp messageScrewdriver = new LocaleItemInfoComp("message.screwdriver.name");
+    public static LocaleComp doubleJump = new LocaleItemInfoComp("miscInfo.doubleJump.name");
+    public static LocaleComp graviEngineToggle = new LocaleItemInfoComp("itemInfo.graviEngineToggle.name");
+    public static LocaleComp graviEngineOn = new LocaleItemInfoComp("message.graviEngineOn.name");
+    public static LocaleComp graviEngineOff = new LocaleItemInfoComp("message.graviEngineOff.name");
+
     public static LocaleComp toolMode = new LocaleItemInfoComp("itemInfo.toolMode.name");
     public static LocaleComp wrench = new LocaleItemInfoComp("itemInfo.wrench.name");
     public static LocaleComp hoe = new LocaleItemInfoComp("itemInfo.hoe.name");
@@ -24,4 +25,8 @@ public class GravisuitLang {
     public static LocaleComp messageAdvancedDrillNormal = new LocaleItemInfoComp("message.advancedDrillNormal.name");
     public static LocaleComp messageAdvancedDrillLowPower = new LocaleItemInfoComp("message.advancedDrillLowPower.name");
     public static LocaleComp messageAdvancedDrillBigHoles = new LocaleItemInfoComp("message.advancedDrillBigHoles.name");
+    public static LocaleComp messageWrench = new LocaleItemInfoComp("message.wrench.name");
+    public static LocaleComp messageHoe = new LocaleItemInfoComp("message.hoe.name");
+    public static LocaleComp messageTreetap = new LocaleItemInfoComp("message.treetap.name");
+    public static LocaleComp messageScrewdriver = new LocaleItemInfoComp("message.screwdriver.name");
 }

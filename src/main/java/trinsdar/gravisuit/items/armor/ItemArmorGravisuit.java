@@ -10,6 +10,7 @@ import ic2.core.item.armor.electric.ItemArmorElectricJetpack;
 import ic2.core.item.armor.electric.ItemArmorQuantumSuit;
 import ic2.core.platform.lang.storage.Ic2InfoLang;
 import ic2.core.platform.player.PlayerHandler;
+import ic2.core.platform.registry.Ic2Lang;
 import ic2.core.platform.registry.Ic2Sounds;
 import ic2.core.util.misc.StackUtil;
 import ic2.core.util.obj.ToolTipType;
@@ -19,12 +20,14 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import trinsdar.gravisuit.GravisuitClassic;
+import trinsdar.gravisuit.util.GravisuitLang;
 import trinsdar.gravisuit.util.Registry;
 
 import java.util.ArrayList;
@@ -71,6 +74,11 @@ public class ItemArmorGravisuit extends ItemArmorQuantumSuit implements IIndirec
 
         return !chest.isEmpty() && chest.getItem() instanceof ItemArmorGravisuit;
     }
+    public static boolean hasQuantumLegs(EntityPlayer player){
+        ItemStack legs = player.getItemStackFromSlot(EntityEquipmentSlot.LEGS);
+
+        return !legs.isEmpty() && legs.getItem() instanceof ItemArmorQuantumSuit;
+    }
 
     public ItemArmorJetpackBase getJetpack() {
         return this.jetpack;
@@ -90,6 +98,14 @@ public class ItemArmorGravisuit extends ItemArmorQuantumSuit implements IIndirec
             }else {
                 return null;
             }
+        }
+
+        @Override
+        @SideOnly(Side.CLIENT)
+        public void onSortedItemToolTip(ItemStack stack, EntityPlayer player, boolean debugTooltip, List<String> tooltip, Map<ToolTipType, List<String>> sortedTooltip) {
+            List<String> ctrlTip = sortedTooltip.get(ToolTipType.Ctrl);
+            ctrlTip.add(TextFormatting.UNDERLINE + Ic2Lang.pressTo.getLocalizedFormatted(GravisuitLang.doubleJump.getLocalizedFormatted(IC2.keyboard.getKeyName(6)), Ic2InfoLang.jetpackJumpToFly));
+            ctrlTip.add(TextFormatting.UNDERLINE + Ic2Lang.pressTo.getLocalizedFormatted(IC2.keyboard.getKeyName(5), GravisuitLang.graviEngineToggle));
         }
 
         @Override
@@ -133,7 +149,7 @@ public class ItemArmorGravisuit extends ItemArmorQuantumSuit implements IIndirec
                     } else if (handler.toggleKeyDown) {
                         nbt.setByte("JetpackTicker", (byte)10);
                         nbt.setBoolean("disabled", false);
-                        IC2.platform.messagePlayer(player, Ic2InfoLang.jetpackOn);
+                        IC2.platform.messagePlayer(player, GravisuitLang.graviEngineOn);
                     }
                 }
 
@@ -142,7 +158,7 @@ public class ItemArmorGravisuit extends ItemArmorQuantumSuit implements IIndirec
                     if (server) {
                         nbt.setBoolean("disabled", true);
                         nbt.setByte("JetpackTicker", (byte)10);
-                        IC2.platform.messagePlayer(player, Ic2InfoLang.jetpackOff);
+                        IC2.platform.messagePlayer(player, GravisuitLang.graviEngineOff);
                         return;
                     }
                 } else if (jetpackTicker > 0) {
@@ -152,8 +168,12 @@ public class ItemArmorGravisuit extends ItemArmorQuantumSuit implements IIndirec
             }
 
             Boolean hasSet = ItemArmorGravisuit.hasGravisuit(player);
-            if (!disabled && ElectricItem.manager.getCharge(stack) >= 512 && hasSet){
-                this.useEnergy(player, stack, 512);
+            if (!disabled && ElectricItem.manager.getCharge(stack) >= 1024 && hasSet){
+                if (handler.quantumArmorBoostSprint && player.isSprinting() && ItemArmorGravisuit.hasQuantumLegs(player)){
+                    this.useEnergy(player, stack, 1024);
+                }else {
+                    this.useEnergy(player, stack, 512);
+                }
                 player.capabilities.allowFlying = true;
                 player.stepHeight = 1.0625F;
                 boolean flying = player.capabilities.isFlying;
@@ -198,28 +218,7 @@ public class ItemArmorGravisuit extends ItemArmorQuantumSuit implements IIndirec
 
                 Boolean hasSet = ItemArmorGravisuit.hasGravisuit(player);
                 if (playersWithSet.contains(key)) {
-                    if (hasSet) {
-                        player.capabilities.allowFlying = true;
-                        player.stepHeight = 1.0625F;
-                        boolean flying = player.capabilities.isFlying;
-                        if(flying){
-                            boolean sneaking = player.isSneaking();
-
-                            float speed = 0.08f
-                                    * (flying ? 0.6f : 1.0f)
-                                    * (sneaking ? 0.1f : 1.0f);
-
-                            if (player.moveForward > 0f) {
-                                player.moveRelative(0f, 0f, 1f, speed);
-                            } else if (player.moveForward < 0f) {
-                                player.moveRelative(0f, 0f, 1f, -speed * 0.3f);
-                            }
-
-                            if (player.moveStrafing != 0f) {
-                                player.moveRelative(1f, 0f, 0f, speed * 0.5f * Math.signum(player.moveStrafing));
-                            }
-                        }
-                    } else {
+                    if (!hasSet) {
                         player.stepHeight = 0.6F;
                         if (!player.capabilities.isCreativeMode && !player.isSpectator()) {
                             player.capabilities.allowFlying = false;

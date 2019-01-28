@@ -25,3 +25,8 @@ message.wrench.name=Set Mode to Wrench
 message.hoe.name=Set Mode to Hoe
 message.treetap.name=Set mode to Treetap
 message.screwdriver.name=Set mode to Screwdriver
+message.graviEngineOn.name=Gravitation Engine Enabled
+message.graviEngineOff.name=Gravitation Engine Disabled
+
+miscInfo.doubleJump.name=Double %1$s
+itemInfo.graviEngineToggle.name=Enable/Disable the Gravitation Engine

@@ -238,7 +238,7 @@ public class ItemToolAdvancedDiamondDrill extends ItemElectricTool implements IS
         if (ElectricItem.manager.canUse(stack,this.getEnergyCost(stack))){
             IC2.audioManager.playOnce(entityLiving, Ic2Sounds.drillHard);
         }
-        
+
         return super.onBlockDestroyed(stack, worldIn, blockIn, pos, entityLiving);
     }
 
