@@ -11,6 +11,7 @@ import trinsdar.gravisuit.items.armor.ItemArmorGravisuit;
 import trinsdar.gravisuit.items.tools.ItemToolAdvancedChainsaw;
 import trinsdar.gravisuit.items.tools.ItemToolAdvancedDiamondDrill;
 import trinsdar.gravisuit.items.tools.ItemToolGravitool;
+import trinsdar.gravisuit.items.tools.ItemToolVajra;
 
 public class Registry {
     public static final ItemArmorAdvancedElectricJetpack advancedElectricJetpack = new ItemArmorAdvancedElectricJetpack();
@@ -20,6 +21,7 @@ public class Registry {
     public static final ItemToolGravitool gravitool = new ItemToolGravitool();
     public static final ItemToolAdvancedDiamondDrill advancedDiamondDrill = new ItemToolAdvancedDiamondDrill();
     public static final ItemToolAdvancedChainsaw advancedChainsaw = new ItemToolAdvancedChainsaw();
+    public static final ItemToolVajra vajra = new ItemToolVajra();
 
     public static final Item[] items = {
             advancedElectricJetpack,
@@ -28,7 +30,8 @@ public class Registry {
             advancedLappack,
             gravitool,
             advancedDiamondDrill,
-            advancedChainsaw
+            advancedChainsaw,
+            vajra
     };
     @SubscribeEvent
     public static void registerItems(RegistryEvent.Register<Item> event)
