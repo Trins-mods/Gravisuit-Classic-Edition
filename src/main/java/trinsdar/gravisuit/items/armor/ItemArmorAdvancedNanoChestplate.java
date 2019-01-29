@@ -36,7 +36,7 @@ public class ItemArmorAdvancedNanoChestplate extends ItemArmorNanoSuit {
 
     @Override
     public String getTexture() {
-        return "ic2:textures/models/armor/nano";
+        return "gravisuit:textures/models/advanced_nano_chestplate";
     }
 
     @Override

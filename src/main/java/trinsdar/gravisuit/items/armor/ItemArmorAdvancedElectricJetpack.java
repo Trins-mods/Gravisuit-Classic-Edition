@@ -4,7 +4,10 @@ import baubles.api.BaubleType;
 import baubles.api.IBauble;
 import ic2.core.IC2;
 import ic2.core.item.armor.electric.ItemArmorElectricJetpack;
+import ic2.core.item.render.model.JetpackModel;
 import ic2.core.platform.textures.Ic2Icons;
+import ic2.core.platform.textures.models.BaseModel;
+import ic2.core.util.helpers.ItemWithMeta;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -23,6 +26,13 @@ public class ItemArmorAdvancedElectricJetpack extends ItemArmorElectricJetpack i
         this.setRegistryName("advanced_electric_jetpack");
         this.setUnlocalizedName(GravisuitClassic.MODID +".advancedElectricJetpack");
         this.setCreativeTab(IC2.tabIC2);
+    }
+
+    @SideOnly(Side.CLIENT)
+    @Override
+    public BaseModel getModelFromItem(ItemStack item) {
+        ItemStack stack = getArmor(item);
+        return new JetpackModel(Ic2Icons.getTextures("gravisuit_items")[11]);
     }
 
     @Override
@@ -58,7 +68,7 @@ public class ItemArmorAdvancedElectricJetpack extends ItemArmorElectricJetpack i
 
     @Override
     public String getTexture() {
-        return "ic2:textures/models/armor/jetpack_Electric";
+        return "gravisuit:textures/models/advanced_electric_jetpack";
     }
 
     @Override

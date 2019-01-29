@@ -56,7 +56,7 @@ public class ItemArmorGravisuit extends ItemArmorQuantumSuit implements IIndirec
 
     @Override
     public String getTexture() {
-        return "ic2:textures/models/armor/quantumjetpack";
+        return "gravisuit:textures/models/gravisuit";
     }
 
     @Override
