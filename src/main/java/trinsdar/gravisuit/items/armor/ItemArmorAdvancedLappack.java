@@ -3,10 +3,14 @@ package trinsdar.gravisuit.items.armor;
 import baubles.api.BaubleType;
 import baubles.api.IBauble;
 import ic2.core.item.armor.electric.ItemArmorElectricPack;
+import ic2.core.platform.textures.Ic2Icons;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.Optional;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import trinsdar.gravisuit.GravisuitClassic;
 
 @Optional.Interface(iface = "baubles.api.IBauble", modid = "baubles", striprefs = true)
@@ -15,6 +19,12 @@ public class ItemArmorAdvancedLappack extends ItemArmorElectricPack implements I
         super(36, "ic2:textures/models/armor/lappack", 600000, 2, 500);
         this.setRegistryName("advanced_lappack");
         this.setUnlocalizedName(GravisuitClassic.MODID + ".advancedLappack");
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public TextureAtlasSprite getTexture(int i) {
+        return Ic2Icons.getTextures("gravisuit_items")[13];
     }
 
     @Override

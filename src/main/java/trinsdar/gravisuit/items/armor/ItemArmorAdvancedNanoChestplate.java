@@ -2,10 +2,14 @@ package trinsdar.gravisuit.items.armor;
 
 import ic2.core.IC2;
 import ic2.core.item.armor.electric.ItemArmorNanoSuit;
+import ic2.core.platform.textures.Ic2Icons;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import trinsdar.gravisuit.GravisuitClassic;
 import trinsdar.gravisuit.items.armor.ItemArmorAdvancedElectricJetpack;
 
@@ -17,6 +21,12 @@ public class ItemArmorAdvancedNanoChestplate extends ItemArmorNanoSuit {
         this.setUnlocalizedName(GravisuitClassic.MODID + ".advancedNanoChestplate");
         this.setRegistryName("advanced_nano_chestplate");
         this.setCreativeTab(IC2.tabIC2);
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public TextureAtlasSprite getTexture(int i) {
+        return Ic2Icons.getTextures("gravisuit_items")[12];
     }
 
     @Override

@@ -4,11 +4,15 @@ import baubles.api.BaubleType;
 import baubles.api.IBauble;
 import ic2.core.IC2;
 import ic2.core.item.armor.electric.ItemArmorElectricJetpack;
+import ic2.core.platform.textures.Ic2Icons;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.Optional;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import trinsdar.gravisuit.GravisuitClassic;
 
 @Optional.Interface(iface = "baubles.api.IBauble", modid = "baubles", striprefs = true)
@@ -19,6 +23,12 @@ public class ItemArmorAdvancedElectricJetpack extends ItemArmorElectricJetpack i
         this.setRegistryName("advanced_electric_jetpack");
         this.setUnlocalizedName(GravisuitClassic.MODID +".advancedElectricJetpack");
         this.setCreativeTab(IC2.tabIC2);
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public TextureAtlasSprite getTexture(int i) {
+        return Ic2Icons.getTextures("gravisuit_items")[11];
     }
 
     @Override

@@ -12,8 +12,10 @@ import ic2.core.platform.lang.storage.Ic2InfoLang;
 import ic2.core.platform.player.PlayerHandler;
 import ic2.core.platform.registry.Ic2Lang;
 import ic2.core.platform.registry.Ic2Sounds;
+import ic2.core.platform.textures.Ic2Icons;
 import ic2.core.util.misc.StackUtil;
 import ic2.core.util.obj.ToolTipType;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -44,6 +46,12 @@ public class ItemArmorGravisuit extends ItemArmorQuantumSuit implements IIndirec
         this.maxCharge = 5000000;
         this.transferLimit = 5000;
         this.setCreativeTab(IC2.tabIC2);
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public TextureAtlasSprite getTexture(int i) {
+        return Ic2Icons.getTextures("gravisuit_items")[14];
     }
 
     @Override
