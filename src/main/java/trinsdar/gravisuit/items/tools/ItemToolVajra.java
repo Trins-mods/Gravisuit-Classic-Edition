@@ -16,6 +16,8 @@ import ic2.core.platform.textures.Ic2Icons;
 import ic2.core.platform.textures.obj.IStaticTexturedItem;
 import ic2.core.util.misc.StackUtil;
 import ic2.core.util.obj.ToolTipType;
+import net.minecraft.block.Block;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -39,6 +41,8 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -152,9 +156,12 @@ public class ItemToolVajra extends ItemElectricTool implements IStaticTexturedIt
     public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         ItemStack stack = player.getHeldItem(hand);
         IBlockState blockState = world.getBlockState(pos);
+        Block block = blockState.getBlock();
+        SoundType soundType = block.getSoundType(blockState, world, pos, player);
         if (ElectricItem.manager.getCharge(stack) >= getEnergyCost(stack) && shouldBreak(player, world, pos)){
             ElectricItem.manager.use(stack, this.getEnergyCost(stack), player);
             blockState.getBlock().harvestBlock(world, player, pos, blockState, world.getTileEntity(pos), stack);
+            world.playSound(null, pos, soundType.getBreakSound(), SoundCategory.BLOCKS, (soundType.getVolume() + 1.0F) / 2.0F, soundType.getPitch() * 0.8F);
             world.setBlockToAir(pos);
             world.removeTileEntity(pos);
             return EnumActionResult.SUCCESS;
