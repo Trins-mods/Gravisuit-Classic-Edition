@@ -21,6 +21,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.entity.Entity;
@@ -95,12 +96,17 @@ public class ItemToolVajra extends ItemElectricTool implements IStaticTexturedIt
         ItemStack stack = player.getHeldItem(handIn);
         NBTTagCompound nbt = StackUtil.getOrCreateNbtData(stack);
         boolean silkTouch = nbt.getBoolean("silkTouch");
+        Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(stack);
         if (IC2.platform.isSimulating() && IC2.keyboard.isModeSwitchKeyDown(player)) {
             if (silkTouch){
                 nbt.setBoolean("silkTouch", false);
+                enchantments.remove(Enchantments.SILK_TOUCH, 1);
+                EnchantmentHelper.setEnchantments(enchantments, stack);
                 IC2.platform.messagePlayer(player, GravisuitLang.silkTouchOff);
             }else {
                 nbt.setBoolean("silkTouch", true);
+                enchantments.put(Enchantments.SILK_TOUCH, 1);
+                EnchantmentHelper.setEnchantments(enchantments, stack);
                 IC2.platform.messagePlayer(player, GravisuitLang.silkTouchOn);
             }
             return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
@@ -132,7 +138,6 @@ public class ItemToolVajra extends ItemElectricTool implements IStaticTexturedIt
             return false;
         }
         float blockHardness = blockState.getBlockHardness(worldIn, pos);
-        System.out.println(blockHardness);
         if (blockHardness < 0) {
             return false;
         }
