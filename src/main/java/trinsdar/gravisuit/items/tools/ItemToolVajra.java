@@ -184,8 +184,8 @@ public class ItemToolVajra extends ItemElectricTool implements IStaticTexturedIt
 
     @Override
     @SideOnly(Side.CLIENT)
-    public TextureAtlasSprite getTexture(int meta) {
-        return Ic2Icons.getTextures("i1")[32];
+    public TextureAtlasSprite getTexture(int i) {
+        return Ic2Icons.getTextures("gravisuit_items")[10];
     }
 
     @Override

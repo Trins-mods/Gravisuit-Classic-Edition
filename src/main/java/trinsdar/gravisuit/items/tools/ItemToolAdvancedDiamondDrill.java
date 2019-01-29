@@ -107,6 +107,12 @@ public class ItemToolAdvancedDiamondDrill extends ItemElectricTool implements IS
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
+    public TextureAtlasSprite getTexture(int i) {
+        return Ic2Icons.getTextures("gravisuit_items")[7];
+    }
+
+    @Override
     public boolean canHarvestBlock(IBlockState state, ItemStack stack) {
         return Items.DIAMOND_PICKAXE.canHarvestBlock(state) || Items.DIAMOND_SHOVEL.canHarvestBlock(state);
     }
@@ -245,12 +251,6 @@ public class ItemToolAdvancedDiamondDrill extends ItemElectricTool implements IS
     @Override
     public List<Integer> getValidVariants() {
         return Arrays.asList(0);
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public TextureAtlasSprite getTexture(int meta) {
-        return Ic2Icons.getTextures("i1")[32];
     }
 
     @Override

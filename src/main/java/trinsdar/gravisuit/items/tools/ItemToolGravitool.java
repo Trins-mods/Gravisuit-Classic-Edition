@@ -10,9 +10,11 @@ import ic2.core.item.tool.electric.ItemElectricToolHoe;
 import ic2.core.item.tool.electric.ItemElectricToolPrecisionWrench;
 import ic2.core.platform.lang.storage.Ic2InfoLang;
 import ic2.core.platform.registry.Ic2Items;
+import ic2.core.platform.textures.Ic2Icons;
 import ic2.core.util.misc.StackUtil;
 import ic2.core.util.obj.ToolTipType;
 import mrtjp.projectred.api.IScrewdriver;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.entity.player.EntityPlayer;
@@ -28,6 +30,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.event.world.ChunkEvent;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Optional;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import reborncore.api.ICustomToolHandler;
 import trinsdar.gravisuit.GravisuitClassic;
 import trinsdar.gravisuit.util.GravisuitLang;
@@ -87,6 +91,12 @@ public class ItemToolGravitool extends ItemElectricToolPrecisionWrench implement
             return Ic2Items.electricTreeTap.getItem().onItemUseFirst(player, world, pos, side, hitX, hitY, hitZ, hand);
         }
 
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public TextureAtlasSprite getTexture(int i) {
+        return Ic2Icons.getTextures("gravisuit_items")[9];
     }
 
     @Override

@@ -62,6 +62,12 @@ public class ItemToolAdvancedChainsaw extends ItemElectricTool implements IStati
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
+    public TextureAtlasSprite getTexture(int i) {
+        return Ic2Icons.getTextures("gravisuit_items")[8];
+    }
+
+    @Override
     public boolean canHarvestBlock(IBlockState state, ItemStack stack) {
         return ironAxe.canHarvestBlock(state) || state.getBlock() == Blocks.WEB;
     }
@@ -191,11 +197,6 @@ public class ItemToolAdvancedChainsaw extends ItemElectricTool implements IStati
         return Arrays.asList(0);
     }
 
-    @Override
-    @SideOnly(Side.CLIENT)
-    public TextureAtlasSprite getTexture(int meta) {
-        return Ic2Icons.getTextures("i1")[34];
-    }
 
     @Override
     public EnumEnchantmentType getType(ItemStack item) {
