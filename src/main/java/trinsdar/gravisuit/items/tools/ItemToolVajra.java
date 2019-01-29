@@ -131,8 +131,9 @@ public class ItemToolVajra extends ItemElectricTool implements IStaticTexturedIt
         if (blockState.getMaterial().isLiquid()) {
             return false;
         }
-        float blockHardness = blockState.getPlayerRelativeBlockHardness(playerIn, worldIn, pos);
-        if (blockHardness == -1.0F) {
+        float blockHardness = blockState.getBlockHardness(worldIn, pos);
+        System.out.println(blockHardness);
+        if (blockHardness < 0) {
             return false;
         }
         if (!blockState.getBlock().canHarvestBlock(worldIn, pos, playerIn)){
