@@ -11,6 +11,7 @@ import ic2.core.item.tool.electric.ItemElectricToolPrecisionWrench;
 import ic2.core.platform.lang.storage.Ic2InfoLang;
 import ic2.core.platform.registry.Ic2Items;
 import ic2.core.platform.textures.Ic2Icons;
+import ic2.core.platform.textures.obj.ITexturedItem;
 import ic2.core.util.misc.StackUtil;
 import ic2.core.util.obj.ToolTipType;
 import mrtjp.projectred.api.IScrewdriver;
@@ -42,8 +43,7 @@ import java.util.Map;
 @Optional.Interface(iface = "reborncore.api.ICustomToolHandler", modid = "techreborn", striprefs = true)
 @Optional.Interface(iface = "buildcraft.api.tools.IToolWrench", modid = "buildcraftcore", striprefs = true)
 @Optional.Interface(iface = "mrtjp.projectred.api.IScrewdriver", modid = "projectred-core", striprefs = true)
-public class ItemToolGravitool extends ItemElectricToolPrecisionWrench implements ICustomToolHandler, IToolWrench, IScrewdriver {
-    public static final String[] itemModes = new String[]{"Wrench", "Hoe", "Treetap"};
+public class ItemToolGravitool extends ItemElectricToolPrecisionWrench implements ICustomToolHandler, IToolWrench, IScrewdriver, ITexturedItem {
 
     public ItemToolGravitool() {
         super();
@@ -88,7 +88,7 @@ public class ItemToolGravitool extends ItemElectricToolPrecisionWrench implement
         if (toolMode == ToolMode.Wrench){
             return super.onItemUseFirst(player, world, pos, side, hitX, hitY, hitZ, hand);
         }else {
-            return Ic2Items.electricTreeTap.getItem().onItemUseFirst(player, world, pos, side, hitX, hitY, hitZ, hand);
+            return EnumActionResult.PASS;
         }
 
     }
@@ -98,6 +98,27 @@ public class ItemToolGravitool extends ItemElectricToolPrecisionWrench implement
     public TextureAtlasSprite getTexture(int i) {
         return Ic2Icons.getTextures("gravisuit_items")[9];
     }
+
+    @Override
+    public List<ItemStack> getValidItemVariants() {
+        return new ArrayList();
+    }
+
+    @SideOnly(Side.CLIENT)
+    @Override
+    public TextureAtlasSprite getTexture(ItemStack stack) {
+        NBTTagCompound nbt = StackUtil.getOrCreateNbtData(stack);
+        if (nbt.getByte("ToolMode") == 0){
+            return Ic2Icons.getTextures("gravisuit_items")[9];
+        }else if (nbt.getByte("ToolMode") == 1){
+            return Ic2Icons.getTextures("gravisuit_items")[10];
+        }else if (nbt.getByte("ToolMode") == 2){
+            return Ic2Icons.getTextures("gravisuit_items")[11];
+        }else {
+            return Ic2Icons.getTextures("gravisuit_items")[12];
+        }
+    }
+
 
     @Override
     public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {

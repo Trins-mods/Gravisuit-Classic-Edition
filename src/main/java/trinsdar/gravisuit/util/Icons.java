@@ -11,7 +11,7 @@ public class Icons {
     @SideOnly(Side.CLIENT)
     public static void loadSprites()
     {
-        addSprite(new Sprites.SpriteData("gravisuit_items", "gravisuit:textures/gravisuit_items.png", new Sprites.SpriteInfo(16, 1)));
-        addTextureEntry(new Sprites.TextureEntry("gravisuit_items", 0, 0, 16, 1));
+        addSprite(new Sprites.SpriteData("gravisuit_items", "gravisuit:textures/gravisuit_items.png", new Sprites.SpriteInfo(4, 5)));
+        addTextureEntry(new Sprites.TextureEntry("gravisuit_items", 0, 0, 4, 5));
     }
 }

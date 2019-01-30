@@ -26,7 +26,7 @@ public class ItemArmorAdvancedNanoChestplate extends ItemArmorNanoSuit {
     @Override
     @SideOnly(Side.CLIENT)
     public TextureAtlasSprite getTexture(int i) {
-        return Ic2Icons.getTextures("gravisuit_items")[12];
+        return Ic2Icons.getTextures("gravisuit_items")[15];
     }
 
     @Override

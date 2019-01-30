@@ -51,7 +51,7 @@ public class ItemArmorGravisuit extends ItemArmorQuantumSuit implements IIndirec
     @Override
     @SideOnly(Side.CLIENT)
     public TextureAtlasSprite getTexture(int i) {
-        return Ic2Icons.getTextures("gravisuit_items")[14];
+        return Ic2Icons.getTextures("gravisuit_items")[17];
     }
 
     @Override

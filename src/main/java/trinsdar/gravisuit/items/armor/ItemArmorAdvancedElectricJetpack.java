@@ -32,13 +32,13 @@ public class ItemArmorAdvancedElectricJetpack extends ItemArmorElectricJetpack i
     @Override
     public BaseModel getModelFromItem(ItemStack item) {
         ItemStack stack = getArmor(item);
-        return new JetpackModel(Ic2Icons.getTextures("gravisuit_items")[11]);
+        return new JetpackModel(Ic2Icons.getTextures("gravisuit_items")[14]);
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public TextureAtlasSprite getTexture(int i) {
-        return Ic2Icons.getTextures("gravisuit_items")[11];
+        return Ic2Icons.getTextures("gravisuit_items")[14];
     }
 
     @Override
