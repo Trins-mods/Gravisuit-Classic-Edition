@@ -179,35 +179,24 @@ public class ItemToolGravitool extends ItemElectricToolPrecisionWrench implement
     @Override
     @Optional.Method(modid = "techreborn")
     public boolean canHandleTool(ItemStack stack) {
-        NBTTagCompound nbt = StackUtil.getOrCreateNbtData(stack);
-        ToolMode toolMode = ToolMode.values()[nbt.getByte("ToolMode")];
-        return toolMode == ToolMode.Wrench;
+        return true;
     }
 
     @Override
     @Optional.Method(modid = "techreborn")
     public boolean handleTool(ItemStack stack, BlockPos blockPos, World world, EntityPlayer player, EnumFacing enumFacing, boolean b) {
-        NBTTagCompound nbt = StackUtil.getOrCreateNbtData(stack);
-        ToolMode toolMode = ToolMode.values()[nbt.getByte("ToolMode")];
-        if (ElectricItem.manager.getCharge(stack) >= 100 && toolMode == ToolMode.Wrench){
-            this.damageItem(stack, 1, player);
-            return true;
-        }
-        return false;
+        return true;
     }
 
     @Override
     @Optional.Method(modid = "buildcraftcore")
     public boolean canWrench(EntityPlayer player, EnumHand hand, ItemStack wrench, RayTraceResult rayTrace) {
-        NBTTagCompound nbt = StackUtil.getOrCreateNbtData(wrench);
-        ToolMode toolMode = ToolMode.values()[nbt.getByte("ToolMode")];
-        return toolMode == ToolMode.Wrench && ElectricItem.manager.getCharge(wrench) >= 100;
+        return true;
     }
 
     @Override
     @Optional.Method(modid = "buildcraftcore")
     public void wrenchUsed(EntityPlayer player, EnumHand hand, ItemStack wrench, RayTraceResult rayTrace) {
-        this.damageItem(wrench, 1, player);
     }
 
     @Override
