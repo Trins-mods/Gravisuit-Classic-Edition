@@ -179,19 +179,31 @@ public class ItemToolGravitool extends ItemElectricToolPrecisionWrench implement
     @Override
     @Optional.Method(modid = "techreborn")
     public boolean canHandleTool(ItemStack stack) {
-        return true;
+        NBTTagCompound nbt = StackUtil.getOrCreateNbtData(stack);
+        if (nbt.getByte("ToolMode") == 0){
+            return true;
+        }
+        return false;
     }
 
     @Override
     @Optional.Method(modid = "techreborn")
     public boolean handleTool(ItemStack stack, BlockPos blockPos, World world, EntityPlayer player, EnumFacing enumFacing, boolean b) {
-        return true;
+        NBTTagCompound nbt = StackUtil.getOrCreateNbtData(stack);
+        if (nbt.getByte("ToolMode") == 0){
+            return true;
+        }
+        return false;
     }
 
     @Override
     @Optional.Method(modid = "buildcraftcore")
     public boolean canWrench(EntityPlayer player, EnumHand hand, ItemStack wrench, RayTraceResult rayTrace) {
-        return true;
+        NBTTagCompound nbt = StackUtil.getOrCreateNbtData(player.getHeldItem(hand));
+        if (nbt.getByte("ToolMode") == 0){
+            return true;
+        }
+        return false;
     }
 
     @Override
