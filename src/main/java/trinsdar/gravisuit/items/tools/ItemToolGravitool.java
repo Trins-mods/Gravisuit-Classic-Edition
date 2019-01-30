@@ -51,9 +51,10 @@ public class ItemToolGravitool extends ItemElectricToolPrecisionWrench implement
 
     @Override
     public List<Integer> getValidVariants() {
-        return Arrays.asList(0, 1, 2, 3);
+        return Arrays.asList(0);
     }
 
+    @Override
     public boolean canOverrideLossChance(ItemStack stack) {
         return true;
     }
@@ -68,16 +69,12 @@ public class ItemToolGravitool extends ItemElectricToolPrecisionWrench implement
             toolMode = toolMode.getNext();
             nbt.setByte("ToolMode", (byte)toolMode.ordinal());
             if (toolMode == ToolMode.Wrench) {
-                this.setDamage(stack, 0);
                 IC2.platform.messagePlayer(player, GravisuitLang.messageWrench);
             } else if (toolMode == ToolMode.Hoe){
-                this.setDamage(stack, 1);
                 IC2.platform.messagePlayer(player, GravisuitLang.messageHoe);
             } else if (toolMode == ToolMode.Treetap){
-                this.setDamage(stack, 2);
                 IC2.platform.messagePlayer(player, GravisuitLang.messageTreetap);
             }else {
-                this.setDamage(stack, 3);
                 IC2.platform.messagePlayer(player, GravisuitLang.messageScrewdriver);
             }
 
@@ -91,7 +88,7 @@ public class ItemToolGravitool extends ItemElectricToolPrecisionWrench implement
     public EnumActionResult onItemUseFirst(EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand) {
         NBTTagCompound nbt = StackUtil.getOrCreateNbtData(player.getHeldItem(hand));
         ToolMode toolMode = ToolMode.values()[nbt.getByte("ToolMode")];
-        if (toolMode == ToolMode.Wrench && this.getDamage(player.getHeldItem(hand)) == 0){
+        if (toolMode == ToolMode.Wrench){
             return super.onItemUseFirst(player, world, pos, side, hitX, hitY, hitZ, hand);
         }else {
             return EnumActionResult.PASS;
@@ -102,7 +99,7 @@ public class ItemToolGravitool extends ItemElectricToolPrecisionWrench implement
     @Override
     @SideOnly(Side.CLIENT)
     public TextureAtlasSprite getTexture(int meta) {
-        return Ic2Icons.getTextures("gravisuit_items")[9 + meta];
+        return Ic2Icons.getTextures("gravisuit_items")[9];
     }
 
     @Override
@@ -112,17 +109,20 @@ public class ItemToolGravitool extends ItemElectricToolPrecisionWrench implement
 
     @SideOnly(Side.CLIENT)
     public ModelResourceLocation createResourceLocationForStack(ItemStack stack) {
-        int damage = stack.getItemDamage();
+        NBTTagCompound nbt = StackUtil.getNbtData(stack);
+        int damage = nbt.getByte("ToolMode");
+        ToolMode toolMode = ToolMode.values()[nbt.getByte("ToolMode")];
         ResourceLocation location = this.getRegistryName();
+        ResourceLocation modeID = new ResourceLocation(toolMode.toString());
         String name = stack.getUnlocalizedName();
-        this.model[damage] = new ModelResourceLocation(
-                location.getResourceDomain() + name.substring(name.indexOf(".") + 1) + damage, "inventory");
+        this.model[damage] = new ModelResourceLocation(location.getResourceDomain() + name.substring(name.indexOf(".") + 1) + modeID, "inventory");
         return this.model[damage];
     }
 
     @SideOnly(Side.CLIENT)
     public ModelResourceLocation getResourceLocationForStack(ItemStack stack) {
-        int damage = stack.getItemDamage();
+        NBTTagCompound nbt = StackUtil.getNbtData(stack);
+        int damage = nbt.getByte("ToolMode");
         return this.model[damage];
     }
 
@@ -132,9 +132,9 @@ public class ItemToolGravitool extends ItemElectricToolPrecisionWrench implement
         ItemStack stack = player.getHeldItem(hand);
         NBTTagCompound nbt = StackUtil.getOrCreateNbtData(player.getHeldItem(hand));
         ToolMode toolMode = ToolMode.values()[nbt.getByte("ToolMode")];
-        if (toolMode == ToolMode.Hoe && this.getDamage(stack) == 1){
+        if (toolMode == ToolMode.Hoe){
             return Ic2Items.electricHoe.getItem().onItemUse(player, world, pos, hand, facing, hitX, hitY, hitZ);
-        }else if (toolMode == ToolMode.Treetap && this.getDamage(stack) == 2){
+        }else if (toolMode == ToolMode.Treetap){
             return Ic2Items.electricTreeTap.getItem().onItemUse(player, world, pos, hand, facing, hitX, hitY, hitZ);
         }else {
             return super.onItemUse(player, world, pos, hand, facing, hitX, hitY, hitZ);
@@ -169,7 +169,7 @@ public class ItemToolGravitool extends ItemElectricToolPrecisionWrench implement
     @Override
     @Optional.Method(modid = "techreborn")
     public boolean handleTool(ItemStack stack, BlockPos blockPos, World world, EntityPlayer player, EnumFacing enumFacing, boolean b) {
-        NBTTagCompound nbt = StackUtil.getOrCreateNbtData(stack);
+        NBTTagCompound nbt = StackUtil.getNbtData(stack);
         if (nbt.getByte("ToolMode") == 0){
             return true;
         }
@@ -179,7 +179,7 @@ public class ItemToolGravitool extends ItemElectricToolPrecisionWrench implement
     @Override
     @Optional.Method(modid = "buildcraftcore")
     public boolean canWrench(EntityPlayer player, EnumHand hand, ItemStack wrench, RayTraceResult rayTrace) {
-        NBTTagCompound nbt = StackUtil.getOrCreateNbtData(player.getHeldItem(hand));
+        NBTTagCompound nbt = StackUtil.getNbtData(player.getHeldItem(hand));
         if (nbt.getByte("ToolMode") == 0){
             return true;
         }
@@ -194,7 +194,7 @@ public class ItemToolGravitool extends ItemElectricToolPrecisionWrench implement
     @Override
     @Optional.Method(modid = "projectred-core")
     public boolean canUse(EntityPlayer player, ItemStack stack) {
-        NBTTagCompound nbt = StackUtil.getOrCreateNbtData(stack);
+        NBTTagCompound nbt = StackUtil.getNbtData(stack);
         ToolMode toolMode = ToolMode.values()[nbt.getByte("ToolMode")];
         return toolMode == ToolMode.Screwdriver && ElectricItem.manager.getCharge(stack) >= 100;
     }
