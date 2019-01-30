@@ -1,31 +1,17 @@
 package trinsdar.gravisuit.items.tools;
 
 import buildcraft.api.tools.IToolWrench;
-import ic2.api.classic.audio.PositionSpec;
-import ic2.api.classic.tile.ISpecialWrenchable;
 import ic2.api.item.ElectricItem;
-import ic2.api.tile.IWrenchable;
 import ic2.core.IC2;
-import ic2.core.block.base.util.info.misc.IWrench;
-import ic2.core.item.armor.base.ItemArmorJetpackBase;
-import ic2.core.item.base.ItemElectricTool;
-import ic2.core.item.tool.electric.ItemElectricToolHoe;
 import ic2.core.item.tool.electric.ItemElectricToolPrecisionWrench;
-import ic2.core.platform.lang.storage.Ic2InfoLang;
 import ic2.core.platform.registry.Ic2Items;
-import ic2.core.platform.registry.Ic2Sounds;
 import ic2.core.platform.textures.Ic2Icons;
 import ic2.core.platform.textures.obj.IAdvancedTexturedItem;
-import ic2.core.platform.textures.obj.ITexturedItem;
 import ic2.core.util.misc.StackUtil;
-import ic2.core.util.obj.ToolTipType;
 import mrtjp.projectred.api.IScrewdriver;
-import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -36,10 +22,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import net.minecraftforge.event.world.ChunkEvent;
-import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -47,11 +30,8 @@ import reborncore.api.ICustomToolHandler;
 import trinsdar.gravisuit.GravisuitClassic;
 import trinsdar.gravisuit.util.GravisuitLang;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 @Optional.Interface(iface = "reborncore.api.ICustomToolHandler", modid = "techreborn", striprefs = true)
 @Optional.Interface(iface = "buildcraft.api.tools.IToolWrench", modid = "buildcraftcore", striprefs = true)
