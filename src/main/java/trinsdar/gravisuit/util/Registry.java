@@ -10,6 +10,7 @@ import trinsdar.gravisuit.items.armor.ItemArmorAdvancedElectricJetpack;
 import trinsdar.gravisuit.items.armor.ItemArmorAdvancedLappack;
 import trinsdar.gravisuit.items.armor.ItemArmorAdvancedNanoChestplate;
 import trinsdar.gravisuit.items.armor.ItemArmorGravisuit;
+import trinsdar.gravisuit.items.tools.ItemRelocator;
 import trinsdar.gravisuit.items.tools.ItemToolAdvancedChainsaw;
 import trinsdar.gravisuit.items.tools.ItemToolAdvancedDiamondDrill;
 import trinsdar.gravisuit.items.tools.ItemToolGravitool;
@@ -24,6 +25,7 @@ public class Registry {
     public static final ItemToolAdvancedDiamondDrill advancedDiamondDrill = new ItemToolAdvancedDiamondDrill();
     public static final ItemToolAdvancedChainsaw advancedChainsaw = new ItemToolAdvancedChainsaw();
     public static final ItemToolVajra vajra = new ItemToolVajra();
+    public static final ItemRelocator relocator = new ItemRelocator();
     public static final ItemComponents
     superConductorCover = new ItemComponents(ItemComponentTypes.SUPER_CONDUCTOR_COVER),
     superConductor = new ItemComponents(ItemComponentTypes.SUPER_CONDUCTOR),
