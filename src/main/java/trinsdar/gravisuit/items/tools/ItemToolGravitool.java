@@ -1,6 +1,7 @@
 package trinsdar.gravisuit.items.tools;
 
 import buildcraft.api.tools.IToolWrench;
+import cofh.api.item.IToolHammer;
 import ic2.api.item.ElectricItem;
 import ic2.core.IC2;
 import ic2.core.item.tool.electric.ItemElectricToolPrecisionWrench;
@@ -12,6 +13,8 @@ import mrtjp.projectred.api.IScrewdriver;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -36,7 +39,7 @@ import java.util.List;
 @Optional.Interface(iface = "reborncore.api.ICustomToolHandler", modid = "techreborn", striprefs = true)
 @Optional.Interface(iface = "buildcraft.api.tools.IToolWrench", modid = "buildcraftcore", striprefs = true)
 @Optional.Interface(iface = "mrtjp.projectred.api.IScrewdriver", modid = "projectred-core", striprefs = true)
-public class ItemToolGravitool extends ItemElectricToolPrecisionWrench implements ICustomToolHandler, IToolWrench, IScrewdriver, IAdvancedTexturedItem {
+public class ItemToolGravitool extends ItemElectricToolPrecisionWrench implements ICustomToolHandler, IToolWrench, IScrewdriver, IAdvancedTexturedItem, IToolHammer {
 
     public ModelResourceLocation[] model = new ModelResourceLocation[4];
 
@@ -167,10 +170,7 @@ public class ItemToolGravitool extends ItemElectricToolPrecisionWrench implement
     @Override
     @Optional.Method(modid = "buildcraftcore")
     public boolean canWrench(EntityPlayer player, EnumHand hand, ItemStack wrench, RayTraceResult rayTrace) {
-        if (this.getDamage(player.getHeldItem(hand)) == 0){
-            return true;
-        }
-        return false;
+        return this.getDamage(player.getHeldItem(hand)) == 0;
     }
 
     @Override
@@ -188,5 +188,25 @@ public class ItemToolGravitool extends ItemElectricToolPrecisionWrench implement
     @Optional.Method(modid = "projectred-core")
     public void damageScrewdriver(EntityPlayer player, ItemStack stack) {
         this.damageItem(stack, 1, player);
+    }
+
+    @Override
+    public boolean isUsable(ItemStack item, EntityLivingBase user, BlockPos pos) {
+        return this.getDamage(item) == 0;
+    }
+
+    @Override
+    public boolean isUsable(ItemStack item, EntityLivingBase user, Entity entity) {
+        return this.getDamage(item) == 0;
+    }
+
+    @Override
+    public void toolUsed(ItemStack item, EntityLivingBase user, BlockPos pos) {
+
+    }
+
+    @Override
+    public void toolUsed(ItemStack item, EntityLivingBase user, Entity entity) {
+
     }
 }
