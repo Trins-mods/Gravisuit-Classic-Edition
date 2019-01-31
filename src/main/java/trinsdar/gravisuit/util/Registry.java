@@ -44,6 +44,8 @@ public class Registry {
             advancedDiamondDrill,
             advancedChainsaw,
             vajra,
+            relocator,
+
             superConductorCover,
             superConductor,
             coolingCore,

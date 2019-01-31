@@ -20,7 +20,10 @@ public class GravisuitLang {
     public static LocaleComp advancedDrillNormal = new LocaleItemInfoComp("itemInfo.advancedDrillNormal.name");
     public static LocaleComp advancedDrillLowPower = new LocaleItemInfoComp("itemInfo.advancedDrillLowPower.name");
     public static LocaleComp advancedDrillBigHoles = new LocaleItemInfoComp("itemInfo.advancedDrillBigHoles.name");
-    public static LocaleComp advancedDrillMode = new LocaleItemInfoComp("itemInfo.advancedDrillMode.name");
+    public static LocaleComp multiModes = new LocaleItemInfoComp("itemInfo.multiModes.name");
+    public static LocaleComp relocatorPersonal = new LocaleItemInfoComp("itemInfo.relocatorPersonal.name");
+    public static LocaleComp relocatorPortal = new LocaleItemInfoComp("itemInfo.relocatorPortal.name");
+    public static LocaleComp relocatorTranslocator = new LocaleItemInfoComp("itemInfo.relocatorTranslocator.name");
     public static LocaleComp vajraSilktouchToggle = new LocaleItemInfoComp("itemInfo.vajraSilktouchToggle.name");
     public static LocaleComp vajraSilktouchOn = new LocaleItemInfoComp("itemInfo.vajraSilktouchOn.name");
     public static LocaleComp vajraSilktouchOff = new LocaleItemInfoComp("itemInfo.vajraSilktouchOff.name");
@@ -29,6 +32,9 @@ public class GravisuitLang {
     public static LocaleComp messageAdvancedDrillNormal = new LocaleItemInfoComp("message.advancedDrillNormal.name");
     public static LocaleComp messageAdvancedDrillLowPower = new LocaleItemInfoComp("message.advancedDrillLowPower.name");
     public static LocaleComp messageAdvancedDrillBigHoles = new LocaleItemInfoComp("message.advancedDrillBigHoles.name");
+    public static LocaleComp messageRelocatorPersonal = new LocaleItemInfoComp("message.relocatorPersonal.name");
+    public static LocaleComp messageRelocatorPortal = new LocaleItemInfoComp("message.relocatorPortal.name");
+    public static LocaleComp messageRelocatorTranslocator = new LocaleItemInfoComp("message.relocatorTranslocator.name");
     public static LocaleComp messageWrench = new LocaleItemInfoComp("message.wrench.name");
     public static LocaleComp messageHoe = new LocaleItemInfoComp("message.hoe.name");
     public static LocaleComp messageTreetap = new LocaleItemInfoComp("message.treetap.name");
