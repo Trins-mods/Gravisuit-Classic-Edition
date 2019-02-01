@@ -114,10 +114,19 @@ public class ItemArmorGravisuit extends ItemArmorQuantumSuit implements IIndirec
             List<String> ctrlTip = sortedTooltip.get(ToolTipType.Ctrl);
             ctrlTip.add(TextFormatting.UNDERLINE + Ic2Lang.pressTo.getLocalizedFormatted(GravisuitLang.doubleJump.getLocalizedFormatted(IC2.keyboard.getKeyName(6)), Ic2InfoLang.jetpackJumpToFly));
             ctrlTip.add(TextFormatting.UNDERLINE + Ic2Lang.pressTo.getLocalizedFormatted(IC2.keyboard.getKeyName(5), GravisuitLang.graviEngineToggle));
+            ctrlTip.add(TextFormatting.UNDERLINE + Ic2Lang.pressTo.getLocalizedFormatted(IC2.keyboard.getKeyName(6), Ic2InfoLang.jetpackJumpToFly));
+            ctrlTip.add(TextFormatting.UNDERLINE + Ic2Lang.pressTo.getLocalizedFormatted(IC2.keyboard.getKeyName(2), Ic2InfoLang.jetpackModeSwitch));
+            ctrlTip.add(TextFormatting.UNDERLINE + Ic2Lang.pressTo.getLocalizedFormatted(IC2.keyboard.getKeyName(0), Ic2InfoLang.jetpackQuickToggle));
+            ctrlTip.add(TextFormatting.UNDERLINE + Ic2Lang.pressTo.getLocalizedFormatted(IC2.keyboard.getKeyName(5), Ic2InfoLang.jetpackToggle));
         }
 
         @Override
         public boolean isElectricJetpack(ItemStack itemStack) {
+            return true;
+        }
+
+        @Override
+        public boolean canDoAdvHoverMode(ItemStack stack) {
             return true;
         }
 
@@ -144,29 +153,29 @@ public class ItemArmorGravisuit extends ItemArmorQuantumSuit implements IIndirec
         @Override
         public void onArmorTick(World world, EntityPlayer player, ItemStack stack) {
             NBTTagCompound nbt = StackUtil.getOrCreateNbtData(stack);
-            boolean disabled = nbt.getBoolean("disabled");
+            boolean enabled = nbt.getBoolean("enabled");
             PlayerHandler handler = PlayerHandler.getHandlerForPlayer(player);
             byte jetpackTicker = nbt.getByte("JetpackTicker");
             Entity entity = player.getLowestRidingEntity();
             boolean server = IC2.platform.isSimulating();
-            if (disabled) {
+            if (enabled) {
                 if (server) {
                     if (jetpackTicker > 0) {
                         --jetpackTicker;
                         nbt.setByte("JetpackTicker", jetpackTicker);
-                    } else if (handler.toggleKeyDown) {
+                    } else if (handler.toggleKeyDown && handler.jumpKeyDown) {
                         nbt.setByte("JetpackTicker", (byte)10);
-                        nbt.setBoolean("disabled", false);
-                        IC2.platform.messagePlayer(player, GravisuitLang.graviEngineOn);
+                        nbt.setBoolean("enabled", false);
+                        IC2.platform.messagePlayer(player, GravisuitLang.graviEngineOff);
                     }
                 }
 
             } else {
-                if (handler.toggleKeyDown && jetpackTicker <= 0) {
+                if (handler.toggleKeyDown && handler.jumpKeyDown && jetpackTicker <= 0) {
                     if (server) {
-                        nbt.setBoolean("disabled", true);
+                        nbt.setBoolean("enabled", true);
                         nbt.setByte("JetpackTicker", (byte)10);
-                        IC2.platform.messagePlayer(player, GravisuitLang.graviEngineOff);
+                        IC2.platform.messagePlayer(player, GravisuitLang.graviEngineOn);
                         return;
                     }
                 } else if (jetpackTicker > 0) {
@@ -175,37 +184,43 @@ public class ItemArmorGravisuit extends ItemArmorQuantumSuit implements IIndirec
                 }
             }
 
-            Boolean hasSet = ItemArmorGravisuit.hasGravisuit(player);
-            if (!disabled && ElectricItem.manager.getCharge(stack) >= 1024 && hasSet){
-                if (handler.quantumArmorBoostSprint && player.isSprinting() && ItemArmorGravisuit.hasQuantumLegs(player)){
-                    this.useEnergy(player, stack, 1024);
+            if (enabled){
+                if (ElectricItem.manager.getCharge(stack) >= 1024){
+                    if (handler.quantumArmorBoostSprint && player.isSprinting() && ItemArmorGravisuit.hasQuantumLegs(player)){
+                        this.useEnergy(player, stack, 1024);
+                    }else {
+                        this.useEnergy(player, stack, 512);
+                    }
+                    player.capabilities.allowFlying = true;
+                    player.stepHeight = 1.0625F;
+                    boolean flying = player.capabilities.isFlying;
+                    if(flying){
+                        boolean sneaking = player.isSneaking();
+
+                        float speed = 0.08f
+                                * (flying ? 0.6f : 1.0f)
+                                * (sneaking ? 0.1f : 1.0f);
+
+                        if (player.moveForward > 0f) {
+                            player.moveRelative(0f, 0f, 1f, speed);
+                        } else if (player.moveForward < 0f) {
+                            player.moveRelative(0f, 0f, 1f, -speed * 0.3f);
+                        }
+
+                        if (player.moveStrafing != 0f) {
+                            player.moveRelative(1f, 0f, 0f, speed * 0.5f * Math.signum(player.moveStrafing));
+                        }
+                    }
                 }else {
-                    this.useEnergy(player, stack, 512);
-                }
-                player.capabilities.allowFlying = true;
-                player.stepHeight = 1.0625F;
-                boolean flying = player.capabilities.isFlying;
-                if(flying){
-                    boolean sneaking = player.isSneaking();
-
-                    float speed = 0.08f
-                            * (flying ? 0.6f : 1.0f)
-                            * (sneaking ? 0.1f : 1.0f);
-
-                    if (player.moveForward > 0f) {
-                        player.moveRelative(0f, 0f, 1f, speed);
-                    } else if (player.moveForward < 0f) {
-                        player.moveRelative(0f, 0f, 1f, -speed * 0.3f);
-                    }
-
-                    if (player.moveStrafing != 0f) {
-                        player.moveRelative(1f, 0f, 0f, speed * 0.5f * Math.signum(player.moveStrafing));
-                    }
+                    player.stepHeight = 0.6F;
+                    player.capabilities.allowFlying = false;
+                    player.capabilities.isFlying = false;
                 }
             }else {
                 player.stepHeight = 0.6F;
                 player.capabilities.allowFlying = false;
                 player.capabilities.isFlying = false;
+                super.onArmorTick(world, player, stack);
             }
         }
 

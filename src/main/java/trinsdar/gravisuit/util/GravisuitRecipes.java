@@ -14,7 +14,6 @@ public class GravisuitRecipes {
     }
 
     public static void initShapedRecipes(){
-
         recipes.addRecipe(new ItemStack(Registry.advancedLappack), "L", "A", "C", 'L', Ic2Items.lapPack, 'A', "circuitAdvanced", 'C', Ic2Items.lapotronCrystal);
         recipes.addRecipe(new ItemStack(Registry.advancedElectricJetpack), "CEC", "BLB", "GAG", 'C', Ic2Items.carbonPlate, 'E', Ic2Items.electricJetpack, 'B', Registry.engineBoost, 'L', Registry.advancedLappack, 'G', Ic2Items.glassFiberCable, 'A', "circuitAdvanced");
         recipes.addRecipe(new ItemStack(Registry.gravisuit), "SQS", "GAG", "SqS", 'S', Registry.superConductor, 'Q', Ic2Items.quantumJetplate, 'G', Registry.gravitationEngine, 'q', Ic2Items.quantumPack);
