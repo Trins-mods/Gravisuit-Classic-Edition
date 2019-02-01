@@ -3,12 +3,9 @@ package trinsdar.gravisuit.items.tools;
 import ic2.api.item.ElectricItem;
 import ic2.core.IC2;
 import ic2.core.item.base.BasicElectricItem;
-import ic2.core.item.base.ItemElectricTool;
-import ic2.core.item.tool.electric.ItemElectricTeleporter;
 import ic2.core.platform.registry.Ic2Lang;
 import ic2.core.util.misc.StackUtil;
 import ic2.core.util.obj.ToolTipType;
-import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -19,12 +16,11 @@ import net.minecraft.world.World;
 import trinsdar.gravisuit.GravisuitClassic;
 import trinsdar.gravisuit.util.GravisuitLang;
 
-import java.awt.*;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-public class ItemRelocator extends ItemElectricTeleporter {
+public class ItemRelocator extends BasicElectricItem {
 
     public ItemRelocator() {
         this.setRegistryName("relocator");
@@ -73,6 +69,11 @@ public class ItemRelocator extends ItemElectricTeleporter {
     }
 
     @Override
+    public int getTextureEntry(int i) {
+        return 179;
+    }
+
+    @Override
     public boolean canProvideEnergy(ItemStack stack) {
         return false;
     }
@@ -84,7 +85,7 @@ public class ItemRelocator extends ItemElectricTeleporter {
 
     @Override
     public int getTier(ItemStack stack) {
-        return 6;
+        return 5;
     }
 
     @Override
@@ -99,6 +100,11 @@ public class ItemRelocator extends ItemElectricTeleporter {
 
     public void useEnergy(ItemStack stack, int energy, EntityPlayer player) {
         ElectricItem.manager.use(stack, (double)(energy), player);
+    }
+
+    @Override
+    public List<Integer> getValidVariants() {
+        return Arrays.asList(0);
     }
 
     public enum TeleportMode {

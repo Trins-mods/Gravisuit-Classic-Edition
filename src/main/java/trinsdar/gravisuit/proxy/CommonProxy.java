@@ -6,6 +6,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import trinsdar.gravisuit.items.armor.ItemArmorGravisuit;
+import trinsdar.gravisuit.util.GravisuitRecipes;
 import trinsdar.gravisuit.util.Registry;
 
 public class CommonProxy {
@@ -20,7 +21,7 @@ public class CommonProxy {
     }
 
     public void init(FMLInitializationEvent e) {
-        //AdvancedSolarsRecipes.init();
+        GravisuitRecipes.init();
     }
 
     public void postInit(FMLPostInitializationEvent e) {
