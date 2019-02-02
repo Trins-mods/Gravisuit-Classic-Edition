@@ -16,7 +16,6 @@ item.gravisuit.vajra_core.name=Vajra Core
 item.gravisuit.engine_boost.name=Engine Booster
 
 
-
 itemInfo.toolMode.name=Current Tool Mode: %1$s
 itemInfo.multiModes.name=Cycle Through the Different Modes
 itemInfo.silkMode.name=Silk Touch Mode: %1$s
@@ -50,5 +49,9 @@ message.silkTouchOn.name=Silk Touch Enabled
 message.silkTouchOff.name=Silk Touch Disabled
 
 
+itemInfo.graviEngineOnInfo.name=When the Gravitation Engine is Enabled,
+itemInfo.graviEngineOffInfo.name=When the Gravitation Engine is Disabled,
+itemInfo.gravisuitToggleCombo.name=%1$s & %2$s
 miscInfo.doubleJump.name=Double %1$s
+itemInfo.jetpackJumpToCreativeFly.name=Fly like in Creative
 itemInfo.graviEngineToggle.name=Enable/Disable the Gravitation Engine

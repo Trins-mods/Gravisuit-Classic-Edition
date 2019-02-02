@@ -100,9 +100,11 @@ public class ItemArmorGravisuit extends ItemArmorQuantumSuit implements IIndirec
             this.item = owner;
         }
 
+        @Override
         public AudioSource createAudioSource(ItemStack stack, EntityPlayer player, ItemArmorJetpackBase.JetpackUseMode mode) {
-            if (player.capabilities.isFlying){
-                return IC2.audioManager.createSource(player, PositionSpec.Backpack, Ic2Sounds.jetpack, true, false, IC2.audioManager.getDefaultVolume());
+            NBTTagCompound nbt = StackUtil.getNbtData(stack);
+            if (!nbt.getBoolean("enabled")){
+                return super.createAudioSource(stack, player, mode);
             }else {
                 return null;
             }
@@ -112,8 +114,10 @@ public class ItemArmorGravisuit extends ItemArmorQuantumSuit implements IIndirec
         @SideOnly(Side.CLIENT)
         public void onSortedItemToolTip(ItemStack stack, EntityPlayer player, boolean debugTooltip, List<String> tooltip, Map<ToolTipType, List<String>> sortedTooltip) {
             List<String> ctrlTip = sortedTooltip.get(ToolTipType.Ctrl);
-            ctrlTip.add(TextFormatting.UNDERLINE + Ic2Lang.pressTo.getLocalizedFormatted(GravisuitLang.doubleJump.getLocalizedFormatted(IC2.keyboard.getKeyName(6)), Ic2InfoLang.jetpackJumpToFly));
-            ctrlTip.add(TextFormatting.UNDERLINE + Ic2Lang.pressTo.getLocalizedFormatted(IC2.keyboard.getKeyName(5), GravisuitLang.graviEngineToggle));
+            ctrlTip.add(TextFormatting.UNDERLINE + Ic2Lang.pressTo.getLocalizedFormatted(GravisuitLang.gravisuitToggleCombo.getLocalizedFormatted(IC2.keyboard.getKeyName(5), IC2.keyboard.getKeyName(6)), GravisuitLang.graviEngineToggle));
+            ctrlTip.add(TextFormatting.UNDERLINE + GravisuitLang.graviEngineOnInfo.getLocalized());
+            ctrlTip.add(TextFormatting.UNDERLINE + Ic2Lang.pressTo.getLocalizedFormatted(GravisuitLang.doubleJump.getLocalizedFormatted(IC2.keyboard.getKeyName(6)), GravisuitLang.creativeFly));
+            ctrlTip.add(TextFormatting.UNDERLINE + GravisuitLang.graviEngineOffInfo.getLocalized());
             ctrlTip.add(TextFormatting.UNDERLINE + Ic2Lang.pressTo.getLocalizedFormatted(IC2.keyboard.getKeyName(6), Ic2InfoLang.jetpackJumpToFly));
             ctrlTip.add(TextFormatting.UNDERLINE + Ic2Lang.pressTo.getLocalizedFormatted(IC2.keyboard.getKeyName(2), Ic2InfoLang.jetpackModeSwitch));
             ctrlTip.add(TextFormatting.UNDERLINE + Ic2Lang.pressTo.getLocalizedFormatted(IC2.keyboard.getKeyName(0), Ic2InfoLang.jetpackQuickToggle));
@@ -156,7 +160,6 @@ public class ItemArmorGravisuit extends ItemArmorQuantumSuit implements IIndirec
             boolean enabled = nbt.getBoolean("enabled");
             PlayerHandler handler = PlayerHandler.getHandlerForPlayer(player);
             byte jetpackTicker = nbt.getByte("JetpackTicker");
-            Entity entity = player.getLowestRidingEntity();
             boolean server = IC2.platform.isSimulating();
             if (enabled) {
                 if (server) {

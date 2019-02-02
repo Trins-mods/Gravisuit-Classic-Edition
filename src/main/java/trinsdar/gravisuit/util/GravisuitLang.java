@@ -9,6 +9,10 @@ public class GravisuitLang {
     public static LocaleComp graviEngineToggle = new LocaleItemInfoComp("itemInfo.graviEngineToggle.name");
     public static LocaleComp graviEngineOn = new LocaleItemInfoComp("message.graviEngineOn.name");
     public static LocaleComp graviEngineOff = new LocaleItemInfoComp("message.graviEngineOff.name");
+    public static LocaleComp creativeFly = new LocaleItemInfoComp("itemInfo.jetpackJumpToCreativeFly.name");
+    public static LocaleComp graviEngineOnInfo = new LocaleItemInfoComp("itemInfo.graviEngineOnInfo.name");
+    public static LocaleComp graviEngineOffInfo = new LocaleItemInfoComp("itemInfo.graviEngineOffInfo.name");
+    public static LocaleComp gravisuitToggleCombo = new LocaleItemInfoComp("itemInfo.gravisuitToggleCombo.name");
 
     public static LocaleComp toolMode = new LocaleItemInfoComp("itemInfo.toolMode.name");
     public static LocaleComp silkMode = new LocaleItemInfoComp("itemInfo.silkMode.name");
