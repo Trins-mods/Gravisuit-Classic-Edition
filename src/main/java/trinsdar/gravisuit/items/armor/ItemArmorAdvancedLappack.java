@@ -18,16 +18,19 @@ import trinsdar.gravisuit.GravisuitClassic;
 
 @Optional.Interface(iface = "baubles.api.IBauble", modid = "baubles", striprefs = true)
 public class ItemArmorAdvancedLappack extends ItemArmorElectricPack implements IBauble {
-    public ItemArmorAdvancedLappack() {
-        super(36, "gravisuit:textures/models/gravisuit", 600000, 2, 500);
-        this.setRegistryName("advanced_lappack");
-        this.setUnlocalizedName(GravisuitClassic.MODID + ".advancedLappack");
+    private int index;
+
+    public ItemArmorAdvancedLappack(String reg, String un, int teir, int max, int index, int limit) {
+        super(36, "gravisuit:textures/models/" + reg, max, teir, limit);
+        this.index = index;
+        this.setRegistryName(reg);
+        this.setUnlocalizedName(GravisuitClassic.MODID + "." + un);
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public TextureAtlasSprite getTexture(int i) {
-        return Ic2Icons.getTextures("gravisuit_items")[16];
+        return Ic2Icons.getTextures("gravisuit_items")[index];
     }
 
     @Override
