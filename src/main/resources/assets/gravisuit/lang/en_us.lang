@@ -16,6 +16,8 @@ item.gravisuit.magnetron.name=Magnetron
 item.gravisuit.vajra_core.name=Vajra Core
 item.gravisuit.engine_boost.name=Engine Booster
 
+tooltip.gravisuit.wip=Work in progress
+
 
 itemInfo.toolMode.name=Current Tool Mode: %1$s
 itemInfo.multiModes.name=Cycle Through the Different Modes

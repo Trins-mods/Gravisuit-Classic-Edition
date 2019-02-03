@@ -6,12 +6,14 @@ import ic2.core.item.base.BasicElectricItem;
 import ic2.core.platform.registry.Ic2Lang;
 import ic2.core.util.misc.StackUtil;
 import ic2.core.util.obj.ToolTipType;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import trinsdar.gravisuit.GravisuitClassic;
 import trinsdar.gravisuit.util.GravisuitLang;
@@ -66,6 +68,7 @@ public class ItemRelocator extends BasicElectricItem {
         List<String> ctrlTip = sortedTooltip.get(ToolTipType.Ctrl);
         ctrlTip.add(Ic2Lang.onItemRightClick.getLocalized());
         ctrlTip.add(Ic2Lang.pressTo.getLocalizedFormatted(IC2.keyboard.getKeyName(2), GravisuitLang.multiModes.getLocalized()));
+        tooltip.add(TextFormatting.RED + I18n.format("tooltip." + GravisuitClassic.MODID + ".wip"));
     }
 
     @Override
