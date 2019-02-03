@@ -23,6 +23,7 @@ public class GravisuitLang {
     public static LocaleComp advancedChainsaw1 = new LocaleItemInfoComp("itemInfo.advancedChainsaw1.name");
     public static LocaleComp advancedDrillNormal = new LocaleItemInfoComp("itemInfo.advancedDrillNormal.name");
     public static LocaleComp advancedDrillLowPower = new LocaleItemInfoComp("itemInfo.advancedDrillLowPower.name");
+    public static LocaleComp advancedDrillFine = new LocaleItemInfoComp("itemInfo.advancedDrillFine.name");
     public static LocaleComp advancedDrillBigHoles = new LocaleItemInfoComp("itemInfo.advancedDrillBigHoles.name");
     public static LocaleComp multiModes = new LocaleItemInfoComp("itemInfo.multiModes.name");
     public static LocaleComp relocatorPersonal = new LocaleItemInfoComp("itemInfo.relocatorPersonal.name");
@@ -35,6 +36,7 @@ public class GravisuitLang {
     public static LocaleComp messageAdvancedChainsaw1 = new LocaleItemInfoComp("message.advancedChainsaw1.name");
     public static LocaleComp messageAdvancedDrillNormal = new LocaleItemInfoComp("message.advancedDrillNormal.name");
     public static LocaleComp messageAdvancedDrillLowPower = new LocaleItemInfoComp("message.advancedDrillLowPower.name");
+    public static LocaleComp messageAdvancedDrillFine = new LocaleItemInfoComp("message.advancedDrillFine.name");
     public static LocaleComp messageAdvancedDrillBigHoles = new LocaleItemInfoComp("message.advancedDrillBigHoles.name");
     public static LocaleComp messageRelocatorPersonal = new LocaleItemInfoComp("message.relocatorPersonal.name");
     public static LocaleComp messageRelocatorPortal = new LocaleItemInfoComp("message.relocatorPortal.name");

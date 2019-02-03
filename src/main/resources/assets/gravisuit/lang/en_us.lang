@@ -28,6 +28,7 @@ itemInfo.treetap.name=Treetap
 itemInfo.screwdriver.name=Screwdriver
 itemInfo.advancedDrillNormal.name=Normal
 itemInfo.advancedDrillLowPower.name=Low Power
+itemInfo.advancedDrillFine.name=Fine
 itemInfo.advancedDrillBigHoles.name=Big Holes
 itemInfo.relocatorPersonal.name=Personal
 itemInfo.relocatorPortal.name=Portal
@@ -38,6 +39,7 @@ itemInfo.vajraSilktouchOff.name=Disabled
 
 message.advancedDrillNormal.name=Set Mode to Normal
 message.advancedDrillLowPower.name=Set Mode to Low Power
+message.advancedDrillFine.name=Set Mode to Fine
 message.advancedDrillBigHoles.name=Set Mode to Big Holes
 message.relocatorPersonal.name=Set Mode to Personal
 message.relocatorPortal.name=Set Mode to Portal

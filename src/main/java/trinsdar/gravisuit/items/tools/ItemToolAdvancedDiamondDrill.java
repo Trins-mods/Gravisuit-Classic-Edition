@@ -91,7 +91,9 @@ public class ItemToolAdvancedDiamondDrill extends ItemElectricTool implements IS
                 IC2.platform.messagePlayer(player, GravisuitLang.messageAdvancedDrillNormal);
             } else if (toolMode == ToolMode.LOWPOWER){
                 IC2.platform.messagePlayer(player, GravisuitLang.messageAdvancedDrillLowPower);
-            }else {
+            } else if (toolMode == ToolMode.FINE){
+                IC2.platform.messagePlayer(player, GravisuitLang.messageAdvancedDrillFine);
+            } else {
                 IC2.platform.messagePlayer(player, GravisuitLang.messageAdvancedDrillBigHoles);
             }
 
@@ -109,6 +111,8 @@ public class ItemToolAdvancedDiamondDrill extends ItemElectricTool implements IS
             tooltip.add(GravisuitLang.toolMode.getLocalizedFormatted(GravisuitLang.advancedDrillNormal));
         }else if (toolMode == ToolMode.LOWPOWER){
             tooltip.add(GravisuitLang.toolMode.getLocalizedFormatted(GravisuitLang.advancedDrillLowPower));
+        }else if (toolMode == ToolMode.FINE){
+            tooltip.add(GravisuitLang.toolMode.getLocalizedFormatted(GravisuitLang.advancedDrillFine));
         }else if (toolMode == ToolMode.BIGHOLES){
             tooltip.add(GravisuitLang.toolMode.getLocalizedFormatted(GravisuitLang.advancedDrillBigHoles));
         }
@@ -236,6 +240,8 @@ public class ItemToolAdvancedDiamondDrill extends ItemElectricTool implements IS
             return 48.0F;
         }else if (toolMode == ToolMode.LOWPOWER){
             return 16.0F;
+        }else if (toolMode == ToolMode.FINE){
+            return 8.0F;
         }else {
             return 5.3F;
         }
@@ -317,6 +323,7 @@ public class ItemToolAdvancedDiamondDrill extends ItemElectricTool implements IS
     public enum ToolMode {
         NORMAL,
         LOWPOWER,
+        FINE,
         BIGHOLES;
 
         private ToolMode() {
@@ -326,6 +333,8 @@ public class ItemToolAdvancedDiamondDrill extends ItemElectricTool implements IS
             if (this == NORMAL) {
                 return LOWPOWER;
             } else if (this == LOWPOWER) {
+                return FINE;
+            } else if (this == FINE) {
                 return BIGHOLES;
             } else {
                 return NORMAL;
