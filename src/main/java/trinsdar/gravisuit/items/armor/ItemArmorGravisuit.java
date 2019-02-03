@@ -127,7 +127,7 @@ public class ItemArmorGravisuit extends ItemArmorQuantumSuit implements IIndirec
         @SideOnly(Side.CLIENT)
         public void onSortedItemToolTip(ItemStack stack, EntityPlayer player, boolean debugTooltip, List<String> tooltip, Map<ToolTipType, List<String>> sortedTooltip) {
             List<String> ctrlTip = sortedTooltip.get(ToolTipType.Ctrl);
-            ctrlTip.add(TextFormatting.UNDERLINE + Ic2Lang.pressTo.getLocalizedFormatted(GravisuitLang.gravisuitToggleCombo.getLocalizedFormatted(IC2.keyboard.getKeyName(5), IC2.keyboard.getKeyName(6)), GravisuitLang.graviEngineToggle));
+            ctrlTip.add(TextFormatting.UNDERLINE + Ic2Lang.pressTo.getLocalizedFormatted(GravisuitLang.gravisuitToggleCombo.getLocalizedFormatted(IC2.keyboard.getKeyName(5), IC2.keyboard.getKeyName(1)), GravisuitLang.graviEngineToggle));
             ctrlTip.add(TextFormatting.UNDERLINE + GravisuitLang.graviEngineOnInfo.getLocalized());
             ctrlTip.add(TextFormatting.UNDERLINE + Ic2Lang.pressTo.getLocalizedFormatted(GravisuitLang.doubleJump.getLocalizedFormatted(IC2.keyboard.getKeyName(6)), GravisuitLang.creativeFly));
             ctrlTip.add(TextFormatting.UNDERLINE + GravisuitLang.graviEngineOffInfo.getLocalized());
@@ -179,7 +179,7 @@ public class ItemArmorGravisuit extends ItemArmorQuantumSuit implements IIndirec
                     if (jetpackTicker > 0) {
                         --jetpackTicker;
                         nbt.setByte("JetpackTicker", jetpackTicker);
-                    } else if (handler.toggleKeyDown && handler.jumpKeyDown) {
+                    } else if (handler.toggleKeyDown && handler.boostKeyDown) {
                         nbt.setByte("JetpackTicker", (byte)10);
                         nbt.setBoolean("enabled", false);
                         IC2.platform.messagePlayer(player, GravisuitLang.graviEngineOff);
@@ -187,7 +187,7 @@ public class ItemArmorGravisuit extends ItemArmorQuantumSuit implements IIndirec
                 }
 
             } else {
-                if (handler.toggleKeyDown && handler.jumpKeyDown && jetpackTicker <= 0) {
+                if (handler.toggleKeyDown && handler.boostKeyDown && jetpackTicker <= 0) {
                     if (server) {
                         nbt.setBoolean("enabled", true);
                         nbt.setByte("JetpackTicker", (byte)10);
