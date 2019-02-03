@@ -70,6 +70,18 @@ public class ItemToolVajra extends ItemElectricTool implements IStaticTexturedIt
         this.setCreativeTab(IC2.tabIC2);
     }
 
+    public void setTier(int tier){
+        this.tier = tier;
+    }
+
+    public void setMaxCharge(int storage){
+        this.maxCharge = storage;
+    }
+
+    public void setMaxTransfer(int maxTransfer) {
+        this.transferLimit = maxTransfer;
+    }
+
     @Override
     public boolean canHarvestBlock(IBlockState state, ItemStack stack) {
         return Items.DIAMOND_PICKAXE.canHarvestBlock(state) || Items.DIAMOND_SHOVEL.canHarvestBlock(state) || Items.DIAMOND_AXE.canHarvestBlock(state) || Items.DIAMOND_SWORD.canHarvestBlock(state);

@@ -41,15 +41,49 @@ import java.util.List;
 @Optional.Interface(iface = "mrtjp.projectred.api.IScrewdriver", modid = "projectred-core", striprefs = true)
 public class ItemToolGravitool extends ItemElectricToolPrecisionWrench implements ICustomToolHandler, IToolWrench, IScrewdriver, IAdvancedTexturedItem, IToolHammer {
 
+    private int maxCharge;
+    private int transferLimit;
+    private int tier;
+
     public ModelResourceLocation[] model = new ModelResourceLocation[4];
 
     public ItemToolGravitool() {
         super();
+        this.maxCharge = 50000;
+        this.transferLimit = 400;
+        this.tier = 2;
         this.setHasSubtypes(true);
         this.setMaxDamage(0);
         this.setRegistryName("gravitool");
         this.setUnlocalizedName(GravisuitClassic.MODID + ".gravitool");
         this.setCreativeTab(IC2.tabIC2);
+    }
+
+    public void setTier(int tier){
+        this.tier = tier;
+    }
+
+    public void setMaxCharge(int storage){
+        this.maxCharge = storage;
+    }
+
+    public void setMaxTransfer(int maxTransfer) {
+        this.transferLimit = maxTransfer;
+    }
+
+    @Override
+    public double getMaxCharge(ItemStack stack) {
+        return (double) maxCharge;
+    }
+
+    @Override
+    public int getTier(ItemStack stack) {
+        return tier;
+    }
+
+    @Override
+    public double getTransferLimit(ItemStack stack) {
+        return (double) transferLimit;
     }
 
     @Override

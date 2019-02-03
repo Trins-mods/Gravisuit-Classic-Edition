@@ -21,17 +21,35 @@ import trinsdar.gravisuit.GravisuitClassic;
 @Optional.Interface(iface = "baubles.api.IBauble", modid = "baubles", striprefs = true)
 public class ItemArmorAdvancedElectricJetpack extends ItemArmorElectricJetpack implements IBauble {
 
+    private int tier;
+    private int maxCharge;
+    private int transferLimit;
+
     public ItemArmorAdvancedElectricJetpack(){
         super();
+        this.tier = 2;
+        this.maxCharge = 100000;
+        this.transferLimit = 120;
         this.setRegistryName("advanced_electric_jetpack");
         this.setUnlocalizedName(GravisuitClassic.MODID +".advancedElectricJetpack");
         this.setCreativeTab(IC2.tabIC2);
     }
 
+    public void setTier(int tier){
+        this.tier = tier;
+    }
+
+    public void setMaxCharge(int storage){
+        this.maxCharge = storage;
+    }
+
+    public void setMaxTransfer(int maxTransfer) {
+        this.transferLimit = maxTransfer;
+    }
+
     @SideOnly(Side.CLIENT)
     @Override
     public BaseModel getModelFromItem(ItemStack item) {
-        ItemStack stack = getArmor(item);
         return new JetpackModel(Ic2Icons.getTextures("gravisuit_items")[14]);
     }
 
@@ -43,12 +61,12 @@ public class ItemArmorAdvancedElectricJetpack extends ItemArmorElectricJetpack i
 
     @Override
     public double getMaxCharge(ItemStack stack) {
-        return 100000.0D;
+        return (double) maxCharge;
     }
 
     @Override
     public int getTier(ItemStack stack) {
-        return 2;
+        return tier;
     }
 
     @Override
@@ -58,7 +76,7 @@ public class ItemArmorAdvancedElectricJetpack extends ItemArmorElectricJetpack i
 
     @Override
     public double getTransferLimit(ItemStack stack) {
-        return 120.0D;
+        return (double) transferLimit;
     }
 
     @Override

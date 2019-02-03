@@ -19,12 +19,45 @@ import trinsdar.gravisuit.GravisuitClassic;
 @Optional.Interface(iface = "baubles.api.IBauble", modid = "baubles", striprefs = true)
 public class ItemArmorAdvancedLappack extends ItemArmorElectricPack implements IBauble {
     private int index;
+    private int tier;
+    private int storage;
+    private int maxTransfer;
 
-    public ItemArmorAdvancedLappack(String reg, String un, int teir, int max, int index, int limit) {
-        super(36, "gravisuit:textures/models/" + reg, max, teir, limit);
+    public ItemArmorAdvancedLappack(String reg, String un, int tier, int max, int index, int limit) {
+        super(36, "gravisuit:textures/models/" + reg, max, tier, limit);
         this.index = index;
+        this.tier = tier;
+        this.storage = max;
+        this.maxTransfer = limit;
         this.setRegistryName(reg);
         this.setUnlocalizedName(GravisuitClassic.MODID + "." + un);
+    }
+
+    public void setTier(int tier){
+        this.tier = tier;
+    }
+
+    public void setMaxStorage(int storage){
+        this.storage = storage;
+    }
+
+    public void setMaxTransfer(int maxTransfer) {
+        this.maxTransfer = maxTransfer;
+    }
+
+    @Override
+    public int getTier(ItemStack stack) {
+        return tier;
+    }
+
+    @Override
+    public double getMaxCharge(ItemStack stack) {
+        return (double)storage;
+    }
+
+    @Override
+    public double getTransferLimit(ItemStack stack) {
+        return maxTransfer;
     }
 
     @Override

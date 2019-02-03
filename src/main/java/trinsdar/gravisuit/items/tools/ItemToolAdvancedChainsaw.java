@@ -55,6 +55,17 @@ public class ItemToolAdvancedChainsaw extends ItemElectricTool implements IStati
         this.setUnlocalizedName(GravisuitClassic.MODID + ".advancedChainsaw");
         this.setCreativeTab(IC2.tabIC2);
     }
+    public void setTier(int tier){
+        this.tier = tier;
+    }
+
+    public void setMaxCharge(int storage){
+        this.maxCharge = storage;
+    }
+
+    public void setMaxTransfer(int maxTransfer) {
+        this.transferLimit = maxTransfer;
+    }
 
     @Override
     public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {

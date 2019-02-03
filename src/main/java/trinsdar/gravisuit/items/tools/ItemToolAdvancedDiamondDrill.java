@@ -66,6 +66,17 @@ public class ItemToolAdvancedDiamondDrill extends ItemElectricTool implements IS
         this.tier = 2;
         this.setCreativeTab(IC2.tabIC2);
     }
+    public void setTier(int tier){
+        this.tier = tier;
+    }
+
+    public void setMaxCharge(int storage){
+        this.maxCharge = storage;
+    }
+
+    public void setMaxTransfer(int maxTransfer) {
+        this.transferLimit = maxTransfer;
+    }
 
     @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer player, EnumHand handIn) {
