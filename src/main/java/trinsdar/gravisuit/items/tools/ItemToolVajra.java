@@ -61,8 +61,7 @@ public class ItemToolVajra extends ItemElectricTool implements IStaticTexturedIt
 
     public ItemToolVajra() {
         super(0.0F, -3.0F, ToolMaterial.DIAMOND);
-        this.setRegistryName("vajra");
-        this.setUnlocalizedName(GravisuitClassic.MODID + ".vajra");
+        this.setUnlocalizedName("vajra");
         this.attackDamage = 1.0F;
         this.maxCharge = 3000000;
         this.transferLimit = 128;

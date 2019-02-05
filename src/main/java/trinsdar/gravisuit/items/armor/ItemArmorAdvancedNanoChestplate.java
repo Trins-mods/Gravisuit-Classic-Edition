@@ -22,8 +22,7 @@ public class ItemArmorAdvancedNanoChestplate extends ItemArmorNanoSuit {
 
     public ItemArmorAdvancedNanoChestplate() {
         super(44, EntityEquipmentSlot.CHEST);
-        this.setUnlocalizedName(GravisuitClassic.MODID + ".advancedNanoChestplate");
-        this.setRegistryName("advanced_nano_chestplate");
+        this.setUnlocalizedName("advancedNanoChestplate");
         this.setCreativeTab(IC2.tabIC2);
     }
     public void setTier(int tier){

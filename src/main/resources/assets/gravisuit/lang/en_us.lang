@@ -1,20 +1,20 @@
-item.gravisuit.gravisuit.name=Gravisuit
-item.gravisuit.advancedNanoChestplate.name=Advanced Nano Chestplate
-item.gravisuit.advancedElectricJetpack.name=Advanced Electric Jetpack
-item.gravisuit.advancedLappack.name=Advanced Lappack
-item.gravisuit.ultimateLappack.name=Ultimate Lappack
-item.gravisuit.gravitool.name=Gravitool
-item.gravisuit.advancedDrill.name=Advanced Diamond Drill
-item.gravisuit.advancedChainsaw.name=Advanced Chainsaw
-item.gravisuit.vajra.name=Vajra
-item.gravisuit.relocator.name=Relocator
-item.gravisuit.super_conductor_cover.name=Super Conductor Cover
-item.gravisuit.super_conductor.name=Super Conductor
-item.gravisuit.cooling_core.name=Cooling Core
-item.gravisuit.gravitation_engine.name=Gravitation Engine
-item.gravisuit.magnetron.name=Magnetron
-item.gravisuit.vajra_core.name=Vajra Core
-item.gravisuit.engine_boost.name=Engine Booster
+item.gravisuit.name=Gravisuit
+item.advancedNanoChestplate.name=Advanced Nano Chestplate
+item.advancedElectricJetpack.name=Advanced Electric Jetpack
+item.advancedLappack.name=Advanced Lappack
+item.ultimateLappack.name=Ultimate Lappack
+item.gravitool.name=Gravitool
+item.advancedDrill.name=Advanced Diamond Drill
+item.advancedChainsaw.name=Advanced Chainsaw
+item.vajra.name=Vajra
+item.relocator.name=Relocator
+item.superConductorCover.name=Super Conductor Cover
+item.superConductor.name=Super Conductor
+item.coolingCore.name=Cooling Core
+item.gravitationEngine.name=Gravitation Engine
+item.magnetron.name=Magnetron
+item.vajraCore.name=Vajra Core
+item.engineBoost.name=Engine Booster
 
 tooltip.gravisuit.wip=Work in progress
 

@@ -51,8 +51,7 @@ public class ItemToolAdvancedChainsaw extends ItemElectricTool implements IStati
         this.tier = 2;
         this.efficiency = 12.0F;
         this.setHarvestLevel("axe", 2);
-        this.setRegistryName("advanced_chainsaw");
-        this.setUnlocalizedName(GravisuitClassic.MODID + ".advancedChainsaw");
+        this.setUnlocalizedName("advancedChainsaw");
         this.setCreativeTab(IC2.tabIC2);
     }
     public void setTier(int tier){

@@ -13,32 +13,11 @@ import java.util.Arrays;
 import java.util.List;
 
 public class ItemComponents extends Item implements IStaticTexturedItem {
-    public enum ItemComponentTypes {
-        SUPER_CONDUCTOR_COVER(0),
-        SUPER_CONDUCTOR(1),
-        COOLING_CORE(2),
-        GRAVITATION_ENGINE(3),
-        MAGNETRON(4),
-        VAJRA_CORE(5),
-        ENGINE_BOOST(6);
+    private int index;
 
-        private int id;
-
-        ItemComponentTypes(int id) {
-            this.id = id;
-        }
-
-        public int getID() {
-            return id;
-        }
-    }
-
-    ItemComponentTypes variant;
-
-    public ItemComponents(ItemComponentTypes variant) {
-        this.variant = variant;
-        setRegistryName(variant.toString().toLowerCase());
-        setUnlocalizedName(GravisuitClassic.MODID + "." + variant.toString().toLowerCase());
+    public ItemComponents(String name, int id) {
+        this.index = id;
+        setUnlocalizedName(name);
         setCreativeTab(IC2.tabIC2);
     }
 
@@ -50,7 +29,7 @@ public class ItemComponents extends Item implements IStaticTexturedItem {
     @Override
     @SideOnly(Side.CLIENT)
     public TextureAtlasSprite getTexture(int i) {
-        return Ic2Icons.getTextures("gravisuit_items")[variant.getID()];
+        return Ic2Icons.getTextures("gravisuit_items")[index];
     }
 }
 

@@ -23,14 +23,13 @@ public class ItemArmorAdvancedLappack extends ItemArmorElectricPack implements I
     private int storage;
     private int maxTransfer;
 
-    public ItemArmorAdvancedLappack(String reg, String un, int tier, int max, int index, int limit) {
-        super(36, "gravisuit:textures/models/" + reg, max, tier, limit);
+    public ItemArmorAdvancedLappack(String name, int tier, int max, int index, int limit) {
+        super(36, "gravisuit:textures/models/" + name, max, tier, limit);
         this.index = index;
         this.tier = tier;
         this.storage = max;
         this.maxTransfer = limit;
-        this.setRegistryName(reg);
-        this.setUnlocalizedName(GravisuitClassic.MODID + "." + un);
+        this.setUnlocalizedName(name);
     }
 
     public void setTier(int tier){

@@ -16,7 +16,7 @@ public class CommonProxy {
         //File directory = e.getModConfigurationDirectory();
         //config = new Configuration(new File(directory.getPath(), "ic2/advancedsolars.cfg"));
         //Config.readConfig();
-        MinecraftForge.EVENT_BUS.register(Registry.class);
+        Registry.init();
         MinecraftForge.EVENT_BUS.register(new ItemArmorGravisuit.GravisuitJetpack(Registry.gravisuit));
     }
 

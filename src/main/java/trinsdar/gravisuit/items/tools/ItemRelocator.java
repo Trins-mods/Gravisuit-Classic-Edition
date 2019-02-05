@@ -25,8 +25,7 @@ import java.util.Map;
 public class ItemRelocator extends BasicElectricItem {
 
     public ItemRelocator() {
-        this.setRegistryName("relocator");
-        this.setUnlocalizedName(GravisuitClassic.MODID + ".relocator");
+        this.setUnlocalizedName("relocator");
         this.setCreativeTab(IC2.tabIC2);
     }
 

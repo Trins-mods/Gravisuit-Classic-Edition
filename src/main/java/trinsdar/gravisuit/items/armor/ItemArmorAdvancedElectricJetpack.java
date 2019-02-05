@@ -30,8 +30,7 @@ public class ItemArmorAdvancedElectricJetpack extends ItemArmorElectricJetpack i
         this.tier = 2;
         this.maxCharge = 100000;
         this.transferLimit = 120;
-        this.setRegistryName("advanced_electric_jetpack");
-        this.setUnlocalizedName(GravisuitClassic.MODID +".advancedElectricJetpack");
+        this.setUnlocalizedName("advancedElectricJetpack");
         this.setCreativeTab(IC2.tabIC2);
     }
 
