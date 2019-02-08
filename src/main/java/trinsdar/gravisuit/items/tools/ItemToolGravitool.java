@@ -39,6 +39,7 @@ import java.util.List;
 @Optional.Interface(iface = "reborncore.api.ICustomToolHandler", modid = "techreborn", striprefs = true)
 @Optional.Interface(iface = "buildcraft.api.tools.IToolWrench", modid = "buildcraftcore", striprefs = true)
 @Optional.Interface(iface = "mrtjp.projectred.api.IScrewdriver", modid = "projectred-core", striprefs = true)
+@Optional.Interface(iface = "cofh.api.item.IToolHamer", modid = "cofhcore", striprefs = true)
 public class ItemToolGravitool extends ItemElectricToolPrecisionWrench implements ICustomToolHandler, IToolWrench, IScrewdriver, IAdvancedTexturedItem, IToolHammer {
 
     private int maxCharge;
@@ -223,21 +224,25 @@ public class ItemToolGravitool extends ItemElectricToolPrecisionWrench implement
         this.damageItem(stack, 1, player);
     }
 
+    @Optional.Method(modid = "cofhcore")
     @Override
     public boolean isUsable(ItemStack item, EntityLivingBase user, BlockPos pos) {
         return this.getDamage(item) == 0;
     }
 
+    @Optional.Method(modid = "cofhcore")
     @Override
     public boolean isUsable(ItemStack item, EntityLivingBase user, Entity entity) {
         return this.getDamage(item) == 0;
     }
 
+    @Optional.Method(modid = "cofhcore")
     @Override
     public void toolUsed(ItemStack item, EntityLivingBase user, BlockPos pos) {
 
     }
 
+    @Optional.Method(modid = "cofhcore")
     @Override
     public void toolUsed(ItemStack item, EntityLivingBase user, Entity entity) {
 
