@@ -22,7 +22,7 @@ public class Registry {
     public static final ItemArmorGravisuit gravisuit = new ItemArmorGravisuit();
     public static final ItemArmorAdvancedLappack advancedLappack = new ItemArmorAdvancedLappack("advancedLappack", 2, 600000, 16, 500);
     public static final ItemArmorAdvancedLappack ultimateLappack = new ItemArmorAdvancedLappack("ultimateLappack", 3, 10000000, 19, 2000);
-    //public static final ItemToolGravitool gravitool = new ItemToolGravitool();
+    public static final ItemToolGravitool gravitool = new ItemToolGravitool();
     public static final ItemToolAdvancedDiamondDrill advancedDiamondDrill = new ItemToolAdvancedDiamondDrill();
     public static final ItemToolAdvancedChainsaw advancedChainsaw = new ItemToolAdvancedChainsaw();
     public static final ItemToolVajra vajra = new ItemToolVajra();
@@ -43,7 +43,7 @@ public class Registry {
         IC2.getInstance().createItem(gravisuit);
         IC2.getInstance().createItem(advancedLappack);
         IC2.getInstance().createItem(ultimateLappack);
-        //IC2.getInstance().createItem(gravitool);
+        IC2.getInstance().createItem(gravitool);
         IC2.getInstance().createItem(advancedDiamondDrill);
         IC2.getInstance().createItem(advancedChainsaw);
         IC2.getInstance().createItem(vajra);
