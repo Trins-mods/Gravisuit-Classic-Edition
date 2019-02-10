@@ -24,6 +24,8 @@ public class ItemArmorAdvancedNanoChestplate extends ItemArmorNanoSuit {
         super(44, EntityEquipmentSlot.CHEST);
         this.setUnlocalizedName("advancedNanoChestplate");
         this.setCreativeTab(IC2.tabIC2);
+        this.maxCharge = 1000000;
+        this.transferLimit = 10000;
     }
     public void setTier(int tier){
         this.tier = tier;
