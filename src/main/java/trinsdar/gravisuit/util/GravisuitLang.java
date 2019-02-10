@@ -16,6 +16,7 @@ public class GravisuitLang {
 
     public static LocaleComp toolMode = new LocaleItemInfoComp("itemInfo.toolMode.name");
     public static LocaleComp silkMode = new LocaleItemInfoComp("itemInfo.silkMode.name");
+    public static LocaleComp craftingGravitool = new LocaleItemInfoComp("itenInfo.craftingGravitool.name");
     public static LocaleComp wrench = new LocaleItemInfoComp("itemInfo.wrench.name");
     public static LocaleComp hoe = new LocaleItemInfoComp("itemInfo.hoe.name");
     public static LocaleComp treetap = new LocaleItemInfoComp("itemInfo.treetap.name");

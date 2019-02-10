@@ -25,6 +25,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.relauncher.Side;
@@ -183,6 +184,7 @@ public class ItemToolGravitool extends ItemElectricToolPrecisionWrench implement
         }else if (this.getDamage(stack) == 3){
             tooltip.add(GravisuitLang.toolMode.getLocalizedFormatted(GravisuitLang.screwdriver));
         }
+        tooltip.add(TextFormatting.GREEN + GravisuitLang.craftingGravitool.getLocalized());
     }
 
     @Override

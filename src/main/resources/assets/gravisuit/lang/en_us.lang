@@ -22,6 +22,7 @@ tooltip.gravisuit.wip=Work in progress
 itemInfo.toolMode.name=Current Tool Mode: %1$s
 itemInfo.multiModes.name=Cycle Through the Different Modes
 itemInfo.silkMode.name=Silk Touch Mode: %1$s
+itenInfo.craftingGravitool.name=Note: Requires the completely lossless Precision Wrench by default.
 itemInfo.wrench.name=Wrench
 itemInfo.hoe.name=Hoe
 itemInfo.treetap.name=Treetap
