@@ -60,7 +60,7 @@ public class ItemToolAdvancedDiamondDrill extends ItemElectricTool implements IS
         super(0.0F, -3.0F, ToolMaterial.DIAMOND);
         this.setUnlocalizedName("advancedDrill");
         this.attackDamage = 4.0F;
-        this.maxCharge = 100000;
+        this.maxCharge = 15000;
         this.transferLimit = 200;
         this.tier = 2;
         this.setCreativeTab(IC2.tabIC2);
