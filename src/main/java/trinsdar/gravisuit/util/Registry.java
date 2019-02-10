@@ -20,8 +20,8 @@ public class Registry {
     public static final ItemArmorAdvancedElectricJetpack advancedElectricJetpack = new ItemArmorAdvancedElectricJetpack();
     public static final ItemArmorAdvancedNanoChestplate advancedNanoChestplate = new ItemArmorAdvancedNanoChestplate();
     public static final ItemArmorGravisuit gravisuit = new ItemArmorGravisuit();
-    public static final ItemArmorAdvancedLappack advancedLappack = new ItemArmorAdvancedLappack("advancedLappack", 2, 600000, 16, 500);
-    public static final ItemArmorAdvancedLappack ultimateLappack = new ItemArmorAdvancedLappack("ultimateLappack", 3, 10000000, 19, 2000);
+    public static final ItemArmorAdvancedLappack advancedLappack = new ItemArmorAdvancedLappack("advancedLappack", 2, 1000000, 16, 10000);
+    public static final ItemArmorAdvancedLappack ultimateLappack = new ItemArmorAdvancedLappack("ultimateLappack", 3, 10000000, 19, 100000);
     public static final ItemToolGravitool gravitool = new ItemToolGravitool();
     public static final ItemToolAdvancedDiamondDrill advancedDiamondDrill = new ItemToolAdvancedDiamondDrill();
     public static final ItemToolAdvancedChainsaw advancedChainsaw = new ItemToolAdvancedChainsaw();
