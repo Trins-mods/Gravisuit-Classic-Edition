@@ -52,7 +52,7 @@ public class ItemToolGravitool extends ItemElectricToolPrecisionWrench implement
 
     public ItemToolGravitool() {
         super();
-        this.maxCharge = 50000;
+        this.maxCharge = 100000;
         this.transferLimit = 400;
         this.tier = 2;
         this.setHasSubtypes(true);
