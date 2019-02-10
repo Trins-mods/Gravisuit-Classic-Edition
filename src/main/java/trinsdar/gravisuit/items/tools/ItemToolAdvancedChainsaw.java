@@ -45,7 +45,7 @@ public class ItemToolAdvancedChainsaw extends ItemElectricTool implements IStati
     public ItemToolAdvancedChainsaw() {
         super(0.0F, 0.0F, ToolMaterial.IRON);
         this.attackDamage = 4.0F;
-        this.maxCharge = 100000;
+        this.maxCharge = 15000;
         this.transferLimit = 200;
         this.operationEnergyCost = 100;
         this.tier = 2;
