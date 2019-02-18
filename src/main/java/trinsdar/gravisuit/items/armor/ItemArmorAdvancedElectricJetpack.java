@@ -29,7 +29,7 @@ public class ItemArmorAdvancedElectricJetpack extends ItemArmorElectricJetpack i
         super();
         this.tier = 2;
         this.maxCharge = 100000;
-        this.transferLimit = 120;
+        this.transferLimit = 500;
         this.setUnlocalizedName("advancedElectricJetpack");
         this.setCreativeTab(IC2.tabIC2);
     }
@@ -80,7 +80,7 @@ public class ItemArmorAdvancedElectricJetpack extends ItemArmorElectricJetpack i
 
     @Override
     public int getMaxHeight(ItemStack stack, int worldHeight) {
-        return (int)((float)worldHeight / 1.024F);
+        return 256;
     }
 
     @Override

@@ -228,7 +228,7 @@ public class ItemToolAdvancedDiamondDrill extends ItemElectricTool implements IS
 
     @Override
     public int getEnergyCost(ItemStack stack) {
-        return 200;
+        return 160;
     }
 
     @Override

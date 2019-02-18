@@ -49,7 +49,7 @@ public class ItemToolAdvancedChainsaw extends ItemElectricTool implements IStati
         this.transferLimit = 200;
         this.operationEnergyCost = 100;
         this.tier = 2;
-        this.efficiency = 12.0F;
+        this.efficiency = 15.0F;
         this.setHarvestLevel("axe", 2);
         this.setUnlocalizedName("advancedChainsaw");
         this.setCreativeTab(IC2.tabIC2);
@@ -89,7 +89,7 @@ public class ItemToolAdvancedChainsaw extends ItemElectricTool implements IStati
             return 1.0F;
         } else {
             return material != Material.WOOD && material != Material.PLANTS && material != Material.VINE
-                    && material != Material.LEAVES ? super.getDestroySpeed(stack, state) : this.efficiency;
+                    && material != Material.LEAVES && material != Material.CACTUS && material != Material.GOURD && material != Material.CLOTH ? super.getDestroySpeed(stack, state) : this.efficiency;
         }
     }
 

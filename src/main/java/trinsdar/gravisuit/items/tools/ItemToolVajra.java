@@ -64,7 +64,7 @@ public class ItemToolVajra extends ItemElectricTool implements IStaticTexturedIt
         this.setUnlocalizedName("vajra");
         this.attackDamage = 1.0F;
         this.maxCharge = 3000000;
-        this.transferLimit = 128;
+        this.transferLimit = 1000;
         this.tier = 3;
         this.setCreativeTab(IC2.tabIC2);
     }
@@ -98,7 +98,7 @@ public class ItemToolVajra extends ItemElectricTool implements IStaticTexturedIt
 
     @Override
     public float getMiningSpeed(ItemStack stack) {
-        return 8192.0F;
+        return 16384.0F;
     }
 
     @Override
