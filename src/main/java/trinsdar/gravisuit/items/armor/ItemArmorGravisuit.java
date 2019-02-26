@@ -201,10 +201,12 @@ public class ItemArmorGravisuit extends ItemArmorQuantumSuit implements IIndirec
 
             if (enabled){
                 if (ElectricItem.manager.getCharge(stack) >= 1024){
-                    if (handler.quantumArmorBoostSprint && player.isSprinting() && ItemArmorGravisuit.hasQuantumLegs(player)){
-                        this.useEnergy(player, stack, 1024);
-                    }else {
-                        this.useEnergy(player, stack, 512);
+                    if (!player.capabilities.isCreativeMode && !player.isSpectator()){
+                        if (handler.quantumArmorBoostSprint && player.isSprinting() && ItemArmorGravisuit.hasQuantumLegs(player)){
+                            this.useEnergy(player, stack, 1024);
+                        }else {
+                            this.useEnergy(player, stack, 512);
+                        }
                     }
                     player.capabilities.allowFlying = true;
                     player.stepHeight = 1.0625F;
@@ -227,14 +229,18 @@ public class ItemArmorGravisuit extends ItemArmorQuantumSuit implements IIndirec
                         }
                     }
                 }else {
+                    if (!player.capabilities.isCreativeMode && !player.isSpectator()){
+                        player.stepHeight = 0.6F;
+                        player.capabilities.allowFlying = false;
+                        player.capabilities.isFlying = false;
+                    }
+                }
+            }else {
+                if (!player.capabilities.isCreativeMode && !player.isSpectator()){
                     player.stepHeight = 0.6F;
                     player.capabilities.allowFlying = false;
                     player.capabilities.isFlying = false;
                 }
-            }else {
-                player.stepHeight = 0.6F;
-                player.capabilities.allowFlying = false;
-                player.capabilities.isFlying = false;
                 super.onArmorTick(world, player, stack);
             }
         }
