@@ -42,7 +42,7 @@ public class ItemArmorGravisuit extends ItemArmorQuantumSuit implements IIndirec
     public ItemArmorGravisuit() {
         super(44, EntityEquipmentSlot.CHEST);
         this.setUnlocalizedName("gravisuit");
-        this.maxCharge = 5000000;
+        this.maxCharge = 10000000;
         this.transferLimit = 5000;
         this.tier = 3;
         this.setCreativeTab(IC2.tabIC2);

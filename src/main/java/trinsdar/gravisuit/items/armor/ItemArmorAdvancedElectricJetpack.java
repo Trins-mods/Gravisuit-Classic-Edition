@@ -28,7 +28,7 @@ public class ItemArmorAdvancedElectricJetpack extends ItemArmorElectricJetpack i
     public ItemArmorAdvancedElectricJetpack(){
         super();
         this.tier = 2;
-        this.maxCharge = 100000;
+        this.maxCharge = 160000;
         this.transferLimit = 500;
         this.setUnlocalizedName("advancedElectricJetpack");
         this.setCreativeTab(IC2.tabIC2);
