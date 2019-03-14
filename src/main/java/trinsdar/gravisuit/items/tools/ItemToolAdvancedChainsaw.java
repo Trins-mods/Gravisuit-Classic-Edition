@@ -3,40 +3,30 @@ package trinsdar.gravisuit.items.tools;
 import ic2.api.item.ElectricItem;
 import ic2.core.IC2;
 import ic2.core.item.base.ItemElectricTool;
+import ic2.core.platform.registry.Ic2Items;
 import ic2.core.platform.registry.Ic2Sounds;
 import ic2.core.platform.textures.Ic2Icons;
 import ic2.core.platform.textures.obj.IStaticTexturedItem;
-import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentDamage;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraft.stats.StatList;
-import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.common.IShearable;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import trinsdar.gravisuit.GravisuitClassic;
 import trinsdar.gravisuit.util.GravisuitLang;
 
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 
 public class ItemToolAdvancedChainsaw extends ItemElectricTool implements IStaticTexturedItem {
@@ -94,35 +84,8 @@ public class ItemToolAdvancedChainsaw extends ItemElectricTool implements IStati
     }
 
     @Override
-    public boolean itemInteractionForEntity(ItemStack stack, EntityPlayer playerIn, EntityLivingBase entity,
-                                            EnumHand hand) {
-        if (entity.world.isRemote) {
-            return false;
-        } else if (!(entity instanceof IShearable)) {
-            return false;
-        } else {
-            IShearable target = (IShearable) entity;
-            BlockPos pos = new BlockPos(entity.posX, entity.posY, entity.posZ);
-            if (target.isShearable(stack, entity.world, pos)
-                    && ElectricItem.manager.canUse(stack, this.getEnergyCost(stack) * 2)) {
-                List<ItemStack> drops = target.onSheared(stack, entity.world, pos,
-                        EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, stack));
-
-                EntityItem ent;
-                for (Iterator<ItemStack> var8 = drops.iterator(); var8
-                        .hasNext(); ent.motionZ += (entity.world.rand.nextFloat() - entity.world.rand.nextFloat())
-                        * 0.1F) {
-                    ItemStack item = (ItemStack) var8.next();
-                    ent = entity.entityDropItem(item, 1.0F);
-                    ent.motionY += entity.world.rand.nextFloat() * 0.05F;
-                    ent.motionX += (entity.world.rand.nextFloat() - entity.world.rand.nextFloat()) * 0.1F;
-                }
-
-                ElectricItem.manager.use(stack, this.getEnergyCost(stack) * 2, playerIn);
-            }
-
-            return true;
-        }
+    public boolean itemInteractionForEntity(ItemStack stack, EntityPlayer playerIn, EntityLivingBase entity, EnumHand hand) {
+        return Ic2Items.chainSaw.getItem().itemInteractionForEntity(stack, playerIn, entity, hand);
     }
 
     @Override
@@ -134,50 +97,19 @@ public class ItemToolAdvancedChainsaw extends ItemElectricTool implements IStati
                 IBlockState nextState = worldIn.getBlockState(nextPos);
                 if (nextState.getBlock().isWood(worldIn, nextPos)) {
                     breakBlock(nextPos, itemstack, worldIn, pos, player);
+                }else {
+                    break;
                 }
             }
         }
-        if (!player.world.isRemote && !player.capabilities.isCreativeMode) {
-            Block block = player.world.getBlockState(pos).getBlock();
-            if (block instanceof IShearable) {
-                IShearable target = (IShearable) block;
-                if (target.isShearable(itemstack, player.world, pos)
-                        && ElectricItem.manager.canUse(itemstack, this.getEnergyCost(itemstack))) {
-                    List<ItemStack> drops = target.onSheared(itemstack, player.world, pos,
-                            EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, itemstack));
-                    Iterator<ItemStack> var7 = drops.iterator();
-
-                    while (var7.hasNext()) {
-                        ItemStack stack = (ItemStack) var7.next();
-                        float f = 0.7F;
-                        double d = player.world.rand.nextFloat() * f + (1.0F - f) * 0.5D;
-                        double d1 = player.world.rand.nextFloat() * f + (1.0F - f) * 0.5D;
-                        double d2 = player.world.rand.nextFloat() * f + (1.0F - f) * 0.5D;
-                        EntityItem entityitem = new EntityItem(player.world, pos.getX() + d, pos.getY() + d1,
-                                pos.getZ() + d2, stack);
-                        entityitem.setDefaultPickupDelay();
-                        player.world.spawnEntity(entityitem);
-                    }
-
-                    ElectricItem.manager.use(itemstack, this.getEnergyCost(itemstack), player);
-                    player.addStat(StatList.getBlockStats(block));
-                    if (block == Blocks.WEB) {
-                        player.world.setBlockToAir(pos);
-                        IC2.achievements.issueStat(player, "blocksSawed");
-                        return true;
-                    }
-                }
-            }
-
-            return false;
-        } else {
-            return false;
+        if (ElectricItem.manager.canUse(itemstack, this.operationEnergyCost)){
+            IC2.audioManager.playOnce(player, Ic2Sounds.chainsawUseOne);
         }
+        return Ic2Items.chainSaw.getItem().onBlockStartBreak(itemstack, pos, player);
     }
 
     @Override
-    public boolean onBlockDestroyed(ItemStack stack, World worldIn, IBlockState blockIn, BlockPos pos,
-                                    EntityLivingBase entityLiving) {
+    public boolean onBlockDestroyed(ItemStack stack, World worldIn, IBlockState blockIn, BlockPos pos, EntityLivingBase entityLiving) {
         if (entityLiving instanceof EntityPlayer) {
             IC2.achievements.issueStat((EntityPlayer) entityLiving, "blocksSawed");
         }
@@ -199,7 +131,6 @@ public class ItemToolAdvancedChainsaw extends ItemElectricTool implements IStati
         blockState.getBlock().harvestBlock(world, player, pos, blockState, world.getTileEntity(pos), saw);
         world.setBlockToAir(pos);
         world.removeTileEntity(pos);
-        IC2.audioManager.playOnce(player, Ic2Sounds.chainsawUseOne);
     }
 
     @Override
@@ -220,27 +151,7 @@ public class ItemToolAdvancedChainsaw extends ItemElectricTool implements IStati
 
     @Override
     public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker) {
-        if (!(attacker instanceof EntityPlayer)) {
-            return true;
-        } else {
-            if (ElectricItem.manager.use(stack, this.operationEnergyCost, attacker)) {
-                target.attackEntityFrom(DamageSource.causePlayerDamage((EntityPlayer) attacker), 10.0F);
-            } else {
-                target.attackEntityFrom(DamageSource.causePlayerDamage((EntityPlayer) attacker), 1.0F);
-            }
-
-            if (target.getHealth() <= 0.0F) {
-                if (target instanceof EntityCreeper) {
-                    IC2.achievements.issueStat((EntityPlayer) attacker, "killCreeperChainsaw");
-                }
-
-                if (attacker instanceof EntityPlayer) {
-                    IC2.achievements.issueStat((EntityPlayer) attacker, "chainsawKills");
-                }
-            }
-
-            return false;
-        }
+        return Ic2Items.chainSaw.getItem().hitEntity(stack, target, attacker);
     }
 
     static {
