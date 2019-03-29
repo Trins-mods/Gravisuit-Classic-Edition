@@ -29,6 +29,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import trinsdar.gravisuit.GravisuitClassic;
+import trinsdar.gravisuit.util.Config;
 import trinsdar.gravisuit.util.GravisuitLang;
 import trinsdar.gravisuit.util.Registry;
 
@@ -42,8 +43,8 @@ public class ItemArmorGravisuit extends ItemArmorQuantumSuit implements IIndirec
     public ItemArmorGravisuit() {
         super(44, EntityEquipmentSlot.CHEST);
         this.setUnlocalizedName("gravisuit");
-        this.maxCharge = 10000000;
-        this.transferLimit = 5000;
+        this.maxCharge = Config.gravisuitStorage;
+        this.transferLimit = Config.gravisuitTransfer;
         this.tier = 3;
         this.setCreativeTab(IC2.tabIC2);
     }

@@ -44,6 +44,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jetbrains.annotations.Nullable;
 import trinsdar.gravisuit.GravisuitClassic;
+import trinsdar.gravisuit.util.Config;
 import trinsdar.gravisuit.util.GravisuitLang;
 
 import java.util.Arrays;
@@ -60,8 +61,8 @@ public class ItemToolAdvancedDiamondDrill extends ItemElectricTool implements IS
         super(0.0F, -3.0F, ToolMaterial.DIAMOND);
         this.setUnlocalizedName("advancedDrill");
         this.attackDamage = 4.0F;
-        this.maxCharge = 100000;
-        this.transferLimit = 200;
+        this.maxCharge = Config.advancedDrillStorage;
+        this.transferLimit = Config.advancedDrillTransfer;
         this.tier = 2;
         this.setCreativeTab(IC2.tabIC2);
     }

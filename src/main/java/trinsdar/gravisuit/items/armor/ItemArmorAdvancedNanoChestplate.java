@@ -13,6 +13,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import trinsdar.gravisuit.GravisuitClassic;
 import trinsdar.gravisuit.items.armor.ItemArmorAdvancedElectricJetpack;
+import trinsdar.gravisuit.util.Config;
 
 import java.util.List;
 import java.util.Map;
@@ -24,7 +25,8 @@ public class ItemArmorAdvancedNanoChestplate extends ItemArmorNanoSuit {
         super(44, EntityEquipmentSlot.CHEST);
         this.setUnlocalizedName("advancedNanoChestplate");
         this.setCreativeTab(IC2.tabIC2);
-        this.transferLimit = 500;
+        this.transferLimit = Config.advancedNanoChestplateTransfer;
+        this.maxCharge = Config.advancedNanoChestplateStorage;
     }
     public void setTier(int tier){
         this.tier = tier;

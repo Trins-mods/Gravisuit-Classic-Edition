@@ -17,6 +17,7 @@ import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import trinsdar.gravisuit.GravisuitClassic;
+import trinsdar.gravisuit.util.Config;
 
 @Optional.Interface(iface = "baubles.api.IBauble", modid = "baubles", striprefs = true)
 public class ItemArmorAdvancedElectricJetpack extends ItemArmorElectricJetpack implements IBauble {
@@ -28,8 +29,8 @@ public class ItemArmorAdvancedElectricJetpack extends ItemArmorElectricJetpack i
     public ItemArmorAdvancedElectricJetpack(){
         super();
         this.tier = 2;
-        this.maxCharge = 160000;
-        this.transferLimit = 500;
+        this.maxCharge = Config.advancedElectricJetpackStorage;
+        this.transferLimit = Config.advancedElectricJetpackTransfer;
         this.setUnlocalizedName("advancedElectricJetpack");
         this.setCreativeTab(IC2.tabIC2);
     }

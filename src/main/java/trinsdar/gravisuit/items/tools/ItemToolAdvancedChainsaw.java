@@ -24,6 +24,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import trinsdar.gravisuit.util.Config;
 import trinsdar.gravisuit.util.GravisuitLang;
 
 import java.util.Arrays;
@@ -35,8 +36,8 @@ public class ItemToolAdvancedChainsaw extends ItemElectricTool implements IStati
     public ItemToolAdvancedChainsaw() {
         super(0.0F, 0.0F, ToolMaterial.IRON);
         this.attackDamage = 4.0F;
-        this.maxCharge = 100000;
-        this.transferLimit = 200;
+        this.maxCharge = Config.advancedChainsawStorage;
+        this.transferLimit = Config.advancedChainsawTransfer;
         this.operationEnergyCost = 100;
         this.tier = 2;
         this.efficiency = 15.0F;

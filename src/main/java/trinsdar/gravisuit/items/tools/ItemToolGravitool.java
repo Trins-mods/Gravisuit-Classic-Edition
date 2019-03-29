@@ -32,6 +32,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import reborncore.api.ICustomToolHandler;
 import trinsdar.gravisuit.GravisuitClassic;
+import trinsdar.gravisuit.util.Config;
 import trinsdar.gravisuit.util.GravisuitLang;
 
 import java.util.Arrays;
@@ -53,8 +54,8 @@ public class ItemToolGravitool extends ItemElectricToolPrecisionWrench implement
 
     public ItemToolGravitool() {
         super();
-        this.maxCharge = 50000;
-        this.transferLimit = 400;
+        this.maxCharge = Config.gravitoolStorage;
+        this.transferLimit = Config.gravitoolTransfer;
         this.tier = 2;
         this.setHasSubtypes(true);
         this.setMaxDamage(0);
