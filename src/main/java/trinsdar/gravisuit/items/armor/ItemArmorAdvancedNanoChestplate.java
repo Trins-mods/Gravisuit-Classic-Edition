@@ -11,8 +11,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import trinsdar.gravisuit.GravisuitClassic;
-import trinsdar.gravisuit.items.armor.ItemArmorAdvancedElectricJetpack;
 import trinsdar.gravisuit.util.Config;
 
 import java.util.List;

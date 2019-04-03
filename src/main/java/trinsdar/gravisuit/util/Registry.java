@@ -1,10 +1,6 @@
 package trinsdar.gravisuit.util;
 
 import ic2.core.IC2;
-import net.minecraft.item.Item;
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.registries.IForgeRegistry;
 import trinsdar.gravisuit.items.ItemComponents;
 import trinsdar.gravisuit.items.armor.ItemArmorAdvancedElectricJetpack;
 import trinsdar.gravisuit.items.armor.ItemArmorAdvancedLappack;

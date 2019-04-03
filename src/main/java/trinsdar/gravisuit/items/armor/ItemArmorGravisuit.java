@@ -1,6 +1,5 @@
 package trinsdar.gravisuit.items.armor;
 
-import ic2.api.classic.audio.PositionSpec;
 import ic2.api.item.ElectricItem;
 import ic2.core.IC2;
 import ic2.core.audio.AudioSource;
@@ -11,12 +10,10 @@ import ic2.core.item.armor.electric.ItemArmorQuantumSuit;
 import ic2.core.platform.lang.storage.Ic2InfoLang;
 import ic2.core.platform.player.PlayerHandler;
 import ic2.core.platform.registry.Ic2Lang;
-import ic2.core.platform.registry.Ic2Sounds;
 import ic2.core.platform.textures.Ic2Icons;
 import ic2.core.util.misc.StackUtil;
 import ic2.core.util.obj.ToolTipType;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
@@ -28,7 +25,6 @@ import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import trinsdar.gravisuit.GravisuitClassic;
 import trinsdar.gravisuit.util.Config;
 import trinsdar.gravisuit.util.GravisuitLang;
 import trinsdar.gravisuit.util.Registry;

@@ -4,7 +4,6 @@ import ic2.api.classic.recipe.ClassicRecipes;
 import ic2.api.classic.recipe.crafting.ICraftingRecipeList;
 import ic2.api.classic.recipe.crafting.ICraftingRecipeList.IRecipeModifier;
 import ic2.core.IC2;
-import ic2.core.item.recipe.upgrades.FlagModifier;
 import ic2.core.platform.registry.Ic2Items;
 import ic2.core.util.misc.StackUtil;
 import net.minecraft.item.ItemStack;
