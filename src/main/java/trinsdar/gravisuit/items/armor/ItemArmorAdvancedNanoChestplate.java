@@ -1,6 +1,7 @@
 package trinsdar.gravisuit.items.armor;
 
 import ic2.core.IC2;
+import ic2.core.item.armor.base.ItemArmorJetpackBase;
 import ic2.core.item.armor.electric.ItemArmorNanoSuit;
 import ic2.core.platform.textures.Ic2Icons;
 import ic2.core.util.obj.ToolTipType;
@@ -16,7 +17,7 @@ import trinsdar.gravisuit.util.Config;
 import java.util.List;
 import java.util.Map;
 
-public class ItemArmorAdvancedNanoChestplate extends ItemArmorNanoSuit {
+public class ItemArmorAdvancedNanoChestplate extends ItemArmorNanoSuit implements ItemArmorJetpackBase.IIndirectJetpack {
     ItemArmorAdvancedElectricJetpack jetpack = new ItemArmorAdvancedElectricJetpack();
 
     public ItemArmorAdvancedNanoChestplate() {
@@ -64,5 +65,10 @@ public class ItemArmorAdvancedNanoChestplate extends ItemArmorNanoSuit {
     public void onArmorTick(World world, EntityPlayer player, ItemStack itemStack) {
         super.onArmorTick(world, player, itemStack);
         jetpack.onArmorTick(world, player,itemStack);
+    }
+
+    @Override
+    public ItemArmorJetpackBase getJetpack() {
+        return this.jetpack;
     }
 }

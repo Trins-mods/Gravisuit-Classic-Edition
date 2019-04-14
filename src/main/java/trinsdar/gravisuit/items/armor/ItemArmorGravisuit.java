@@ -2,7 +2,6 @@ package trinsdar.gravisuit.items.armor;
 
 import ic2.api.item.ElectricItem;
 import ic2.core.IC2;
-import ic2.core.audio.AudioSource;
 import ic2.core.item.armor.base.ItemArmorJetpackBase;
 import ic2.core.item.armor.base.ItemArmorJetpackBase.IIndirectJetpack;
 import ic2.core.item.armor.electric.ItemArmorElectricJetpack;
@@ -109,15 +108,6 @@ public class ItemArmorGravisuit extends ItemArmorQuantumSuit implements IIndirec
             this.item = owner;
         }
 
-        @Override
-        public AudioSource createAudioSource(ItemStack stack, EntityPlayer player, ItemArmorJetpackBase.JetpackUseMode mode) {
-            NBTTagCompound nbt = StackUtil.getNbtData(stack);
-            if (!nbt.getBoolean("enabled")){
-                return super.createAudioSource(stack, player, mode);
-            }else {
-                return null;
-            }
-        }
 
         @Override
         @SideOnly(Side.CLIENT)
@@ -161,6 +151,12 @@ public class ItemArmorGravisuit extends ItemArmorQuantumSuit implements IIndirec
         @Override
         public double getTransferLimit(ItemStack itemStack) {
             return 0;
+        }
+
+        @Override
+        public int getJetpackUse(ItemStack stack) {
+            NBTTagCompound nbt = StackUtil.getNbtData(stack);
+            return nbt.getBoolean("enabled") ? 2 : nbt.getInteger("LastUseMode");
         }
 
         @Override
