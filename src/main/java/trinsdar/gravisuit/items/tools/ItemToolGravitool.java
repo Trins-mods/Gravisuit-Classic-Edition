@@ -95,7 +95,12 @@ public class ItemToolGravitool extends ItemElectricToolPrecisionWrench implement
     public boolean canOverrideLossChance(ItemStack stack) {
         return true;
     }
-
+        
+    @Override
+    public boolean doesSneakBypassUse(ItemStack stack, IBlockAccess world, BlockPos pos, EntityPlayer player) {
+	return true;
+    }
+        
     @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer player, EnumHand handIn) {
         ItemStack stack = player.getHeldItem(handIn);
