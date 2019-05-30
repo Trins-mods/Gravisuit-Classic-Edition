@@ -1,6 +1,8 @@
 package trinsdar.gravisuit.util;
 
+import ic2.bobIntigration.SubModul;
 import ic2.core.IC2;
+import net.minecraftforge.fml.common.Loader;
 import trinsdar.gravisuit.items.ItemComponents;
 import trinsdar.gravisuit.items.armor.ItemArmorAdvancedElectricJetpack;
 import trinsdar.gravisuit.items.armor.ItemArmorAdvancedLappack;
@@ -11,6 +13,7 @@ import trinsdar.gravisuit.items.tools.ItemToolAdvancedChainsaw;
 import trinsdar.gravisuit.items.tools.ItemToolAdvancedDiamondDrill;
 import trinsdar.gravisuit.items.tools.ItemToolGravitool;
 import trinsdar.gravisuit.items.tools.ItemToolVajra;
+import trinsdar.gravisuit.util.baubles.BItemArmorAdvancedElectricJetpack;
 
 public class Registry {
     public static final ItemArmorAdvancedElectricJetpack advancedElectricJetpack = new ItemArmorAdvancedElectricJetpack();
@@ -32,6 +35,13 @@ public class Registry {
     vajraCore = new ItemComponents("vajraCore", 5),
     engineBoost = new ItemComponents("engineBoost", 6);
 
+
+    private static ItemArmorAdvancedElectricJetpack jetpack(){
+        if (Loader.isModLoaded("baubles")){
+            return new BItemArmorAdvancedElectricJetpack();
+        }
+        return new ItemArmorAdvancedElectricJetpack();
+    }
 
     public static void init(){
         if (Config.enableAdvancedElectricJetpack){
