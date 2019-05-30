@@ -1,5 +1,6 @@
 package trinsdar.gravisuit.proxy;
 
+import ic2.api.classic.recipe.machine.IMachineRecipeList;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -19,6 +20,7 @@ public class CommonProxy {
         File directory = e.getModConfigurationDirectory();
         config = new Configuration(new File(directory.getPath(), "ic2/gravisuit.cfg"));
         Config.readConfig();
+        Registry.initVars();
         Registry.init();
         MinecraftForge.EVENT_BUS.register(new ItemArmorGravisuit.GravisuitJetpack(Registry.gravisuit));
     }

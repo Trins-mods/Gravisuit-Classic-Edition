@@ -16,11 +16,11 @@ import trinsdar.gravisuit.util.baubles.BItemArmorAdvancedElectricJetpack;
 import trinsdar.gravisuit.util.baubles.BItemArmorAdvancedLappack;
 
 public class Registry {
-    public static final ItemArmorAdvancedElectricJetpack advancedElectricJetpack = advancedElectricJetpack();
+    private static ItemArmorAdvancedElectricJetpack advancedElectricJetpack;
     public static final ItemArmorAdvancedNanoChestplate advancedNanoChestplate = new ItemArmorAdvancedNanoChestplate();
     public static final ItemArmorGravisuit gravisuit = new ItemArmorGravisuit();
-    public static final ItemArmorAdvancedLappack advancedLappack = advancedLappack("advancedLappack", 2, Config.advancedLappackStorage, 16, Config.advancedLappackTransfer);
-    public static final ItemArmorAdvancedLappack ultimateLappack = advancedLappack("ultimateLappack", 3, Config.ultimateLappackStorage, 19, Config.ultimateLappackTransfer);
+    private static ItemArmorAdvancedLappack advancedLappack;
+    private static ItemArmorAdvancedLappack ultimateLappack;
     public static final ItemToolGravitool gravitool = new ItemToolGravitool();
     public static final ItemToolAdvancedDiamondDrill advancedDiamondDrill = new ItemToolAdvancedDiamondDrill();
     public static final ItemToolAdvancedChainsaw advancedChainsaw = new ItemToolAdvancedChainsaw();
@@ -37,18 +37,28 @@ public class Registry {
 
     static IBaublesPlugin plugin = IC2.loader.getPlugin("baubles", IBaublesPlugin.class);
 
-    private static ItemArmorAdvancedElectricJetpack advancedElectricJetpack(){
-        if (plugin != null){
-            return new BItemArmorAdvancedElectricJetpack();
-        }
-        return new ItemArmorAdvancedElectricJetpack();
+    public static ItemArmorAdvancedElectricJetpack getAdvancedElectricJetpack() {
+        return advancedElectricJetpack;
     }
 
-    private static ItemArmorAdvancedLappack advancedLappack(String name, int tier, int max, int index, int limit){
+    public static ItemArmorAdvancedLappack getAdvancedLappack() {
+        return advancedLappack;
+    }
+
+    public static ItemArmorAdvancedLappack getUltimateLappack() {
+        return ultimateLappack;
+    }
+
+    public static void initVars(){
         if (plugin != null){
-            return new BItemArmorAdvancedLappack(name, tier, max, index, limit);
+            advancedElectricJetpack = new BItemArmorAdvancedElectricJetpack();
+            advancedLappack = new BItemArmorAdvancedLappack("advancedLappack", 2, Config.advancedLappackStorage, 16, Config.advancedLappackTransfer);
+            ultimateLappack = new BItemArmorAdvancedLappack("ultimateLappack", 3, Config.ultimateLappackStorage, 19, Config.ultimateLappackTransfer);
+        }else {
+            advancedElectricJetpack = new ItemArmorAdvancedElectricJetpack();
+            advancedLappack = new ItemArmorAdvancedLappack("advancedLappack", 2, Config.advancedLappackStorage, 16, Config.advancedLappackTransfer);
+            ultimateLappack = new ItemArmorAdvancedLappack("ultimateLappack", 3, Config.ultimateLappackStorage, 19, Config.ultimateLappackTransfer);
         }
-        return new ItemArmorAdvancedLappack(name, tier, max, index, limit);
     }
 
     public static void init(){
