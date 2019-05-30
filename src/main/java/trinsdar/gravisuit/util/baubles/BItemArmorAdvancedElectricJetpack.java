@@ -10,10 +10,6 @@ import trinsdar.gravisuit.items.armor.ItemArmorAdvancedElectricJetpack;
 
 @Optional.Interface(iface = "baubles.api.IBauble", modid = "baubles", striprefs = true)
 public class BItemArmorAdvancedElectricJetpack extends ItemArmorAdvancedElectricJetpack implements IBauble {
-    public BItemArmorAdvancedElectricJetpack(){
-        super();
-    }
-
     @Override
     @Optional.Method(modid = "baubles")
     public BaubleType getBaubleType(ItemStack itemStack) {

@@ -35,8 +35,6 @@ public class Registry {
     vajraCore = new ItemComponents("vajraCore", 5),
     engineBoost = new ItemComponents("engineBoost", 6);
 
-    static IBaublesPlugin plugin = IC2.loader.getPlugin("baubles", IBaublesPlugin.class);
-
     public static ItemArmorAdvancedElectricJetpack getAdvancedElectricJetpack() {
         return advancedElectricJetpack;
     }
@@ -50,6 +48,7 @@ public class Registry {
     }
 
     public static void initVars(){
+        IBaublesPlugin plugin = IC2.loader.getPlugin("baubles", IBaublesPlugin.class);
         if (plugin != null){
             advancedElectricJetpack = new BItemArmorAdvancedElectricJetpack();
             advancedLappack = new BItemArmorAdvancedLappack("advancedLappack", 2, Config.advancedLappackStorage, 16, Config.advancedLappackTransfer);
