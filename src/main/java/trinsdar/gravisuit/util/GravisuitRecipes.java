@@ -87,7 +87,7 @@ public class GravisuitRecipes {
 
     public static void initOverrideRecipes(){
         if (Config.enableAdvancedLappack){
-            recipes.overrideRecipe("shaped_Quantum Pack", Ic2Items.quantumPack, " A ", "ILI", " l ", 'A', "circuitAdvanced", 'I', Ic2Items.iridiumPlate, 'L', Registry.advancedLappack, 'l', Ic2Items.lapotronCrystal);
+            recipes.overrideRecipe("shaped_item.itemarmorquantumpack_447958198", Ic2Items.quantumPack, " A ", "ILI", " l ", 'A', "circuitAdvanced", 'I', Ic2Items.iridiumPlate, 'L', Registry.advancedLappack, 'l', Ic2Items.lapotronCrystal);
         }
     }
 }
