@@ -6,12 +6,12 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.Optional;
-import trinsdar.gravisuit.items.armor.ItemArmorAdvancedElectricJetpack;
+import trinsdar.gravisuit.items.armor.ItemArmorAdvancedLappack;
 
 @Optional.Interface(iface = "baubles.api.IBauble", modid = "baubles", striprefs = true)
-public class BItemArmorAdvancedElectricJetpack extends ItemArmorAdvancedElectricJetpack implements IBauble {
-    public BItemArmorAdvancedElectricJetpack(){
-        super();
+public class BItemArmorAdvancedLappack extends ItemArmorAdvancedLappack implements IBauble {
+    public BItemArmorAdvancedLappack(String name, int tier, int max, int index, int limit) {
+        super(name, tier, max, index, limit);
     }
 
     @Override
@@ -45,7 +45,7 @@ public class BItemArmorAdvancedElectricJetpack extends ItemArmorAdvancedElectric
     @Override
     @Optional.Method(modid = "baubles")
     public boolean canEquip(ItemStack itemstack, EntityLivingBase player) {
-        return getArmor(itemstack).isEmpty();
+        return true;
     }
 
     @Override

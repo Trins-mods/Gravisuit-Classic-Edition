@@ -1,8 +1,7 @@
 package trinsdar.gravisuit.util;
 
-import ic2.bobIntigration.SubModul;
 import ic2.core.IC2;
-import net.minecraftforge.fml.common.Loader;
+import ic2.core.util.obj.plugins.IBaublesPlugin;
 import trinsdar.gravisuit.items.ItemComponents;
 import trinsdar.gravisuit.items.armor.ItemArmorAdvancedElectricJetpack;
 import trinsdar.gravisuit.items.armor.ItemArmorAdvancedLappack;
@@ -14,13 +13,14 @@ import trinsdar.gravisuit.items.tools.ItemToolAdvancedDiamondDrill;
 import trinsdar.gravisuit.items.tools.ItemToolGravitool;
 import trinsdar.gravisuit.items.tools.ItemToolVajra;
 import trinsdar.gravisuit.util.baubles.BItemArmorAdvancedElectricJetpack;
+import trinsdar.gravisuit.util.baubles.BItemArmorAdvancedLappack;
 
 public class Registry {
-    public static final ItemArmorAdvancedElectricJetpack advancedElectricJetpack = new ItemArmorAdvancedElectricJetpack();
+    public static final ItemArmorAdvancedElectricJetpack advancedElectricJetpack = advancedElectricJetpack();
     public static final ItemArmorAdvancedNanoChestplate advancedNanoChestplate = new ItemArmorAdvancedNanoChestplate();
     public static final ItemArmorGravisuit gravisuit = new ItemArmorGravisuit();
-    public static final ItemArmorAdvancedLappack advancedLappack = new ItemArmorAdvancedLappack("advancedLappack", 2, Config.advancedLappackStorage, 16, Config.advancedLappackTransfer);
-    public static final ItemArmorAdvancedLappack ultimateLappack = new ItemArmorAdvancedLappack("ultimateLappack", 3, Config.ultimateLappackStorage, 19, Config.ultimateLappackTransfer);
+    public static final ItemArmorAdvancedLappack advancedLappack = advancedLappack("advancedLappack", 2, Config.advancedLappackStorage, 16, Config.advancedLappackTransfer);
+    public static final ItemArmorAdvancedLappack ultimateLappack = advancedLappack("ultimateLappack", 3, Config.ultimateLappackStorage, 19, Config.ultimateLappackTransfer);
     public static final ItemToolGravitool gravitool = new ItemToolGravitool();
     public static final ItemToolAdvancedDiamondDrill advancedDiamondDrill = new ItemToolAdvancedDiamondDrill();
     public static final ItemToolAdvancedChainsaw advancedChainsaw = new ItemToolAdvancedChainsaw();
@@ -35,12 +35,20 @@ public class Registry {
     vajraCore = new ItemComponents("vajraCore", 5),
     engineBoost = new ItemComponents("engineBoost", 6);
 
+    static IBaublesPlugin plugin = IC2.loader.getPlugin("baubles", IBaublesPlugin.class);
 
-    private static ItemArmorAdvancedElectricJetpack jetpack(){
-        if (Loader.isModLoaded("baubles")){
+    private static ItemArmorAdvancedElectricJetpack advancedElectricJetpack(){
+        if (plugin != null){
             return new BItemArmorAdvancedElectricJetpack();
         }
         return new ItemArmorAdvancedElectricJetpack();
+    }
+
+    private static ItemArmorAdvancedLappack advancedLappack(String name, int tier, int max, int index, int limit){
+        if (plugin != null){
+            return new BItemArmorAdvancedLappack(name, tier, max, index, limit);
+        }
+        return new ItemArmorAdvancedLappack(name, tier, max, index, limit);
     }
 
     public static void init(){
