@@ -9,8 +9,8 @@ import net.minecraftforge.fml.common.Optional;
 import trinsdar.gravisuit.items.armor.ItemArmorAdvancedLappack;
 
 @Optional.Interface(iface = "baubles.api.IBauble", modid = "baubles", striprefs = true)
-public class BItemArmorAdvancedLappack extends ItemArmorAdvancedLappack implements IBauble {
-    public BItemArmorAdvancedLappack(String name, int tier, int max, int index, int limit) {
+public class ItemArmorBaublesAdvancedLappack extends ItemArmorAdvancedLappack implements IBauble {
+    public ItemArmorBaublesAdvancedLappack(String name, int tier, int max, int index, int limit) {
         super(name, tier, max, index, limit);
     }
 

@@ -9,7 +9,7 @@ import net.minecraftforge.fml.common.Optional;
 import trinsdar.gravisuit.items.armor.ItemArmorAdvancedElectricJetpack;
 
 @Optional.Interface(iface = "baubles.api.IBauble", modid = "baubles", striprefs = true)
-public class BItemArmorAdvancedElectricJetpack extends ItemArmorAdvancedElectricJetpack implements IBauble {
+public class ItemArmorBaublesAdvancedElectricJetpack extends ItemArmorAdvancedElectricJetpack implements IBauble {
     @Override
     @Optional.Method(modid = "baubles")
     public BaubleType getBaubleType(ItemStack itemStack) {

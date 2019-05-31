@@ -12,8 +12,8 @@ import trinsdar.gravisuit.items.tools.ItemToolAdvancedChainsaw;
 import trinsdar.gravisuit.items.tools.ItemToolAdvancedDiamondDrill;
 import trinsdar.gravisuit.items.tools.ItemToolGravitool;
 import trinsdar.gravisuit.items.tools.ItemToolVajra;
-import trinsdar.gravisuit.util.baubles.BItemArmorAdvancedElectricJetpack;
-import trinsdar.gravisuit.util.baubles.BItemArmorAdvancedLappack;
+import trinsdar.gravisuit.util.baubles.ItemArmorBaublesAdvancedElectricJetpack;
+import trinsdar.gravisuit.util.baubles.ItemArmorBaublesAdvancedLappack;
 
 public class Registry {
     private static ItemArmorAdvancedElectricJetpack advancedElectricJetpack;
@@ -50,9 +50,9 @@ public class Registry {
     public static void initVars(){
         IBaublesPlugin plugin = IC2.loader.getPlugin("baubles", IBaublesPlugin.class);
         if (plugin != null){
-            advancedElectricJetpack = new BItemArmorAdvancedElectricJetpack();
-            advancedLappack = new BItemArmorAdvancedLappack("advancedLappack", 2, Config.advancedLappackStorage, 16, Config.advancedLappackTransfer);
-            ultimateLappack = new BItemArmorAdvancedLappack("ultimateLappack", 3, Config.ultimateLappackStorage, 19, Config.ultimateLappackTransfer);
+            advancedElectricJetpack = new ItemArmorBaublesAdvancedElectricJetpack();
+            advancedLappack = new ItemArmorBaublesAdvancedLappack("advancedLappack", 2, Config.advancedLappackStorage, 16, Config.advancedLappackTransfer);
+            ultimateLappack = new ItemArmorBaublesAdvancedLappack("ultimateLappack", 3, Config.ultimateLappackStorage, 19, Config.ultimateLappackTransfer);
         }else {
             advancedElectricJetpack = new ItemArmorAdvancedElectricJetpack();
             advancedLappack = new ItemArmorAdvancedLappack("advancedLappack", 2, Config.advancedLappackStorage, 16, Config.advancedLappackTransfer);
