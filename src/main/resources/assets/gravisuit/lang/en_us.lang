@@ -1,6 +1,9 @@
 item.gravisuit.name=Gravitation Chestplate
 item.advancedNanoChestplate.name=Advanced Nano Chestplate
 item.advancedElectricJetpack.name=Advanced Electric Jetpack
+item.nuclearGravisuit.name=Nuclear Gravitation Chestplate
+item.advancedNuclearNanoChestplate.name=Advanced Nuclear Nano Chestplate
+item.advancedNuclearJetpack.name=Advanced Nuclear Jetpack
 item.advancedLappack.name=Advanced Lappack
 item.ultimateLappack.name=Ultimate Lappack
 item.gravitool.name=Gravitool

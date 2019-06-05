@@ -77,11 +77,20 @@ public class Registry {
         if (Config.enableAdvancedElectricJetpack){
             IC2.getInstance().createItem(advancedElectricJetpack);
         }
+        if (Config.enableAdvancedNuclearJetpack){
+            IC2.getInstance().createItem(advancedNuclearJetpack);
+        }
         if (Config.enableAdvancedNanoChestplate){
             IC2.getInstance().createItem(advancedNanoChestplate);
         }
+        if (Config.enableAdvancedNuclearNanoChestplate){
+            IC2.getInstance().createItem(advancedNuclearNanoChestplate);
+        }
         if (Config.enableGravisuit){
             IC2.getInstance().createItem(gravisuit);
+        }
+        if (Config.enableNuclearGravisuit){
+            IC2.getInstance().createItem(nuclearGravisuit);
         }
         if (Config.enableAdvancedLappack){
             IC2.getInstance().createItem(advancedLappack);
@@ -111,8 +120,5 @@ public class Registry {
             IC2.getInstance().createItem(engineBoost);
         }
         IC2.getInstance().createItem(relocator);
-        IC2.getInstance().createItem(advancedNuclearJetpack);
-        IC2.getInstance().createItem(advancedNuclearNanoChestplate);
-        IC2.getInstance().createItem(nuclearGravisuit);
     }
 }
