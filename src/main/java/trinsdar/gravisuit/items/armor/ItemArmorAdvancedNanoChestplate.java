@@ -18,12 +18,17 @@ import java.util.List;
 import java.util.Map;
 
 public class ItemArmorAdvancedNanoChestplate extends ItemArmorNanoSuit implements ItemArmorJetpackBase.IIndirectJetpack {
-    ItemArmorAdvancedElectricJetpack jetpack = new ItemArmorAdvancedElectricJetpack();
+    ItemArmorJetpackBase jetpack;
+    String texture;
+    int index;
 
-    public ItemArmorAdvancedNanoChestplate() {
+    public ItemArmorAdvancedNanoChestplate(ItemArmorJetpackBase jetpack, String name, String tex, int index) {
         super(44, EntityEquipmentSlot.CHEST);
-        this.setUnlocalizedName("advancedNanoChestplate");
+        this.setUnlocalizedName(name);
         this.setCreativeTab(IC2.tabIC2);
+        this.jetpack = jetpack;
+        this.texture = tex;
+        this.index = index;
         this.transferLimit = Config.advancedNanoChestplateTransfer;
         this.maxCharge = Config.advancedNanoChestplateStorage;
     }
@@ -42,7 +47,7 @@ public class ItemArmorAdvancedNanoChestplate extends ItemArmorNanoSuit implement
     @Override
     @SideOnly(Side.CLIENT)
     public TextureAtlasSprite getTexture(int i) {
-        return Ic2Icons.getTextures("gravisuit_items")[15];
+        return Ic2Icons.getTextures("gravisuit_items")[index];
     }
 
     @Override
@@ -52,7 +57,7 @@ public class ItemArmorAdvancedNanoChestplate extends ItemArmorNanoSuit implement
 
     @Override
     public String getTexture() {
-        return "gravisuit:textures/models/advanced_nano_chestplate";
+        return "gravisuit:textures/models/" + texture;
     }
 
     @Override

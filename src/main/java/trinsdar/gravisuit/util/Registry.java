@@ -6,6 +6,8 @@ import trinsdar.gravisuit.items.ItemComponents;
 import trinsdar.gravisuit.items.armor.ItemArmorAdvancedElectricJetpack;
 import trinsdar.gravisuit.items.armor.ItemArmorAdvancedLappack;
 import trinsdar.gravisuit.items.armor.ItemArmorAdvancedNanoChestplate;
+import trinsdar.gravisuit.items.armor.ItemArmorAdvancedNuclearJetpack;
+import trinsdar.gravisuit.items.armor.ItemArmorAdvancedNuclearNanoChestplate;
 import trinsdar.gravisuit.items.armor.ItemArmorGravisuit;
 import trinsdar.gravisuit.items.tools.ItemRelocator;
 import trinsdar.gravisuit.items.tools.ItemToolAdvancedChainsaw;
@@ -14,10 +16,13 @@ import trinsdar.gravisuit.items.tools.ItemToolGravitool;
 import trinsdar.gravisuit.items.tools.ItemToolVajra;
 import trinsdar.gravisuit.util.baubles.ItemArmorBaublesAdvancedElectricJetpack;
 import trinsdar.gravisuit.util.baubles.ItemArmorBaublesAdvancedLappack;
+import trinsdar.gravisuit.util.baubles.ItemArmorBaublesAdvancedNuclearJetpack;
 
 public class Registry {
     private static ItemArmorAdvancedElectricJetpack advancedElectricJetpack;
-    public static final ItemArmorAdvancedNanoChestplate advancedNanoChestplate = new ItemArmorAdvancedNanoChestplate();
+    private static ItemArmorAdvancedNuclearJetpack advancedNuclearJetpack;
+    public static final ItemArmorAdvancedNanoChestplate advancedNanoChestplate = new ItemArmorAdvancedNanoChestplate(new ItemArmorAdvancedElectricJetpack(), "advancedNanoChestplate", "advanced_nano_chestplate", 15);
+    public static final ItemArmorAdvancedNuclearNanoChestplate advancedNuclearNanoChestplate = new ItemArmorAdvancedNuclearNanoChestplate();
     public static final ItemArmorGravisuit gravisuit = new ItemArmorGravisuit();
     private static ItemArmorAdvancedLappack advancedLappack;
     private static ItemArmorAdvancedLappack ultimateLappack;
@@ -39,6 +44,10 @@ public class Registry {
         return advancedElectricJetpack;
     }
 
+    public static ItemArmorAdvancedNuclearJetpack getAdvancedNuclearJetpack() {
+        return advancedNuclearJetpack;
+    }
+
     public static ItemArmorAdvancedLappack getAdvancedLappack() {
         return advancedLappack;
     }
@@ -51,10 +60,12 @@ public class Registry {
         IBaublesPlugin plugin = IC2.loader.getPlugin("baubles", IBaublesPlugin.class);
         if (plugin != null){
             advancedElectricJetpack = new ItemArmorBaublesAdvancedElectricJetpack();
+            advancedNuclearJetpack = new ItemArmorBaublesAdvancedNuclearJetpack();
             advancedLappack = new ItemArmorBaublesAdvancedLappack("advancedLappack", 2, Config.advancedLappackStorage, 16, Config.advancedLappackTransfer);
             ultimateLappack = new ItemArmorBaublesAdvancedLappack("ultimateLappack", 3, Config.ultimateLappackStorage, 19, Config.ultimateLappackTransfer);
         }else {
             advancedElectricJetpack = new ItemArmorAdvancedElectricJetpack();
+            advancedNuclearJetpack = new ItemArmorAdvancedNuclearJetpack();
             advancedLappack = new ItemArmorAdvancedLappack("advancedLappack", 2, Config.advancedLappackStorage, 16, Config.advancedLappackTransfer);
             ultimateLappack = new ItemArmorAdvancedLappack("ultimateLappack", 3, Config.ultimateLappackStorage, 19, Config.ultimateLappackTransfer);
         }
