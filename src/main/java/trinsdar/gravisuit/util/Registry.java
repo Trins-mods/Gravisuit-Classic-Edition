@@ -109,5 +109,7 @@ public class Registry {
             IC2.getInstance().createItem(engineBoost);
         }
         IC2.getInstance().createItem(relocator);
+        IC2.getInstance().createItem(advancedNuclearJetpack);
+        IC2.getInstance().createItem(advancedNuclearNanoChestplate);
     }
 }
