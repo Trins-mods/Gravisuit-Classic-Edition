@@ -9,6 +9,7 @@ import trinsdar.gravisuit.items.armor.ItemArmorAdvancedNanoChestplate;
 import trinsdar.gravisuit.items.armor.ItemArmorAdvancedNuclearJetpack;
 import trinsdar.gravisuit.items.armor.ItemArmorAdvancedNuclearNanoChestplate;
 import trinsdar.gravisuit.items.armor.ItemArmorGravisuit;
+import trinsdar.gravisuit.items.armor.ItemArmorNuclearGravisuit;
 import trinsdar.gravisuit.items.tools.ItemRelocator;
 import trinsdar.gravisuit.items.tools.ItemToolAdvancedChainsaw;
 import trinsdar.gravisuit.items.tools.ItemToolAdvancedDiamondDrill;
@@ -24,6 +25,7 @@ public class Registry {
     public static final ItemArmorAdvancedNanoChestplate advancedNanoChestplate = new ItemArmorAdvancedNanoChestplate(new ItemArmorAdvancedElectricJetpack(), "advancedNanoChestplate", "advanced_nano_chestplate", 15);
     public static final ItemArmorAdvancedNuclearNanoChestplate advancedNuclearNanoChestplate = new ItemArmorAdvancedNuclearNanoChestplate();
     public static final ItemArmorGravisuit gravisuit = new ItemArmorGravisuit();
+    public static final ItemArmorNuclearGravisuit nuclearGravisuit = new ItemArmorNuclearGravisuit();
     private static ItemArmorAdvancedLappack advancedLappack;
     private static ItemArmorAdvancedLappack ultimateLappack;
     public static final ItemToolGravitool gravitool = new ItemToolGravitool();
@@ -111,5 +113,6 @@ public class Registry {
         IC2.getInstance().createItem(relocator);
         IC2.getInstance().createItem(advancedNuclearJetpack);
         IC2.getInstance().createItem(advancedNuclearNanoChestplate);
+        IC2.getInstance().createItem(nuclearGravisuit);
     }
 }
