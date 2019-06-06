@@ -323,7 +323,7 @@ public class ItemToolAdvancedDiamondDrill extends ItemElectricTool implements IS
                 return LOWPOWER;
             } else if (this == LOWPOWER) {
                 return FINE;
-            } else if (this == FINE) {
+            } else if (this == FINE && Config.enableAdvancedDrill3x3Mode) {
                 return BIGHOLES;
             } else {
                 return NORMAL;

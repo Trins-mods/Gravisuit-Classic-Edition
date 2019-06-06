@@ -93,6 +93,7 @@ public class ItemToolGravitool extends ItemElectricToolPrecisionWrench implement
         return Arrays.asList(0, 1, 2, 3);
     }
 
+    @Override
     public boolean canOverrideLossChance(ItemStack stack) {
         return true;
     }
