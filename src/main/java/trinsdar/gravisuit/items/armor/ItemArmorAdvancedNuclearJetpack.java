@@ -19,8 +19,8 @@ public class ItemArmorAdvancedNuclearJetpack extends ItemArmorNuclearJetpack {
     public ItemArmorAdvancedNuclearJetpack(){
         super(16);
         this.tier = 2;
-        this.maxCharge = Config.advancedElectricJetpackStorage;
-        this.transferLimit = Config.advancedElectricJetpackTransfer;
+        this.maxCharge = Config.advancedNuclearJetpackStorage;
+        this.transferLimit = Config.advancedNuclearJetpackTransfer;
         this.setUnlocalizedName("advancedNuclearJetpack");
         this.setCreativeTab(IC2.tabIC2);
     }
