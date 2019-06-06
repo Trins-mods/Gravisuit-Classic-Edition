@@ -1,6 +1,5 @@
 package trinsdar.gravisuit.proxy;
 
-import ic2.api.classic.recipe.machine.IMachineRecipeList;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
