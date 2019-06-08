@@ -53,7 +53,12 @@ public class Config {
     enableVajra = true,
     enableMiscCraftingItems = true;
 
-    public static boolean enableAdvancedDrill3x3Mode = true;
+    public static boolean
+    enableAdvancedDrill3x3Mode = true,
+    enableCompactedElectricJetpackOverride = true,
+    enableCompactedNuclearJetpackOverride = true,
+    enableQuantumJetplateOverride = false,
+    enableQuantumNuclearJetplateOverride = false;
 
     public static void readConfig() {
         Configuration cfg = CommonProxy.config;
@@ -114,6 +119,10 @@ public class Config {
         enableMiscCraftingItems = cfg.getBoolean("enableMiscCraftingItems", CATEGORY_ENABLED_ITEMS, enableMiscCraftingItems, "");
 
         enableAdvancedDrill3x3Mode = cfg.getBoolean("enableAdvancedDrill3x3Mode", CATEGORY_MISC, enableAdvancedDrill3x3Mode, "Enable or Disable the 3x3 mining mode of the advanced drill here.");
+        enableCompactedElectricJetpackOverride = cfg.getBoolean("enableCompactedElectricJetpackOverride", CATEGORY_MISC, enableCompactedElectricJetpackOverride, "Enable or Disable the compacted electric jetpack charging items like a lappack does here.");
+        enableCompactedNuclearJetpackOverride = cfg.getBoolean("enableCompactedNuclearJetpackOverride", CATEGORY_MISC, enableCompactedNuclearJetpackOverride, "Enable or Disable the compacted nuclear jetpack charging items like a lappack does here.");
+        enableQuantumJetplateOverride = cfg.getBoolean("enableQuantumJetplateOverride", CATEGORY_MISC, enableQuantumJetplateOverride, "Enable or Disable the quantum jetplate charging items like a lappack does here.");
+        enableQuantumNuclearJetplateOverride = cfg.getBoolean("enableQuantumNuclearJetplateOverride", CATEGORY_MISC, enableQuantumNuclearJetplateOverride, "Enable or Disable the quantum nuclear jetplate charging items like a lappack does here.");
     }
 }
 
