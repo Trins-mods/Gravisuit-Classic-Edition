@@ -62,7 +62,8 @@ public class Config {
     enableQuantumJetplateOverride = true,
     enableQuantumNuclearJetplateOverride = true,
     enableIc2JetpackRecipOverrides = true,
-    enableGravitoolRequiresLosslessPrecisionWrench = true;
+    enableGravitoolRequiresLosslessPrecisionWrench = true,
+    enableGravisuitTier4 = false;
 
     public static void readConfig() {
         Configuration cfg = CommonProxy.config;
@@ -131,6 +132,7 @@ public class Config {
         enableQuantumNuclearJetplateOverride = cfg.getBoolean("enableQuantumNuclearJetplateOverride", CATEGORY_MISC, enableQuantumNuclearJetplateOverride, "Enable or Disable the quantum nuclear jetplate charging items like a lappack does here.");
         enableIc2JetpackRecipOverrides = cfg.getBoolean("enableIc2JetpackRecipOverrides", CATEGORY_MISC, enableIc2JetpackRecipOverrides, "Enable or Disable the overriding of compacted jetpack and jetplate recipes here. Also requires that the configs for making them charge items also be enabled.");
         enableGravitoolRequiresLosslessPrecisionWrench = cfg.getBoolean("enableGravitoolRequiresLosslessPrecisionWrench", CATEGORY_MISC, enableGravitoolRequiresLosslessPrecisionWrench, "Enable or Disable the gravitool requiring the completly lossless version of the precision wrench here.");
+        enableGravisuitTier4 = cfg.getBoolean("enableGravisuitTier4", CATEGORY_MISC, enableGravisuitTier4, "Enables the gravitation chestplate tier being tier 4. WARNING: If you don't have gtclassic or tech reborn or another mod with tier 4 energy storage, you will have to get a pesu in order to charge it.");
     }
 }
 

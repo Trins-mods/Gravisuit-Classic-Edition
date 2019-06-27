@@ -46,8 +46,12 @@ public class ItemArmorNuclearGravisuit extends ItemArmorQuantumSuit implements I
         this.setUnlocalizedName("nuclearGravisuit");
         this.maxCharge = Config.nuclearGravisuitStorage;
         this.transferLimit = Config.nuclearGravisuitTransfer;
-        this.tier = 3;
         this.setCreativeTab(IC2.tabIC2);
+        if (Config.enableGravisuitTier4){
+            this.tier = 4;
+        }else {
+            this.tier = 3;
+        }
     }
 
     public void setTier(int tier){

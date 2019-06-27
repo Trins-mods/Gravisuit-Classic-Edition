@@ -40,8 +40,12 @@ public class ItemArmorGravisuit extends ItemArmorQuantumSuit implements IIndirec
         this.setUnlocalizedName("gravisuit");
         this.maxCharge = Config.gravisuitStorage;
         this.transferLimit = Config.gravisuitTransfer;
-        this.tier = 3;
         this.setCreativeTab(IC2.tabIC2);
+        if (Config.enableGravisuitTier4){
+            this.tier = 4;
+        }else {
+            this.tier = 3;
+        }
     }
 
     public void setTier(int tier){
