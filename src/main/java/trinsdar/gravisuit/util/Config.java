@@ -57,8 +57,10 @@ public class Config {
     enableAdvancedDrill3x3Mode = true,
     enableCompactedElectricJetpackOverride = true,
     enableCompactedNuclearJetpackOverride = true,
-    enableQuantumJetplateOverride = false,
-    enableQuantumNuclearJetplateOverride = false;
+    enableQuantumJetplateOverride = true,
+    enableQuantumNuclearJetplateOverride = true,
+    enableIc2JetpackRecipOverrides = true,
+    enableGravitoolRequiresLosslessPrecisionWrench = true;
 
     public static void readConfig() {
         Configuration cfg = CommonProxy.config;
@@ -123,6 +125,8 @@ public class Config {
         enableCompactedNuclearJetpackOverride = cfg.getBoolean("enableCompactedNuclearJetpackOverride", CATEGORY_MISC, enableCompactedNuclearJetpackOverride, "Enable or Disable the compacted nuclear jetpack charging items like a lappack does here.");
         enableQuantumJetplateOverride = cfg.getBoolean("enableQuantumJetplateOverride", CATEGORY_MISC, enableQuantumJetplateOverride, "Enable or Disable the quantum jetplate charging items like a lappack does here.");
         enableQuantumNuclearJetplateOverride = cfg.getBoolean("enableQuantumNuclearJetplateOverride", CATEGORY_MISC, enableQuantumNuclearJetplateOverride, "Enable or Disable the quantum nuclear jetplate charging items like a lappack does here.");
+        enableIc2JetpackRecipOverrides = cfg.getBoolean("enableIc2JetpackRecipOverrides", CATEGORY_MISC, enableIc2JetpackRecipOverrides, "Enable or Disable the overriding of compacted jetpack and jetplate recipes here. Also requires that the configs for making them charge items also be enabled.");
+        enableGravitoolRequiresLosslessPrecisionWrench = cfg.getBoolean("enableGravitoolRequiresLosslessPrecisionWrench", CATEGORY_MISC, enableGravitoolRequiresLosslessPrecisionWrench, "Enable or Disable the gravitool requiring the completly lossless version of the precision wrench here.");
     }
 }
 
