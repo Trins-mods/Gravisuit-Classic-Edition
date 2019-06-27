@@ -189,7 +189,9 @@ public class ItemToolGravitool extends ItemElectricToolPrecisionWrench implement
         }else if (this.getDamage(stack) == 3){
             tooltip.add(GravisuitLang.toolMode.getLocalizedFormatted(GravisuitLang.screwdriver));
         }
-        tooltip.add(TextFormatting.GREEN + GravisuitLang.craftingGravitool.getLocalized());
+        if (Config.enableGravitoolRequiresLosslessPrecisionWrench){
+            tooltip.add(TextFormatting.GREEN + GravisuitLang.craftingGravitool.getLocalized());
+        }
     }
 
     @Override
