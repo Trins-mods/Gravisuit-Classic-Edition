@@ -37,6 +37,7 @@ import org.jetbrains.annotations.Nullable;
 import trinsdar.gravisuit.util.Config;
 import trinsdar.gravisuit.util.GravisuitLang;
 
+import java.lang.reflect.Member;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
@@ -82,8 +83,12 @@ public class ItemToolAdvancedDiamondDrill extends ItemElectricTool implements IS
                 IC2.platform.messagePlayer(player, GravisuitLang.messageAdvancedDrillLowPower);
             } else if (toolMode == ToolMode.FINE){
                 IC2.platform.messagePlayer(player, GravisuitLang.messageAdvancedDrillFine);
-            } else {
+            } else if (toolMode == ToolMode.BIGHOLES){
                 IC2.platform.messagePlayer(player, GravisuitLang.messageAdvancedDrillBigHoles);
+            } else if (toolMode == ToolMode.MEDIUMHOLES){
+                IC2.platform.messagePlayer(player, GravisuitLang.messageAdvancedDrillMediumHoles);
+            } else {
+                IC2.platform.messagePlayer(player, GravisuitLang.messageAdvancedDrillTunnelHoles);
             }
 
             return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
@@ -104,6 +109,10 @@ public class ItemToolAdvancedDiamondDrill extends ItemElectricTool implements IS
             tooltip.add(GravisuitLang.toolMode.getLocalizedFormatted(GravisuitLang.advancedDrillFine));
         }else if (toolMode == ToolMode.BIGHOLES){
             tooltip.add(GravisuitLang.toolMode.getLocalizedFormatted(GravisuitLang.advancedDrillBigHoles));
+        }else if (toolMode == ToolMode.MEDIUMHOLES){
+            tooltip.add(GravisuitLang.toolMode.getLocalizedFormatted(GravisuitLang.advancedDrillMediumHoles));
+        }else if (toolMode == ToolMode.TUNNELHOLES){
+            tooltip.add(GravisuitLang.toolMode.getLocalizedFormatted(GravisuitLang.advancedDrillTunnelHoles));
         }
         List<String> ctrlTip = sortedTooltip.get(ToolTipType.Ctrl);
         ctrlTip.add(Ic2Lang.onItemRightClick.getLocalized());
@@ -126,15 +135,24 @@ public class ItemToolAdvancedDiamondDrill extends ItemElectricTool implements IS
         NBTTagCompound nbt = StackUtil.getNbtData(stack);
         ToolMode toolMode = ToolMode.values()[nbt.getByte("ToolModeDrill")];
         World worldIn = player.world;
-        if (!player.isSneaking() && toolMode == ToolMode.BIGHOLES) {
-            for (BlockPos additionalPos : getTargetBlocks(worldIn, pos, player)) {
-                breakBlock(additionalPos, worldIn, player, stack);
+        if (!player.isSneaking()) {
+            if (toolMode ==ToolMode.BIGHOLES){
+                for (BlockPos additionalPos : get3X3TargetBlocks(worldIn, pos, player)) {
+                    breakBlock(additionalPos, worldIn, player, stack);
+                }
+            }else if (toolMode == ToolMode.MEDIUMHOLES){
+                for (BlockPos additionalPos : get2X3TargetBlocks(worldIn, pos, player)) {
+                    breakBlock(additionalPos, worldIn, player, stack);
+                }
+            } else if (toolMode == ToolMode.TUNNELHOLES){
+                breakBlock(get1x2TargetBlock(worldIn, pos, player), worldIn , player, stack);
             }
+
         }
         return false;
     }
 
-    public Set<BlockPos> getTargetBlocks(World worldIn, BlockPos pos, @Nullable EntityPlayer playerIn) {
+    public Set<BlockPos> get3X3TargetBlocks(World worldIn, BlockPos pos, @Nullable EntityPlayer playerIn) {
         Set<BlockPos> targetBlocks = new HashSet<BlockPos>();
         if (playerIn == null) {
             return new HashSet<BlockPos>();
@@ -173,6 +191,73 @@ public class ItemToolAdvancedDiamondDrill extends ItemElectricTool implements IS
             }
         }
         return targetBlocks;
+    }
+
+    public Set<BlockPos> get2X3TargetBlocks(World worldIn, BlockPos pos, @Nullable EntityPlayer playerIn) {
+        Set<BlockPos> targetBlocks = new HashSet<BlockPos>();
+        if (playerIn == null) {
+            return new HashSet<BlockPos>();
+        }
+        RayTraceResult raytrace = rayTrace(worldIn, playerIn, false);
+        if(raytrace == null || raytrace.sideHit == null){
+            return Collections.emptySet();
+        }
+        EnumFacing enumfacing = raytrace.sideHit;
+        EnumFacing enumFacing2 = playerIn.getHorizontalFacing();
+        if (enumfacing == EnumFacing.SOUTH || enumfacing == EnumFacing.NORTH) {
+            for (int i = 0; i < 2; i++) {
+                for (int j = -1; j < 2; j++) {
+                    BlockPos newPos = pos.add(i, j, 0);
+                    if (shouldBreak(playerIn, worldIn, pos, newPos)) {
+                        targetBlocks.add(newPos);
+                    }
+                }
+            }
+        } else if (enumfacing == EnumFacing.EAST || enumfacing == EnumFacing.WEST) {
+            for (int i = 0; i < 2; i++) {
+                for (int j = -1; j < 2; j++) {
+                    BlockPos newPos = pos.add(0, j, i);
+                    if (shouldBreak(playerIn, worldIn, pos, newPos)) {
+                        targetBlocks.add(newPos);
+                    }
+                }
+            }
+        } else if (enumfacing == EnumFacing.DOWN || enumfacing == EnumFacing.UP) {
+            for (int i = 0; i < 2; i++) {
+                for (int j = -1; j < 2; j++) {
+                    BlockPos newPos = pos.add(j, 0, i);
+                    if (shouldBreak(playerIn, worldIn, pos, newPos)) {
+                        targetBlocks.add(newPos);
+                    }
+                }
+            }
+        }
+        return targetBlocks;
+    }
+
+    public BlockPos get1x2TargetBlock(World worldIn, BlockPos pos, @Nullable EntityPlayer playerIn) {
+        if (playerIn == null) {
+            return pos.up();
+        }
+        RayTraceResult raytrace = rayTrace(worldIn, playerIn, false);
+        if(raytrace == null || raytrace.sideHit == null){
+            return pos.up();
+        }
+        EnumFacing enumfacing = raytrace.sideHit;
+        EnumFacing enumFacing2 = playerIn.getHorizontalFacing();
+        BlockPos newPos = pos.up();
+        if (enumfacing == EnumFacing.UP || enumfacing == EnumFacing.DOWN){
+            if (enumFacing2 == EnumFacing.EAST){
+                newPos = pos.add(1, 0, 0);
+            } else if (enumFacing2 == EnumFacing.WEST){
+                newPos = pos.add(-1, 0, 0);
+            } else if (enumFacing2 == EnumFacing.SOUTH){
+                newPos = pos.add(0, 0, 1);
+            }else {
+                newPos = pos.add(0, 0, -1);
+            }
+        }
+        return newPos;
     }
 
     public void breakBlock(BlockPos pos, World world, EntityPlayer player, ItemStack drill) {
@@ -229,10 +314,12 @@ public class ItemToolAdvancedDiamondDrill extends ItemElectricTool implements IS
             return 48.0F;
         }else if (toolMode == ToolMode.LOWPOWER){
             return 16.0F;
-        }else if (toolMode == ToolMode.FINE){
+        }else if (toolMode == ToolMode.FINE || toolMode == ToolMode.MEDIUMHOLES){
             return 8.0F;
-        }else {
+        }else if (toolMode == ToolMode.BIGHOLES){
             return 5.3F;
+        }else {
+            return 24.0F;
         }
     }
 
@@ -313,7 +400,9 @@ public class ItemToolAdvancedDiamondDrill extends ItemElectricTool implements IS
         NORMAL,
         LOWPOWER,
         FINE,
-        BIGHOLES;
+        BIGHOLES,
+        MEDIUMHOLES,
+        TUNNELHOLES;
 
         private ToolMode() {
         }
@@ -323,8 +412,30 @@ public class ItemToolAdvancedDiamondDrill extends ItemElectricTool implements IS
                 return LOWPOWER;
             } else if (this == LOWPOWER) {
                 return FINE;
-            } else if (this == FINE && Config.enableAdvancedDrill3x3Mode) {
-                return BIGHOLES;
+            } else if (this == FINE) {
+                if (Config.enableAdvancedDrill3x3Mode){
+                    return BIGHOLES;
+                } else if (Config.enableAdvancedDrill2x3Mode){
+                    return MEDIUMHOLES;
+                }else if (Config.enableAdvancedDrill1x2Mode){
+                    return TUNNELHOLES;
+                }else {
+                    return NORMAL;
+                }
+            } else if (this == BIGHOLES ) {
+                if (Config.enableAdvancedDrill2x3Mode){
+                    return MEDIUMHOLES;
+                }else if (Config.enableAdvancedDrill1x2Mode){
+                    return TUNNELHOLES;
+                }else {
+                    return NORMAL;
+                }
+            } else if (this == MEDIUMHOLES){
+                if (Config.enableAdvancedDrill1x2Mode){
+                    return TUNNELHOLES;
+                }else {
+                    return NORMAL;
+                }
             } else {
                 return NORMAL;
             }

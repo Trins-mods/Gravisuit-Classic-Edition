@@ -55,6 +55,8 @@ public class Config {
 
     public static boolean
     enableAdvancedDrill3x3Mode = true,
+    enableAdvancedDrill2x3Mode = true,
+    enableAdvancedDrill1x2Mode = true,
     enableCompactedElectricJetpackOverride = true,
     enableCompactedNuclearJetpackOverride = true,
     enableQuantumJetplateOverride = true,
@@ -121,6 +123,8 @@ public class Config {
         enableMiscCraftingItems = cfg.getBoolean("enableMiscCraftingItems", CATEGORY_ENABLED_ITEMS, enableMiscCraftingItems, "");
 
         enableAdvancedDrill3x3Mode = cfg.getBoolean("enableAdvancedDrill3x3Mode", CATEGORY_MISC, enableAdvancedDrill3x3Mode, "Enable or Disable the 3x3 mining mode of the advanced drill here.");
+        enableAdvancedDrill2x3Mode = cfg.getBoolean("enableAdvancedDrill2x3Mode", CATEGORY_MISC, enableAdvancedDrill2x3Mode, "Enable or Disable the 2x3 mining mode of the advanced drill here.");
+        enableAdvancedDrill1x2Mode = cfg.getBoolean("enableAdvancedDrill1x2Mode", CATEGORY_MISC, enableAdvancedDrill1x2Mode, "Enable or Disable the 1x2 mining mode of the advanced drill here.");
         enableCompactedElectricJetpackOverride = cfg.getBoolean("enableCompactedElectricJetpackOverride", CATEGORY_MISC, enableCompactedElectricJetpackOverride, "Enable or Disable the compacted electric jetpack charging items like a lappack does here.");
         enableCompactedNuclearJetpackOverride = cfg.getBoolean("enableCompactedNuclearJetpackOverride", CATEGORY_MISC, enableCompactedNuclearJetpackOverride, "Enable or Disable the compacted nuclear jetpack charging items like a lappack does here.");
         enableQuantumJetplateOverride = cfg.getBoolean("enableQuantumJetplateOverride", CATEGORY_MISC, enableQuantumJetplateOverride, "Enable or Disable the quantum jetplate charging items like a lappack does here.");
