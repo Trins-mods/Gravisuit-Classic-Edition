@@ -204,7 +204,7 @@ public class ItemToolAdvancedDiamondDrill extends ItemElectricTool implements IS
         }
         EnumFacing enumfacing = raytrace.sideHit;
         EnumFacing enumFacing2 = playerIn.getHorizontalFacing();
-        if (enumfacing == EnumFacing.SOUTH || enumfacing == EnumFacing.NORTH) {
+        if (enumfacing == EnumFacing.SOUTH) {
             for (int i = 0; i < 2; i++) {
                 for (int j = -1; j < 2; j++) {
                     BlockPos newPos = pos.add(i, j, 0);
@@ -213,7 +213,25 @@ public class ItemToolAdvancedDiamondDrill extends ItemElectricTool implements IS
                     }
                 }
             }
-        } else if (enumfacing == EnumFacing.EAST || enumfacing == EnumFacing.WEST) {
+        } else if (enumfacing == EnumFacing.NORTH) {
+            for (int i = -1; i < 1; i++) {
+                for (int j = -1; j < 2; j++) {
+                    BlockPos newPos = pos.add(i, j, 0);
+                    if (shouldBreak(playerIn, worldIn, pos, newPos)) {
+                        targetBlocks.add(newPos);
+                    }
+                }
+            }
+        } else if (enumfacing == EnumFacing.EAST) {
+            for (int i = -1; i < 1; i++) {
+                for (int j = -1; j < 2; j++) {
+                    BlockPos newPos = pos.add(0, j, i);
+                    if (shouldBreak(playerIn, worldIn, pos, newPos)) {
+                        targetBlocks.add(newPos);
+                    }
+                }
+            }
+        } else if (enumfacing == EnumFacing.WEST) {
             for (int i = 0; i < 2; i++) {
                 for (int j = -1; j < 2; j++) {
                     BlockPos newPos = pos.add(0, j, i);
@@ -222,12 +240,41 @@ public class ItemToolAdvancedDiamondDrill extends ItemElectricTool implements IS
                     }
                 }
             }
-        } else if (enumfacing == EnumFacing.DOWN || enumfacing == EnumFacing.UP) {
-            for (int i = 0; i < 2; i++) {
-                for (int j = -1; j < 2; j++) {
-                    BlockPos newPos = pos.add(j, 0, i);
-                    if (shouldBreak(playerIn, worldIn, pos, newPos)) {
-                        targetBlocks.add(newPos);
+        }  else if (enumfacing == EnumFacing.DOWN || enumfacing == EnumFacing.UP) {
+            if (enumFacing2 == EnumFacing.SOUTH){
+                for (int i = -1; i < 1; i++) {
+                    for (int j = -1; j < 2; j++) {
+                        BlockPos newPos = pos.add(i, 0, j);
+                        if (shouldBreak(playerIn, worldIn, pos, newPos)) {
+                            targetBlocks.add(newPos);
+                        }
+                    }
+                }
+            } else if (enumFacing2 == EnumFacing.NORTH){
+                for (int i = 0; i < 2; i++) {
+                    for (int j = -1; j < 2; j++) {
+                        BlockPos newPos = pos.add(i, 0, j);
+                        if (shouldBreak(playerIn, worldIn, pos, newPos)) {
+                            targetBlocks.add(newPos);
+                        }
+                    }
+                }
+            } else if (enumFacing2 == EnumFacing.EAST){
+                for (int i = 0; i < 2; i++) {
+                    for (int j = -1; j < 2; j++) {
+                        BlockPos newPos = pos.add(j, 0, i);
+                        if (shouldBreak(playerIn, worldIn, pos, newPos)) {
+                            targetBlocks.add(newPos);
+                        }
+                    }
+                }
+            }else {
+                for (int i = -1; i < 1; i++) {
+                    for (int j = -1; j < 2; j++) {
+                        BlockPos newPos = pos.add(j, 0, i);
+                        if (shouldBreak(playerIn, worldIn, pos, newPos)) {
+                            targetBlocks.add(newPos);
+                        }
                     }
                 }
             }
