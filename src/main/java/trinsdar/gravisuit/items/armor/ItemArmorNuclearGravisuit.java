@@ -69,12 +69,12 @@ public class ItemArmorNuclearGravisuit extends ItemArmorQuantumSuit implements I
     @Override
     @SideOnly(Side.CLIENT)
     public TextureAtlasSprite getTexture(int i) {
-        return Ic2Icons.getTextures("gravisuit_items")[17];
+        return Ic2Icons.getTextures("gravisuit_items")[22];
     }
 
     @Override
     public String getTexture() {
-        return "gravisuit:textures/models/gravisuit";
+        return "gravisuit:textures/models/nuclear_gravisuit";
     }
 
     @Override

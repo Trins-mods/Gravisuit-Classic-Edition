@@ -17,7 +17,7 @@ import trinsdar.gravisuit.util.Config;
 
 public class ItemArmorAdvancedNuclearNanoChestplate extends ItemArmorAdvancedNanoChestplate implements IHandHeldInventory {
     public ItemArmorAdvancedNuclearNanoChestplate() {
-        super(new ItemArmorAdvancedNuclearJetpack(), "advancedNuclearNanoChestplate", "advanced_nuclear_nano_chestplate", 15);
+        super(new ItemArmorAdvancedNuclearJetpack(), "advancedNuclearNanoChestplate", "advanced_nuclear_nano_chestplate", 21);
         this.transferLimit = Config.advancedNuclearNanoChestplateTransfer;
         this.maxCharge = Config.advancedNuclearNanoChestplateStorage;
     }

@@ -40,13 +40,13 @@ public class ItemArmorAdvancedNuclearJetpack extends ItemArmorNuclearJetpack {
     @SideOnly(Side.CLIENT)
     @Override
     public BaseModel getModelFromItem(ItemStack item) {
-        return new JetpackModel(Ic2Icons.getTextures("gravisuit_items")[14]);
+        return new JetpackModel(Ic2Icons.getTextures("gravisuit_items")[20]);
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public TextureAtlasSprite getTexture(int i) {
-        return Ic2Icons.getTextures("gravisuit_items")[14];
+        return Ic2Icons.getTextures("gravisuit_items")[20];
     }
 
     @Override
@@ -76,6 +76,6 @@ public class ItemArmorAdvancedNuclearJetpack extends ItemArmorNuclearJetpack {
 
     @Override
     public String getTexture() {
-        return "gravisuit:textures/models/advanced_electric_jetpack";
+        return "gravisuit:textures/models/advanced_nuclear_jetpack";
     }
 }
