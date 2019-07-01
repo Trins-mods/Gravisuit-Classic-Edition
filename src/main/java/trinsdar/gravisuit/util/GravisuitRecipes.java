@@ -5,16 +5,69 @@ import ic2.api.classic.recipe.crafting.ICraftingRecipeList;
 import ic2.api.classic.recipe.crafting.ICraftingRecipeList.IRecipeModifier;
 import ic2.core.IC2;
 import ic2.core.item.recipe.entry.RecipeInputOreDict;
+import ic2.core.item.recipe.upgrades.FlagModifier;
 import ic2.core.platform.registry.Ic2Items;
 import ic2.core.util.misc.StackUtil;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import trinsdar.gravisuit.GravisuitClassic;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public class GravisuitRecipes {
     static ICraftingRecipeList recipes = ClassicRecipes.advCrafting;
     public static void init(){
         initShapedRecipes();
         initOverrideRecipes();
+    }
+
+    static IRecipeModifier hoe(){
+        return new IRecipeModifier() {
+
+            String id = "Import";
+            boolean tag = false;
+
+            @Override
+            public void clear() {
+                tag = false;
+            }
+
+            @Override
+            public boolean isStackValid(ItemStack provided) {
+                if (StackUtil.isStackEqual(Ic2Items.electricTreeTap, provided)){
+                    NBTTagCompound nbt = StackUtil.getNbtData(provided);
+                    if (nbt.getBoolean(id)) {
+                        tag = true;
+                    }
+                }
+
+                return true;
+            }
+
+            @Override
+            public ItemStack getOutput(ItemStack output, boolean forDisplay) {
+                if (forDisplay) {
+                    StackUtil.addToolTip(output, "Upgrades get transfered");
+                } else {
+                    NBTTagCompound nbt = StackUtil.getOrCreateNbtData(output);
+
+                    if (tag){
+                        nbt.setBoolean(id, true);
+                    }
+                }
+
+                return output;
+            }
+
+            @Override
+            public boolean isOutput(ItemStack possibleOutput) {
+                return false;
+            }
+        };
     }
 
     static IRecipeModifier wrench( ItemStack provided){
@@ -108,10 +161,11 @@ public class GravisuitRecipes {
 
         }
         if (Config.enableGravitool){
+            recipes.addShapelessRecipe(new ItemStack(Registry.gravitool), (new FlagModifierMetaLess(new ItemStack(Registry.gravitool), "Import", true)).setUsesInput(), Registry.gravitool, Blocks.HOPPER, Ic2Items.importBasicUpgrade.copy());
             if (Config.enableGravitoolRequiresLosslessPrecisionWrench){
-                recipes.addRecipe(new ItemStack(Registry.gravitool), "CHC", "AEA", "WaT", wrench(Ic2Items.precisionWrench), 'C', Ic2Items.carbonPlate, 'H', Ic2Items.electricHoe, 'A', Ic2Items.advancedAlloy, 'E', Ic2Items.energyCrystal, 'W', Ic2Items.precisionWrench, 'a', "circuitAdvanced", 'T', Ic2Items.electricTreeTap);
+                recipes.addRecipe(new ItemStack(Registry.gravitool), "CHC", "AEA", "WaT", wrench(Ic2Items.precisionWrench), hoe(), 'C', Ic2Items.carbonPlate, 'H', Ic2Items.electricHoe, 'A', Ic2Items.advancedAlloy, 'E', Ic2Items.energyCrystal, 'W', Ic2Items.precisionWrench, 'a', "circuitAdvanced", 'T', Ic2Items.electricTreeTap);
             }else {
-                recipes.addRecipe(new ItemStack(Registry.gravitool), "CHC", "AEA", "WaT", 'C', Ic2Items.carbonPlate, 'H', Ic2Items.electricHoe, 'A', Ic2Items.advancedAlloy, 'E', Ic2Items.energyCrystal, 'W', Ic2Items.precisionWrench, 'a', "circuitAdvanced", 'T', Ic2Items.electricTreeTap);
+                recipes.addRecipe(new ItemStack(Registry.gravitool), "CHC", "AEA", "WaT", hoe(),  'C', Ic2Items.carbonPlate, 'H', Ic2Items.electricHoe, 'A', Ic2Items.advancedAlloy, 'E', Ic2Items.energyCrystal, 'W', Ic2Items.precisionWrench, 'a', "circuitAdvanced", 'T', Ic2Items.electricTreeTap);
             }
 
         }

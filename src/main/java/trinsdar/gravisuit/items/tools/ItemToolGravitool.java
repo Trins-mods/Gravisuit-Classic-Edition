@@ -5,9 +5,11 @@ import cofh.api.item.IToolHammer;
 import ic2.api.item.ElectricItem;
 import ic2.core.IC2;
 import ic2.core.item.tool.electric.ItemElectricToolPrecisionWrench;
+import ic2.core.platform.lang.storage.Ic2InfoLang;
 import ic2.core.platform.registry.Ic2Items;
 import ic2.core.platform.textures.Ic2Icons;
 import ic2.core.platform.textures.obj.IAdvancedTexturedItem;
+import ic2.core.util.misc.StackUtil;
 import mrtjp.projectred.api.IScrewdriver;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -192,6 +194,13 @@ public class ItemToolGravitool extends ItemElectricToolPrecisionWrench implement
         if (Config.enableGravitoolRequiresLosslessPrecisionWrench){
             tooltip.add(TextFormatting.GREEN + GravisuitLang.craftingGravitool.getLocalized());
         }
+        if (this.isImport(stack)) {
+            tooltip.add(Ic2InfoLang.treeTapEffect.getLocalized());
+        }
+    }
+
+    public boolean isImport(ItemStack stack) {
+        return StackUtil.getNbtData(stack).getBoolean("Import");
     }
 
     @Override
