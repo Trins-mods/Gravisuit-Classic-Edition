@@ -25,7 +25,7 @@ public class GravisuitRecipes {
         initOverrideRecipes();
     }
 
-    static IRecipeModifier hoe(){
+    static IRecipeModifier treetap(){
         return new IRecipeModifier() {
 
             String id = "Import";
@@ -163,9 +163,9 @@ public class GravisuitRecipes {
         if (Config.enableGravitool){
             recipes.addShapelessRecipe(new ItemStack(Registry.gravitool), (new FlagModifierMetaLess(new ItemStack(Registry.gravitool), "Import", true)).setUsesInput(), Registry.gravitool, Blocks.HOPPER, Ic2Items.importBasicUpgrade.copy());
             if (Config.enableGravitoolRequiresLosslessPrecisionWrench){
-                recipes.addRecipe(new ItemStack(Registry.gravitool), "CHC", "AEA", "WaT", wrench(Ic2Items.precisionWrench), hoe(), 'C', Ic2Items.carbonPlate, 'H', Ic2Items.electricHoe, 'A', Ic2Items.advancedAlloy, 'E', Ic2Items.energyCrystal, 'W', Ic2Items.precisionWrench, 'a', "circuitAdvanced", 'T', Ic2Items.electricTreeTap);
+                recipes.addRecipe(new ItemStack(Registry.gravitool), "CHC", "AEA", "WaT", wrench(Ic2Items.precisionWrench), treetap(), 'C', Ic2Items.carbonPlate, 'H', Ic2Items.electricHoe, 'A', Ic2Items.advancedAlloy, 'E', Ic2Items.energyCrystal, 'W', Ic2Items.precisionWrench, 'a', "circuitAdvanced", 'T', Ic2Items.electricTreeTap);
             }else {
-                recipes.addRecipe(new ItemStack(Registry.gravitool), "CHC", "AEA", "WaT", hoe(),  'C', Ic2Items.carbonPlate, 'H', Ic2Items.electricHoe, 'A', Ic2Items.advancedAlloy, 'E', Ic2Items.energyCrystal, 'W', Ic2Items.precisionWrench, 'a', "circuitAdvanced", 'T', Ic2Items.electricTreeTap);
+                recipes.addRecipe(new ItemStack(Registry.gravitool), "CHC", "AEA", "WaT", treetap(),  'C', Ic2Items.carbonPlate, 'H', Ic2Items.electricHoe, 'A', Ic2Items.advancedAlloy, 'E', Ic2Items.energyCrystal, 'W', Ic2Items.precisionWrench, 'a', "circuitAdvanced", 'T', Ic2Items.electricTreeTap);
             }
 
         }
