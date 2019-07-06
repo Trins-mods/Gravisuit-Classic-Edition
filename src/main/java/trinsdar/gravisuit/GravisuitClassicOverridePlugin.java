@@ -8,6 +8,7 @@ import ic2.core.platform.lang.components.base.LocaleComp;
 import ic2.core.platform.lang.storage.Ic2ItemLang;
 import ic2.core.util.misc.ModulLoader;
 import ic2.core.util.obj.plugins.IBaublesPlugin;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import trinsdar.gravisuit.items.ic2override.ItemArmorCompactedElectricJetpack2;
@@ -32,7 +33,7 @@ public class GravisuitClassicOverridePlugin extends PluginBase {
         IBaublesPlugin plugin = IC2.loader.getPlugin("baubles", IBaublesPlugin.class);
         map.put(getID(Ic2ItemLang.quantumJetplate), new ModulLoader.ItemOverride(new ItemArmorQuantumJetplate2()));
         map.put(getID(Ic2ItemLang.quantumNuclearJetplate), new ModulLoader.ItemOverride(new ItemArmorQuantumNuclearJetplate2()));
-        if (plugin != null){
+        if (plugin != null && Loader.isModLoaded("baubles")){
             map.put(getID(Ic2ItemLang.jetpackCompactElectric), new ModulLoader.ItemOverride(new ItemBaublesCompactedElectricJetpack2()));
             map.put(getID(Ic2ItemLang.jetpackCompactNuclear), new ModulLoader.ItemOverride(new ItemBaublesCompactedNuclearJetpack2()));
         }else {
