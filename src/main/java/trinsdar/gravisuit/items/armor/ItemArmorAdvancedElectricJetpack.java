@@ -12,6 +12,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import trinsdar.gravisuit.util.Config;
+import trinsdar.gravisuit.util.GravisuitLang;
 
 public class ItemArmorAdvancedElectricJetpack extends ItemArmorElectricJetpack {
 
@@ -24,7 +25,8 @@ public class ItemArmorAdvancedElectricJetpack extends ItemArmorElectricJetpack {
         this.tier = 2;
         this.maxCharge = Config.advancedElectricJetpackStorage;
         this.transferLimit = Config.advancedElectricJetpackTransfer;
-        this.setUnlocalizedName("advancedElectricJetpack");
+        this.setRegistryName("advancedelectricjetpack");
+        this.setUnlocalizedName(GravisuitLang.advancedElectricJetpack);
         this.setCreativeTab(IC2.tabIC2);
     }
 

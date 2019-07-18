@@ -22,7 +22,7 @@ import trinsdar.gravisuit.util.baubles.ItemArmorBaublesAdvancedNuclearJetpack;
 public class Registry {
     private static ItemArmorAdvancedElectricJetpack advancedElectricJetpack;
     private static ItemArmorAdvancedNuclearJetpack advancedNuclearJetpack;
-    public static final ItemArmorAdvancedNanoChestplate advancedNanoChestplate = new ItemArmorAdvancedNanoChestplate(new ItemArmorAdvancedElectricJetpack(), "advancedNanoChestplate", "advanced_nano_chestplate", 15);
+    public static final ItemArmorAdvancedNanoChestplate advancedNanoChestplate = new ItemArmorAdvancedNanoChestplate(new ItemArmorAdvancedElectricJetpack(), "advancedNanoChestplate", GravisuitLang.advancedNanoChestplate, "advanced_nano_chestplate", 15);
     public static final ItemArmorAdvancedNuclearNanoChestplate advancedNuclearNanoChestplate = new ItemArmorAdvancedNuclearNanoChestplate();
     public static final ItemArmorGravisuit gravisuit = new ItemArmorGravisuit();
     public static final ItemArmorNuclearGravisuit nuclearGravisuit = new ItemArmorNuclearGravisuit();
@@ -63,13 +63,13 @@ public class Registry {
         if (plugin != null){
             advancedElectricJetpack = new ItemArmorBaublesAdvancedElectricJetpack();
             advancedNuclearJetpack = new ItemArmorBaublesAdvancedNuclearJetpack();
-            advancedLappack = new ItemArmorBaublesAdvancedLappack("advancedLappack", 2, Config.advancedLappackStorage, 16, Config.advancedLappackTransfer);
-            ultimateLappack = new ItemArmorBaublesAdvancedLappack("ultimateLappack", 3, Config.ultimateLappackStorage, 19, Config.ultimateLappackTransfer);
+            advancedLappack = new ItemArmorBaublesAdvancedLappack("advancedLappack", GravisuitLang.advancedLappack, 2, Config.advancedLappackStorage, 16, Config.advancedLappackTransfer);
+            ultimateLappack = new ItemArmorBaublesAdvancedLappack("ultimateLappack", GravisuitLang.ultimateLappack, 3, Config.ultimateLappackStorage, 19, Config.ultimateLappackTransfer);
         }else {
             advancedElectricJetpack = new ItemArmorAdvancedElectricJetpack();
             advancedNuclearJetpack = new ItemArmorAdvancedNuclearJetpack();
-            advancedLappack = new ItemArmorAdvancedLappack("advancedLappack", 2, Config.advancedLappackStorage, 16, Config.advancedLappackTransfer);
-            ultimateLappack = new ItemArmorAdvancedLappack("ultimateLappack", 3, Config.ultimateLappackStorage, 19, Config.ultimateLappackTransfer);
+            advancedLappack = new ItemArmorAdvancedLappack("advancedLappack", GravisuitLang.advancedLappack, 2, Config.advancedLappackStorage, 16, Config.advancedLappackTransfer);
+            ultimateLappack = new ItemArmorAdvancedLappack("ultimateLappack", GravisuitLang.ultimateLappack, 3, Config.ultimateLappackStorage, 19, Config.ultimateLappackTransfer);
         }
     }
 

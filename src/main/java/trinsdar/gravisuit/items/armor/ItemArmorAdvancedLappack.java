@@ -1,6 +1,7 @@
 package trinsdar.gravisuit.items.armor;
 
 import ic2.core.item.armor.electric.ItemArmorElectricPack;
+import ic2.core.platform.lang.components.base.LocaleComp;
 import ic2.core.platform.textures.Ic2Icons;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.item.ItemStack;
@@ -13,13 +14,14 @@ public class ItemArmorAdvancedLappack extends ItemArmorElectricPack {
     private int storage;
     private int maxTransfer;
 
-    public ItemArmorAdvancedLappack(String name, int tier, int max, int index, int limit) {
+    public ItemArmorAdvancedLappack(String name, LocaleComp comp, int tier, int max, int index, int limit) {
         super(36, "gravisuit:textures/models/" + name, max, tier, limit);
         this.index = index;
         this.tier = tier;
         this.storage = max;
         this.maxTransfer = limit;
-        this.setUnlocalizedName(name);
+        this.setRegistryName(name.toLowerCase());
+        this.setUnlocalizedName(comp);
     }
 
     public void setTier(int tier){

@@ -57,4 +57,13 @@ public class GravisuitLang {
     public static LocaleComp advancedDrill = new LangComponentHolder.LocaleItemComp("item.advancedDrill");
     public static LocaleComp gravitool = new LangComponentHolder.LocaleItemComp("item.gravitool");
     public static LocaleComp vajra = new LangComponentHolder.LocaleItemComp("item.vajra");
+    public static LocaleComp advancedElectricJetpack = new LangComponentHolder.LocaleItemComp("item.advancedElectricJetpack");
+    public static LocaleComp advancedLappack = new LangComponentHolder.LocaleItemComp("item.advancedLappack");
+    public static LocaleComp ultimateLappack = new LangComponentHolder.LocaleItemComp("item.ultimateLappack");
+    public static LocaleComp advancedNanoChestplate = new LangComponentHolder.LocaleItemComp("item.advancedNanoChestplate");
+    public static LocaleComp advancedNuclearJetpack = new LangComponentHolder.LocaleItemComp("item.advancedNuclearJetpack");
+    public static LocaleComp advancedNuclearNanoChestplate = new LangComponentHolder.LocaleItemComp("item.advancedNuclearNanoChestplate");
+    public static LocaleComp gravisuit = new LangComponentHolder.LocaleItemComp("item.gravisuit");
+    public static LocaleComp nuclearGravisuit = new LangComponentHolder.LocaleItemComp("item.nuclearGravisuit");
+
 }

@@ -14,10 +14,11 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 import trinsdar.gravisuit.util.Config;
+import trinsdar.gravisuit.util.GravisuitLang;
 
 public class ItemArmorAdvancedNuclearNanoChestplate extends ItemArmorAdvancedNanoChestplate implements IHandHeldInventory {
     public ItemArmorAdvancedNuclearNanoChestplate() {
-        super(new ItemArmorAdvancedNuclearJetpack(), "advancedNuclearNanoChestplate", "advanced_nuclear_nano_chestplate", 21);
+        super(new ItemArmorAdvancedNuclearJetpack(), "advancedNuclearNanoChestplate", GravisuitLang.advancedNuclearNanoChestplate,"advanced_nuclear_nano_chestplate", 21);
         this.transferLimit = Config.advancedNuclearNanoChestplateTransfer;
         this.maxCharge = Config.advancedNuclearNanoChestplateStorage;
     }

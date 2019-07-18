@@ -43,7 +43,8 @@ public class ItemArmorNuclearGravisuit extends ItemArmorQuantumSuit implements I
 
     public ItemArmorNuclearGravisuit() {
         super(44, EntityEquipmentSlot.CHEST);
-        this.setUnlocalizedName("nuclearGravisuit");
+        this.setRegistryName("nucleargravisuit");
+        this.setUnlocalizedName(GravisuitLang.nuclearGravisuit);
         this.maxCharge = Config.nuclearGravisuitStorage;
         this.transferLimit = Config.nuclearGravisuitTransfer;
         this.setCreativeTab(IC2.tabIC2);

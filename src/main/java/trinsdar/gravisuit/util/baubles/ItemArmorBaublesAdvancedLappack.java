@@ -2,6 +2,7 @@ package trinsdar.gravisuit.util.baubles;
 
 import baubles.api.BaubleType;
 import baubles.api.IBauble;
+import ic2.core.platform.lang.components.base.LocaleComp;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -10,8 +11,8 @@ import trinsdar.gravisuit.items.armor.ItemArmorAdvancedLappack;
 
 @Optional.Interface(iface = "baubles.api.IBauble", modid = "baubles", striprefs = true)
 public class ItemArmorBaublesAdvancedLappack extends ItemArmorAdvancedLappack implements IBauble {
-    public ItemArmorBaublesAdvancedLappack(String name, int tier, int max, int index, int limit) {
-        super(name, tier, max, index, limit);
+    public ItemArmorBaublesAdvancedLappack(String name, LocaleComp comp, int tier, int max, int index, int limit) {
+        super(name, comp, tier, max, index, limit);
     }
 
     @Override

@@ -10,6 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import trinsdar.gravisuit.util.Config;
+import trinsdar.gravisuit.util.GravisuitLang;
 
 public class ItemArmorAdvancedNuclearJetpack extends ItemArmorNuclearJetpack {
     private int tier;
@@ -21,7 +22,8 @@ public class ItemArmorAdvancedNuclearJetpack extends ItemArmorNuclearJetpack {
         this.tier = 2;
         this.maxCharge = Config.advancedNuclearJetpackStorage;
         this.transferLimit = Config.advancedNuclearJetpackTransfer;
-        this.setUnlocalizedName("advancedNuclearJetpack");
+        this.setRegistryName("advancednuclearjetpack");
+        this.setUnlocalizedName(GravisuitLang.advancedNuclearJetpack);
         this.setCreativeTab(IC2.tabIC2);
     }
 

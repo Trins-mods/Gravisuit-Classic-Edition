@@ -3,6 +3,7 @@ package trinsdar.gravisuit.items.armor;
 import ic2.core.IC2;
 import ic2.core.item.armor.base.ItemArmorJetpackBase;
 import ic2.core.item.armor.electric.ItemArmorNanoSuit;
+import ic2.core.platform.lang.components.base.LocaleComp;
 import ic2.core.platform.textures.Ic2Icons;
 import ic2.core.util.obj.ToolTipType;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -22,9 +23,10 @@ public class ItemArmorAdvancedNanoChestplate extends ItemArmorNanoSuit implement
     String texture;
     int index;
 
-    public ItemArmorAdvancedNanoChestplate(ItemArmorJetpackBase jetpack, String name, String tex, int index) {
+    public ItemArmorAdvancedNanoChestplate(ItemArmorJetpackBase jetpack, String name, LocaleComp comp, String tex, int index) {
         super(44, EntityEquipmentSlot.CHEST);
-        this.setUnlocalizedName(name);
+        this.setRegistryName(name.toLowerCase());
+        this.setUnlocalizedName(comp);
         this.setCreativeTab(IC2.tabIC2);
         this.jetpack = jetpack;
         this.texture = tex;
