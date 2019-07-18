@@ -49,7 +49,8 @@ public class ItemToolAdvancedDiamondDrill extends ItemElectricTool implements IS
 
     public ItemToolAdvancedDiamondDrill() {
         super(0.0F, -3.0F, ToolMaterial.DIAMOND);
-        this.setUnlocalizedName("advancedDrill");
+        this.setRegistryName("advanceddrill");
+        this.setUnlocalizedName(GravisuitLang.advancedDrill);
         this.attackDamage = 4.0F;
         this.maxCharge = Config.advancedDrillStorage;
         this.transferLimit = Config.advancedDrillTransfer;
