@@ -127,7 +127,7 @@ public class ItemToolGravitool extends ItemElectricToolPrecisionWrench implement
 
             return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
         } else {
-            return super.onItemRightClick(worldIn, player, handIn);
+            return ActionResult.newResult(EnumActionResult.PASS, stack);
         }
     }
 
