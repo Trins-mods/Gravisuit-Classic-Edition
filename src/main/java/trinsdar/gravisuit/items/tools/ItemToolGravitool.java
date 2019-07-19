@@ -116,16 +116,16 @@ public class ItemToolGravitool extends ItemElectricToolPrecisionWrench implement
 	    IC2.audioManager.playOnce(player, PositionSpec.Hand, GravisuitSounds.toolGraviToolSound, true, IC2.audioManager.getDefaultVolume());
             if (this.getDamage(stack) == 3) {
                 this.setDamage(stack, 0);
-                IC2.platform.messagePlayer(player, GravisuitLang.messageWrench);
+                IC2.platform.messagePlayer(player, TextFormatting.AQUA, GravisuitLang.messageWrench);
             } else if (this.getDamage(stack) == 0){
                 this.setDamage(stack, 1);
-                IC2.platform.messagePlayer(player, GravisuitLang.messageHoe);
+                IC2.platform.messagePlayer(player, TextFormatting.GOLD, GravisuitLang.messageHoe);
             } else if (this.getDamage(stack) == 1){
                 this.setDamage(stack, 2);
-                IC2.platform.messagePlayer(player, GravisuitLang.messageTreetap);
+                IC2.platform.messagePlayer(player, TextFormatting.DARK_GREEN, GravisuitLang.messageTreetap);
             }else {
                 this.setDamage(stack, 3);
-                IC2.platform.messagePlayer(player, GravisuitLang.messageScrewdriver);
+                IC2.platform.messagePlayer(player, TextFormatting.LIGHT_PURPLE, GravisuitLang.messageScrewdriver);
             }
 
             return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
