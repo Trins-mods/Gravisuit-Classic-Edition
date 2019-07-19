@@ -2,6 +2,7 @@ package trinsdar.gravisuit.items.tools;
 
 import buildcraft.api.tools.IToolWrench;
 import cofh.api.item.IToolHammer;
+import ic2.api.classic.audio.PositionSpec;
 import ic2.api.item.ElectricItem;
 import ic2.core.IC2;
 import ic2.core.item.tool.electric.ItemElectricToolPrecisionWrench;
@@ -34,6 +35,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import reborncore.api.ICustomToolHandler;
 import trinsdar.gravisuit.util.Config;
 import trinsdar.gravisuit.util.GravisuitLang;
+import trinsdar.gravisuit.util.GravisuitSounds;
 
 import java.util.Arrays;
 import java.util.List;
@@ -111,6 +113,7 @@ public class ItemToolGravitool extends ItemElectricToolPrecisionWrench implement
         ItemStack stack = player.getHeldItem(handIn);
 
         if (IC2.platform.isSimulating() && IC2.keyboard.isModeSwitchKeyDown(player)) {
+	    IC2.audioManager.playOnce(player, PositionSpec.Hand, GravisuitSounds.toolGraviToolSound, true, IC2.audioManager.getDefaultVolume());
             if (this.getDamage(stack) == 3) {
                 this.setDamage(stack, 0);
                 IC2.platform.messagePlayer(player, GravisuitLang.messageWrench);
