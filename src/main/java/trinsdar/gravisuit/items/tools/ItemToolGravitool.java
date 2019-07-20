@@ -2,6 +2,7 @@ package trinsdar.gravisuit.items.tools;
 
 import buildcraft.api.tools.IToolWrench;
 import cofh.api.item.IToolHammer;
+import ic2.api.classic.audio.PositionSpec;
 import ic2.api.item.ElectricItem;
 import ic2.core.IC2;
 import ic2.core.item.tool.electric.ItemElectricToolPrecisionWrench;
@@ -34,6 +35,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import reborncore.api.ICustomToolHandler;
 import trinsdar.gravisuit.util.Config;
 import trinsdar.gravisuit.util.GravisuitLang;
+import trinsdar.gravisuit.util.GravisuitSounds;
 
 import java.util.Arrays;
 import java.util.List;
@@ -111,23 +113,24 @@ public class ItemToolGravitool extends ItemElectricToolPrecisionWrench implement
         ItemStack stack = player.getHeldItem(handIn);
 
         if (IC2.platform.isSimulating() && IC2.keyboard.isModeSwitchKeyDown(player)) {
+	    IC2.audioManager.playOnce(player, PositionSpec.Hand, GravisuitSounds.toolGraviToolSound, true, IC2.audioManager.getDefaultVolume());
             if (this.getDamage(stack) == 3) {
                 this.setDamage(stack, 0);
-                IC2.platform.messagePlayer(player, GravisuitLang.messageWrench);
+                IC2.platform.messagePlayer(player, TextFormatting.AQUA, GravisuitLang.messageWrench);
             } else if (this.getDamage(stack) == 0){
                 this.setDamage(stack, 1);
-                IC2.platform.messagePlayer(player, GravisuitLang.messageHoe);
+                IC2.platform.messagePlayer(player, TextFormatting.GOLD, GravisuitLang.messageHoe);
             } else if (this.getDamage(stack) == 1){
                 this.setDamage(stack, 2);
-                IC2.platform.messagePlayer(player, GravisuitLang.messageTreetap);
+                IC2.platform.messagePlayer(player, TextFormatting.DARK_GREEN, GravisuitLang.messageTreetap);
             }else {
                 this.setDamage(stack, 3);
-                IC2.platform.messagePlayer(player, GravisuitLang.messageScrewdriver);
+                IC2.platform.messagePlayer(player, TextFormatting.LIGHT_PURPLE, GravisuitLang.messageScrewdriver);
             }
 
             return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
         } else {
-            return super.onItemRightClick(worldIn, player, handIn);
+            return ActionResult.newResult(EnumActionResult.PASS, stack);
         }
     }
 
