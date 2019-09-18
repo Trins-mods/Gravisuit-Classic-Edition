@@ -60,7 +60,12 @@ public class ItemToolAdvancedChainsaw extends ItemElectricTool implements IStati
 
     @Override
     public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-        tooltip.add(GravisuitLang.advancedChainsaw1.getLocalized());
+        //tooltip.add(GravisuitLang.advancedChainsaw1.getLocalized());
+        if (this.getDamage(stack) == 0) {
+        	tooltip.add(GravisuitLang.messageAdvancedChainsaw1.getLocalized());
+        } else if (this.getDamage(stack) == 1) {
+        	tooltip.add(GravisuitLang.messageAdvancedChainsaw2.getLocalized());
+        }
     }
 
     @Override
@@ -87,7 +92,10 @@ public class ItemToolAdvancedChainsaw extends ItemElectricTool implements IStati
 
     @Override
     public boolean itemInteractionForEntity(ItemStack stack, EntityPlayer playerIn, EntityLivingBase entity, EnumHand hand) {
-        return Ic2Items.chainSaw.getItem().itemInteractionForEntity(stack, playerIn, entity, hand);
+    	if (this.getDamage(stack) == 0) {
+            return Ic2Items.chainSaw.getItem().itemInteractionForEntity(stack, playerIn, entity, hand);
+    	} 
+    	return false;
     }
 
     @Override
@@ -99,15 +107,17 @@ public class ItemToolAdvancedChainsaw extends ItemElectricTool implements IStati
                 IBlockState nextState = worldIn.getBlockState(nextPos);
                 if (nextState.getBlock().isWood(worldIn, nextPos)) {
                     breakBlock(nextPos, itemstack, worldIn, pos, player);
-                }else {
+                } else {
                     break;
                 }
             }
         }
-        if (ElectricItem.manager.canUse(itemstack, this.operationEnergyCost)){
+        if (ElectricItem.manager.canUse(itemstack, this.operationEnergyCost)) {
             IC2.audioManager.playOnce(player, Ic2Sounds.chainsawUseOne);
         }
-        return Ic2Items.chainSaw.getItem().onBlockStartBreak(itemstack, pos, player);
+        if (this.getDamage(itemstack) == 0) {
+        	return Ic2Items.chainSaw.getItem().onBlockStartBreak(itemstack, pos, player);
+        } else return false; 
     }
 
     @Override
@@ -133,6 +143,23 @@ public class ItemToolAdvancedChainsaw extends ItemElectricTool implements IStati
         blockState.getBlock().harvestBlock(world, player, pos, blockState, world.getTileEntity(pos), saw);
         world.setBlockToAir(pos);
         world.removeTileEntity(pos);
+    }
+    
+    @Override
+    public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer player, EnumHand handIn) {
+        ItemStack stack = player.getHeldItem(handIn);
+        if (IC2.platform.isSimulating() && IC2.keyboard.isModeSwitchKeyDown(player)) {
+            if (this.getDamage(stack) == 1) {
+                this.setDamage(stack, 0);
+                IC2.platform.messagePlayer(player, TextFormatting.GREEN, GravisuitLang.messageAdvancedChainsaw1);
+            } else {
+                this.setDamage(stack, 1);
+                IC2.platform.messagePlayer(player, TextFormatting.RED, GravisuitLang.messageAdvancedChainsaw2);
+            }
+            return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
+        } else {
+            return ActionResult.newResult(EnumActionResult.PASS, stack);
+        }
     }
 
     @Override
