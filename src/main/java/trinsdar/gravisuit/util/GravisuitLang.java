@@ -37,6 +37,7 @@ public class GravisuitLang {
     public static LocaleComp vajraSilktouchOff = new LocaleItemInfoComp("itemInfo.vajraSilktouchOff.name");
 
     public static LocaleComp messageAdvancedChainsaw1 = new LocaleItemInfoComp("message.advancedChainsaw1.name");
+    public static LocaleComp messageAdvancedChainsaw2 = new LocaleItemInfoComp("message.advancedChainsaw2.name");
     public static LocaleComp messageAdvancedDrillNormal = new LocaleItemInfoComp("message.advancedDrillNormal.name");
     public static LocaleComp messageAdvancedDrillLowPower = new LocaleItemInfoComp("message.advancedDrillLowPower.name");
     public static LocaleComp messageAdvancedDrillFine = new LocaleItemInfoComp("message.advancedDrillFine.name");
