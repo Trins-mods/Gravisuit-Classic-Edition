@@ -7,6 +7,7 @@ import ic2.core.platform.registry.Ic2Items;
 import ic2.core.platform.registry.Ic2Sounds;
 import ic2.core.platform.textures.Ic2Icons;
 import ic2.core.platform.textures.obj.IStaticTexturedItem;
+import ic2.core.util.misc.StackUtil;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -19,8 +20,12 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -60,7 +65,12 @@ public class ItemToolAdvancedChainsaw extends ItemElectricTool implements IStati
 
     @Override
     public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-        tooltip.add(GravisuitLang.advancedChainsaw1.getLocalized());
+    	NBTTagCompound tag = StackUtil.getOrCreateNbtData(stack);
+    	if (!tag.getBoolean("noShear")) {
+    		tooltip.add(GravisuitLang.messageAdvancedChainsawNormal.getLocalized());
+    	} else if (tag.getBoolean("noShear")) {
+    		tooltip.add(GravisuitLang.messageAdvancedChainsawNoShear.getLocalized());
+    	}
     }
 
     @Override
@@ -87,11 +97,16 @@ public class ItemToolAdvancedChainsaw extends ItemElectricTool implements IStati
 
     @Override
     public boolean itemInteractionForEntity(ItemStack stack, EntityPlayer playerIn, EntityLivingBase entity, EnumHand hand) {
-        return Ic2Items.chainSaw.getItem().itemInteractionForEntity(stack, playerIn, entity, hand);
+    	NBTTagCompound tag = StackUtil.getOrCreateNbtData(stack);
+    	if (!tag.getBoolean("noShear")) {
+            return Ic2Items.chainSaw.getItem().itemInteractionForEntity(stack, playerIn, entity, hand);
+    	} 
+    	return false;
     }
 
     @Override
     public boolean onBlockStartBreak(ItemStack itemstack, BlockPos pos, EntityPlayer player) {
+    	NBTTagCompound tag = StackUtil.getOrCreateNbtData(itemstack);
         World worldIn = player.world;
         if (!player.isSneaking()) {
             for (int i = 1; i < 60; i++) {
@@ -99,15 +114,19 @@ public class ItemToolAdvancedChainsaw extends ItemElectricTool implements IStati
                 IBlockState nextState = worldIn.getBlockState(nextPos);
                 if (nextState.getBlock().isWood(worldIn, nextPos)) {
                     breakBlock(nextPos, itemstack, worldIn, pos, player);
-                }else {
+                } else {
                     break;
                 }
             }
         }
-        if (ElectricItem.manager.canUse(itemstack, this.operationEnergyCost)){
+        if (ElectricItem.manager.canUse(itemstack, this.operationEnergyCost)) {
             IC2.audioManager.playOnce(player, Ic2Sounds.chainsawUseOne);
         }
-        return Ic2Items.chainSaw.getItem().onBlockStartBreak(itemstack, pos, player);
+        if (!tag.getBoolean("noShear")) {
+        	return Ic2Items.chainSaw.getItem().onBlockStartBreak(itemstack, pos, player);
+        } else {
+        	return false; 
+        }
     }
 
     @Override
@@ -139,7 +158,24 @@ public class ItemToolAdvancedChainsaw extends ItemElectricTool implements IStati
     public List<Integer> getValidVariants() {
         return Arrays.asList(0);
     }
-
+    
+    @Override
+    public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer player, EnumHand handIn) {
+        ItemStack stack = player.getHeldItem(handIn);
+        NBTTagCompound tag = StackUtil.getOrCreateNbtData(stack);
+        if (IC2.platform.isSimulating() && IC2.keyboard.isModeSwitchKeyDown(player)) {
+        	if (tag.getBoolean("noShear")) {
+            	tag.setBoolean("noShear", false);
+            	IC2.platform.messagePlayer(player, TextFormatting.GREEN, GravisuitLang.messageAdvancedChainsawNormal);
+            } else {
+            	tag.setBoolean("noShear", true);
+            	IC2.platform.messagePlayer(player, TextFormatting.RED, GravisuitLang.messageAdvancedChainsawNoShear);
+            }
+        	return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
+        } else {
+            return super.onItemRightClick(worldIn, player, handIn);	
+        }
+    }
 
     @Override
     public EnumEnchantmentType getType(ItemStack item) {
