@@ -43,6 +43,8 @@ itemInfo.vajraSilktouchToggle.name=Enable/Disable Silktouch
 itemInfo.vajraSilktouchOn.name=Enabled
 itemInfo.vajraSilktouchOff.name=Disabled
 
+message.advancedChainsawNormal.name=Normal
+message.advancedChainsawNoShear.name=No Shears
 message.advancedDrillNormal.name=Set Mode to Normal
 message.advancedDrillLowPower.name=Set Mode to Low Power
 message.advancedDrillFine.name=Set Mode to Fine
