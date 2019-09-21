@@ -82,7 +82,7 @@ public class ItemToolAdvancedChainsaw extends ItemElectricTool implements IStati
         List<String> ctrlTip = sortedTooltip.get(ToolTipType.Ctrl);
         ctrlTip.add(Ic2Lang.onItemRightClick.getLocalized());
         ctrlTip.add(Ic2Lang.pressTo.getLocalizedFormatted(IC2.keyboard.getKeyName(2), GravisuitLang.advancedChainsawShearToggle.getLocalized()));
-        ctrlTip.add(Ic2Lang.pressTo.getLocalizedFormatted(GravisuitLang.gravisuitToggleCombo.getLocalizedFormatted(IC2.keyboard.getKeyName(0), IC2.keyboard.getKeyName(2)), GravisuitLang.advancedChainsawTreeCuttingToggle.getLocalized()));
+        ctrlTip.add(Ic2Lang.pressTo.getLocalizedFormatted(GravisuitLang.gravisuitToggleCombo.getLocalizedFormatted(IC2.keyboard.getKeyName(9), IC2.keyboard.getKeyName(2)), GravisuitLang.advancedChainsawTreeCuttingToggle.getLocalized()));
     }
 
     @Override
