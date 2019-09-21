@@ -130,7 +130,7 @@ public class ItemToolAdvancedChainsaw extends ItemElectricTool implements IStati
         World worldIn = player.world;
         if (!player.isSneaking() && !tag.getBoolean("noTreeCutting")) {
             Set<BlockPos> positions = getTargetBlocks(worldIn, pos, player);
-            if (isTree(pos, player) && !positions.isEmpty()){
+            if (!positions.isEmpty()){
                 for (BlockPos pos2 : positions) {
                     breakBlock(pos2, itemstack, worldIn, pos, player);
                 }
@@ -216,7 +216,7 @@ public class ItemToolAdvancedChainsaw extends ItemElectricTool implements IStati
                 }
             }
         }
-        
+
         if (worldIn.getBlockState(pos).getBlock().isWood(worldIn, pos)){
             for (int i = 1; i < 60; i++) {
                 BlockPos nextPos = pos.up(i);
