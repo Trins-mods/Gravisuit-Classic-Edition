@@ -4,10 +4,12 @@ import ic2.api.item.ElectricItem;
 import ic2.core.IC2;
 import ic2.core.item.base.ItemElectricTool;
 import ic2.core.platform.registry.Ic2Items;
+import ic2.core.platform.registry.Ic2Lang;
 import ic2.core.platform.registry.Ic2Sounds;
 import ic2.core.platform.textures.Ic2Icons;
 import ic2.core.platform.textures.obj.IStaticTexturedItem;
 import ic2.core.util.misc.StackUtil;
+import ic2.core.util.obj.ToolTipType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -34,6 +36,7 @@ import trinsdar.gravisuit.util.GravisuitLang;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 public class ItemToolAdvancedChainsaw extends ItemElectricTool implements IStaticTexturedItem {
     public static final ItemStack ironAxe;
@@ -64,13 +67,22 @@ public class ItemToolAdvancedChainsaw extends ItemElectricTool implements IStati
     }
 
     @Override
-    public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-    	NBTTagCompound tag = StackUtil.getOrCreateNbtData(stack);
-    	if (!tag.getBoolean("noShear")) {
-    		tooltip.add(GravisuitLang.messageAdvancedChainsawNormal.getLocalized());
-    	} else if (tag.getBoolean("noShear")) {
-    		tooltip.add(GravisuitLang.messageAdvancedChainsawNoShear.getLocalized());
-    	}
+    public void onSortedItemToolTip(ItemStack stack, EntityPlayer player, boolean debugTooltip, List<String> tooltip, Map<ToolTipType, List<String>> sortedTooltip) {
+        NBTTagCompound tag = StackUtil.getOrCreateNbtData(stack);
+        if (!tag.getBoolean("noShear")) {
+            tooltip.add(GravisuitLang.messageAdvancedChainsawNormal.getLocalized());
+        } else if (tag.getBoolean("noShear")) {
+            tooltip.add(GravisuitLang.messageAdvancedChainsawNoShear.getLocalized());
+        }
+        if (!tag.getBoolean("noTreeCutting")){
+            tooltip.add(GravisuitLang.messageAdvancedChainsawTreeCuttingOn.getLocalized());
+        } else {
+            tooltip.add(GravisuitLang.messageAdvancedChainsawTreeCuttingOff.getLocalized());
+        }
+        List<String> ctrlTip = sortedTooltip.get(ToolTipType.Ctrl);
+        ctrlTip.add(Ic2Lang.onItemRightClick.getLocalized());
+        ctrlTip.add(Ic2Lang.pressTo.getLocalizedFormatted(IC2.keyboard.getKeyName(2), GravisuitLang.advancedChainsawShearToggle.getLocalized()));
+        ctrlTip.add(Ic2Lang.pressTo.getLocalizedFormatted(GravisuitLang.gravisuitToggleCombo.getLocalizedFormatted(IC2.keyboard.getKeyName(0), IC2.keyboard.getKeyName(2)), GravisuitLang.advancedChainsawTreeCuttingToggle.getLocalized()));
     }
 
     @Override
@@ -108,7 +120,7 @@ public class ItemToolAdvancedChainsaw extends ItemElectricTool implements IStati
     public boolean onBlockStartBreak(ItemStack itemstack, BlockPos pos, EntityPlayer player) {
     	NBTTagCompound tag = StackUtil.getOrCreateNbtData(itemstack);
         World worldIn = player.world;
-        if (!player.isSneaking()) {
+        if (!player.isSneaking() && !tag.getBoolean("noTreeCutting")) {
             for (int i = 1; i < 60; i++) {
                 BlockPos nextPos = pos.up(i);
                 IBlockState nextState = worldIn.getBlockState(nextPos);
@@ -118,9 +130,6 @@ public class ItemToolAdvancedChainsaw extends ItemElectricTool implements IStati
                     break;
                 }
             }
-        }
-        if (ElectricItem.manager.canUse(itemstack, this.operationEnergyCost)) {
-            IC2.audioManager.playOnce(player, Ic2Sounds.chainsawUseOne);
         }
         if (!tag.getBoolean("noShear")) {
         	return Ic2Items.chainSaw.getItem().onBlockStartBreak(itemstack, pos, player);
@@ -164,12 +173,22 @@ public class ItemToolAdvancedChainsaw extends ItemElectricTool implements IStati
         ItemStack stack = player.getHeldItem(handIn);
         NBTTagCompound tag = StackUtil.getOrCreateNbtData(stack);
         if (IC2.platform.isSimulating() && IC2.keyboard.isModeSwitchKeyDown(player)) {
-        	if (tag.getBoolean("noShear")) {
-            	tag.setBoolean("noShear", false);
-            	IC2.platform.messagePlayer(player, TextFormatting.GREEN, GravisuitLang.messageAdvancedChainsawNormal);
+            if (player.isSneaking()){
+                if (tag.getBoolean("noTreeCutting")) {
+                    tag.setBoolean("noTreeCutting", false);
+                    IC2.platform.messagePlayer(player, TextFormatting.GREEN, GravisuitLang.messageAdvancedChainsawTreeCuttingOn);
+                } else {
+                    tag.setBoolean("noTreeCutting", true);
+                    IC2.platform.messagePlayer(player, TextFormatting.RED, GravisuitLang.messageAdvancedChainsawTreeCuttingOff);
+                }
             } else {
-            	tag.setBoolean("noShear", true);
-            	IC2.platform.messagePlayer(player, TextFormatting.RED, GravisuitLang.messageAdvancedChainsawNoShear);
+                if (tag.getBoolean("noShear")) {
+                    tag.setBoolean("noShear", false);
+                    IC2.platform.messagePlayer(player, TextFormatting.GREEN, GravisuitLang.messageAdvancedChainsawNormal);
+                } else {
+                    tag.setBoolean("noShear", true);
+                    IC2.platform.messagePlayer(player, TextFormatting.RED, GravisuitLang.messageAdvancedChainsawNoShear);
+                }
             }
         	return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
         } else {

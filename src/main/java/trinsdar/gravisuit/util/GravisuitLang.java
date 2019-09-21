@@ -21,7 +21,8 @@ public class GravisuitLang {
     public static LocaleComp hoe = new LocaleItemInfoComp("itemInfo.hoe.name");
     public static LocaleComp treetap = new LocaleItemInfoComp("itemInfo.treetap.name");
     public static LocaleComp screwdriver = new LocaleItemInfoComp("itemInfo.screwdriver.name");
-    public static LocaleComp advancedChainsaw1 = new LocaleItemInfoComp("itemInfo.advancedChainsaw1.name");
+    public static LocaleComp advancedChainsawTreeCuttingToggle = new LocaleItemInfoComp("itemInfo.advancedChainsawTreeCuttingToggle.name");
+    public static LocaleComp advancedChainsawShearToggle = new LocaleItemInfoComp("itemInfo.advancedChainsawShearToggle.name");
     public static LocaleComp advancedDrillNormal = new LocaleItemInfoComp("itemInfo.advancedDrillNormal.name");
     public static LocaleComp advancedDrillLowPower = new LocaleItemInfoComp("itemInfo.advancedDrillLowPower.name");
     public static LocaleComp advancedDrillFine = new LocaleItemInfoComp("itemInfo.advancedDrillFine.name");
@@ -36,6 +37,8 @@ public class GravisuitLang {
     public static LocaleComp vajraSilktouchOn = new LocaleItemInfoComp("itemInfo.vajraSilktouchOn.name");
     public static LocaleComp vajraSilktouchOff = new LocaleItemInfoComp("itemInfo.vajraSilktouchOff.name");
 
+    public static LocaleComp messageAdvancedChainsawTreeCuttingOn = new LocaleItemInfoComp("message.advancedChainsawTreeCuttingOn.name");
+    public static LocaleComp messageAdvancedChainsawTreeCuttingOff = new LocaleItemInfoComp("message.advancedChainsawTreeCuttingOff.name");
     public static LocaleComp messageAdvancedChainsawNormal = new LocaleItemInfoComp("message.advancedChainsawNormal.name");
     public static LocaleComp messageAdvancedChainsawNoShear = new LocaleItemInfoComp("message.advancedChainsawNoShear.name");
     public static LocaleComp messageAdvancedDrillNormal = new LocaleItemInfoComp("message.advancedDrillNormal.name");
