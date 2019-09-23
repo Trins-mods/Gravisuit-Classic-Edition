@@ -28,6 +28,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
@@ -79,17 +80,17 @@ public class ItemToolAdvancedDiamondDrill extends ItemElectricTool implements IS
             toolMode = toolMode.getNext();
             nbt.setByte("ToolModeDrill", (byte)toolMode.ordinal());
             if (toolMode == ToolMode.NORMAL) {
-                IC2.platform.messagePlayer(player, GravisuitLang.messageAdvancedDrillNormal);
+                IC2.platform.messagePlayer(player, TextFormatting.AQUA, GravisuitLang.messageAdvancedDrillNormal);
             } else if (toolMode == ToolMode.LOWPOWER){
-                IC2.platform.messagePlayer(player, GravisuitLang.messageAdvancedDrillLowPower);
+                IC2.platform.messagePlayer(player, TextFormatting.GOLD, GravisuitLang.messageAdvancedDrillLowPower);
             } else if (toolMode == ToolMode.FINE){
-                IC2.platform.messagePlayer(player, GravisuitLang.messageAdvancedDrillFine);
+                IC2.platform.messagePlayer(player, TextFormatting.DARK_GREEN, GravisuitLang.messageAdvancedDrillFine);
             } else if (toolMode == ToolMode.BIGHOLES){
-                IC2.platform.messagePlayer(player, GravisuitLang.messageAdvancedDrillBigHoles);
+                IC2.platform.messagePlayer(player,TextFormatting.LIGHT_PURPLE, GravisuitLang.messageAdvancedDrillBigHoles);
             } else if (toolMode == ToolMode.MEDIUMHOLES){
-                IC2.platform.messagePlayer(player, GravisuitLang.messageAdvancedDrillMediumHoles);
+                IC2.platform.messagePlayer(player, TextFormatting.BLUE, GravisuitLang.messageAdvancedDrillMediumHoles);
             } else {
-                IC2.platform.messagePlayer(player, GravisuitLang.messageAdvancedDrillTunnelHoles);
+                IC2.platform.messagePlayer(player, TextFormatting.DARK_PURPLE, GravisuitLang.messageAdvancedDrillTunnelHoles);
             }
 
             return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
