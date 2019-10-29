@@ -31,7 +31,9 @@ public class GUIHandler extends Gui {
 		if ((armorStack != null) && (itemArmor == Registry.getAdvancedLappack() || itemArmor == Registry.getUltimateLappack() ||
 									itemArmor == Registry.getAdvancedElectricJetpack() || itemArmor == Registry.getAdvancedNuclearJetpack() || 
 									itemArmor == Registry.advancedNanoChestplate || itemArmor == Registry.advancedNuclearNanoChestplate || 
-									itemArmor == Registry.gravisuit || itemArmor == Registry.nuclearGravisuit)) 
+									itemArmor == Registry.gravisuit || itemArmor == Registry.nuclearGravisuit || 
+									itemArmor == Ic2Items.compactedElectricJetpack.getItem() || itemArmor == Ic2Items.compactedNuclearJetpack.getItem() || 
+									itemArmor == Ic2Items.quantumJetplate.getItem() || itemArmor == Ic2Items.quantumNuclearJetplate.getItem()))   
 		{
 			int currCharge = getCharge(armorStack);
 			int energyStatus = (int) (currCharge / ((IElectricItem) itemArmor).getMaxCharge(armorStack) * 100);
@@ -41,7 +43,9 @@ public class GUIHandler extends Gui {
 		
 		if ((armorStack != null) && (itemArmor == Registry.getAdvancedElectricJetpack() || itemArmor == Registry.getAdvancedNuclearJetpack() || 
 									itemArmor == Registry.advancedNanoChestplate || itemArmor == Registry.advancedNuclearNanoChestplate || 
-									itemArmor == Registry.gravisuit || itemArmor == Registry.nuclearGravisuit)) 
+									itemArmor == Registry.gravisuit || itemArmor == Registry.nuclearGravisuit || 
+									itemArmor == Ic2Items.compactedElectricJetpack.getItem() || itemArmor == Ic2Items.compactedNuclearJetpack.getItem() || 
+									itemArmor == Ic2Items.quantumJetplate.getItem() || itemArmor == Ic2Items.quantumNuclearJetplate.getItem())) 
 		{
 			NBTTagCompound tag = StackUtil.getOrCreateNbtData(armorStack);
 			if (tag.getBoolean("enabled")) {
