@@ -22,7 +22,7 @@ public class GUIHandler extends Gui {
 	    String hoverModeStatus = "";
 	    String engineStatus = "";
 	    String graviEngine = "";
-		String energyLevelName = I18n.format("panelInfo.energyLevel") + ": ";
+	    String energyLevelName = I18n.format("panelInfo.energyLevel") + ": ";
 		
 		EntityPlayer player = mc.player;
 		ItemStack armorStack = player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
