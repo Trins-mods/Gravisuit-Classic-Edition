@@ -67,6 +67,11 @@ message.graviEngineOff.name=Gravitation Engine Disabled
 message.silkTouchOn.name=Silk Touch Enabled
 message.silkTouchOff.name=Silk Touch Disabled
 
+panelInfo.energyLevel=Energy Level
+panelInfo.jetpackEngineOn=Jetpack Engine On
+panelInfo.jetpackHoverMode=Hover Mode
+panelInfo.jetpackExtremeHoverMode=Extreme Hover Mode
+panelInfo.gravitationEngineOn=Gravi Engine On
 
 itemInfo.graviEngineOnInfo.name=When the Gravitation Engine is Enabled,
 itemInfo.graviEngineOffInfo.name=When the Gravitation Engine is Disabled,
