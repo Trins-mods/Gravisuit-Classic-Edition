@@ -17,6 +17,11 @@ public class GUIHandler extends Gui {
 	
 	public GUIHandler(Minecraft mc) {
 		
+	    int offset = 3;
+ 	    int xPos = offset;
+	    int yPos1 = offset;
+	    int yPos2 = offset + mc.fontRenderer.FONT_HEIGHT + 2;
+		
 	    String energyLevelString = "";
 	    String statusString = "";
 	    String hoverModeStatus = "";
@@ -38,7 +43,7 @@ public class GUIHandler extends Gui {
 			int currCharge = getCharge(armorStack);
 			int energyStatus = (int) (currCharge / ((IElectricItem) itemArmor).getMaxCharge(armorStack) * 100);
 			energyLevelString = energyLevelName + energyStatus;
-			drawString(mc.fontRenderer, energyLevelString + "%",  3, 3, getEnergyTextColor(energyStatus)); 
+			drawString(mc.fontRenderer, energyLevelString + "%",  xPos, yPos1, getEnergyTextColor(energyStatus)); 
 		}
 		
 		if ((armorStack != null) && (itemArmor == Registry.getAdvancedElectricJetpack() || itemArmor == Registry.getAdvancedNuclearJetpack() || 
@@ -64,7 +69,7 @@ public class GUIHandler extends Gui {
 				statusString = engineStatus + hoverModeStatus;
 			} 
 		}
-			drawString(mc.fontRenderer, statusString,  3, 13, 5635925);
+			drawString(mc.fontRenderer, statusString,  xPos, yPos2, 5635925);
 	}
 		
 	public static int getEnergyTextColor(int energyLevel) {
