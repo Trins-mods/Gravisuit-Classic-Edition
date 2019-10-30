@@ -9,6 +9,7 @@ import trinsdar.gravisuit.items.armor.ItemArmorGravisuit;
 import trinsdar.gravisuit.util.Config;
 import trinsdar.gravisuit.util.GravisuitRecipes;
 import trinsdar.gravisuit.util.Registry;
+import trinsdar.gravisuit.util.render.RenderGUIHandler;
 
 import java.io.File;
 
@@ -29,6 +30,6 @@ public class CommonProxy {
     }
 
     public void postInit(FMLPostInitializationEvent e) {
-        // temporarily empty post init method
+        MinecraftForge.EVENT_BUS.register(new RenderGUIHandler());
     }
 }
