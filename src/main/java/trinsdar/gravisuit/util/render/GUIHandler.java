@@ -23,6 +23,7 @@ public class GUIHandler extends Gui {
 	
 	public GUIHandler(Minecraft mc) {
 
+		int offset = 3;
 		int xPos;
 		int yPos1;
 		ScaledResolution scaledResolution = new ScaledResolution(mc);
@@ -34,7 +35,7 @@ public class GUIHandler extends Gui {
 	    		yPos1 = scaledResolution.getScaledHeight() - (mc.fontRenderer.FONT_HEIGHT * 3) + 5;
 			}
 		} else if (GravisuitConfig.client.positions == GravisuitConfig.Client.Positions.TOPRIGHT || GravisuitConfig.client.positions == GravisuitConfig.Client.Positions.BOTTOMRIGHT){
-	    	xPos = (int)(scaledResolution.getScaledWidth() * 0.70F);
+	    	xPos = 3;
 			if (GravisuitConfig.client.positions == GravisuitConfig.Client.Positions.TOPRIGHT){
 				yPos1 = 3;
 			} else {
@@ -68,6 +69,9 @@ public class GUIHandler extends Gui {
 			int currCharge = getCharge(armorStack);
 			int energyStatus = (int) (currCharge / ((IElectricItem) itemArmor).getMaxCharge(armorStack) * 100);
 			energyLevelString = energyLevelName + energyStatus;
+			if (GravisuitConfig.client.positions == GravisuitConfig.Client.Positions.TOPRIGHT || GravisuitConfig.client.positions == GravisuitConfig.Client.Positions.BOTTOMRIGHT){
+				xPos = scaledResolution.getScaledWidth() - 3 - energyLevelString.length();
+			}
 			drawString(mc.fontRenderer, energyLevelString + "%",  xPos, yPos1, getEnergyTextColor(energyStatus)); 
 		}
 		
@@ -94,7 +98,10 @@ public class GUIHandler extends Gui {
 				statusString = engineStatus + hoverModeStatus;
 			} 
 		}
-			drawString(mc.fontRenderer, statusString,  xPos, yPos2, 5635925);
+		if (GravisuitConfig.client.positions == GravisuitConfig.Client.Positions.TOPRIGHT || GravisuitConfig.client.positions == GravisuitConfig.Client.Positions.BOTTOMRIGHT){
+			xPos = (scaledResolution.getScaledWidth() - 3) - statusString.length() * 2;
+		}
+		drawString(mc.fontRenderer, statusString,  xPos, yPos2, 5635925);
 	}
 		
 	public static int getEnergyTextColor(int energyLevel) {
