@@ -53,53 +53,77 @@ public class GravisuitConfig {
     public static class PowerValues {
 
         @RangeInt(min = 1)
+        @RequiresMcRestart
         public int advancedElectricJetpackStorage = 500000;
         @RangeInt(min = 1)
+        @RequiresMcRestart
         public int advancedNuclearJetpackStorage = 500000;
         @RangeInt(min = 1)
+        @RequiresMcRestart
         public int advancedLappackStorage = 600000;
         @RangeInt(min = 1)
+        @RequiresMcRestart
         public int ultimateLappackStorage = 10000000;
         @RangeInt(min = 1)
+        @RequiresMcRestart
         public int advancedNanoChestplateStorage = 600000;
         @RangeInt(min = 1)
+        @RequiresMcRestart
         public int advancedNuclearNanoChestplateStorage = 600000;
         @RangeInt(min = 1)
+        @RequiresMcRestart
         public int gravisuitStorage = 10000000;
         @RangeInt(min = 1)
+        @RequiresMcRestart
         public int nuclearGravisuitStorage = 10000000;
         @RangeInt(min = 1)
+        @RequiresMcRestart
         public int advancedChainsawStorage = 100000;
         @RangeInt(min = 1)
+        @RequiresMcRestart
         public int advancedDrillStorage = 100000;
         @RangeInt(min = 1)
+        @RequiresMcRestart
         public int gravitoolStorage = 50000;
         @RangeInt(min = 1)
+        @RequiresMcRestart
         public int vajraStorage = 3000000;
 
         @RangeInt(min = 1)
+        @RequiresMcRestart
         public int advancedElectricJetpackTransfer = 500;
         @RangeInt(min = 1)
+        @RequiresMcRestart
         public int advancedNuclearJetpackTransfer = 500;
         @RangeInt(min = 1)
+        @RequiresMcRestart
         public int advancedLappackTransfer = 500;
         @RangeInt(min = 1)
+        @RequiresMcRestart
         public int ultimateLappackTransfer = 4000;
         @RangeInt(min = 1)
+        @RequiresMcRestart
         public int advancedNanoChestplateTransfer = 500;
         @RangeInt(min = 1)
+        @RequiresMcRestart
         public int advancedNuclearNanoChestplateTransfer = 500;
         @RangeInt(min = 1)
+        @RequiresMcRestart
         public int gravisuitTransfer = 5000;
         @RangeInt(min = 1)
+        @RequiresMcRestart
         public int nuclearGravisuitTransfer = 5000;
         @RangeInt(min = 1)
+        @RequiresMcRestart
         public int advancedChainsawTransfer = 200;
         @RangeInt(min = 1)
+        @RequiresMcRestart
         public int advancedDrillTransfer = 200;
         @RangeInt(min = 1)
+        @RequiresMcRestart
         public int gravitoolTransfer = 400;
         @RangeInt(min = 1)
+        @RequiresMcRestart
         public int vajraTransfer = 1000;
     }
 
