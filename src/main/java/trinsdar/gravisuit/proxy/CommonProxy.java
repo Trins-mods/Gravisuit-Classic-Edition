@@ -26,6 +26,5 @@ public class CommonProxy {
     }
 
     public void postInit(FMLPostInitializationEvent e) {
-        MinecraftForge.EVENT_BUS.register(new RenderGUIHandler());
     }
 }
