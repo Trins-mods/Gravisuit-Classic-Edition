@@ -3,20 +3,15 @@ package trinsdar.gravisuit.items.tools;
 import buildcraft.api.tools.IToolWrench;
 import cofh.api.item.IToolHammer;
 import ic2.api.classic.audio.PositionSpec;
-import ic2.api.classic.tile.ISpecialWrenchable;
 import ic2.api.item.ElectricItem;
-import ic2.api.tile.IWrenchable;
 import ic2.core.IC2;
 import ic2.core.item.tool.electric.ItemElectricToolPrecisionWrench;
 import ic2.core.platform.lang.storage.Ic2InfoLang;
 import ic2.core.platform.registry.Ic2Items;
-import ic2.core.platform.registry.Ic2Sounds;
 import ic2.core.platform.textures.Ic2Icons;
 import ic2.core.platform.textures.obj.IAdvancedTexturedItem;
 import ic2.core.util.misc.StackUtil;
 import mrtjp.projectred.api.IScrewdriver;
-import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.util.ITooltipFlag;
@@ -24,7 +19,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
@@ -32,7 +26,6 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -40,13 +33,12 @@ import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import reborncore.api.ICustomToolHandler;
-import trinsdar.gravisuit.util.Config;
+import trinsdar.gravisuit.util.GravisuitConfig;
 import trinsdar.gravisuit.util.GravisuitLang;
 import trinsdar.gravisuit.util.GravisuitSounds;
 import trinsdar.gravisuit.util.RotationHelper;
 
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 
 @Optional.InterfaceList({
@@ -65,8 +57,8 @@ public class ItemToolGravitool extends ItemElectricToolPrecisionWrench implement
 
     public ItemToolGravitool() {
         super();
-        this.maxCharge = Config.gravitoolStorage;
-        this.transferLimit = Config.gravitoolTransfer;
+        this.maxCharge = GravisuitConfig.powerValues.gravitoolStorage;
+        this.transferLimit = GravisuitConfig.powerValues.gravitoolTransfer;
         this.tier = 2;
         this.setHasSubtypes(true);
         this.setMaxDamage(0);
@@ -207,7 +199,7 @@ public class ItemToolGravitool extends ItemElectricToolPrecisionWrench implement
         }else if (this.getDamage(stack) == 3){
             tooltip.add(GravisuitLang.toolMode.getLocalizedFormatted(GravisuitLang.screwdriver));
         }
-        if (Config.enableGravitoolRequiresLosslessPrecisionWrench){
+        if (GravisuitConfig.enableGravitoolRequiresLosslessPrecisionWrench){
             tooltip.add(TextFormatting.GREEN + GravisuitLang.craftingGravitool.getLocalized());
         }
         if (this.isImport(stack)) {

@@ -2,7 +2,7 @@ package trinsdar.gravisuit.items.ic2override;
 
 import ic2.core.item.armor.electric.ItemArmorCompactedElectricJetpack;
 import net.minecraft.item.ItemStack;
-import trinsdar.gravisuit.util.Config;
+import trinsdar.gravisuit.util.GravisuitConfig;
 
 public class ItemArmorCompactedElectricJetpack2 extends ItemArmorCompactedElectricJetpack {
     public ItemArmorCompactedElectricJetpack2() {
@@ -11,6 +11,6 @@ public class ItemArmorCompactedElectricJetpack2 extends ItemArmorCompactedElectr
 
     @Override
     public boolean canProvideEnergy(ItemStack stack) {
-        return Config.enableCompactedElectricJetpackOverride;
+        return GravisuitConfig.enableCompactedElectricJetpackOverride;
     }
 }

@@ -3,7 +3,6 @@ package trinsdar.gravisuit.items.armor;
 import ic2.core.IC2;
 import ic2.core.inventory.base.IHandHeldInventory;
 import ic2.core.inventory.base.IHasGui;
-import ic2.core.item.armor.base.ItemArmorJetpackBase;
 import ic2.core.item.inv.inventories.NuclearJetpackInventory;
 import ic2.core.util.misc.StackUtil;
 import net.minecraft.entity.player.EntityPlayer;
@@ -13,14 +12,14 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
-import trinsdar.gravisuit.util.Config;
+import trinsdar.gravisuit.util.GravisuitConfig;
 import trinsdar.gravisuit.util.GravisuitLang;
 
 public class ItemArmorAdvancedNuclearNanoChestplate extends ItemArmorAdvancedNanoChestplate implements IHandHeldInventory {
     public ItemArmorAdvancedNuclearNanoChestplate() {
         super(new ItemArmorAdvancedNuclearJetpack(), "advancedNuclearNanoChestplate", GravisuitLang.advancedNuclearNanoChestplate,"advanced_nuclear_nano_chestplate", 21);
-        this.transferLimit = Config.advancedNuclearNanoChestplateTransfer;
-        this.maxCharge = Config.advancedNuclearNanoChestplateStorage;
+        this.transferLimit = GravisuitConfig.powerValues.advancedNuclearNanoChestplateTransfer;
+        this.maxCharge = GravisuitConfig.powerValues.advancedNuclearNanoChestplateStorage;
     }
 
     @Override

@@ -35,10 +35,9 @@ import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jetbrains.annotations.Nullable;
-import trinsdar.gravisuit.util.Config;
+import trinsdar.gravisuit.util.GravisuitConfig;
 import trinsdar.gravisuit.util.GravisuitLang;
 
-import java.lang.reflect.Member;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
@@ -53,8 +52,8 @@ public class ItemToolAdvancedDiamondDrill extends ItemElectricTool implements IS
         this.setRegistryName("advanceddrill");
         this.setUnlocalizedName(GravisuitLang.advancedDrill);
         this.attackDamage = 4.0F;
-        this.maxCharge = Config.advancedDrillStorage;
-        this.transferLimit = Config.advancedDrillTransfer;
+        this.maxCharge = GravisuitConfig.powerValues.advancedDrillStorage;
+        this.transferLimit = GravisuitConfig.powerValues.advancedDrillTransfer;
         this.tier = 2;
         this.setCreativeTab(IC2.tabIC2);
     }
@@ -462,25 +461,25 @@ public class ItemToolAdvancedDiamondDrill extends ItemElectricTool implements IS
             } else if (this == LOWPOWER) {
                 return FINE;
             } else if (this == FINE) {
-                if (Config.enableAdvancedDrill3x3Mode){
+                if (GravisuitConfig.enableAdvancedDrill3x3Mode){
                     return BIGHOLES;
-                } else if (Config.enableAdvancedDrill2x3Mode){
+                } else if (GravisuitConfig.enableAdvancedDrill2x3Mode){
                     return MEDIUMHOLES;
-                }else if (Config.enableAdvancedDrill1x2Mode){
+                }else if (GravisuitConfig.enableAdvancedDrill1x2Mode){
                     return TUNNELHOLES;
                 }else {
                     return NORMAL;
                 }
             } else if (this == BIGHOLES ) {
-                if (Config.enableAdvancedDrill2x3Mode){
+                if (GravisuitConfig.enableAdvancedDrill2x3Mode){
                     return MEDIUMHOLES;
-                }else if (Config.enableAdvancedDrill1x2Mode){
+                }else if (GravisuitConfig.enableAdvancedDrill1x2Mode){
                     return TUNNELHOLES;
                 }else {
                     return NORMAL;
                 }
             } else if (this == MEDIUMHOLES){
-                if (Config.enableAdvancedDrill1x2Mode){
+                if (GravisuitConfig.enableAdvancedDrill1x2Mode){
                     return TUNNELHOLES;
                 }else {
                     return NORMAL;

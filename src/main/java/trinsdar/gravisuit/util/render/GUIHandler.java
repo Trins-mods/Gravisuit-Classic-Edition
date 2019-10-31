@@ -2,6 +2,7 @@ package trinsdar.gravisuit.util.render;
 
 import ic2.api.item.IElectricItem;
 import ic2.core.item.armor.base.ItemArmorJetpackBase.HoverMode;
+import ic2.core.platform.registry.Ic2Items;
 import ic2.core.util.misc.StackUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
@@ -11,7 +12,10 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import trinsdar.gravisuit.GravisuitClassic;
 import trinsdar.gravisuit.util.Registry;
+
+import java.util.Random;
 
 public class GUIHandler extends Gui {
 	
@@ -21,6 +25,10 @@ public class GUIHandler extends Gui {
  	    int xPos = offset;
 	    int yPos1 = offset;
 	    int yPos2 = offset + mc.fontRenderer.FONT_HEIGHT + 2;
+		Random random = new Random();
+		if (random.nextInt(50) == 0){
+			GravisuitClassic.logger.info(mc.displayWidth);
+		}
 		
 	    String energyLevelString = "";
 	    String statusString = "";
@@ -37,7 +45,7 @@ public class GUIHandler extends Gui {
 									itemArmor == Registry.getAdvancedElectricJetpack() || itemArmor == Registry.getAdvancedNuclearJetpack() || 
 									itemArmor == Registry.advancedNanoChestplate || itemArmor == Registry.advancedNuclearNanoChestplate || 
 									itemArmor == Registry.gravisuit || itemArmor == Registry.nuclearGravisuit || 
-									itemArmor == Ic2Items.compactedElectricJetpack.getItem() || itemArmor == Ic2Items.compactedNuclearJetpack.getItem() || 
+									itemArmor == Ic2Items.compactedElectricJetpack.getItem() || itemArmor == Ic2Items.compactedNuclearJetpack.getItem() ||
 									itemArmor == Ic2Items.quantumJetplate.getItem() || itemArmor == Ic2Items.quantumNuclearJetplate.getItem()))   
 		{
 			int currCharge = getCharge(armorStack);

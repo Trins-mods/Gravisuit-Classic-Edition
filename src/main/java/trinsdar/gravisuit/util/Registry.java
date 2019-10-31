@@ -63,54 +63,54 @@ public class Registry {
         if (plugin != null){
             advancedElectricJetpack = new ItemArmorBaublesAdvancedElectricJetpack();
             advancedNuclearJetpack = new ItemArmorBaublesAdvancedNuclearJetpack();
-            advancedLappack = new ItemArmorBaublesAdvancedLappack("advancedLappack", GravisuitLang.advancedLappack, 2, Config.advancedLappackStorage, 16, Config.advancedLappackTransfer);
-            ultimateLappack = new ItemArmorBaublesAdvancedLappack("ultimateLappack", GravisuitLang.ultimateLappack, 3, Config.ultimateLappackStorage, 19, Config.ultimateLappackTransfer);
+            advancedLappack = new ItemArmorBaublesAdvancedLappack("advancedLappack", GravisuitLang.advancedLappack, 2, GravisuitConfig.powerValues.advancedLappackStorage, 16, GravisuitConfig.powerValues.advancedLappackTransfer);
+            ultimateLappack = new ItemArmorBaublesAdvancedLappack("ultimateLappack", GravisuitLang.ultimateLappack, 3, GravisuitConfig.powerValues.ultimateLappackStorage, 19, GravisuitConfig.powerValues.ultimateLappackTransfer);
         }else {
             advancedElectricJetpack = new ItemArmorAdvancedElectricJetpack();
             advancedNuclearJetpack = new ItemArmorAdvancedNuclearJetpack();
-            advancedLappack = new ItemArmorAdvancedLappack("advancedLappack", GravisuitLang.advancedLappack, 2, Config.advancedLappackStorage, 16, Config.advancedLappackTransfer);
-            ultimateLappack = new ItemArmorAdvancedLappack("ultimateLappack", GravisuitLang.ultimateLappack, 3, Config.ultimateLappackStorage, 19, Config.ultimateLappackTransfer);
+            advancedLappack = new ItemArmorAdvancedLappack("advancedLappack", GravisuitLang.advancedLappack, 2, GravisuitConfig.powerValues.advancedLappackStorage, 16, GravisuitConfig.powerValues.advancedLappackTransfer);
+            ultimateLappack = new ItemArmorAdvancedLappack("ultimateLappack", GravisuitLang.ultimateLappack, 3, GravisuitConfig.powerValues.ultimateLappackStorage, 19, GravisuitConfig.powerValues.ultimateLappackTransfer);
         }
     }
 
     public static void init(){
-        if (Config.enableAdvancedElectricJetpack){
+        if (GravisuitConfig.enabledItems.enableAdvancedElectricJetpack){
             IC2.getInstance().createItem(advancedElectricJetpack);
         }
-        if (Config.enableAdvancedNuclearJetpack){
+        if (GravisuitConfig.enabledItems.enableAdvancedNuclearJetpack){
             IC2.getInstance().createItem(advancedNuclearJetpack);
         }
-        if (Config.enableAdvancedNanoChestplate){
+        if (GravisuitConfig.enabledItems.enableAdvancedNanoChestplate){
             IC2.getInstance().createItem(advancedNanoChestplate);
         }
-        if (Config.enableAdvancedNuclearNanoChestplate){
+        if (GravisuitConfig.enabledItems.enableAdvancedNuclearNanoChestplate){
             IC2.getInstance().createItem(advancedNuclearNanoChestplate);
         }
-        if (Config.enableGravisuit){
+        if (GravisuitConfig.enabledItems.enableGravisuit){
             IC2.getInstance().createItem(gravisuit);
         }
-        if (Config.enableNuclearGravisuit){
+        if (GravisuitConfig.enabledItems.enableNuclearGravisuit){
             IC2.getInstance().createItem(nuclearGravisuit);
         }
-        if (Config.enableAdvancedLappack){
+        if (GravisuitConfig.enabledItems.enableAdvancedLappack){
             IC2.getInstance().createItem(advancedLappack);
         }
-        if (Config.enableUltimateLappack){
+        if (GravisuitConfig.enabledItems.enableUltimateLappack){
             IC2.getInstance().createItem(ultimateLappack);
         }
-        if (Config.enableGravitool){
+        if (GravisuitConfig.enabledItems.enableGravitool){
             IC2.getInstance().createItem(gravitool);
         }
-        if (Config.enableAdvancedDrill){
+        if (GravisuitConfig.enabledItems.enableAdvancedDrill){
             IC2.getInstance().createItem(advancedDiamondDrill);
         }
-        if (Config.enableAdvancedChainsaw){
+        if (GravisuitConfig.enabledItems.enableAdvancedChainsaw){
             IC2.getInstance().createItem(advancedChainsaw);
         }
-        if (Config.enableVajra){
+        if (GravisuitConfig.enabledItems.enableVajra){
             IC2.getInstance().createItem(vajra);
         }
-        if (Config.enableMiscCraftingItems){
+        if (GravisuitConfig.enabledItems.enableMiscCraftingItems){
             IC2.getInstance().createItem(superConductorCover);
             IC2.getInstance().createItem(superConductor);
             IC2.getInstance().createItem(coolingCore);

@@ -1,14 +1,14 @@
 [
 {
-  "modid": "examplemod",
-  "name": "Example Mod",
-  "description": "Example placeholder mod.",
+  "modid": "gravisuit",
+  "name": "Gravisuit Classic",
+  "description": "Gravitation Suite for ic2 classic",
   "version": "${version}",
   "mcversion": "${mcversion}",
   "url": "",
   "updateUrl": "",
-  "authorList": ["ExampleDude"],
-  "credits": "The Forge and FML guys, for making this example",
+  "authorList": ["Trinsdar"],
+  "credits": "The Forge and FML guys for forge, crossvas for helping with some things",
   "logoFile": "",
   "screenshots": [],
   "dependencies": []

@@ -40,7 +40,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import trinsdar.gravisuit.util.Config;
+import trinsdar.gravisuit.util.GravisuitConfig;
 import trinsdar.gravisuit.util.GravisuitLang;
 
 import java.util.Arrays;
@@ -55,8 +55,8 @@ public class ItemToolVajra extends ItemElectricTool implements IStaticTexturedIt
         this.setRegistryName("vajra");
         this.setUnlocalizedName(GravisuitLang.vajra);
         this.attackDamage = 1.0F;
-        this.maxCharge = Config.vajraStorage;
-        this.transferLimit = Config.vajraTransfer;
+        this.maxCharge = GravisuitConfig.powerValues.vajraStorage;
+        this.transferLimit = GravisuitConfig.powerValues.vajraTransfer;
         this.tier = 3;
         this.setCreativeTab(IC2.tabIC2);
     }
