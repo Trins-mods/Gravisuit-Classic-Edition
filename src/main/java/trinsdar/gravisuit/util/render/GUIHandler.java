@@ -6,6 +6,7 @@ import ic2.core.platform.registry.Ic2Items;
 import ic2.core.util.misc.StackUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -13,6 +14,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import trinsdar.gravisuit.GravisuitClassic;
+import trinsdar.gravisuit.util.GravisuitConfig;
 import trinsdar.gravisuit.util.Registry;
 
 import java.util.Random;
@@ -20,15 +22,30 @@ import java.util.Random;
 public class GUIHandler extends Gui {
 	
 	public GUIHandler(Minecraft mc) {
-		
-	    int offset = 3;
- 	    int xPos = offset;
-	    int yPos1 = offset;
-	    int yPos2 = offset + mc.fontRenderer.FONT_HEIGHT + 2;
-		Random random = new Random();
-		if (random.nextInt(50) == 0){
-			GravisuitClassic.logger.info(mc.displayWidth);
+
+		int xPos;
+		int yPos1;
+		ScaledResolution scaledResolution = new ScaledResolution(mc);
+	    if (GravisuitConfig.client.positions == GravisuitConfig.Client.Positions.TOPLEFT || GravisuitConfig.client.positions == GravisuitConfig.Client.Positions.BOTTOMLEFT){
+	    	xPos = 3;
+	    	if (GravisuitConfig.client.positions == GravisuitConfig.Client.Positions.TOPLEFT){
+	    		yPos1 = 3;
+			} else {
+	    		yPos1 = scaledResolution.getScaledHeight() - (mc.fontRenderer.FONT_HEIGHT * 3) + 5;
+			}
+		} else if (GravisuitConfig.client.positions == GravisuitConfig.Client.Positions.TOPRIGHT || GravisuitConfig.client.positions == GravisuitConfig.Client.Positions.BOTTOMRIGHT){
+	    	xPos = (int)(scaledResolution.getScaledWidth() * 0.70F);
+			if (GravisuitConfig.client.positions == GravisuitConfig.Client.Positions.TOPRIGHT){
+				yPos1 = 3;
+			} else {
+				yPos1 = scaledResolution.getScaledHeight() - (mc.fontRenderer.FONT_HEIGHT * 3) + 5;
+			}
+		} else {
+	    	yPos1 = 3;
+	    	xPos = (int)(scaledResolution.getScaledWidth() * 0.40F);
 		}
+
+	    int yPos2 = yPos1 + mc.fontRenderer.FONT_HEIGHT + 2;
 		
 	    String energyLevelString = "";
 	    String statusString = "";

@@ -137,10 +137,16 @@ public class GravisuitConfig {
         public boolean enableMiscCraftingItems = true;
     }
 
+    @Comment("Client only stuff.")
     public static Client client = new Client();
 
     public static class Client {
+        @Comment("Set the location of the hud position here.")
+        public Positions positions = Positions.TOPLEFT;
 
+        public enum Positions {
+            TOPLEFT, TOPRIGHT, TOPMIDDLE, BOTTOMLEFT, BOTTOMRIGHT
+        }
     }
 }
 
