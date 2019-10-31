@@ -55,7 +55,8 @@ public class GUIHandler extends Gui {
 									itemArmor == Registry.advancedNanoChestplate || itemArmor == Registry.advancedNuclearNanoChestplate || 
 									itemArmor == Registry.gravisuit || itemArmor == Registry.nuclearGravisuit || 
 									itemArmor == Ic2Items.compactedElectricJetpack.getItem() || itemArmor == Ic2Items.compactedNuclearJetpack.getItem() ||
-									itemArmor == Ic2Items.quantumJetplate.getItem() || itemArmor == Ic2Items.quantumNuclearJetplate.getItem()))
+									itemArmor == Ic2Items.quantumJetplate.getItem() || itemArmor == Ic2Items.quantumNuclearJetplate.getItem() ||
+									itemArmor == Ic2Items.lapPack.getItem() || itemArmor == Ic2Items.quantumPack.getItem()))
 		{
 			int currCharge = getCharge(armorStack);
 			int energyStatus = (int) (currCharge / ((IElectricItem) itemArmor).getMaxCharge(armorStack) * 100);
@@ -66,7 +67,7 @@ public class GUIHandler extends Gui {
 				xPos = (int)(scaledResolution.getScaledWidth() * 0.50F) - (mc.fontRenderer.getStringWidth(energyLevelString + "%") / 2);
 			}
 			drawString(mc.fontRenderer, energyLevelString + "%",  xPos, yPos1, getEnergyTextColor(energyStatus));
-			if (itemArmor != Registry.getAdvancedLappack() && itemArmor != Registry.getUltimateLappack()){
+			if (itemArmor != Registry.getAdvancedLappack() && itemArmor != Registry.getUltimateLappack() && itemArmor != Ic2Items.lapPack.getItem() && itemArmor != Ic2Items.quantumPack.getItem()){
 				NBTTagCompound tag = StackUtil.getOrCreateNbtData(armorStack);
 				if (tag.getBoolean("enabled")) {
 					graviEngine = I18n.format("panelInfo.gravitationEngineOn");
@@ -101,7 +102,8 @@ public class GUIHandler extends Gui {
 							itemArmor == Registry.advancedNanoChestplate || itemArmor == Registry.advancedNuclearNanoChestplate ||
 							itemArmor == Registry.gravisuit || itemArmor == Registry.nuclearGravisuit ||
 							itemArmor == Ic2Items.compactedElectricJetpack.getItem() || itemArmor == Ic2Items.compactedNuclearJetpack.getItem() ||
-							itemArmor == Ic2Items.quantumJetplate.getItem() || itemArmor == Ic2Items.quantumNuclearJetplate.getItem()))
+							itemArmor == Ic2Items.quantumJetplate.getItem() || itemArmor == Ic2Items.quantumNuclearJetplate.getItem()||
+							itemArmor == Ic2Items.lapPack.getItem() || itemArmor == Ic2Items.quantumPack.getItem()))
 					{
 						int currCharge = getCharge(armorStack);
 						int energyStatus = (int) (currCharge / ((IElectricItem) itemArmor).getMaxCharge(armorStack) * 100);
@@ -112,7 +114,7 @@ public class GUIHandler extends Gui {
 							xPos = (int)(scaledResolution.getScaledWidth() * 0.50F) - (mc.fontRenderer.getStringWidth(energyLevelString + "%") / 2);
 						}
 						drawString(mc.fontRenderer, energyLevelString + "%",  xPos, yPos1, getEnergyTextColor(energyStatus));
-						if (itemArmor != Registry.getAdvancedLappack() && itemArmor != Registry.getUltimateLappack()){
+						if (itemArmor != Registry.getAdvancedLappack() && itemArmor != Registry.getUltimateLappack() && itemArmor != Ic2Items.lapPack.getItem() && itemArmor != Ic2Items.quantumPack.getItem()){
 							NBTTagCompound tag = StackUtil.getOrCreateNbtData(armorStack);
 							if (tag.getBoolean("enabled")) {
 								graviEngine = I18n.format("panelInfo.gravitationEngineOn");
