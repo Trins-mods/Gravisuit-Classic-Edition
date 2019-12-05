@@ -29,6 +29,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jetbrains.annotations.Nullable;
@@ -43,7 +44,7 @@ import java.util.Map;
 import java.util.Set;
 
 public class ItemToolAdvancedChainsaw extends ItemElectricTool implements IStaticTexturedItem {
-    public static final ItemStack ironAxe;
+    public static final ItemStack diamondAxe;
 
     public ItemToolAdvancedChainsaw() {
         super(0.0F, 0.0F, ToolMaterial.IRON);
@@ -52,10 +53,15 @@ public class ItemToolAdvancedChainsaw extends ItemElectricTool implements IStati
         this.transferLimit = GravisuitConfig.powerValues.advancedChainsawTransfer;
         this.operationEnergyCost = 100;
         this.tier = 2;
-        this.efficiency = 15.0F;
-        this.setHarvestLevel("axe", 2);
+        this.efficiency = 24.0F;
+        this.setHarvestLevel("axe", 3);
         this.setRegistryName("advancedchainsaw");
-        this.setUnlocalizedName(GravisuitLang.advancedChainsaw);
+        if (Loader.isModLoaded("gtc_expansion")){
+            this.setUnlocalizedName(GravisuitLang.advancedDiamondChainsaw);
+        } else {
+            this.setUnlocalizedName(GravisuitLang.advancedChainsaw);
+        }
+
         this.setCreativeTab(IC2.tabIC2);
     }
     public void setTier(int tier){
@@ -92,12 +98,13 @@ public class ItemToolAdvancedChainsaw extends ItemElectricTool implements IStati
     @Override
     @SideOnly(Side.CLIENT)
     public TextureAtlasSprite getTexture(int i) {
-        return Ic2Icons.getTextures("gravisuit_items")[8];
+        int id = Loader.isModLoaded("gtc_expansion") ? 18 : 8;
+        return Ic2Icons.getTextures("gravisuit_items")[id];
     }
 
     @Override
     public boolean canHarvestBlock(IBlockState state, ItemStack stack) {
-        return ironAxe.canHarvestBlock(state) || state.getBlock() == Blocks.WEB;
+        return diamondAxe.canHarvestBlock(state) || state.getBlock() == Blocks.WEB;
     }
 
     @Override
@@ -376,6 +383,6 @@ public class ItemToolAdvancedChainsaw extends ItemElectricTool implements IStati
     }
 
     static {
-        ironAxe = new ItemStack(Items.IRON_AXE);
+        diamondAxe = new ItemStack(Items.DIAMOND_AXE);
     }
 }

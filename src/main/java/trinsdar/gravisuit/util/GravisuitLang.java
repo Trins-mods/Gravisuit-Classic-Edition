@@ -58,6 +58,7 @@ public class GravisuitLang {
     public static LocaleComp silkTouchOff = new LocaleItemInfoComp("message.silkTouchOff.name");
 
     public static LocaleComp advancedChainsaw = new LangComponentHolder.LocaleItemComp("item.advancedChainsaw");
+    public static LocaleComp advancedDiamondChainsaw = new LangComponentHolder.LocaleItemComp("item.advancedDiamondChainsaw");
     public static LocaleComp advancedDrill = new LangComponentHolder.LocaleItemComp("item.advancedDrill");
     public static LocaleComp gravitool = new LangComponentHolder.LocaleItemComp("item.gravitool");
     public static LocaleComp vajra = new LangComponentHolder.LocaleItemComp("item.vajra");
