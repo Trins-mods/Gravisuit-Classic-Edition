@@ -59,7 +59,7 @@ repositories{
         url 'http://maven.covers1624.net/'
     }
     maven { // McJtyLib
-        url "http://maven.k-4u.nl"
+        url "http://modmaven.k-4u.nl"
     }
     maven { // JEI
         name 'DVS1 Maven FS'
