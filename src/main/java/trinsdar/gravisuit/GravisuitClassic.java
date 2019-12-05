@@ -18,7 +18,7 @@ public class GravisuitClassic {
     public static final String MODID = "gravisuit";
     public static final String MODNAME = "Gravisuit Classic Edition";
     public static final String MODVERSION = "@VERSION@";
-    public static final String DEPENDS ="required-after:ic2;required-after:ic2-classic-spmod";
+    public static final String DEPENDS ="required-after:ic2;required-after:ic2-classic-spmod;before:gtc_expansion@[0.0.6,)";
 
     @SidedProxy(clientSide = "trinsdar.gravisuit.proxy.ClientProxy", serverSide = "trinsdar.gravisuit.proxy.CommonProxy")
     public static CommonProxy proxy;
