@@ -74,51 +74,25 @@ public class Registry {
     }
 
     public static void init(){
-        if (GravisuitConfig.enabledItems.enableAdvancedElectricJetpack){
-            IC2.getInstance().createItem(advancedElectricJetpack);
-        }
-        if (GravisuitConfig.enabledItems.enableAdvancedNuclearJetpack){
-            IC2.getInstance().createItem(advancedNuclearJetpack);
-        }
-        if (GravisuitConfig.enabledItems.enableAdvancedNanoChestplate){
-            IC2.getInstance().createItem(advancedNanoChestplate);
-        }
-        if (GravisuitConfig.enabledItems.enableAdvancedNuclearNanoChestplate){
-            IC2.getInstance().createItem(advancedNuclearNanoChestplate);
-        }
-        if (GravisuitConfig.enabledItems.enableGravisuit){
-            IC2.getInstance().createItem(gravisuit);
-        }
-        if (GravisuitConfig.enabledItems.enableNuclearGravisuit){
-            IC2.getInstance().createItem(nuclearGravisuit);
-        }
-        if (GravisuitConfig.enabledItems.enableAdvancedLappack){
-            IC2.getInstance().createItem(advancedLappack);
-        }
-        if (GravisuitConfig.enabledItems.enableUltimateLappack){
-            IC2.getInstance().createItem(ultimateLappack);
-        }
-        if (GravisuitConfig.enabledItems.enableGravitool){
-            IC2.getInstance().createItem(gravitool);
-        }
-        if (GravisuitConfig.enabledItems.enableAdvancedDrill){
-            IC2.getInstance().createItem(advancedDiamondDrill);
-        }
-        if (GravisuitConfig.enabledItems.enableAdvancedChainsaw){
-            IC2.getInstance().createItem(advancedChainsaw);
-        }
-        if (GravisuitConfig.enabledItems.enableVajra){
-            IC2.getInstance().createItem(vajra);
-        }
-        if (GravisuitConfig.enabledItems.enableMiscCraftingItems){
-            IC2.getInstance().createItem(superConductorCover);
-            IC2.getInstance().createItem(superConductor);
-            IC2.getInstance().createItem(coolingCore);
-            IC2.getInstance().createItem(gravitationEngine);
-            IC2.getInstance().createItem(magnetron);
-            IC2.getInstance().createItem(vajraCore);
-            IC2.getInstance().createItem(engineBoost);
-        }
+        IC2.getInstance().createItem(advancedElectricJetpack);
+        IC2.getInstance().createItem(advancedNuclearJetpack);
+        IC2.getInstance().createItem(advancedNanoChestplate);
+        IC2.getInstance().createItem(advancedNuclearNanoChestplate);
+        IC2.getInstance().createItem(gravisuit);
+        IC2.getInstance().createItem(nuclearGravisuit);
+        IC2.getInstance().createItem(advancedLappack);
+        IC2.getInstance().createItem(ultimateLappack);
+        IC2.getInstance().createItem(gravitool);
+        IC2.getInstance().createItem(advancedDiamondDrill);
+        IC2.getInstance().createItem(advancedChainsaw);
+        IC2.getInstance().createItem(vajra);
+        IC2.getInstance().createItem(superConductorCover);
+        IC2.getInstance().createItem(superConductor);
+        IC2.getInstance().createItem(coolingCore);
+        IC2.getInstance().createItem(gravitationEngine);
+        IC2.getInstance().createItem(magnetron);
+        IC2.getInstance().createItem(vajraCore);
+        IC2.getInstance().createItem(engineBoost);
         IC2.getInstance().createItem(relocator);
     }
 }
