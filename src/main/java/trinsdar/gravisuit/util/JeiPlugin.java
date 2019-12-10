@@ -21,43 +21,43 @@ public class JeiPlugin implements IModPlugin {
         if (SubModul.load) {
             IIngredientBlacklist blacklist = registry.getJeiHelpers().getIngredientBlacklist();
 
-            if (GravisuitConfig.enabledItems.enableAdvancedElectricJetpack){
+            if (!GravisuitConfig.enabledItems.enableAdvancedElectricJetpack){
                 blacklist.addIngredientToBlacklist(new ItemStack(Registry.getAdvancedElectricJetpack()));
             }
-            if (GravisuitConfig.enabledItems.enableAdvancedNuclearJetpack){
+            if (!GravisuitConfig.enabledItems.enableAdvancedNuclearJetpack){
                 blacklist.addIngredientToBlacklist(new ItemStack(Registry.getAdvancedNuclearJetpack()));
             }
-            if (GravisuitConfig.enabledItems.enableAdvancedNanoChestplate){
+            if (!GravisuitConfig.enabledItems.enableAdvancedNanoChestplate){
                 blacklist.addIngredientToBlacklist(new ItemStack(Registry.advancedNanoChestplate));
             }
-            if (GravisuitConfig.enabledItems.enableAdvancedNuclearNanoChestplate){
+            if (!GravisuitConfig.enabledItems.enableAdvancedNuclearNanoChestplate){
                 blacklist.addIngredientToBlacklist(new ItemStack(Registry.advancedNuclearNanoChestplate));
             }
-            if (GravisuitConfig.enabledItems.enableGravisuit){
+            if (!GravisuitConfig.enabledItems.enableGravisuit){
                 blacklist.addIngredientToBlacklist(new ItemStack(Registry.gravisuit));
             }
-            if (GravisuitConfig.enabledItems.enableNuclearGravisuit){
+            if (!GravisuitConfig.enabledItems.enableNuclearGravisuit){
                 blacklist.addIngredientToBlacklist(new ItemStack(Registry.nuclearGravisuit));
             }
-            if (GravisuitConfig.enabledItems.enableAdvancedLappack){
+            if (!GravisuitConfig.enabledItems.enableAdvancedLappack){
                 blacklist.addIngredientToBlacklist(new ItemStack(Registry.getAdvancedLappack()));
             }
-            if (GravisuitConfig.enabledItems.enableUltimateLappack){
+            if (!GravisuitConfig.enabledItems.enableUltimateLappack){
                 blacklist.addIngredientToBlacklist(new ItemStack(Registry.getUltimateLappack()));
             }
-            if (GravisuitConfig.enabledItems.enableGravitool){
+            if (!GravisuitConfig.enabledItems.enableGravitool){
                 blacklist.addIngredientToBlacklist(new ItemStack(Registry.gravitool));
             }
-            if (GravisuitConfig.enabledItems.enableAdvancedDrill){
+            if (!GravisuitConfig.enabledItems.enableAdvancedDrill){
                 blacklist.addIngredientToBlacklist(new ItemStack(Registry.advancedDiamondDrill));
             }
-            if (GravisuitConfig.enabledItems.enableAdvancedChainsaw){
+            if (!GravisuitConfig.enabledItems.enableAdvancedChainsaw){
                 blacklist.addIngredientToBlacklist(new ItemStack(Registry.advancedChainsaw));
             }
-            if (GravisuitConfig.enabledItems.enableVajra){
+            if (!GravisuitConfig.enabledItems.enableVajra){
                 blacklist.addIngredientToBlacklist(new ItemStack(Registry.vajra));
             }
-            if (GravisuitConfig.enabledItems.enableMiscCraftingItems){
+            if (!GravisuitConfig.enabledItems.enableMiscCraftingItems){
                 blacklist.addIngredientToBlacklist(new ItemStack(Registry.superConductorCover));
                 blacklist.addIngredientToBlacklist(new ItemStack(Registry.superConductor));
                 blacklist.addIngredientToBlacklist(new ItemStack(Registry.coolingCore));
