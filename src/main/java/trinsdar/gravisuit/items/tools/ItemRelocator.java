@@ -2,6 +2,7 @@ package trinsdar.gravisuit.items.tools;
 
 import ic2.api.item.ElectricItem;
 import ic2.core.IC2;
+import ic2.core.block.machine.high.TileEntityTeleporter;
 import ic2.core.inventory.base.IHandHeldInventory;
 import ic2.core.inventory.base.IHasGui;
 import ic2.core.item.base.BasicElectricItem;
@@ -10,6 +11,7 @@ import ic2.core.util.misc.StackUtil;
 import ic2.core.util.obj.ToolTipType;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ActionResult;
@@ -77,8 +79,14 @@ public class ItemRelocator extends BasicElectricItem implements IHandHeldInvento
         NBTTagCompound nbt = StackUtil.getNbtData(stack);
         byte teleportMode = nbt.getByte("TeleportMode");
         if (teleportMode == 0 && player.isSneaking()){
-
+            NBTTagCompound compound = new NBTTagCompound();
+            compound.setFloat("x", hitX);
+            compound.setFloat("y", hitY);
+            compound.setFloat("z", hitZ);
+            compound.setInteger("dimID", worldIn.provider.getDimension());
+            nbt.setTag("tempPosition", compound);
             IC2.platform.launchGui(player, this.getInventory(player, hand, stack), hand);
+            nbt.removeTag("tempPosition");
             return EnumActionResult.SUCCESS;
         }
         return super.onItemUse(player, worldIn, pos, hand, facing, hitX, hitY, hitZ);
@@ -165,14 +173,72 @@ public class ItemRelocator extends BasicElectricItem implements IHandHeldInvento
     }
 
     public void onButtonClick(ItemStack stack, int buttonId, EntityPlayer player){
+        NBTTagCompound nbt = StackUtil.getNbtData(stack);
         if (buttonId == 1){
 
         }
         if (buttonId == 2){
-
+            String name = nbt.getString("tempName");
+            NBTTagCompound map = nbt.getCompoundTag("map");
+            NBTTagCompound teleportData;
+            if (map.hasKey(name)){
+                teleportData = map.getCompoundTag(name);
+                teleportEntity(player, (int)teleportData.getFloat("x"), (int)teleportData.getFloat("y"), (int)teleportData.getFloat("z"), teleportData.getInteger("dimID"), stack);
+            }
         }
         if (buttonId == 3){
+            NBTTagCompound compound = nbt.getCompoundTag("tempPosition");
+            float x = compound.getFloat("x");
+            float y = compound.getFloat("y");
+            float z = compound.getFloat("z");
+            int dimId = compound.getInteger("dimID");
+            String name = compound.getString("name");
+            NBTTagCompound map = nbt.getCompoundTag("map");
+            if (map.getKeySet().size() < 10){
+                NBTTagCompound teleportData = new NBTTagCompound();
+                if (!map.hasKey(name)){
+                    teleportData.setFloat("x", x);
+                    teleportData.setFloat("y", y);
+                    teleportData.setFloat("z", z);
+                    teleportData.setInteger("dimID", dimId);
+                    map.setTag(name, teleportData);
+                }
+            }
+        }
+    }
 
+    public void teleportEntity(EntityPlayer player, int x, int y, int z, int dimId, ItemStack stack) {
+        int weight = TileEntityTeleporter.getWeightOfUser(player);
+        if (weight != 0) {
+            double distance = Math.sqrt(player.getPosition().distanceSq(new BlockPos(x, y, z)));
+            boolean dimSwitch = player.world.provider.getDimension() != dimId;
+            int energyCost = (int)((double)weight * Math.pow(distance + 10.0D, dimSwitch ? 0.9D : 0.7D) * 6.0D);
+            if (ElectricItem.manager.use(stack, (double)energyCost, player)) {
+                player.dismountRidingEntity();
+                player.removePassengers();
+                IC2.achievements.issueStat(player, "distanceTeleported", (int)distance);
+                if (distance >= 1000.0D) {
+                    IC2.achievements.issueStat(player, "teleportFarAway");
+                }
+
+                BlockPos targetPos = new BlockPos(x, y, z);
+
+
+                if (!IC2.config.getFlag("TeleporterInventory")) {
+                    player.inventory.dropAllItems();
+                }
+
+                if (dimSwitch) {
+                    player.setPositionAndRotation(x, y, z, player.rotationYaw, player.rotationPitch);
+                } else {
+                    player.setPositionAndUpdate(x, y, z);
+                }
+
+                if (dimSwitch) {
+                    TileEntityTeleporter.transferPlayerToDimension((EntityPlayerMP)player, dimId);
+                }
+
+            }
         }
     }
 

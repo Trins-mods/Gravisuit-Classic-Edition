@@ -4,9 +4,11 @@ import ic2.core.inventory.gui.GuiIC2;
 import ic2.core.inventory.gui.buttons.IC2Button;
 import ic2.core.inventory.gui.components.GuiComponent;
 import ic2.core.util.math.Box2D;
+import ic2.core.util.misc.StackUtil;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import trinsdar.gravisuit.items.tools.ItemRelocator;
@@ -19,13 +21,15 @@ public class GuiCompRelocatorDisplay extends GuiComponent {
     ItemStack relocator;
     EntityPlayer player;
     int y;
+    String name;
     private Box2D BOX;
 
-    public GuiCompRelocatorDisplay(ItemStack relocator, int y, EntityPlayer player) {
+    public GuiCompRelocatorDisplay(ItemStack relocator, int y, EntityPlayer player, String name) {
         super(new Box2D(21, 3 + (y * 18), 1, 11));
         BOX = new Box2D(21, 3 + (y * 18), 18, 11);
         this.relocator = relocator;
         this.y = 3 + (y * 18);
+        this.name = name;
         this.player = player;
     }
 
@@ -51,7 +55,10 @@ public class GuiCompRelocatorDisplay extends GuiComponent {
             return;
         }
         if (button.id == 2) {
+            NBTTagCompound nbt = StackUtil.getNbtData(this.relocator);
+            nbt.setString("tempName", name);
             item.onButtonClick(this.relocator, 2, player);
+            nbt.removeTag("tempName");
         }
         if (button.id == 1) {
             item.onButtonClick(this.relocator, 1, player);
