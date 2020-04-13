@@ -17,8 +17,8 @@ public class ItemContainerRelocatorDisplay extends ContainerItemComponent<ItemIn
     public ItemContainerRelocatorDisplay(IPortableInventory inv, int id, ItemStack item, EntityPlayer player) {
         super(inv, id);
         NBTTagCompound nbt = StackUtil.getNbtData(item);
-        if (nbt.hasKey("map")){
-            NBTTagCompound map = nbt.getCompoundTag("map");
+        if (nbt.hasKey("Locations")){
+            NBTTagCompound map = nbt.getCompoundTag("Locations");
             if (map.getSize() > 0 && map.getSize() < 11){
                 int i = 0;
                 for (String name : map.getKeySet()){

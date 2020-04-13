@@ -77,9 +77,9 @@ public class ItemRelocator extends BasicElectricItem implements IHandHeldInvento
         byte teleportMode = nbt.getByte("TeleportMode");
         if (teleportMode == 0 && player.isSneaking()){
             NBTTagCompound compound = new NBTTagCompound();
-            compound.setFloat("x", pos.getX());
-            compound.setFloat("y", pos.getY());
-            compound.setFloat("z", pos.getZ());
+            compound.setInteger("x", pos.getX());
+            compound.setInteger("y", pos.getY());
+            compound.setInteger("z", pos.getZ());
             nbt.setTag("tempPosition", compound);
             nbt.setBoolean("lookingAtBlock", true);
             IC2.platform.launchGui(player, this.getInventory(player, hand, stack), hand);
@@ -213,7 +213,7 @@ public class ItemRelocator extends BasicElectricItem implements IHandHeldInvento
         }
     }
 
-    public void teleportEntity(EntityPlayer player, int x, int y, int z, int dimId, ItemStack stack) {
+    public static void teleportEntity(EntityPlayer player, int x, int y, int z, int dimId, ItemStack stack) {
         int weight = TileEntityTeleporter.getWeightOfUser(player);
         if (weight != 0) {
             double distance = Math.sqrt(player.getPosition().distanceSq(new BlockPos(x, y, z)));
@@ -282,6 +282,14 @@ public class ItemRelocator extends BasicElectricItem implements IHandHeldInvento
             this.name = name;
         }
 
+        public TeleportData(String name){
+            this.x = 0;
+            this.y = 0;
+            this.z = 0;
+            this.dimId = 0;
+            this.name = name;
+        }
+
         public int getX() {
             return x;
         }
@@ -320,6 +328,13 @@ public class ItemRelocator extends BasicElectricItem implements IHandHeldInvento
 
         public void setDimId(int dimId) {
             this.dimId = dimId;
+        }
+
+        public void writeToNBT(NBTTagCompound compound) {
+            compound.setDouble("X", x);
+            compound.setDouble("Y", y);
+            compound.setDouble("Z", z);
+            compound.setInteger("Dimension", dimId);
         }
     }
 }

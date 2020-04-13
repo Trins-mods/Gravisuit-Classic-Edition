@@ -34,7 +34,7 @@ public class ItemInventoryRelocator extends IC2ItemInventory {
 
     @Override
     public Class<? extends GuiScreen> getGuiClass(EntityPlayer player) {
-        return GuiComponentContainer.class;
+        return GuiRelocator.class;
     }
 
     @Override

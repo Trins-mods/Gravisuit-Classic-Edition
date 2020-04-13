@@ -14,7 +14,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import trinsdar.gravisuit.GravisuitClassic;
 import trinsdar.gravisuit.items.tools.ItemRelocator;
+import trinsdar.gravisuit.network.PacketRelocator;
 
 import java.util.Arrays;
 import java.util.List;
@@ -55,44 +57,29 @@ public class GuiCompRelocatorAdd extends GuiComponent {
     @Override
     @SideOnly(Side.CLIENT)
     public void onButtonClick(GuiIC2 gui, GuiButton button) {
-        ItemRelocator item;
-        if (relocator.getItem() instanceof ItemRelocator){
-            item = (ItemRelocator)relocator.getItem();
-        } else {
-            return;
-        }
         if (button.id == 2) {
             if (!Strings.isNullOrEmpty(textBox.getText())){
                 NBTTagCompound nbt = StackUtil.getNbtData(relocator);
                 NBTTagCompound compound = nbt.getCompoundTag("tempPosition");
-                float x = compound.getFloat("x");
-                float y = compound.getFloat("y");
-                float z = compound.getFloat("z");
+                int x = compound.getInteger("x");
+                int y = compound.getInteger("y");
+                int z = compound.getInteger("z");
                 int dimId = player.getEntityWorld().provider.getDimension();
                 String name = textBox.getText();
-                //item.onButtonClick(this.relocator, 3, player);
-                if (!nbt.hasKey("map")){
-                    nbt.setTag("map", new NBTTagCompound());
-                }
-                NBTTagCompound map = nbt.getCompoundTag("map");
-                boolean successful;
+                ItemRelocator.TeleportData location = new ItemRelocator.TeleportData(x, y, z, dimId, name);
+                NBTTagCompound map = nbt.getCompoundTag("Locations");
+                boolean successful = false;
                 if (map.getKeySet().size() < 10){
-                    NBTTagCompound teleportData = new NBTTagCompound();
-                    if (!map.hasKey(name)){
-                        teleportData.setFloat("x", x);
-                        teleportData.setFloat("y", y);
-                        teleportData.setFloat("z", z);
-                        teleportData.setInteger("dimID", dimId);
-                        map.setTag(name, teleportData);
-                        successful = true;
-                    }
-                } else {
-                    successful = false;
+                    successful = true;
                 }
-                nbt.removeTag("tempPosition");
-                relocator.setTagCompound(nbt);
+                if (successful){
+                    GravisuitClassic.network.sendToServer(new PacketRelocator(location, PacketRelocator.ADDDESTINATION, relocator));
+                    IC2.platform.messagePlayer(player, name + " added to teleport list");
+                } else {
+                    IC2.platform.messagePlayer(player, "Max teleport Locations already reached!");
+                }
                 player.closeScreen();
-                IC2.platform.messagePlayer(player, name + " added to teleport list");
+
             }
         }
         if (button.id == 1) {

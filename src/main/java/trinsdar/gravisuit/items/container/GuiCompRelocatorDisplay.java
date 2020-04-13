@@ -1,5 +1,6 @@
 package trinsdar.gravisuit.items.container;
 
+import ic2.core.IC2;
 import ic2.core.inventory.gui.GuiIC2;
 import ic2.core.inventory.gui.buttons.IconButton;
 import ic2.core.inventory.gui.components.GuiComponent;
@@ -11,7 +12,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import trinsdar.gravisuit.GravisuitClassic;
 import trinsdar.gravisuit.items.tools.ItemRelocator;
+import trinsdar.gravisuit.network.PacketRelocator;
 
 import java.awt.Color;
 import java.util.Arrays;
@@ -56,15 +59,26 @@ public class GuiCompRelocatorDisplay extends GuiComponent {
             return;
         }
         if (button.id == 2) {
-            NBTTagCompound nbt = StackUtil.getNbtData(this.relocator);
-            nbt.setString("tempName", name);
-            item.onButtonClick(this.relocator, 2, player);
-            nbt.removeTag("tempName");
+            NBTTagCompound nbt = StackUtil.getNbtData(relocator);
+            int function = nbt.getByte("TeleportMode") == 0 ? PacketRelocator.TELEPORT : PacketRelocator.ADDDEFAULT;
+            ItemRelocator.TeleportData location = new ItemRelocator.TeleportData(name);
+            GravisuitClassic.network.sendToServer(new PacketRelocator(location, function, relocator));
+            if (function == PacketRelocator.TELEPORT) {
+                player.closeScreen();
+            } else {
+                IC2.platform.messagePlayer(player, name + " set as default");
+            }
         }
         if (button.id == 1) {
-            item.onButtonClick(this.relocator, 1, player);
+            ItemRelocator.TeleportData location = new ItemRelocator.TeleportData(name);
+            GravisuitClassic.network.sendToServer(new PacketRelocator(location, PacketRelocator.REMOVEDESTINATION, relocator));
+            if (gui instanceof GuiRelocator){
+                ((GuiRelocator)gui).setReloadGui(true);
+            }
         }
     }
+
+
 
     @Override
     @SideOnly(Side.CLIENT)
