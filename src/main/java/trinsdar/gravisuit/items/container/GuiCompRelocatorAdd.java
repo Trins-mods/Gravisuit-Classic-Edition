@@ -1,12 +1,15 @@
 package trinsdar.gravisuit.items.container;
 
+import com.google.common.base.Strings;
 import ic2.core.inventory.gui.GuiIC2;
-import ic2.core.inventory.gui.buttons.IC2Button;
+import ic2.core.inventory.gui.buttons.IconButton;
 import ic2.core.inventory.gui.components.GuiComponent;
 import ic2.core.util.math.Box2D;
+import ic2.core.util.misc.StackUtil;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import trinsdar.gravisuit.items.tools.ItemRelocator;
@@ -37,9 +40,11 @@ public class GuiCompRelocatorAdd extends GuiComponent {
     @Override
     @SideOnly(Side.CLIENT)
     public void onGuiInit(GuiIC2 gui) {
-        gui.registerButton((new IC2Button(2, bX(gui, 59), bY(gui, 43), 26, 13, "")));// -1
-        gui.registerButton((new IC2Button(1, bX(gui, 91), bY(gui, 43), 26, 13, "")));// -64
+        gui.registerButton((new IconButton(2, bX(gui, 59), bY(gui, 43), 26, 13).setIconOnly()));// -1
+        gui.registerButton((new IconButton(1, bX(gui, 91), bY(gui, 43), 26, 13).setIconOnly()));// -64
     }
+
+    String name;
 
     @Override
     @SideOnly(Side.CLIENT)
@@ -51,10 +56,16 @@ public class GuiCompRelocatorAdd extends GuiComponent {
             return;
         }
         if (button.id == 2) {
-            item.onButtonClick(this.relocator, 3, player);
+            if (!Strings.isNullOrEmpty(name)){
+                NBTTagCompound nbt = StackUtil.getNbtData(relocator);
+                nbt.getCompoundTag("tempPosition").setString("name", name);
+                item.onButtonClick(this.relocator, 3, player);
+            }
         }
         if (button.id == 1) {
-            item.onButtonClick(this.relocator, 0, player);
+            if (gui instanceof GuiRelocator){
+                ((GuiRelocator)gui).getTextBox().setText("");
+            }
         }
     }
 
@@ -76,19 +87,23 @@ public class GuiCompRelocatorAdd extends GuiComponent {
         int x = gui.getXOffset();
         int y = gui.getYOffset();
         Box2D box = this.getPosition();
-
-        gui.drawTexturedModalRect(x + box.getX(), y + box.getY(), 0, 116, box.getLenght(),
-                box.getHeight());
+        if (this.isMouseOver(mouseX, mouseY) && within(mouseY, 43, 55)){
+            if (within(mouseX, 59, 85)){
+                gui.drawTexturedModalRect(x + 60, y + 44, 177, 1, 24,
+                        11);
+            }
+            if (within(mouseX, 91, 117)){
+                gui.drawTexturedModalRect(x + 92, y + 44, 209, 1, 24,
+                        11);
+            }
+        }
     }
 
     @Override
-    public void drawFrontground(GuiIC2 gui, int mouseX, int mouseY) {
-        super.drawFrontground(gui, mouseX, mouseY);
-    }
-
-    @Override
-    public boolean onKeyTyped(GuiIC2 gui, char keyTyped, int keyCode) {
-        return super.onKeyTyped(gui, keyTyped, keyCode);
+    public void onGuiTick(GuiIC2 gui) {
+        if (gui instanceof GuiRelocator){
+            name = ((GuiRelocator)gui).getTextBox().getText();
+        }
     }
 
     private int bX(GuiIC2 gui, int position) {

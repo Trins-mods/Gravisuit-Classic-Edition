@@ -26,13 +26,10 @@ import trinsdar.gravisuit.items.container.ItemInventoryRelocator;
 import trinsdar.gravisuit.util.GravisuitLang;
 
 import java.util.Arrays;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 public class ItemRelocator extends BasicElectricItem implements IHandHeldInventory {
-
-    private Map<String, TeleportData> teleportDataList = new LinkedHashMap<>();
 
     public ItemRelocator() {
         this.setUnlocalizedName("relocator");
@@ -85,8 +82,10 @@ public class ItemRelocator extends BasicElectricItem implements IHandHeldInvento
             compound.setFloat("z", hitZ);
             compound.setInteger("dimID", worldIn.provider.getDimension());
             nbt.setTag("tempPosition", compound);
+            nbt.setBoolean("lookingAtBlock", true);
             IC2.platform.launchGui(player, this.getInventory(player, hand, stack), hand);
             nbt.removeTag("tempPosition");
+            nbt.removeTag("lookingAtBlock");
             return EnumActionResult.SUCCESS;
         }
         return super.onItemUse(player, worldIn, pos, hand, facing, hitX, hitY, hitZ);
@@ -175,15 +174,21 @@ public class ItemRelocator extends BasicElectricItem implements IHandHeldInvento
     public void onButtonClick(ItemStack stack, int buttonId, EntityPlayer player){
         NBTTagCompound nbt = StackUtil.getNbtData(stack);
         if (buttonId == 1){
-
+            String name = nbt.getString("tempName");
+            NBTTagCompound map = nbt.getCompoundTag("map");
+            map.removeTag(name);
         }
         if (buttonId == 2){
             String name = nbt.getString("tempName");
-            NBTTagCompound map = nbt.getCompoundTag("map");
-            NBTTagCompound teleportData;
-            if (map.hasKey(name)){
-                teleportData = map.getCompoundTag(name);
-                teleportEntity(player, (int)teleportData.getFloat("x"), (int)teleportData.getFloat("y"), (int)teleportData.getFloat("z"), teleportData.getInteger("dimID"), stack);
+            if (nbt.getByte("TeleportMode") == 0){
+                NBTTagCompound map = nbt.getCompoundTag("map");
+                NBTTagCompound teleportData;
+                if (map.hasKey(name)){
+                    teleportData = map.getCompoundTag(name);
+                    teleportEntity(player, (int)teleportData.getFloat("x"), (int)teleportData.getFloat("y"), (int)teleportData.getFloat("z"), teleportData.getInteger("dimID"), stack);
+                }
+            } else {
+                nbt.setString("default", name);
             }
         }
         if (buttonId == 3){

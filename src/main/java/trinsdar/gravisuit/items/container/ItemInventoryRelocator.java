@@ -3,9 +3,11 @@ package trinsdar.gravisuit.items.container;
 import ic2.core.inventory.base.IC2ItemInventory;
 import ic2.core.inventory.container.ContainerIC2;
 import ic2.core.inventory.gui.GuiComponentContainer;
+import ic2.core.util.misc.StackUtil;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import trinsdar.gravisuit.items.tools.ItemRelocator;
 
 public class ItemInventoryRelocator extends IC2ItemInventory {
@@ -22,14 +24,19 @@ public class ItemInventoryRelocator extends IC2ItemInventory {
 
     @Override
     public ContainerIC2 getGuiContainer(EntityPlayer player) {
-        if (player.isSneaking()){
-            return new ItemContainerRelocatorAdd(this, this.getID(), relocator);
+        NBTTagCompound nbt = StackUtil.getNbtData(relocator);
+        if (player.isSneaking() && nbt.getByte("TeleportMode") == 0){
+            return new ItemContainerRelocatorAdd(this, this.getID(), relocator, player);
         }
-        return new ItemContainerRelocatorDisplay(this, this.getID(), relocator);
+        return new ItemContainerRelocatorDisplay(this, this.getID(), relocator, player);
     }
 
     @Override
-    public Class<? extends GuiScreen> getGuiClass(EntityPlayer entityPlayer) {
+    public Class<? extends GuiScreen> getGuiClass(EntityPlayer player) {
+        NBTTagCompound nbt = StackUtil.getNbtData(relocator);
+        if (player.isSneaking() && nbt.getByte("TeleportMode") == 0){
+            return GuiRelocator.class;
+        }
         return GuiComponentContainer.class;
     }
 

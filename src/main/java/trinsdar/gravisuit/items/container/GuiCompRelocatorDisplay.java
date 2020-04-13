@@ -13,6 +13,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import trinsdar.gravisuit.items.tools.ItemRelocator;
 
+import java.awt.Color;
 import java.util.Arrays;
 import java.util.List;
 
@@ -35,7 +36,7 @@ public class GuiCompRelocatorDisplay extends GuiComponent {
 
     @Override
     public List<ActionRequest> getNeededRequests() {
-        return Arrays.asList(ActionRequest.GuiInit, ActionRequest.ButtonNotify, ActionRequest.ToolTip);
+        return Arrays.asList(ActionRequest.GuiInit, ActionRequest.ButtonNotify, ActionRequest.ToolTip, ActionRequest.BackgroundDraw, ActionRequest.FrontgroundDraw);
     }
 
     @Override
@@ -83,9 +84,25 @@ public class GuiCompRelocatorDisplay extends GuiComponent {
         int x = gui.getXOffset();
         int y = gui.getYOffset();
         Box2D box = this.getPosition();
-
-        gui.drawTexturedModalRect(x + box.getX(), y + box.getY(), 0, 116, box.getLenght(),
-                box.getHeight());
+        NBTTagCompound nbt = StackUtil.getNbtData(relocator);
+        int textureY = 116;
+        if (nbt.getString("default").equals(name)){
+            textureY = 155;
+        }
+        if (this.isMouseOver(mouseX, mouseY) && within(mouseY, box.getY() + 1, box.getY() + 10)){
+            if (within(mouseX, 22, 142)){
+                textureY = 129;
+            }
+            if (within(mouseX, 145, 154)){
+                textureY = 142;
+            }
+        }
+        NBTTagCompound map = nbt.getCompoundTag("map");
+        if (map.hasKey(name)){
+            gui.drawTexturedModalRect(x + box.getX(), y + box.getY(), 0, textureY, box.getLenght(),
+                    box.getHeight());
+            gui.drawString(name, x + 22, y + y + box.getY() + 1, Color.WHITE.getRGB());
+        }
     }
 
     private int bX(GuiIC2 gui, int position) {
