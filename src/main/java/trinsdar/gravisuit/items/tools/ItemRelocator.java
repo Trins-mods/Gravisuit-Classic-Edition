@@ -77,15 +77,12 @@ public class ItemRelocator extends BasicElectricItem implements IHandHeldInvento
         byte teleportMode = nbt.getByte("TeleportMode");
         if (teleportMode == 0 && player.isSneaking()){
             NBTTagCompound compound = new NBTTagCompound();
-            compound.setFloat("x", hitX);
-            compound.setFloat("y", hitY);
-            compound.setFloat("z", hitZ);
-            compound.setInteger("dimID", worldIn.provider.getDimension());
+            compound.setFloat("x", pos.getX());
+            compound.setFloat("y", pos.getY());
+            compound.setFloat("z", pos.getZ());
             nbt.setTag("tempPosition", compound);
             nbt.setBoolean("lookingAtBlock", true);
             IC2.platform.launchGui(player, this.getInventory(player, hand, stack), hand);
-            nbt.removeTag("tempPosition");
-            nbt.removeTag("lookingAtBlock");
             return EnumActionResult.SUCCESS;
         }
         return super.onItemUse(player, worldIn, pos, hand, facing, hitX, hitY, hitZ);
@@ -198,6 +195,10 @@ public class ItemRelocator extends BasicElectricItem implements IHandHeldInvento
             float z = compound.getFloat("z");
             int dimId = compound.getInteger("dimID");
             String name = compound.getString("name");
+            GravisuitClassic.logger.info("added teleport data");
+            if (!nbt.hasKey("map")){
+                nbt.setTag("map", new NBTTagCompound());
+            }
             NBTTagCompound map = nbt.getCompoundTag("map");
             if (map.getKeySet().size() < 10){
                 NBTTagCompound teleportData = new NBTTagCompound();
@@ -266,14 +267,14 @@ public class ItemRelocator extends BasicElectricItem implements IHandHeldInvento
         }
     }
 
-    private static class TeleportData {
+    public static class TeleportData {
         int x;
         int y;
         int z;
         int dimId;
         String name;
 
-        TeleportData(int x, int y, int z, int dimId, String name){
+        public TeleportData(int x, int y, int z, int dimId, String name){
             this.x = x;
             this.y = y;
             this.z = z;
@@ -303,6 +304,22 @@ public class ItemRelocator extends BasicElectricItem implements IHandHeldInvento
 
         public void setName(String name) {
             this.name = name;
+        }
+
+        public void setX(int x) {
+            this.x = x;
+        }
+
+        public void setY(int y) {
+            this.y = y;
+        }
+
+        public void setZ(int z) {
+            this.z = z;
+        }
+
+        public void setDimId(int dimId) {
+            this.dimId = dimId;
         }
     }
 }

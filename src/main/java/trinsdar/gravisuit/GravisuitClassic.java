@@ -10,6 +10,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import org.apache.logging.log4j.Logger;
 import trinsdar.gravisuit.proxy.CommonProxy;
 
@@ -19,6 +20,8 @@ public class GravisuitClassic {
     public static final String MODNAME = "Gravisuit Classic Edition";
     public static final String MODVERSION = "@VERSION@";
     public static final String DEPENDS ="required-after:ic2;required-after:ic2-classic-spmod;before:gtc_expansion@[0.0.6,)";
+
+    public static SimpleNetworkWrapper network;
 
     @SidedProxy(clientSide = "trinsdar.gravisuit.proxy.ClientProxy", serverSide = "trinsdar.gravisuit.proxy.CommonProxy")
     public static CommonProxy proxy;

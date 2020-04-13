@@ -17,10 +17,6 @@ public class ItemContainerRelocatorAdd extends ContainerItemComponent<ItemInvent
         addComponent(new GuiCompRelocatorAdd(item, player));
     }
 
-    public int guiInventorySize() {
-        return ((IPortableInventory)this.getGuiHolder()).getSlotCount();
-    }
-
     @Override
     public ResourceLocation getTexture() {
         return TEXTURE;

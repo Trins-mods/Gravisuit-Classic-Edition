@@ -25,7 +25,8 @@ public class ItemInventoryRelocator extends IC2ItemInventory {
     @Override
     public ContainerIC2 getGuiContainer(EntityPlayer player) {
         NBTTagCompound nbt = StackUtil.getNbtData(relocator);
-        if (player.isSneaking() && nbt.getByte("TeleportMode") == 0){
+        if (player.isSneaking() && nbt.getByte("TeleportMode") == 0 && nbt.getBoolean("lookingAtBlock")){
+            nbt.removeTag("lookingAtBlock");
             return new ItemContainerRelocatorAdd(this, this.getID(), relocator, player);
         }
         return new ItemContainerRelocatorDisplay(this, this.getID(), relocator, player);
@@ -33,10 +34,6 @@ public class ItemInventoryRelocator extends IC2ItemInventory {
 
     @Override
     public Class<? extends GuiScreen> getGuiClass(EntityPlayer player) {
-        NBTTagCompound nbt = StackUtil.getNbtData(relocator);
-        if (player.isSneaking() && nbt.getByte("TeleportMode") == 0){
-            return GuiRelocator.class;
-        }
         return GuiComponentContainer.class;
     }
 

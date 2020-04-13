@@ -1,7 +1,7 @@
 package trinsdar.gravisuit.items.container;
 
 import ic2.core.inventory.gui.GuiIC2;
-import ic2.core.inventory.gui.buttons.IC2Button;
+import ic2.core.inventory.gui.buttons.IconButton;
 import ic2.core.inventory.gui.components.GuiComponent;
 import ic2.core.util.math.Box2D;
 import ic2.core.util.misc.StackUtil;
@@ -42,8 +42,8 @@ public class GuiCompRelocatorDisplay extends GuiComponent {
     @Override
     @SideOnly(Side.CLIENT)
     public void onGuiInit(GuiIC2 gui) {
-        gui.registerButton((new IC2Button(2, bX(gui, 22), bY(gui, y + 1), 120, 9, "")));// -1
-        gui.registerButton((new IC2Button(1, bX(gui, 145), bY(gui, y + 1), 9, 9, "")));// -64
+        gui.registerButton((new IconButton(2, bX(gui, 22), bY(gui, y + 1), 120, 9).setIconOnly()));// -1
+        gui.registerButton((new IconButton(1, bX(gui, 145), bY(gui, y + 1), 9, 9).setIconOnly()));// -64
     }
 
     @Override

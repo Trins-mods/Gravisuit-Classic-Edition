@@ -1,12 +1,14 @@
 package trinsdar.gravisuit.items.container;
 
 import com.google.common.base.Strings;
+import ic2.core.IC2;
 import ic2.core.inventory.gui.GuiIC2;
 import ic2.core.inventory.gui.buttons.IconButton;
 import ic2.core.inventory.gui.components.GuiComponent;
 import ic2.core.util.math.Box2D;
 import ic2.core.util.misc.StackUtil;
 import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -23,6 +25,7 @@ public class GuiCompRelocatorAdd extends GuiComponent {
     EntityPlayer player;
     int y;
     private Box2D BOX;
+    private GuiTextField textBox;
 
     public GuiCompRelocatorAdd(ItemStack relocator, EntityPlayer player) {
         super(new Box2D(21, 18, 1, 11));
@@ -34,7 +37,7 @@ public class GuiCompRelocatorAdd extends GuiComponent {
 
     @Override
     public List<ActionRequest> getNeededRequests() {
-        return Arrays.asList(ActionRequest.GuiInit, ActionRequest.ButtonNotify, ActionRequest.ToolTip, ActionRequest.BackgroundDraw);
+        return Arrays.asList(ActionRequest.GuiInit, ActionRequest.ButtonNotify, ActionRequest.ToolTip, ActionRequest.BackgroundDraw, ActionRequest.KeyPressed, ActionRequest.MouseClick, ActionRequest.PostDraw);
     }
 
     @Override
@@ -42,6 +45,9 @@ public class GuiCompRelocatorAdd extends GuiComponent {
     public void onGuiInit(GuiIC2 gui) {
         gui.registerButton((new IconButton(2, bX(gui, 59), bY(gui, 43), 26, 13).setIconOnly()));// -1
         gui.registerButton((new IconButton(1, bX(gui, 91), bY(gui, 43), 26, 13).setIconOnly()));// -64
+        this.textBox = new GuiTextField(3, gui.getFont(), bX(gui,14), bY(gui, 19), 148, 16);
+        this.textBox.setMaxStringLength(32500);
+        this.textBox.setFocused(true);
     }
 
     String name;
@@ -56,16 +62,41 @@ public class GuiCompRelocatorAdd extends GuiComponent {
             return;
         }
         if (button.id == 2) {
-            if (!Strings.isNullOrEmpty(name)){
+            if (!Strings.isNullOrEmpty(textBox.getText())){
                 NBTTagCompound nbt = StackUtil.getNbtData(relocator);
-                nbt.getCompoundTag("tempPosition").setString("name", name);
-                item.onButtonClick(this.relocator, 3, player);
+                NBTTagCompound compound = nbt.getCompoundTag("tempPosition");
+                float x = compound.getFloat("x");
+                float y = compound.getFloat("y");
+                float z = compound.getFloat("z");
+                int dimId = player.getEntityWorld().provider.getDimension();
+                String name = textBox.getText();
+                //item.onButtonClick(this.relocator, 3, player);
+                if (!nbt.hasKey("map")){
+                    nbt.setTag("map", new NBTTagCompound());
+                }
+                NBTTagCompound map = nbt.getCompoundTag("map");
+                boolean successful;
+                if (map.getKeySet().size() < 10){
+                    NBTTagCompound teleportData = new NBTTagCompound();
+                    if (!map.hasKey(name)){
+                        teleportData.setFloat("x", x);
+                        teleportData.setFloat("y", y);
+                        teleportData.setFloat("z", z);
+                        teleportData.setInteger("dimID", dimId);
+                        map.setTag(name, teleportData);
+                        successful = true;
+                    }
+                } else {
+                    successful = false;
+                }
+                nbt.removeTag("tempPosition");
+                relocator.setTagCompound(nbt);
+                player.closeScreen();
+                IC2.platform.messagePlayer(player, name + " added to teleport list");
             }
         }
         if (button.id == 1) {
-            if (gui instanceof GuiRelocator){
-                ((GuiRelocator)gui).getTextBox().setText("");
-            }
+            textBox.setText("");
         }
     }
 
@@ -100,10 +131,21 @@ public class GuiCompRelocatorAdd extends GuiComponent {
     }
 
     @Override
-    public void onGuiTick(GuiIC2 gui) {
-        if (gui instanceof GuiRelocator){
-            name = ((GuiRelocator)gui).getTextBox().getText();
-        }
+    public boolean onKeyTyped(GuiIC2 gui, char keyTyped, int keyCode) {
+        this.textBox.textboxKeyTyped(keyTyped, keyCode);
+        return gui.mc.gameSettings.keyBindInventory.isActiveAndMatches(keyCode);
+    }
+
+
+    @Override
+    public boolean onMouseClick(GuiIC2 gui, int mouseX, int mouseY, int mouseButton) {
+        this.textBox.mouseClicked(mouseX, mouseY, mouseButton);
+        return false;
+    }
+
+    @Override
+    public void postDraw(GuiIC2 gui, int mouseX, int mouseY) {
+        textBox.drawTextBox();
     }
 
     private int bX(GuiIC2 gui, int position) {
