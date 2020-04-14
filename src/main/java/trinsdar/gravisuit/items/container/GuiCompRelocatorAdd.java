@@ -3,7 +3,6 @@ package trinsdar.gravisuit.items.container;
 import com.google.common.base.Strings;
 import ic2.core.IC2;
 import ic2.core.inventory.gui.GuiIC2;
-import ic2.core.inventory.gui.buttons.IconButton;
 import ic2.core.inventory.gui.components.GuiComponent;
 import ic2.core.util.math.Box2D;
 import ic2.core.util.misc.StackUtil;
@@ -39,14 +38,14 @@ public class GuiCompRelocatorAdd extends GuiComponent {
 
     @Override
     public List<ActionRequest> getNeededRequests() {
-        return Arrays.asList(ActionRequest.GuiInit, ActionRequest.ButtonNotify, ActionRequest.ToolTip, ActionRequest.BackgroundDraw, ActionRequest.KeyPressed, ActionRequest.MouseClick, ActionRequest.PostDraw);
+        return Arrays.asList(ActionRequest.GuiInit, ActionRequest.ButtonNotify, ActionRequest.ToolTip, ActionRequest.KeyPressed, ActionRequest.MouseClick, ActionRequest.PostDraw);
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public void onGuiInit(GuiIC2 gui) {
-        gui.registerButton((new IconButton(2, bX(gui, 59), bY(gui, 43), 26, 13).setIconOnly()));// -1
-        gui.registerButton((new IconButton(1, bX(gui, 91), bY(gui, 43), 26, 13).setIconOnly()));// -64
+        gui.registerButton((new RelocatorButton(2, bX(gui, 59), bY(gui, 43), 26, 13, true, false)));// -1
+        gui.registerButton((new RelocatorButton(1, bX(gui, 91), bY(gui, 43), 26, 13, true, true)));// -64
         this.textBox = new GuiTextField(3, gui.getFont(), bX(gui,14), bY(gui, 19), 148, 16);
         this.textBox.setMaxStringLength(32500);
         this.textBox.setFocused(true);
@@ -60,10 +59,9 @@ public class GuiCompRelocatorAdd extends GuiComponent {
         if (button.id == 2) {
             if (!Strings.isNullOrEmpty(textBox.getText())){
                 NBTTagCompound nbt = StackUtil.getNbtData(relocator);
-                NBTTagCompound compound = nbt.getCompoundTag("tempPosition");
-                int x = compound.getInteger("x");
-                int y = compound.getInteger("y");
-                int z = compound.getInteger("z");
+                int x = (int)player.posX;
+                int y = (int)player.posY;
+                int z = (int)player.posZ;
                 int dimId = player.getEntityWorld().provider.getDimension();
                 String name = textBox.getText();
                 ItemRelocator.TeleportData location = new ItemRelocator.TeleportData(x, y, z, dimId, name);
@@ -96,23 +94,6 @@ public class GuiCompRelocatorAdd extends GuiComponent {
             }
             if (within(mouseY, 57, 72)) {
                 //tooltips.add(I18n.format(GTLang.BUTTON_AESU_SUB64));
-            }
-        }
-    }
-
-    @Override
-    public void drawBackground(GuiIC2 gui, int mouseX, int mouseY, float particalTicks) {
-        int x = gui.getXOffset();
-        int y = gui.getYOffset();
-        Box2D box = this.getPosition();
-        if (this.isMouseOver(mouseX, mouseY) && within(mouseY, 43, 55)){
-            if (within(mouseX, 59, 85)){
-                gui.drawTexturedModalRect(x + 60, y + 44, 177, 1, 24,
-                        11);
-            }
-            if (within(mouseX, 91, 117)){
-                gui.drawTexturedModalRect(x + 92, y + 44, 209, 1, 24,
-                        11);
             }
         }
     }

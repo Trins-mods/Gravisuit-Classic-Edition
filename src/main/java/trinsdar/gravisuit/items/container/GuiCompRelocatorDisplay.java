@@ -2,7 +2,6 @@ package trinsdar.gravisuit.items.container;
 
 import ic2.core.IC2;
 import ic2.core.inventory.gui.GuiIC2;
-import ic2.core.inventory.gui.buttons.IconButton;
 import ic2.core.inventory.gui.components.GuiComponent;
 import ic2.core.util.math.Box2D;
 import ic2.core.util.misc.StackUtil;
@@ -29,8 +28,8 @@ public class GuiCompRelocatorDisplay extends GuiComponent {
     private Box2D BOX;
 
     public GuiCompRelocatorDisplay(ItemStack relocator, int y, EntityPlayer player, String name) {
-        super(new Box2D(21, 3 + (y * 18), 1, 11));
-        BOX = new Box2D(21, 3 + (y * 18), 18, 11);
+        super(new Box2D(3, 3 + (y * 18), 170, 11));
+        BOX = new Box2D(3, 3 + (y * 18), 170, 11);
         this.relocator = relocator;
         this.y = 3 + (y * 18);
         this.name = name;
@@ -45,8 +44,8 @@ public class GuiCompRelocatorDisplay extends GuiComponent {
     @Override
     @SideOnly(Side.CLIENT)
     public void onGuiInit(GuiIC2 gui) {
-        gui.registerButton((new IconButton(2, bX(gui, 22), bY(gui, y + 1), 120, 9).setIconOnly()));// -1
-        gui.registerButton((new IconButton(1, bX(gui, 145), bY(gui, y + 1), 9, 9).setIconOnly()));// -64
+        gui.registerButton((new RelocatorButton(2, bX(gui, 4), bY(gui, y + 1), 156, 9, false, false)));// -1
+        gui.registerButton((new RelocatorButton(1, bX(gui, 163), bY(gui, y + 1), 9, 9, false, true)));// -64
     }
 
     @Override
@@ -100,22 +99,25 @@ public class GuiCompRelocatorDisplay extends GuiComponent {
         Box2D box = this.getPosition();
         NBTTagCompound nbt = StackUtil.getNbtData(relocator);
         int textureY = 116;
-        if (nbt.getString("default").equals(name)){
+        if (nbt.getString("DefaultLocation").equals(name)){
             textureY = 155;
         }
-        if (this.isMouseOver(mouseX, mouseY) && within(mouseY, box.getY() + 1, box.getY() + 10)){
-            if (within(mouseX, 22, 142)){
-                textureY = 129;
-            }
-            if (within(mouseX, 145, 154)){
-                textureY = 142;
-            }
-        }
-        NBTTagCompound map = nbt.getCompoundTag("map");
+        NBTTagCompound map = nbt.getCompoundTag("Locations");
         if (map.hasKey(name)){
             gui.drawTexturedModalRect(x + box.getX(), y + box.getY(), 0, textureY, box.getLenght(),
                     box.getHeight());
-            gui.drawString(name, x + 22, y + y + box.getY() + 1, Color.WHITE.getRGB());
+        }
+    }
+
+    @Override
+    public void drawFrontground(GuiIC2 gui, int mouseX, int mouseY) {
+        int x = gui.getXOffset();
+        int y = gui.getYOffset();
+        Box2D box = this.getPosition();
+        NBTTagCompound nbt = StackUtil.getNbtData(relocator);
+        NBTTagCompound map = nbt.getCompoundTag("Locations");
+        if (map.hasKey(name)){
+            gui.drawString(name, 4, box.getY() + 2, Color.WHITE.getRGB());
         }
     }
 

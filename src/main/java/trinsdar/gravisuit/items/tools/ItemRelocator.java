@@ -16,7 +16,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
@@ -55,11 +54,12 @@ public class ItemRelocator extends BasicElectricItem implements IHandHeldInvento
                     IC2.platform.messagePlayer(player, GravisuitLang.messageRelocatorTranslocator);
                 }
             } else {
-                if (!player.isSneaking()){
-                    if (IC2.platform.isSimulating()) {
+                if (IC2.platform.isSimulating()) {
+                    NBTTagCompound nbt = StackUtil.getOrCreateNbtData(stack);
+                    if (nbt.getByte("TeleportMode") == 0 || player.isSneaking()) {
                         IC2.platform.launchGui(player, this.getInventory(player, handIn, player.getHeldItem(handIn)), handIn);
                     }
-                } else {
+                }else {
                     return super.onItemRightClick(worldIn, player, handIn);
                 }
             }
@@ -68,24 +68,6 @@ public class ItemRelocator extends BasicElectricItem implements IHandHeldInvento
         } else {
             return super.onItemRightClick(worldIn, player, handIn);
         }
-    }
-
-    @Override
-    public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-        ItemStack stack = player.getHeldItem(hand);
-        NBTTagCompound nbt = StackUtil.getNbtData(stack);
-        byte teleportMode = nbt.getByte("TeleportMode");
-        if (teleportMode == 0 && player.isSneaking()){
-            NBTTagCompound compound = new NBTTagCompound();
-            compound.setInteger("x", pos.getX());
-            compound.setInteger("y", pos.getY());
-            compound.setInteger("z", pos.getZ());
-            nbt.setTag("tempPosition", compound);
-            nbt.setBoolean("lookingAtBlock", true);
-            IC2.platform.launchGui(player, this.getInventory(player, hand, stack), hand);
-            return EnumActionResult.SUCCESS;
-        }
-        return super.onItemUse(player, worldIn, pos, hand, facing, hitX, hitY, hitZ);
     }
 
     @Override
