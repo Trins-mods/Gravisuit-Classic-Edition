@@ -26,12 +26,6 @@ public class PacketRelocator implements IMessage {
     public PacketRelocator() {
     }
 
-//    public PacketRelocator(int function, int data, boolean b) {
-//        this.data = data;
-//        this.function = (byte) function;
-//        this.dataB = b;
-//    }
-
     public PacketRelocator(TeleportData location, int function, ItemStack relocator) {
         this.location = location;
         this.function = (byte) function;
@@ -46,9 +40,9 @@ public class PacketRelocator implements IMessage {
     public void toBytes(ByteBuf bytes) {
         bytes.writeByte(function);
         if (function == ADDDESTINATION) {
-            bytes.writeDouble(location.getX());
-            bytes.writeDouble(location.getY());
-            bytes.writeDouble(location.getZ());
+            bytes.writeInt(location.getX());
+            bytes.writeInt(location.getY());
+            bytes.writeInt(location.getZ());
             bytes.writeInt(location.getDimId());
             ByteBufUtils.writeUTF8String(bytes, location.getName());
         }
@@ -89,7 +83,6 @@ public class PacketRelocator implements IMessage {
 
                 if (message.function == ADDDESTINATION) {
                     NBTTagCompound tag = new NBTTagCompound();
-
                     message.location.writeToNBT(tag);
                     map.setTag(message.location.getName(), tag);
                     nbt.setTag("Locations", map);
