@@ -3,7 +3,9 @@ package trinsdar.gravisuit.network;
 
 import ic2.core.util.misc.StackUtil;
 import io.netty.buffer.ByteBuf;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
@@ -11,6 +13,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import trinsdar.gravisuit.items.tools.ItemRelocator;
 import trinsdar.gravisuit.items.tools.ItemRelocator.TeleportData;
+import trinsdar.gravisuit.util.Registry;
 
 public class PacketRelocator implements IMessage {
     public static final int ADDDESTINATION = 0;
@@ -70,12 +73,12 @@ public class PacketRelocator implements IMessage {
 
         @Override
         public IMessage handleMessage(PacketRelocator message, MessageContext ctx) {
-            ItemStack teleporter = message.getRelocator();
+            EntityPlayerMP serverPlayer = ctx.getServerHandler().player;
+            ItemStack teleporter = getItem(serverPlayer, Registry.relocator);
             if (teleporter.isEmpty()) {
                 return null;
             }
 
-            EntityPlayerMP serverPlayer = ctx.getServerHandler().player;
 
             serverPlayer.getServerWorld().addScheduledTask(() -> {
                 NBTTagCompound nbt = StackUtil.getNbtData(teleporter);
@@ -110,6 +113,16 @@ public class PacketRelocator implements IMessage {
 
 
             return null;
+        }
+
+        public static ItemStack getItem(EntityPlayer player, Item item) {
+            if (!player.getHeldItemMainhand().isEmpty() && player.getHeldItemMainhand().getItem() == item) {
+                return player.getHeldItemMainhand();
+            }
+            else if (!player.getHeldItemOffhand().isEmpty() && player.getHeldItemOffhand().getItem() == item) {
+                return player.getHeldItemOffhand();
+            }
+            return ItemStack.EMPTY;
         }
     }
 }
