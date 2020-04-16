@@ -9,6 +9,7 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumHand;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import trinsdar.gravisuit.GravisuitClassic;
@@ -25,12 +26,14 @@ public class GuiCompRelocatorDisplay extends GuiComponent {
     EntityPlayer player;
     int y;
     String name;
+    EnumHand hand;
     private Box2D BOX;
 
-    public GuiCompRelocatorDisplay(ItemStack relocator, int y, EntityPlayer player, String name) {
+    public GuiCompRelocatorDisplay(EnumHand hand, int y, EntityPlayer player, String name) {
         super(new Box2D(3, 3 + (y * 18), 170, 11));
         BOX = new Box2D(3, 3 + (y * 18), 170, 11);
-        this.relocator = relocator;
+        this.relocator = player.getHeldItem(hand);
+        this.hand = hand;
         this.y = 3 + (y * 18);
         this.name = name;
         this.player = player;
@@ -61,7 +64,7 @@ public class GuiCompRelocatorDisplay extends GuiComponent {
             NBTTagCompound nbt = StackUtil.getNbtData(relocator);
             int function = nbt.getByte("TeleportMode") == 0 ? PacketRelocator.TELEPORT : PacketRelocator.ADDDEFAULT;
             ItemRelocator.TeleportData location = new ItemRelocator.TeleportData(name);
-            GravisuitClassic.network.sendToServer(new PacketRelocator(location, function, relocator));
+            GravisuitClassic.network.sendToServer(new PacketRelocator(location, function, PacketRelocator.handToInt(hand)));
             if (function == PacketRelocator.TELEPORT) {
                 player.closeScreen();
             } else {
@@ -70,7 +73,7 @@ public class GuiCompRelocatorDisplay extends GuiComponent {
         }
         if (button.id == 1) {
             ItemRelocator.TeleportData location = new ItemRelocator.TeleportData(name);
-            GravisuitClassic.network.sendToServer(new PacketRelocator(location, PacketRelocator.REMOVEDESTINATION, relocator));
+            GravisuitClassic.network.sendToServer(new PacketRelocator(location, PacketRelocator.REMOVEDESTINATION, PacketRelocator.handToInt(hand)));
             if (gui instanceof GuiRelocator){
                 ((GuiRelocator)gui).setReloadGui(true);
             }

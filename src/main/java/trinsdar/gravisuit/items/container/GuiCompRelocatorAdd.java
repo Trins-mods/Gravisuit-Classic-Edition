@@ -11,6 +11,7 @@ import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumHand;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import trinsdar.gravisuit.GravisuitClassic;
@@ -24,14 +25,16 @@ public class GuiCompRelocatorAdd extends GuiComponent {
 
     ItemStack relocator;
     EntityPlayer player;
+    EnumHand hand;
     int y;
     private Box2D BOX;
     private GuiTextField textBox;
 
-    public GuiCompRelocatorAdd(ItemStack relocator, EntityPlayer player) {
+    public GuiCompRelocatorAdd(EnumHand hand, EntityPlayer player) {
         super(new Box2D(21, 18, 1, 11));
         BOX = new Box2D(21, 18, 18, 11);
-        this.relocator = relocator;
+        this.relocator = player.getHeldItem(hand);
+        this.hand = hand;
         this.y = 18;
         this.player = player;
     }
@@ -71,7 +74,7 @@ public class GuiCompRelocatorAdd extends GuiComponent {
                     successful = true;
                 }
                 if (successful){
-                    GravisuitClassic.network.sendToServer(new PacketRelocator(location, PacketRelocator.ADDDESTINATION, relocator));
+                    GravisuitClassic.network.sendToServer(new PacketRelocator(location, PacketRelocator.ADDDESTINATION, PacketRelocator.handToInt(hand)));
                     IC2.platform.messagePlayer(player, name + " added to teleport list");
                 } else {
                     IC2.platform.messagePlayer(player, "Max teleport Locations already reached!");

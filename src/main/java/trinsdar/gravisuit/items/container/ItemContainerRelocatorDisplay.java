@@ -7,6 +7,7 @@ import ic2.core.util.misc.StackUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -14,15 +15,16 @@ import trinsdar.gravisuit.GravisuitClassic;
 
 public class ItemContainerRelocatorDisplay extends ContainerItemComponent<ItemInventoryRelocator> {
     public static ResourceLocation TEXTURE = new ResourceLocation(GravisuitClassic.MODID, "textures/gui/relocator_display.png");
-    public ItemContainerRelocatorDisplay(IPortableInventory inv, int id, ItemStack item, EntityPlayer player) {
+    public ItemContainerRelocatorDisplay(IPortableInventory inv, int id, EnumHand hand, EntityPlayer player) {
         super(inv, id);
+        ItemStack item = player.getHeldItem(hand);
         NBTTagCompound nbt = StackUtil.getNbtData(item);
         if (nbt.hasKey("Locations")){
             NBTTagCompound map = nbt.getCompoundTag("Locations");
             if (map.getSize() > 0 && map.getSize() < 11){
                 int i = 0;
                 for (String name : map.getKeySet()){
-                    addComponent(new GuiCompRelocatorDisplay(item, i, player, name));
+                    addComponent(new GuiCompRelocatorDisplay(hand, i, player, name));
                     i++;
                 }
             }

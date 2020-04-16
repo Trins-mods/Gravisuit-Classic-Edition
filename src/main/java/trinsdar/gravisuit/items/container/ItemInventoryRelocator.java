@@ -7,13 +7,16 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumHand;
 import trinsdar.gravisuit.items.tools.ItemRelocator;
 
 public class ItemInventoryRelocator extends IC2ItemInventory {
     ItemStack relocator;
-    public ItemInventoryRelocator(EntityPlayer player, ItemRelocator inv, ItemStack relocator) {
+    EnumHand hand;
+    public ItemInventoryRelocator(EntityPlayer player, ItemRelocator inv, ItemStack relocator, EnumHand hand) {
         super(player, inv, relocator);
         this.relocator = relocator;
+        this.hand = hand;
     }
 
     @Override
@@ -25,9 +28,9 @@ public class ItemInventoryRelocator extends IC2ItemInventory {
     public ContainerIC2 getGuiContainer(EntityPlayer player) {
         NBTTagCompound nbt = StackUtil.getNbtData(relocator);
         if (player.isSneaking() && nbt.getByte("TeleportMode") == 0){
-            return new ItemContainerRelocatorAdd(this, this.getID(), relocator, player);
+            return new ItemContainerRelocatorAdd(this, this.getID(), hand, player);
         }
-        return new ItemContainerRelocatorDisplay(this, this.getID(), relocator, player);
+        return new ItemContainerRelocatorDisplay(this, this.getID(), hand, player);
     }
 
     @Override

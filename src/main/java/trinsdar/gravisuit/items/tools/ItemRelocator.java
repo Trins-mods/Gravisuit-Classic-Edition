@@ -129,7 +129,7 @@ public class ItemRelocator extends BasicElectricItem implements IHandHeldInvento
 
     @Override
     public IHasGui getInventory(EntityPlayer entityPlayer, EnumHand enumHand, ItemStack itemStack) {
-        return new ItemInventoryRelocator(entityPlayer, this, itemStack);
+        return new ItemInventoryRelocator(entityPlayer, this, itemStack, enumHand);
     }
 
     @Override
@@ -150,48 +150,14 @@ public class ItemRelocator extends BasicElectricItem implements IHandHeldInvento
         StackUtil.getOrCreateNbtData(stack).setInteger("GuiID", id);
     }
 
-    public void onButtonClick(ItemStack stack, int buttonId, EntityPlayer player){
+    public static void onButtonClick(ItemStack stack, int function, EntityPlayer player, TeleportData data){
         NBTTagCompound nbt = StackUtil.getNbtData(stack);
-        if (buttonId == 1){
-            String name = nbt.getString("tempName");
-            NBTTagCompound map = nbt.getCompoundTag("map");
-            map.removeTag(name);
-        }
-        if (buttonId == 2){
-            String name = nbt.getString("tempName");
-            if (nbt.getByte("TeleportMode") == 0){
-                NBTTagCompound map = nbt.getCompoundTag("map");
-                NBTTagCompound teleportData;
-                if (map.hasKey(name)){
-                    teleportData = map.getCompoundTag(name);
-                    teleportEntity(player, (int)teleportData.getFloat("x"), (int)teleportData.getFloat("y"), (int)teleportData.getFloat("z"), teleportData.getInteger("dimID"), stack);
-                }
-            } else {
-                nbt.setString("default", name);
-            }
-        }
-        if (buttonId == 3){
-            NBTTagCompound compound = nbt.getCompoundTag("tempPosition");
-            float x = compound.getFloat("x");
-            float y = compound.getFloat("y");
-            float z = compound.getFloat("z");
-            int dimId = compound.getInteger("dimID");
-            String name = compound.getString("name");
-            GravisuitClassic.logger.info("added teleport data");
-            if (!nbt.hasKey("map")){
-                nbt.setTag("map", new NBTTagCompound());
-            }
-            NBTTagCompound map = nbt.getCompoundTag("map");
-            if (map.getKeySet().size() < 10){
-                NBTTagCompound teleportData = new NBTTagCompound();
-                if (!map.hasKey(name)){
-                    teleportData.setFloat("x", x);
-                    teleportData.setFloat("y", y);
-                    teleportData.setFloat("z", z);
-                    teleportData.setInteger("dimID", dimId);
-                    map.setTag(name, teleportData);
-                }
-            }
+        NBTTagCompound map = nbt.getCompoundTag("Locations");
+        if (function == 0){
+            NBTTagCompound tag = new NBTTagCompound();
+            data.writeToNBT(tag);
+            map.setTag(data.getName(), tag);
+            nbt.setTag("Locations", map);
         }
     }
 

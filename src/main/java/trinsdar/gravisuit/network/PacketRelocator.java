@@ -3,17 +3,15 @@ package trinsdar.gravisuit.network;
 
 import ic2.core.util.misc.StackUtil;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumHand;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import trinsdar.gravisuit.items.tools.ItemRelocator;
 import trinsdar.gravisuit.items.tools.ItemRelocator.TeleportData;
-import trinsdar.gravisuit.util.Registry;
 
 public class PacketRelocator implements IMessage {
     public static final int ADDDESTINATION = 0;
@@ -24,19 +22,15 @@ public class PacketRelocator implements IMessage {
     private boolean dataB;
     private byte function = -1;
     private TeleportData location;
-    private ItemStack relocator;
+    private int hand;
 
     public PacketRelocator() {
     }
 
-    public PacketRelocator(TeleportData location, int function, ItemStack relocator) {
+    public PacketRelocator(TeleportData location, int function, int hand) {
         this.location = location;
         this.function = (byte) function;
-        this.relocator = relocator;
-    }
-
-    public ItemStack getRelocator() {
-        return relocator;
+        this.hand = hand;
     }
 
     @Override
@@ -53,7 +47,7 @@ public class PacketRelocator implements IMessage {
         if (function == REMOVEDESTINATION || function == TELEPORT || function == ADDDEFAULT) {
             ByteBufUtils.writeUTF8String(bytes, location.getName());
         }
-        ByteBufUtils.writeItemStack(bytes, relocator);
+        bytes.writeInt(hand);
     }
 
     @Override
@@ -66,7 +60,27 @@ public class PacketRelocator implements IMessage {
         if (function == REMOVEDESTINATION || function == TELEPORT || function == ADDDEFAULT) {
             location = new TeleportData(ByteBufUtils.readUTF8String(bytes));
         }
-        relocator = ByteBufUtils.readItemStack(bytes);
+        hand = bytes.readInt();
+    }
+
+    public static EnumHand intToHand(int id){
+        if (id == 0){
+            return EnumHand.MAIN_HAND;
+        } else if (id == 1){
+            return EnumHand.OFF_HAND;
+        } else { // in case someone puts in a wrong int
+            throw new IllegalArgumentException("Invalid id from invalid hand " + id);
+        }
+    }
+
+    public static int handToInt(EnumHand hand){
+        if (hand == EnumHand.MAIN_HAND){
+            return 0;
+        } else if (hand == EnumHand.OFF_HAND){
+            return 1;
+        } else { // should never be reached
+            throw new IllegalArgumentException("Invalid hand " + hand);
+        }
     }
 
     public static class Handler extends MessageHandlerWrapper<PacketRelocator, IMessage> {
@@ -74,7 +88,7 @@ public class PacketRelocator implements IMessage {
         @Override
         public IMessage handleMessage(PacketRelocator message, MessageContext ctx) {
             EntityPlayerMP serverPlayer = ctx.getServerHandler().player;
-            ItemStack teleporter = getItem(serverPlayer, Registry.relocator);
+            ItemStack teleporter = serverPlayer.getHeldItem(intToHand(message.hand));
             if (teleporter.isEmpty()) {
                 return null;
             }
@@ -109,20 +123,12 @@ public class PacketRelocator implements IMessage {
                 if (message.function == ADDDEFAULT){
                     nbt.setString("DefaultLocation", message.location.getName());
                 }
+
+                serverPlayer.setHeldItem(intToHand(message.hand), teleporter);
             });
 
 
             return null;
-        }
-
-        public static ItemStack getItem(EntityPlayer player, Item item) {
-            if (!player.getHeldItemMainhand().isEmpty() && player.getHeldItemMainhand().getItem() == item) {
-                return player.getHeldItemMainhand();
-            }
-            else if (!player.getHeldItemOffhand().isEmpty() && player.getHeldItemOffhand().getItem() == item) {
-                return player.getHeldItemOffhand();
-            }
-            return ItemStack.EMPTY;
         }
     }
 }
