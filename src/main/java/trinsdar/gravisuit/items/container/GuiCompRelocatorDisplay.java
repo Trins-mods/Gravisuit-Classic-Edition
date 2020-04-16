@@ -64,7 +64,7 @@ public class GuiCompRelocatorDisplay extends GuiComponent {
             NBTTagCompound nbt = StackUtil.getNbtData(relocator);
             int function = nbt.getByte("TeleportMode") == 0 ? PacketRelocator.TELEPORT : PacketRelocator.ADDDEFAULT;
             ItemRelocator.TeleportData location = new ItemRelocator.TeleportData(name);
-            GravisuitClassic.network.sendToServer(new PacketRelocator(location, function, PacketRelocator.handToInt(hand)));
+            GravisuitClassic.network.sendToServer(new PacketRelocator(location, function, PacketRelocator.handToBool(hand)));
             if (function == PacketRelocator.TELEPORT) {
                 player.closeScreen();
             } else {
@@ -73,7 +73,7 @@ public class GuiCompRelocatorDisplay extends GuiComponent {
         }
         if (button.id == 1) {
             ItemRelocator.TeleportData location = new ItemRelocator.TeleportData(name);
-            GravisuitClassic.network.sendToServer(new PacketRelocator(location, PacketRelocator.REMOVEDESTINATION, PacketRelocator.handToInt(hand)));
+            GravisuitClassic.network.sendToServer(new PacketRelocator(location, PacketRelocator.REMOVEDESTINATION, PacketRelocator.handToBool(hand)));
             if (gui instanceof GuiRelocator){
                 ((GuiRelocator)gui).setReloadGui(true);
             }

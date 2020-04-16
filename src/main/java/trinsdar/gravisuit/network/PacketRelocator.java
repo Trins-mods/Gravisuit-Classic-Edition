@@ -22,12 +22,12 @@ public class PacketRelocator implements IMessage {
     private boolean dataB;
     private byte function = -1;
     private TeleportData location;
-    private int hand;
+    private boolean hand;
 
     public PacketRelocator() {
     }
 
-    public PacketRelocator(TeleportData location, int function, int hand) {
+    public PacketRelocator(TeleportData location, int function, boolean hand) {
         this.location = location;
         this.function = (byte) function;
         this.hand = hand;
@@ -47,7 +47,7 @@ public class PacketRelocator implements IMessage {
         if (function == REMOVEDESTINATION || function == TELEPORT || function == ADDDEFAULT) {
             ByteBufUtils.writeUTF8String(bytes, location.getName());
         }
-        bytes.writeInt(hand);
+        bytes.writeBoolean(hand);
     }
 
     @Override
@@ -60,27 +60,15 @@ public class PacketRelocator implements IMessage {
         if (function == REMOVEDESTINATION || function == TELEPORT || function == ADDDEFAULT) {
             location = new TeleportData(ByteBufUtils.readUTF8String(bytes));
         }
-        hand = bytes.readInt();
+        hand = bytes.readBoolean();
     }
 
-    public static EnumHand intToHand(int id){
-        if (id == 0){
-            return EnumHand.MAIN_HAND;
-        } else if (id == 1){
-            return EnumHand.OFF_HAND;
-        } else { // in case someone puts in a wrong int
-            throw new IllegalArgumentException("Invalid id from invalid hand " + id);
-        }
+    public static EnumHand boolToHand(boolean hand){
+        return hand ? EnumHand.MAIN_HAND : EnumHand.OFF_HAND;
     }
 
-    public static int handToInt(EnumHand hand){
-        if (hand == EnumHand.MAIN_HAND){
-            return 0;
-        } else if (hand == EnumHand.OFF_HAND){
-            return 1;
-        } else { // should never be reached
-            throw new IllegalArgumentException("Invalid hand " + hand);
-        }
+    public static boolean handToBool(EnumHand hand){
+        return hand == EnumHand.MAIN_HAND;
     }
 
     public static class Handler extends MessageHandlerWrapper<PacketRelocator, IMessage> {
@@ -88,11 +76,10 @@ public class PacketRelocator implements IMessage {
         @Override
         public IMessage handleMessage(PacketRelocator message, MessageContext ctx) {
             EntityPlayerMP serverPlayer = ctx.getServerHandler().player;
-            ItemStack teleporter = serverPlayer.getHeldItem(intToHand(message.hand));
-            if (teleporter.isEmpty()) {
+            ItemStack teleporter = serverPlayer.getHeldItem(boolToHand(message.hand));
+            if (serverPlayer.getHeldItem(boolToHand(message.hand)).isEmpty()) {
                 return null;
             }
-
 
             serverPlayer.getServerWorld().addScheduledTask(() -> {
                 NBTTagCompound nbt = StackUtil.getNbtData(teleporter);
@@ -124,7 +111,6 @@ public class PacketRelocator implements IMessage {
                     nbt.setString("DefaultLocation", message.location.getName());
                 }
 
-                serverPlayer.setHeldItem(intToHand(message.hand), teleporter);
             });
 
 

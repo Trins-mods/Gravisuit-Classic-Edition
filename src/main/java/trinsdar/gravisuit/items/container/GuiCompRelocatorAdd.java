@@ -74,7 +74,7 @@ public class GuiCompRelocatorAdd extends GuiComponent {
                     successful = true;
                 }
                 if (successful){
-                    GravisuitClassic.network.sendToServer(new PacketRelocator(location, PacketRelocator.ADDDESTINATION, PacketRelocator.handToInt(hand)));
+                    GravisuitClassic.network.sendToServer(new PacketRelocator(location, PacketRelocator.ADDDESTINATION, PacketRelocator.handToBool(hand)));
                     IC2.platform.messagePlayer(player, name + " added to teleport list");
                 } else {
                     IC2.platform.messagePlayer(player, "Max teleport Locations already reached!");
