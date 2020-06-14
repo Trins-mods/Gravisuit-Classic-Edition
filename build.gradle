@@ -11,6 +11,7 @@ buildscript {
         classpath "com.wynprice.cursemaven:CurseMaven:2.1.0"
     }
 }
+apply plugin: "com.wynprice.cursemaven"
 apply plugin: 'net.minecraftforge.gradle.forge'
 //Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 
