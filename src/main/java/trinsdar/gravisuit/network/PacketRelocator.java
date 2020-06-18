@@ -77,12 +77,12 @@ public class PacketRelocator implements IMessage {
         public IMessage handleMessage(PacketRelocator message, MessageContext ctx) {
             EntityPlayerMP serverPlayer = ctx.getServerHandler().player;
             ItemStack teleporter = serverPlayer.getHeldItem(boolToHand(message.hand));
-            if (serverPlayer.getHeldItem(boolToHand(message.hand)).isEmpty()) {
+            if (teleporter.isEmpty()) {
                 return null;
             }
 
             serverPlayer.getServerWorld().addScheduledTask(() -> {
-                NBTTagCompound nbt = StackUtil.getNbtData(teleporter);
+                NBTTagCompound nbt = StackUtil.getOrCreateNbtData(teleporter);
                 NBTTagCompound map = nbt.getCompoundTag("Locations");
 
                 if (message.function == ADDDESTINATION) {
