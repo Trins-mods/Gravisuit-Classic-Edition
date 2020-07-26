@@ -11,22 +11,20 @@ import ic2.core.platform.textures.Ic2Icons;
 import ic2.core.platform.textures.obj.IStaticTexturedItem;
 import ic2.core.util.misc.StackUtil;
 import ic2.core.util.obj.ToolTipType;
+import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockLeaves;
-import net.minecraft.block.BlockShulkerBox;
-import net.minecraft.block.BlockTrapDoor;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ActionResult;
@@ -53,6 +51,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import static net.minecraft.item.ItemBlock.setTileEntityNBT;
 
 public class ItemToolAdvancedDiamondDrill extends ItemElectricTool implements IStaticTexturedItem, IMiningDrill {
 
@@ -454,84 +454,55 @@ public class ItemToolAdvancedDiamondDrill extends ItemElectricTool implements IS
     }
 
     static boolean gtcxLoaded = Loader.isModLoaded("gtc_expansion");
-    ItemStack torch = new ItemStack(Blocks.TORCH);
+    final ItemStack torch = new ItemStack(Blocks.TORCH);
     @Override
     public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-        if (gtcxLoaded){
-            if (facing != EnumFacing.DOWN){
-                for (ItemStack stack : player.inventory.mainInventory){
-                    if (stack.getItem() == torch.getItem()){
-                        if (placeTorch(player, worldIn, pos, hand, facing, hitX, hitY, hitZ)){
-                            if (!player.isCreative()){
-                                stack.shrink(1);
-                            }
-                            return EnumActionResult.SUCCESS;
-                        }
-                    }
-                }
+        if (!gtcxLoaded){
+            return super.onItemUse(player, worldIn, pos, hand, facing, hitX, hitY, hitZ);
+        }
+        IBlockState state = worldIn.getBlockState(pos);
+        Block block = state.getBlock();
+        ItemStack stack = ItemStack.EMPTY;
+        if (!block.isReplaceable(worldIn, pos)) {
+            pos = pos.offset(facing);
+        }
+        for (ItemStack stack1 : player.inventory.mainInventory){
+            if (stack1.getItem() == torch.getItem()){
+                stack = stack1;
+                break;
             }
         }
-        return super.onItemUse(player, worldIn, pos, hand, facing, hitX, hitY, hitZ);
-    }
-
-    public boolean placeTorch(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ){
-        BlockPos offset = pos.offset(facing);
-        if (grass(world, pos)){
-            world.setBlockState(pos, Blocks.TORCH.getDefaultState());
-            world.playSound(null, pos, SoundEvents.BLOCK_WOOD_PLACE, SoundCategory.BLOCKS, 1.0F, 0.75F);
-            return true;
+        if (!stack.isEmpty() && player.canPlayerEdit(pos, facing, stack) && worldIn.mayPlace(Blocks.TORCH, pos, false, facing, player)) {
+            IBlockState state1 = Blocks.TORCH.getStateForPlacement(worldIn, pos, facing, hitX, hitY, hitZ, 0, player, hand);
+            if (placeBlockAt(stack, player, worldIn, pos, facing, hitX, hitY, hitZ, state1)) {
+                state1 = worldIn.getBlockState(pos);
+                SoundType soundtype = state1.getBlock().getSoundType(state1, worldIn, pos, player);
+                worldIn.playSound(player, pos, soundtype.getPlaceSound(), SoundCategory.BLOCKS, (soundtype.getVolume() + 1.0F) / 2.0F, soundtype.getPitch() * 0.8F);
+                if (!player.isCreative()) {
+                    stack.shrink(1);
+                }
+            }
+            return EnumActionResult.SUCCESS;
+        } else {
+            return super.onItemUse(player, worldIn, pos, hand, facing, hitX, hitY, hitZ);
         }
-        if (canPlaceAt(world, pos, facing) && world.getBlockState(offset).getBlock() == Blocks.AIR){
-            world.setBlockState(offset, Blocks.TORCH.getStateForPlacement(world, pos, facing, hitX, hitY, hitZ, 0, player, hand));
-            world.playSound(null, pos, SoundEvents.BLOCK_WOOD_PLACE, SoundCategory.BLOCKS, 1.0F, 0.75F);
-            return true;
-        }
-        return false;
+
     }
 
-    private boolean canPlaceAt(World worldIn, BlockPos pos, EnumFacing facing)
-    {
-        BlockPos blockpos = pos.offset(facing.getOpposite());
-        IBlockState state = worldIn.getBlockState(blockpos);
-        Block block = state.getBlock();
-        BlockFaceShape blockfaceshape = state.getBlockFaceShape(worldIn, blockpos, facing);
+    public boolean placeBlockAt(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, IBlockState newState) {
+        if (!world.setBlockState(pos, newState, 11)) return false;
 
-        if (facing.equals(EnumFacing.UP) && state.getBlock().canPlaceTorchOnTop(state, worldIn, pos))
-        {
-            return true;
-        }
-        else if (facing != EnumFacing.UP && facing != EnumFacing.DOWN)
-        {
-            return !isExceptBlockForAttachWithPiston(block) && blockfaceshape == BlockFaceShape.SOLID;
-        }
-        else
-        {
-            return false;
-        }
-    }
-
-    protected static boolean isExceptionBlockForAttaching(Block attachBlock)
-    {
-        return attachBlock instanceof BlockShulkerBox || attachBlock instanceof BlockLeaves || attachBlock instanceof BlockTrapDoor || attachBlock == Blocks.BEACON || attachBlock == Blocks.CAULDRON || attachBlock == Blocks.GLASS || attachBlock == Blocks.GLOWSTONE || attachBlock == Blocks.ICE || attachBlock == Blocks.SEA_LANTERN || attachBlock == Blocks.STAINED_GLASS;
-    }
-
-    protected static boolean isExceptBlockForAttachWithPiston(Block attachBlock)
-    {
-        return isExceptionBlockForAttaching(attachBlock) || attachBlock == Blocks.PISTON || attachBlock == Blocks.STICKY_PISTON || attachBlock == Blocks.PISTON_HEAD;
-    }
-
-
-    public static boolean grass(World world, BlockPos pos) {return grass(block(world, pos), meta(world, pos));}
-    public static boolean grass(Block block, int meta) {
-        if (block == Blocks.TALLGRASS) return true;
-        if (block == Blocks.DOUBLE_PLANT)  return meta ==  2 || meta ==  3;
-        return false;
-    }
-
-    public static Block block(World world, BlockPos pos) {return world.getBlockState(pos).getBlock();}
-    public static int meta(World world, BlockPos pos) {
         IBlockState state = world.getBlockState(pos);
-        return state.getBlock().getMetaFromState(state);
+        if (state.getBlock() == Blocks.TORCH) {
+            setTileEntityNBT(world, player, pos, stack);
+            Blocks.TORCH.onBlockPlacedBy(world, pos, state, player, stack);
+
+            if (player instanceof EntityPlayerMP) {
+                CriteriaTriggers.PLACED_BLOCK.trigger((EntityPlayerMP)player, pos, stack);
+            }
+        }
+
+        return true;
     }
 
     public enum ToolMode {
