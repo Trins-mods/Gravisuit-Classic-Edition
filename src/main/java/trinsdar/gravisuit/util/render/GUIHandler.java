@@ -16,13 +16,10 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.common.Loader;
-import trinsdar.gravisuit.GravisuitClassic;
 import trinsdar.gravisuit.util.GravisuitConfig;
 import trinsdar.gravisuit.util.GravisuitConfig.Client.Positions;
 import trinsdar.gravisuit.util.Registry;
 import trinsdar.gravisuit.util.baubles.BaublesLoader;
-
-import java.util.Random;
 
 public class GUIHandler extends Gui {
 	
@@ -50,14 +47,10 @@ public class GUIHandler extends Gui {
 		ItemStack armorStack = player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
 		Item itemArmor = armorStack.getItem();
 
-		if (!armorStack.isEmpty() && (itemArmor == Registry.getAdvancedLappack() || itemArmor == Registry.getUltimateLappack() ||
-									itemArmor == Registry.getAdvancedElectricJetpack() || itemArmor == Registry.getAdvancedNuclearJetpack() || 
-									itemArmor == Registry.advancedNanoChestplate || itemArmor == Registry.advancedNuclearNanoChestplate || 
-									itemArmor == Registry.gravisuit || itemArmor == Registry.nuclearGravisuit || 
-									itemArmor == Ic2Items.compactedElectricJetpack.getItem() || itemArmor == Ic2Items.compactedNuclearJetpack.getItem() ||
-									itemArmor == Ic2Items.quantumJetplate.getItem() || itemArmor == Ic2Items.quantumNuclearJetplate.getItem() ||
-									itemArmor == Ic2Items.lapPack.getItem() || itemArmor == Ic2Items.quantumPack.getItem()))
-		{
+		if (!armorStack.isEmpty() && or(itemArmor,  Registry.getAdvancedLappack(), Registry.getUltimateLappack(), Registry.getAdvancedElectricJetpack(),
+				Registry.getAdvancedNuclearJetpack(), Registry.advancedNanoChestplate, Registry.advancedNuclearNanoChestplate,
+				Registry.gravisuit, Registry.nuclearGravisuit, Ic2Items.compactedElectricJetpack.getItem(), Ic2Items.compactedNuclearJetpack.getItem(),
+				Ic2Items.quantumJetplate.getItem(), Ic2Items.quantumNuclearJetplate.getItem(), Ic2Items.lapPack.getItem(), Ic2Items.quantumPack.getItem())) {
 			int currCharge = getCharge(armorStack);
 			int energyStatus = (int) (currCharge / ((IElectricItem) itemArmor).getMaxCharge(armorStack) * 100);
 			energyLevelString = energyLevelName + energyStatus;
@@ -91,57 +84,59 @@ public class GUIHandler extends Gui {
 				}
 				drawString(mc.fontRenderer, statusString,  xPos, yPos2, 5635925);
 			}
-		} else if (armorStack.isEmpty()){
+		} else {
 			if (Loader.isModLoaded("baubles") && IC2.loader.getPlugin("baubles", IBaublesPlugin.class) != null){
-				if (!BaublesLoader.getBaublesChestSlot(player).isEmpty()){
-					armorStack = BaublesLoader.getBaublesChestSlot(player);
-					itemArmor = armorStack.getItem();
-
-					if ((itemArmor == Registry.getAdvancedLappack() || itemArmor == Registry.getUltimateLappack() ||
-							itemArmor == Registry.getAdvancedElectricJetpack() || itemArmor == Registry.getAdvancedNuclearJetpack() ||
-							itemArmor == Registry.advancedNanoChestplate || itemArmor == Registry.advancedNuclearNanoChestplate ||
-							itemArmor == Registry.gravisuit || itemArmor == Registry.nuclearGravisuit ||
-							itemArmor == Ic2Items.compactedElectricJetpack.getItem() || itemArmor == Ic2Items.compactedNuclearJetpack.getItem() ||
-							itemArmor == Ic2Items.quantumJetplate.getItem() || itemArmor == Ic2Items.quantumNuclearJetplate.getItem()||
-							itemArmor == Ic2Items.lapPack.getItem() || itemArmor == Ic2Items.quantumPack.getItem()))
-					{
-						int currCharge = getCharge(armorStack);
-						int energyStatus = (int) (currCharge / ((IElectricItem) itemArmor).getMaxCharge(armorStack) * 100);
-						energyLevelString = energyLevelName + energyStatus;
-						if (GravisuitConfig.client.positions == Positions.TOPRIGHT || GravisuitConfig.client.positions == Positions.BOTTOMRIGHT){
-							xPos = scaledResolution.getScaledWidth() - 3 - mc.fontRenderer.getStringWidth(energyLevelString + "%");
-						}else if (GravisuitConfig.client.positions == Positions.TOPMIDDLE){
-							xPos = (int)(scaledResolution.getScaledWidth() * 0.50F) - (mc.fontRenderer.getStringWidth(energyLevelString + "%") / 2);
+				armorStack = BaublesLoader.getBaublesChestSlot(player);
+				itemArmor = armorStack.getItem();
+				if (!armorStack.isEmpty() && or(itemArmor, Registry.getAdvancedLappack(), Registry.getUltimateLappack(), Registry.getAdvancedElectricJetpack(),
+						Registry.getAdvancedNuclearJetpack(), Registry.advancedNanoChestplate, Registry.advancedNuclearNanoChestplate,
+						Registry.gravisuit, Registry.nuclearGravisuit, Ic2Items.compactedElectricJetpack.getItem(), Ic2Items.compactedNuclearJetpack.getItem(),
+						Ic2Items.quantumJetplate.getItem(), Ic2Items.quantumNuclearJetplate.getItem(), Ic2Items.lapPack.getItem(), Ic2Items.quantumPack.getItem())) {
+					int currCharge = getCharge(armorStack);
+					int energyStatus = (int) (currCharge / ((IElectricItem) itemArmor).getMaxCharge(armorStack) * 100);
+					energyLevelString = energyLevelName + energyStatus;
+					if (GravisuitConfig.client.positions == Positions.TOPRIGHT || GravisuitConfig.client.positions == Positions.BOTTOMRIGHT) {
+						xPos = scaledResolution.getScaledWidth() - 3 - mc.fontRenderer.getStringWidth(energyLevelString + "%");
+					} else if (GravisuitConfig.client.positions == Positions.TOPMIDDLE) {
+						xPos = (int) (scaledResolution.getScaledWidth() * 0.50F) - (mc.fontRenderer.getStringWidth(energyLevelString + "%") / 2);
+					}
+					drawString(mc.fontRenderer, energyLevelString + "%", xPos, yPos1, getEnergyTextColor(energyStatus));
+					if (itemArmor != Registry.getAdvancedLappack() && itemArmor != Registry.getUltimateLappack() && itemArmor != Ic2Items.lapPack.getItem() && itemArmor != Ic2Items.quantumPack.getItem()) {
+						NBTTagCompound tag = StackUtil.getOrCreateNbtData(armorStack);
+						if (tag.getBoolean("enabled")) {
+							graviEngine = I18n.format("panelInfo.gravitationEngineOn");
+							statusString = graviEngine;
 						}
-						drawString(mc.fontRenderer, energyLevelString + "%",  xPos, yPos1, getEnergyTextColor(energyStatus));
-						if (itemArmor != Registry.getAdvancedLappack() && itemArmor != Registry.getUltimateLappack() && itemArmor != Ic2Items.lapPack.getItem() && itemArmor != Ic2Items.quantumPack.getItem()){
-							NBTTagCompound tag = StackUtil.getOrCreateNbtData(armorStack);
-							if (tag.getBoolean("enabled")) {
-								graviEngine = I18n.format("panelInfo.gravitationEngineOn");
-								statusString = graviEngine;
+						if (!tag.getBoolean("disabled") & !tag.getBoolean("enabled")) {
+							engineStatus = I18n.format("panelInfo.jetpackEngineOn") + " ";
+							HoverMode hoverMode = HoverMode.values()[tag.getByte("HoverMode")];
+							statusString = engineStatus;
+							if (hoverMode == HoverMode.Basic) {
+								hoverModeStatus = "(" + I18n.format("panelInfo.jetpackHoverMode") + ")";
+							} else if (hoverMode == HoverMode.Adv) {
+								hoverModeStatus = "(" + I18n.format("panelInfo.jetpackExtremeHoverMode") + ")";
 							}
-							if (!tag.getBoolean("disabled") & !tag.getBoolean("enabled")) {
-								engineStatus = I18n.format("panelInfo.jetpackEngineOn") + " ";
-								HoverMode hoverMode = HoverMode.values()[tag.getByte("HoverMode")];
-								statusString = engineStatus;
-								if (hoverMode == HoverMode.Basic) {
-									hoverModeStatus = "(" + I18n.format("panelInfo.jetpackHoverMode") + ")";
-								} else if (hoverMode == HoverMode.Adv) {
-									hoverModeStatus = "(" + I18n.format("panelInfo.jetpackExtremeHoverMode") + ")";
-								}
-								statusString = engineStatus + hoverModeStatus;
-							}
-							if (GravisuitConfig.client.positions == Positions.TOPRIGHT || GravisuitConfig.client.positions == Positions.BOTTOMRIGHT){
-								xPos = (scaledResolution.getScaledWidth() - 3) - mc.fontRenderer.getStringWidth(statusString);
-							} else if (GravisuitConfig.client.positions == Positions.TOPMIDDLE){
-								xPos = (int)(scaledResolution.getScaledWidth() * 0.50F) - (mc.fontRenderer.getStringWidth(statusString) / 2);
-							}
-							drawString(mc.fontRenderer, statusString,  xPos, yPos2, 5635925);
+							statusString = engineStatus + hoverModeStatus;
 						}
+						if (GravisuitConfig.client.positions == Positions.TOPRIGHT || GravisuitConfig.client.positions == Positions.BOTTOMRIGHT) {
+							xPos = (scaledResolution.getScaledWidth() - 3) - mc.fontRenderer.getStringWidth(statusString);
+						} else if (GravisuitConfig.client.positions == Positions.TOPMIDDLE) {
+							xPos = (int) (scaledResolution.getScaledWidth() * 0.50F) - (mc.fontRenderer.getStringWidth(statusString) / 2);
+						}
+						drawString(mc.fontRenderer, statusString, xPos, yPos2, 5635925);
 					}
 				}
 			}
 		}
+	}
+
+	public boolean or(Item compare, Item... items){
+		for (Item item : items){
+			if (compare == item){
+				return true;
+			}
+		}
+		return false;
 	}
 		
 	public static int getEnergyTextColor(int energyLevel) {
