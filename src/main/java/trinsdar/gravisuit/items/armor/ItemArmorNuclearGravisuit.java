@@ -27,18 +27,21 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingEvent;
+import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import trinsdar.gravisuit.util.GravisuitConfig;
 import trinsdar.gravisuit.util.GravisuitLang;
 import trinsdar.gravisuit.util.Registry;
+import trinsdar.ic2c_extras.util.INuclearJetpackLogic;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class ItemArmorNuclearGravisuit extends ItemArmorQuantumSuit implements ItemArmorJetpackBase.IIndirectJetpack, IHandHeldInventory{
+@Optional.Interface(iface = "trinsdar.ic2c_extras.util.INuclearJetpackLogic", modid = "ic2c_extras")
+public class ItemArmorNuclearGravisuit extends ItemArmorQuantumSuit implements ItemArmorJetpackBase.IIndirectJetpack, IHandHeldInventory, INuclearJetpackLogic {
     GravisuitJetpack jetpack = new GravisuitJetpack(this);
 
     public ItemArmorNuclearGravisuit() {
@@ -143,6 +146,12 @@ public class ItemArmorNuclearGravisuit extends ItemArmorQuantumSuit implements I
         } else {
             StackUtil.getOrCreateNbtData(stack).setInteger("GuiID", id);
         }
+    }
+
+    @Optional.Method(modid = "ic2c_extras")
+    @Override
+    public NuclearJetpackLogic getLogic(EntityPlayer entityPlayer, ItemStack itemStack) {
+        return jetpack.getLogic(entityPlayer, itemStack);
     }
 
     public static class GravisuitJetpack extends ItemArmorElectricJetpack {

@@ -18,14 +18,20 @@ public class ItemArmorAdvancedElectricJetpack extends ItemArmorElectricJetpack {
     private int maxCharge;
     private int transferLimit;
 
-    public ItemArmorAdvancedElectricJetpack(){
+    public ItemArmorAdvancedElectricJetpack(boolean register){
         super();
         this.tier = 2;
         this.maxCharge = GravisuitConfig.powerValues.advancedElectricJetpackStorage;
         this.transferLimit = GravisuitConfig.powerValues.advancedElectricJetpackTransfer;
-        this.setRegistryName("advancedelectricjetpack");
-        this.setUnlocalizedName(GravisuitLang.advancedElectricJetpack);
-        this.setCreativeTab(IC2.tabIC2);
+        if (register){
+            this.setRegistryName("advancedelectricjetpack");
+            this.setUnlocalizedName(GravisuitLang.advancedElectricJetpack);
+            this.setCreativeTab(IC2.tabIC2);
+        }
+    }
+
+    public ItemArmorAdvancedElectricJetpack(){
+        this(true);
     }
 
     public void setTier(int tier){

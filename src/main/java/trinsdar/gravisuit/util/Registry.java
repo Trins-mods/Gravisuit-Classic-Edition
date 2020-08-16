@@ -22,7 +22,7 @@ import trinsdar.gravisuit.util.baubles.ItemArmorBaublesAdvancedNuclearJetpack;
 public class Registry {
     private static ItemArmorAdvancedElectricJetpack advancedElectricJetpack;
     private static ItemArmorAdvancedNuclearJetpack advancedNuclearJetpack;
-    public static final ItemArmorAdvancedNanoChestplate advancedNanoChestplate = new ItemArmorAdvancedNanoChestplate(new ItemArmorAdvancedElectricJetpack(), "advancedNanoChestplate", GravisuitLang.advancedNanoChestplate, "advanced_nano_chestplate", 15);
+    public static final ItemArmorAdvancedNanoChestplate advancedNanoChestplate = new ItemArmorAdvancedNanoChestplate(new ItemArmorAdvancedElectricJetpack(false), "advancedNanoChestplate", GravisuitLang.advancedNanoChestplate, "advanced_nano_chestplate", 15);
     public static final ItemArmorAdvancedNuclearNanoChestplate advancedNuclearNanoChestplate = new ItemArmorAdvancedNuclearNanoChestplate();
     public static final ItemArmorGravisuit gravisuit = new ItemArmorGravisuit();
     public static final ItemArmorNuclearGravisuit nuclearGravisuit = new ItemArmorNuclearGravisuit();

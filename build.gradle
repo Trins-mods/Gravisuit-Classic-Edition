@@ -77,6 +77,7 @@ dependencies {
     runtime "mezz.jei:jei_${mc_version}:${jei_version}"
     compile "curse.maven:baubles:2518667"
     compile "curse.maven:ic2-classic:2979877"
+    deobfCompile "curse.maven:ic2c-extras:3033496"
     deobfProvided("RebornCore:RebornCore-${mc_version}:${reborn_core_version}:universal") {
         transitive = false
     }

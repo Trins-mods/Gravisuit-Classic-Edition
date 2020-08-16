@@ -82,7 +82,8 @@ public class PacketRelocator implements IMessage {
             }
 
             serverPlayer.getServerWorld().addScheduledTask(() -> {
-                NBTTagCompound nbt = StackUtil.getOrCreateNbtData(teleporter);
+                ItemStack teleport = serverPlayer.getHeldItem(boolToHand(message.hand));
+                NBTTagCompound nbt = StackUtil.getOrCreateNbtData(teleport);
                 NBTTagCompound map = nbt.getCompoundTag("Locations");
 
                 if (message.function == ADDDESTINATION) {
@@ -90,25 +91,28 @@ public class PacketRelocator implements IMessage {
                     message.location.writeToNBT(tag);
                     map.setTag(message.location.getName(), tag);
                     nbt.setTag("Locations", map);
-                    teleporter.setTagCompound(nbt);
+                    teleport.setTagCompound(nbt);
+                    serverPlayer.openContainer.detectAndSendChanges();
                 }
 
                 if (message.function == REMOVEDESTINATION) {
                     map.removeTag(message.location.getName());
                     nbt.setTag("Locations", map);
-                    teleporter.setTagCompound(nbt);
+                    teleport.setTagCompound(nbt);
+                    serverPlayer.openContainer.detectAndSendChanges();
                 }
 
                 if (message.function == TELEPORT) {
                     NBTTagCompound teleportData;
                     if (map.hasKey(message.location.getName())){
                         teleportData = map.getCompoundTag(message.location.getName());
-                        ItemRelocator.teleportEntity(ctx.getServerHandler().player, (int)teleportData.getDouble("X"), (int)teleportData.getDouble("Y"), (int)teleportData.getDouble("Z"), teleportData.getInteger("Dimension"), teleporter);
+                        ItemRelocator.teleportEntity(ctx.getServerHandler().player, (int)teleportData.getDouble("X"), (int)teleportData.getDouble("Y"), (int)teleportData.getDouble("Z"), teleportData.getInteger("Dimension"), teleport);
                     }
                 }
 
                 if (message.function == ADDDEFAULT){
                     nbt.setString("DefaultLocation", message.location.getName());
+                    serverPlayer.openContainer.detectAndSendChanges();
                 }
 
             });

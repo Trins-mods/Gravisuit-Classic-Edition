@@ -29,6 +29,7 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -36,6 +37,7 @@ import reborncore.api.ICustomToolHandler;
 import trinsdar.gravisuit.util.GravisuitConfig;
 import trinsdar.gravisuit.util.GravisuitLang;
 import trinsdar.gravisuit.util.GravisuitSounds;
+import trinsdar.gravisuit.util.Ic2cExtrasCodeHelper;
 import trinsdar.gravisuit.util.RotationHelper;
 
 import java.util.Arrays;
@@ -199,7 +201,7 @@ public class ItemToolGravitool extends ItemElectricToolPrecisionWrench implement
         }else if (this.getDamage(stack) == 3){
             tooltip.add(GravisuitLang.toolMode.getLocalizedFormatted(GravisuitLang.screwdriver));
         }
-        if (GravisuitConfig.enableGravitoolRequiresLosslessPrecisionWrench){
+        if (GravisuitConfig.enableGravitoolRequiresLosslessPrecisionWrench && !(Loader.isModLoaded("ic2c_extras") && Ic2cExtrasCodeHelper.isOverridingLossy())){
             tooltip.add(TextFormatting.GREEN + GravisuitLang.craftingGravitool.getLocalized());
         }
         if (this.isImport(stack)) {

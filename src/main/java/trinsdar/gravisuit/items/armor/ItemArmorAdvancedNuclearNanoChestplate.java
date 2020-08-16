@@ -4,6 +4,7 @@ import ic2.core.IC2;
 import ic2.core.inventory.base.IHandHeldInventory;
 import ic2.core.inventory.base.IHasGui;
 import ic2.core.item.inv.inventories.NuclearJetpackInventory;
+import ic2.core.item.inv.logics.NuclearJetpackLogic;
 import ic2.core.util.misc.StackUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -12,12 +13,15 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.Optional;
 import trinsdar.gravisuit.util.GravisuitConfig;
 import trinsdar.gravisuit.util.GravisuitLang;
+import trinsdar.ic2c_extras.util.INuclearJetpackLogic;
 
-public class ItemArmorAdvancedNuclearNanoChestplate extends ItemArmorAdvancedNanoChestplate implements IHandHeldInventory {
+@Optional.Interface(iface = "trinsdar.ic2c_extras.util.INuclearJetpackLogic", modid = "ic2c_extras")
+public class ItemArmorAdvancedNuclearNanoChestplate extends ItemArmorAdvancedNanoChestplate implements IHandHeldInventory, INuclearJetpackLogic {
     public ItemArmorAdvancedNuclearNanoChestplate() {
-        super(new ItemArmorAdvancedNuclearJetpack(), "advancedNuclearNanoChestplate", GravisuitLang.advancedNuclearNanoChestplate,"advanced_nuclear_nano_chestplate", 21);
+        super(new ItemArmorAdvancedNuclearJetpack(false), "advancedNuclearNanoChestplate", GravisuitLang.advancedNuclearNanoChestplate,"advanced_nuclear_nano_chestplate", 21);
         this.transferLimit = GravisuitConfig.powerValues.advancedNuclearNanoChestplateTransfer;
         this.maxCharge = GravisuitConfig.powerValues.advancedNuclearNanoChestplateStorage;
     }
@@ -53,5 +57,11 @@ public class ItemArmorAdvancedNuclearNanoChestplate extends ItemArmorAdvancedNan
         } else {
             StackUtil.getOrCreateNbtData(stack).setInteger("GuiID", id);
         }
+    }
+
+    @Optional.Method(modid = "ic2c_extras")
+    @Override
+    public NuclearJetpackLogic getLogic(EntityPlayer entityPlayer, ItemStack itemStack) {
+        return ((ItemArmorAdvancedNuclearJetpack)this.jetpack).getLogic(entityPlayer, itemStack);
     }
 }
