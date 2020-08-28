@@ -2,16 +2,11 @@ buildscript {
     repositories {
         jcenter()
         maven { url = "https://files.minecraftforge.net/maven" }
-        maven {
-            url "https://plugins.gradle.org/m2/"
-        }
     }
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
-        classpath "com.wynprice.cursemaven:CurseMaven:2.1.0"
     }
 }
-apply plugin: "com.wynprice.cursemaven"
 apply plugin: 'net.minecraftforge.gradle.forge'
 //Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 
@@ -65,6 +60,9 @@ repositories{
     }
     maven { // McJtyLib
         url "http://modmaven.k-4u.nl"
+    }
+    maven {
+        url = "https://www.cursemaven.com"
     }
     maven { // JEI
         name 'DVS1 Maven FS'
