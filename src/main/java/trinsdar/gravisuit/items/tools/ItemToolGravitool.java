@@ -151,6 +151,11 @@ public class ItemToolGravitool extends ItemElectricToolPrecisionWrench implement
     }
 
     @Override
+    public boolean hasBigCost(ItemStack stack) {
+        return false;
+    }
+
+    @Override
     @SideOnly(Side.CLIENT)
     public TextureAtlasSprite getTexture(int meta) {
         return Ic2Icons.getTextures("gravisuit_items")[9 + meta];
@@ -216,30 +221,25 @@ public class ItemToolGravitool extends ItemElectricToolPrecisionWrench implement
     @Override
     @Optional.Method(modid = "techreborn")
     public boolean canHandleTool(ItemStack stack) {
-        if (this.getDamage(stack) == 0){
-            return true;
-        }
-        return false;
+        return this.getDamage(stack) == 0 && ElectricItem.manager.getCharge(stack) >= 100;
     }
 
     @Override
     @Optional.Method(modid = "techreborn")
     public boolean handleTool(ItemStack stack, BlockPos blockPos, World world, EntityPlayer player, EnumFacing enumFacing, boolean b) {
-        if (this.getDamage(stack) == 0){
-            return true;
-        }
-        return false;
+        return this.getDamage(stack) == 0 && ElectricItem.manager.use(stack, 100, player);
     }
 
     @Override
     @Optional.Method(modid = "buildcraftcore")
     public boolean canWrench(EntityPlayer player, EnumHand hand, ItemStack wrench, RayTraceResult rayTrace) {
-        return this.getDamage(player.getHeldItem(hand)) == 0;
+        return this.getDamage(player.getHeldItem(hand)) == 0 && ElectricItem.manager.getCharge(wrench) >= 100;
     }
 
     @Override
     @Optional.Method(modid = "buildcraftcore")
     public void wrenchUsed(EntityPlayer player, EnumHand hand, ItemStack wrench, RayTraceResult rayTrace) {
+        ElectricItem.manager.use(wrench, 100, player);
     }
 
     @Override
@@ -257,24 +257,24 @@ public class ItemToolGravitool extends ItemElectricToolPrecisionWrench implement
     @Optional.Method(modid = "cofhcore")
     @Override
     public boolean isUsable(ItemStack item, EntityLivingBase user, BlockPos pos) {
-        return this.getDamage(item) == 0;
+        return this.getDamage(item) == 0 && ElectricItem.manager.getCharge(item) >= 100;
     }
 
     @Optional.Method(modid = "cofhcore")
     @Override
     public boolean isUsable(ItemStack item, EntityLivingBase user, Entity entity) {
-        return this.getDamage(item) == 0;
+        return this.getDamage(item) == 0 && ElectricItem.manager.getCharge(item) >= 100;
     }
 
     @Optional.Method(modid = "cofhcore")
     @Override
     public void toolUsed(ItemStack item, EntityLivingBase user, BlockPos pos) {
-
+        ElectricItem.manager.use(item, 100, user);
     }
 
     @Optional.Method(modid = "cofhcore")
     @Override
     public void toolUsed(ItemStack item, EntityLivingBase user, Entity entity) {
-
+        ElectricItem.manager.use(item, 100, user);
     }
 }
