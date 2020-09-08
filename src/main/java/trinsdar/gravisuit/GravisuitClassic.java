@@ -4,6 +4,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.ConfigManager;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -12,6 +13,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import org.apache.logging.log4j.Logger;
+import trinsdar.gravisuit.compat.better_pipes.BetterPipesInit;
 import trinsdar.gravisuit.proxy.CommonProxy;
 
 @Mod(modid = GravisuitClassic.MODID, name = GravisuitClassic.MODNAME, version = GravisuitClassic.MODVERSION, dependencies = GravisuitClassic.DEPENDS)
@@ -19,7 +21,7 @@ public class GravisuitClassic {
     public static final String MODID = "gravisuit";
     public static final String MODNAME = "Gravisuit Classic Edition";
     public static final String MODVERSION = "@VERSION@";
-    public static final String DEPENDS ="required-after:ic2;required-after:ic2-classic-spmod;before:gtc_expansion@[0.0.6,);before:ic2c_extras@[1.4.7,)";
+    public static final String DEPENDS ="required-after:ic2;required-after:ic2-classic-spmod;before:gtc_expansion@[0.0.6,);before:ic2c_extras@[1.4.7,);after:betterpipes@[0.14,)";
     public static final String networkChannelName = MODID;
 
     public static SimpleNetworkWrapper network;
@@ -56,5 +58,8 @@ public class GravisuitClassic {
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent e) {
         proxy.postInit(e);
+        if (Loader.isModLoaded("betterpipes")){
+            BetterPipesInit.init();
+        }
     }
 }

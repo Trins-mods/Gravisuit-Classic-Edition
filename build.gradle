@@ -75,6 +75,8 @@ dependencies {
     runtime "mezz.jei:jei_${mc_version}:${jei_version}"
     compile "curse.maven:baubles:2518667"
     compile "curse.maven:ic2-classic:2979877"
+    compileOnly "curse.maven:better-pipes:3050661"
+    runtime "curse.maven:better-pipes:3050661"
     deobfCompile "curse.maven:ic2c-extras:3033496"
     deobfProvided("RebornCore:RebornCore-${mc_version}:${reborn_core_version}:universal") {
         transitive = false
@@ -88,8 +90,8 @@ dependencies {
     runtime("TechReborn:TechReborn-ModCompatibility-${mc_version}:${tr_modcompatibility_version}:universal") {
         transitive = false
     }
-    deobfProvided "com.mod-buildcraft:buildcraft-api:7.99.12"
-    runtime "com.mod-buildcraft:buildcraft:7.99.12"
+    deobfProvided "com.mod-buildcraft:buildcraft-api:7.99.19"
+    runtime "com.mod-buildcraft:buildcraft:7.99.19"
     deobfProvided ("mrtjp:ProjectRed:${mc_version}-4.9.3.118:all") {
         transitive = false
     }

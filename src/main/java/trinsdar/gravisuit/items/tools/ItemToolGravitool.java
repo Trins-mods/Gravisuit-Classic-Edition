@@ -37,7 +37,7 @@ import reborncore.api.ICustomToolHandler;
 import trinsdar.gravisuit.util.GravisuitConfig;
 import trinsdar.gravisuit.util.GravisuitLang;
 import trinsdar.gravisuit.util.GravisuitSounds;
-import trinsdar.gravisuit.util.Ic2cExtrasCodeHelper;
+import trinsdar.gravisuit.compat.ic2c_extras.Ic2cExtrasCodeHelper;
 import trinsdar.gravisuit.util.RotationHelper;
 
 import java.util.Arrays;

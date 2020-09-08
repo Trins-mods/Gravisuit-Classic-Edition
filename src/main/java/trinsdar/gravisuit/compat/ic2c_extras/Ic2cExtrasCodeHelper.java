@@ -1,4 +1,4 @@
-package trinsdar.gravisuit.util;
+package trinsdar.gravisuit.compat.ic2c_extras;
 
 import trinsdar.ic2c_extras.Ic2cExtrasConfig;
 
