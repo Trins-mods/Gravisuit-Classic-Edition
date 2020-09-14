@@ -21,7 +21,7 @@ public class GravisuitClassic {
     public static final String MODID = "gravisuit";
     public static final String MODNAME = "Gravisuit Classic Edition";
     public static final String MODVERSION = "@VERSION@";
-    public static final String DEPENDS ="required-after:ic2;required-after:ic2-classic-spmod;before:gtc_expansion@[0.0.6,);before:ic2c_extras@[1.4.7,);after:betterpipes@[0.14,)";
+    public static final String DEPENDS ="required-after:ic2;required-after:ic2-classic-spmod;before:gtc_expansion@[0.0.6,);before:ic2c_extras@[1.4.8,);after:betterpipes@[0.14,)";
     public static final String networkChannelName = MODID;
 
     public static SimpleNetworkWrapper network;

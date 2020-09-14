@@ -5,11 +5,13 @@ import ic2.api.classic.recipe.crafting.ICraftingRecipeList;
 import ic2.api.classic.recipe.crafting.ICraftingRecipeList.IRecipeModifier;
 import ic2.core.IC2;
 import ic2.core.item.recipe.entry.RecipeInputOreDict;
+import ic2.core.item.recipe.upgrades.FlagModifier;
 import ic2.core.platform.registry.Ic2Items;
 import ic2.core.util.misc.StackUtil;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.fml.common.Loader;
 
 public class GravisuitRecipes {
     static ICraftingRecipeList recipes = ClassicRecipes.advCrafting;
@@ -18,10 +20,9 @@ public class GravisuitRecipes {
         initOverrideRecipes();
     }
 
-    static IRecipeModifier treetap(){
+    static IRecipeModifier treetap(ItemStack compare, String id){
         return new IRecipeModifier() {
 
-            String id = "Import";
             boolean tag = false;
 
             @Override
@@ -31,7 +32,7 @@ public class GravisuitRecipes {
 
             @Override
             public boolean isStackValid(ItemStack provided) {
-                if (StackUtil.isStackEqual(Ic2Items.electricTreeTap, provided)){
+                if (StackUtil.isStackEqual(compare, provided)){
                     NBTTagCompound nbt = StackUtil.getNbtData(provided);
                     if (nbt.getBoolean(id)) {
                         tag = true;
@@ -44,7 +45,7 @@ public class GravisuitRecipes {
             @Override
             public ItemStack getOutput(ItemStack output, boolean forDisplay) {
                 if (forDisplay) {
-                    StackUtil.addToolTip(output, "Upgrades get transfered");
+                    StackUtil.addToolTip(output, "Upgrades get transferred");
                 } else {
                     NBTTagCompound nbt = StackUtil.getOrCreateNbtData(output);
 
@@ -135,30 +136,35 @@ public class GravisuitRecipes {
             }
         }
         if (GravisuitConfig.enabledItems.enableAdvancedNanoChestplate && GravisuitConfig.enabledItems.enableAdvancedElectricJetpack){
+            if (Loader.isModLoaded("ic2c_extras")){
+                recipes.addShapelessRecipe(new ItemStack(Registry.advancedNanoChestplate), (new FlagModifier(new ItemStack(Registry.advancedNanoChestplate), "ReactorPlating", true)).setUsesInput(), new ItemStack(Registry.advancedNanoChestplate), Ic2Items.reactorPlating.copy());
+            }
             if (areOverrideRecipesValid()) {
-                recipes.addRecipe(new ItemStack(Registry.advancedNanoChestplate), "CAC", "CNC", "GcG", 'C', Ic2Items.carbonPlate, 'A', Ic2Items.compactedElectricJetpack, 'N', Ic2Items.nanoChest, 'G', Ic2Items.glassFiberCable, 'c', "circuitAdvanced");
+                recipes.addRecipe(new ItemStack(Registry.advancedNanoChestplate), "CAC", "CNC", "GcG", treetap(Ic2Items.nanoChest, "ReactorPlating"), 'C', Ic2Items.carbonPlate, 'A', Ic2Items.compactedElectricJetpack, 'N', Ic2Items.nanoChest, 'G', Ic2Items.glassFiberCable, 'c', "circuitAdvanced");
             }else {
-                recipes.addRecipe(new ItemStack(Registry.advancedNanoChestplate), "CAC", "CNC", "GcG", 'C', Ic2Items.carbonPlate, 'A', Registry.getAdvancedElectricJetpack(), 'N', Ic2Items.nanoChest, 'G', Ic2Items.glassFiberCable, 'c', "circuitAdvanced");
+                recipes.addRecipe(new ItemStack(Registry.advancedNanoChestplate), "CAC", "CNC", "GcG", treetap(Ic2Items.nanoChest, "ReactorPlating"), 'C', Ic2Items.carbonPlate, 'A', Registry.getAdvancedElectricJetpack(), 'N', Ic2Items.nanoChest, 'G', Ic2Items.glassFiberCable, 'c', "circuitAdvanced");
             }
         }
         if (GravisuitConfig.enabledItems.enableAdvancedNuclearNanoChestplate && GravisuitConfig.enabledItems.enableAdvancedNuclearJetpack){
-
+            if (Loader.isModLoaded("ic2c_extras")){
+                recipes.addShapelessRecipe(new ItemStack(Registry.advancedNuclearNanoChestplate), (new FlagModifier(new ItemStack(Registry.advancedNuclearNanoChestplate), "ReactorPlating", true)).setUsesInput(), new ItemStack(Registry.advancedNuclearNanoChestplate), Ic2Items.reactorPlating.copy());
+            }
             if (GravisuitConfig.enabledItems.enableAdvancedNanoChestplate){
-                recipes.addRecipe(new ItemStack(Registry.advancedNuclearNanoChestplate), "CTC", "RNR", "CAC", 'C', "circuitBasic", 'T', Ic2Items.transformerEV, 'R', Ic2Items.reactorChamber, 'N', Ic2Items.nuclearReactor, 'A', Registry.advancedNanoChestplate);
+                recipes.addRecipe(new ItemStack(Registry.advancedNuclearNanoChestplate), "CTC", "RNR", "CAC", treetap(new ItemStack(Registry.advancedNanoChestplate), "ReactorPlating"), 'C', "circuitBasic", 'T', Ic2Items.transformerEV, 'R', Ic2Items.reactorChamber, 'N', Ic2Items.nuclearReactor, 'A', Registry.advancedNanoChestplate);
             }
             if (areOverrideRecipesValid()){
-                recipes.addRecipe(new ItemStack(Registry.advancedNuclearNanoChestplate), "CAC", "CNC", "GcG", 'C', Ic2Items.carbonPlate, 'A', Ic2Items.compactedNuclearJetpack, 'N', Ic2Items.nanoChest, 'G', Ic2Items.glassFiberCable, 'c', "circuitAdvanced");
+                recipes.addRecipe(new ItemStack(Registry.advancedNuclearNanoChestplate), "CAC", "CNC", "GcG", treetap(Ic2Items.nanoChest, "ReactorPlating"), 'C', Ic2Items.carbonPlate, 'A', Ic2Items.compactedNuclearJetpack, 'N', Ic2Items.nanoChest, 'G', Ic2Items.glassFiberCable, 'c', "circuitAdvanced");
             }else {
-                recipes.addRecipe(new ItemStack(Registry.advancedNuclearNanoChestplate), "CAC", "CNC", "GcG", 'C', Ic2Items.carbonPlate, 'A', Registry.getAdvancedNuclearJetpack(), 'N', Ic2Items.nanoChest, 'G', Ic2Items.glassFiberCable, 'c', "circuitAdvanced");
+                recipes.addRecipe(new ItemStack(Registry.advancedNuclearNanoChestplate), "CAC", "CNC", "GcG", treetap(Ic2Items.nanoChest, "ReactorPlating"), 'C', Ic2Items.carbonPlate, 'A', Registry.getAdvancedNuclearJetpack(), 'N', Ic2Items.nanoChest, 'G', Ic2Items.glassFiberCable, 'c', "circuitAdvanced");
             }
 
         }
         if (GravisuitConfig.enabledItems.enableGravitool){
             recipes.addShapelessRecipe(new ItemStack(Registry.gravitool), (new FlagModifierMetaLess(new ItemStack(Registry.gravitool), "Import", true)).setUsesInput(), Registry.gravitool, Blocks.HOPPER, Ic2Items.importBasicUpgrade.copy());
             if (GravisuitConfig.enableGravitoolRequiresLosslessPrecisionWrench){
-                recipes.addRecipe(new ItemStack(Registry.gravitool), "CHC", "AEA", "WaT", wrench(Ic2Items.precisionWrench), treetap(), 'C', Ic2Items.carbonPlate, 'H', Ic2Items.electricHoe, 'A', Ic2Items.advancedAlloy, 'E', Ic2Items.energyCrystal, 'W', Ic2Items.precisionWrench, 'a', "circuitAdvanced", 'T', Ic2Items.electricTreeTap);
+                recipes.addRecipe(new ItemStack(Registry.gravitool), "CHC", "AEA", "WaT", wrench(Ic2Items.precisionWrench), treetap(Ic2Items.treeTap, "Import"), 'C', Ic2Items.carbonPlate, 'H', Ic2Items.electricHoe, 'A', Ic2Items.advancedAlloy, 'E', Ic2Items.energyCrystal, 'W', Ic2Items.precisionWrench, 'a', "circuitAdvanced", 'T', Ic2Items.electricTreeTap);
             }else {
-                recipes.addRecipe(new ItemStack(Registry.gravitool), "CHC", "AEA", "WaT", treetap(),  'C', Ic2Items.carbonPlate, 'H', Ic2Items.electricHoe, 'A', Ic2Items.advancedAlloy, 'E', Ic2Items.energyCrystal, 'W', Ic2Items.precisionWrench, 'a', "circuitAdvanced", 'T', Ic2Items.electricTreeTap);
+                recipes.addRecipe(new ItemStack(Registry.gravitool), "CHC", "AEA", "WaT", treetap(Ic2Items.treeTap, "Import"),  'C', Ic2Items.carbonPlate, 'H', Ic2Items.electricHoe, 'A', Ic2Items.advancedAlloy, 'E', Ic2Items.energyCrystal, 'W', Ic2Items.precisionWrench, 'a', "circuitAdvanced", 'T', Ic2Items.electricTreeTap);
             }
 
         }

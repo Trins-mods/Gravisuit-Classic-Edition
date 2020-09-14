@@ -37,6 +37,7 @@ minecraft {
 }
 
 repositories{
+    maven { url "https://dist.creeper.host/Sponge/maven" }
     maven { // Tech Reborn
         name 'Tech Reborn'
         url 'https://maven.modmuss50.me/'
@@ -73,11 +74,21 @@ repositories{
 dependencies {
     deobfProvided "mezz.jei:jei_${mc_version}:${jei_version}:api"
     runtime "mezz.jei:jei_${mc_version}:${jei_version}"
+    runtime("org.spongepowered:mixin:0.8-SNAPSHOT"){
+        exclude module: "asm-commons"
+        exclude module: "asm-tree"
+        exclude module: "launchwrapper"
+        exclude module: "guava"
+        exclude module: "log4j-core"
+        exclude module: "gson"
+        exclude module: "commons-io"
+    }
     compile "curse.maven:baubles:2518667"
     compile "curse.maven:ic2-classic:2979877"
     compileOnly "curse.maven:better-pipes:3050661"
     runtime "curse.maven:better-pipes:3050661"
-    deobfCompile "curse.maven:ic2c-extras:3033496"
+    compileOnly "curse.maven:ic2c-extras:3057114"
+    runtime "curse.maven:ic2c-extras:3057114"
     deobfProvided("RebornCore:RebornCore-${mc_version}:${reborn_core_version}:universal") {
         transitive = false
     }

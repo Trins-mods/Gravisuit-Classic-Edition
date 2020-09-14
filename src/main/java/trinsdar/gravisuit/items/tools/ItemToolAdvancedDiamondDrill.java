@@ -366,6 +366,9 @@ public class ItemToolAdvancedDiamondDrill extends ItemElectricTool implements IS
     @Override
     public float getMiningSpeed(ItemStack stack) {
         NBTTagCompound nbt = StackUtil.getNbtData(stack);
+        if (!nbt.hasKey("ToolModeDrill")){
+            return 48.0F;
+        }
         ToolMode toolMode = ToolMode.values()[nbt.getByte("ToolModeDrill")];
         if (toolMode == ToolMode.NORMAL){
             return 48.0F;
@@ -410,13 +413,13 @@ public class ItemToolAdvancedDiamondDrill extends ItemElectricTool implements IS
 
     @Override
     public boolean isBasicDrill(ItemStack d) {
-        return !d.isItemEnchantable();
+        return false;
     }
 
     @Override
     public int getExtraSpeed(ItemStack d) {
         int pointBoost = this.getPointBoost(d);
-        return 0 + pointBoost;
+        return 9 + pointBoost;
     }
 
     private int getPointBoost(ItemStack drill) {
@@ -427,7 +430,7 @@ public class ItemToolAdvancedDiamondDrill extends ItemElectricTool implements IS
     @Override
     public int getExtraEnergyCost(ItemStack d) {
         int points = this.getEnergyChange(d);
-        return points > 0 ? points : 0;
+        return Math.max(points, 0);
     }
 
     public int getEnergyChange(ItemStack drill) {

@@ -5,20 +5,27 @@ import ic2.core.item.armor.base.ItemArmorJetpackBase;
 import ic2.core.item.armor.electric.ItemArmorNanoSuit;
 import ic2.core.platform.lang.components.base.LocaleComp;
 import ic2.core.platform.textures.Ic2Icons;
+import ic2.core.util.misc.StackUtil;
 import ic2.core.util.obj.ToolTipType;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import trinsdar.gravisuit.util.GravisuitConfig;
+import trinsdar.ic2c_extras.util.IReactorPlated;
 
 import java.util.List;
 import java.util.Map;
 
-public class ItemArmorAdvancedNanoChestplate extends ItemArmorNanoSuit implements ItemArmorJetpackBase.IIndirectJetpack {
+@Optional.Interface(iface = "trinsdar.ic2c_extras.util.IReactorPlated", modid = "ic2c_extras")
+public class ItemArmorAdvancedNanoChestplate extends ItemArmorNanoSuit implements ItemArmorJetpackBase.IIndirectJetpack, IReactorPlated {
     ItemArmorJetpackBase jetpack;
     String texture;
     int index;
@@ -65,6 +72,11 @@ public class ItemArmorAdvancedNanoChestplate extends ItemArmorNanoSuit implement
     @Override
     public void onSortedItemToolTip(ItemStack stack, EntityPlayer player, boolean debugTooltip, List<String> tooltip, Map<ToolTipType, List<String>> sortedTooltip) {
         super.onSortedItemToolTip(stack, player, debugTooltip, tooltip, sortedTooltip);
+        List<String> s = sortedTooltip.get(ToolTipType.Shift);
+        NBTTagCompound nbt = StackUtil.getNbtData(stack);
+        if (nbt.hasKey("ReactorPlating") && Loader.isModLoaded("ic2c_extras")) {
+            s.add(I18n.format("itemInfo.reactorPlated.name"));
+        }
         jetpack.onSortedItemToolTip(stack, player, debugTooltip, tooltip, sortedTooltip);
     }
 
@@ -77,5 +89,10 @@ public class ItemArmorAdvancedNanoChestplate extends ItemArmorNanoSuit implement
     @Override
     public ItemArmorJetpackBase getJetpack() {
         return this.jetpack;
+    }
+
+    @Override
+    public boolean hasReactorPlate(ItemStack stack) {
+        return StackUtil.getNbtData(stack).getBoolean("ReactorPlating");
     }
 }
