@@ -2,6 +2,7 @@ package trinsdar.gravisuit.items.tools;
 
 import buildcraft.api.tools.IToolWrench;
 import cofh.api.item.IToolHammer;
+import gtc_expansion.interfaces.IGTOverlayWrench;
 import ic2.api.classic.audio.PositionSpec;
 import ic2.api.item.ElectricItem;
 import ic2.core.IC2;
@@ -47,9 +48,10 @@ import java.util.List;
         @Optional.Interface(iface = "reborncore.api.ICustomToolHandler", modid = "techreborn", striprefs = true),
         @Optional.Interface(iface = "buildcraft.api.tools.IToolWrench", modid = "buildcraftcore", striprefs = true),
         @Optional.Interface(iface = "mrtjp.projectred.api.IScrewdriver", modid = "projectred-core", striprefs = true),
-        @Optional.Interface(iface = "cofh.api.item.IToolHammer", modid = "cofhcore", striprefs = true)
+        @Optional.Interface(iface = "cofh.api.item.IToolHammer", modid = "cofhcore", striprefs = true),
+        @Optional.Interface(iface = "gtc_expansion.interfaces.IGTOverlayWrench", modid = "gtc_expansion")
 })
-public class ItemToolGravitool extends ItemElectricToolPrecisionWrench implements ICustomToolHandler, IToolWrench, IScrewdriver, IAdvancedTexturedItem, IToolHammer {
+public class ItemToolGravitool extends ItemElectricToolPrecisionWrench implements ICustomToolHandler, IToolWrench, IScrewdriver, IAdvancedTexturedItem, IToolHammer, IGTOverlayWrench {
 
     private int maxCharge;
     private int transferLimit;
@@ -276,5 +278,15 @@ public class ItemToolGravitool extends ItemElectricToolPrecisionWrench implement
     @Override
     public void toolUsed(ItemStack item, EntityLivingBase user, Entity entity) {
         ElectricItem.manager.use(item, 100, user);
+    }
+
+    @Override
+    public boolean canBeUsed(ItemStack itemStack) {
+        return this.getDamage(itemStack) == 0 && ElectricItem.manager.getCharge(itemStack) >= 100;
+    }
+
+    @Override
+    public void damage(ItemStack itemStack, EntityPlayer entityPlayer) {
+        ElectricItem.manager.use(itemStack, 100, entityPlayer);
     }
 }

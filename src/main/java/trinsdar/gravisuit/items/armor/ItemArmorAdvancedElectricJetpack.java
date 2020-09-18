@@ -1,7 +1,7 @@
 package trinsdar.gravisuit.items.armor;
 
 import ic2.core.IC2;
-import ic2.core.item.armor.electric.ItemArmorElectricJetpack;
+import ic2.core.item.armor.electric.ItemArmorCompactedElectricJetpack;
 import ic2.core.item.render.model.JetpackModel;
 import ic2.core.platform.textures.Ic2Icons;
 import ic2.core.platform.textures.models.BaseModel;
@@ -12,14 +12,14 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import trinsdar.gravisuit.util.GravisuitConfig;
 import trinsdar.gravisuit.util.GravisuitLang;
 
-public class ItemArmorAdvancedElectricJetpack extends ItemArmorElectricJetpack {
+public class ItemArmorAdvancedElectricJetpack extends ItemArmorCompactedElectricJetpack {
 
     private int tier;
     private int maxCharge;
     private int transferLimit;
 
     public ItemArmorAdvancedElectricJetpack(boolean register){
-        super();
+        super(0);
         this.tier = 2;
         this.maxCharge = GravisuitConfig.powerValues.advancedElectricJetpackStorage;
         this.transferLimit = GravisuitConfig.powerValues.advancedElectricJetpackTransfer;
