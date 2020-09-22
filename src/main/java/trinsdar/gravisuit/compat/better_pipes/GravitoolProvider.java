@@ -25,6 +25,9 @@ public class GravitoolProvider implements IWrenchProvider {
 
     @Override
     public boolean canBeUsed(ItemStack item, EntityPlayer player){
+        if (player.isSneaking()){
+            return false;
+        }
         if (item.getItem() instanceof ItemToolGravitool){
             return ElectricItem.manager.canUse(item, 100) && item.getMetadata() == 0;
         }
