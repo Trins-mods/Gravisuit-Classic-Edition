@@ -2,8 +2,11 @@ package trinsdar.gravisuit.items.tools;
 
 import buildcraft.api.tools.IToolWrench;
 import cofh.api.item.IToolHammer;
-import gtc_expansion.interfaces.IGTOverlayWrench;
+import gtc_expansion.interfaces.IGTScrewdriver;
+import gtc_expansion.interfaces.IGTWrench;
 import ic2.api.classic.audio.PositionSpec;
+import ic2.api.classic.crops.ISeedCrop;
+import ic2.api.crops.ICropTile;
 import ic2.api.item.ElectricItem;
 import ic2.core.IC2;
 import ic2.core.item.tool.electric.ItemElectricToolPrecisionWrench;
@@ -20,6 +23,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
@@ -49,9 +54,10 @@ import java.util.List;
         @Optional.Interface(iface = "buildcraft.api.tools.IToolWrench", modid = "buildcraftcore", striprefs = true),
         @Optional.Interface(iface = "mrtjp.projectred.api.IScrewdriver", modid = "projectred-core", striprefs = true),
         @Optional.Interface(iface = "cofh.api.item.IToolHammer", modid = "cofhcore", striprefs = true),
-        @Optional.Interface(iface = "gtc_expansion.interfaces.IGTOverlayWrench", modid = "gtc_expansion")
+        @Optional.Interface(iface = "gtc_expansion.interfaces.IGTWrench", modid = "gtc_expansion"),
+        @Optional.Interface(iface = "gtc_expansion.interfaces.IGTScrewdriver", modid = "gtc_expansion")
 })
-public class ItemToolGravitool extends ItemElectricToolPrecisionWrench implements ICustomToolHandler, IToolWrench, IScrewdriver, IAdvancedTexturedItem, IToolHammer, IGTOverlayWrench {
+public class ItemToolGravitool extends ItemElectricToolPrecisionWrench implements ICustomToolHandler, IToolWrench, IScrewdriver, IAdvancedTexturedItem, IToolHammer, IGTWrench, IGTScrewdriver {
 
     private int maxCharge;
     private int transferLimit;
@@ -189,6 +195,18 @@ public class ItemToolGravitool extends ItemElectricToolPrecisionWrench implement
     public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         ItemStack stack = player.getHeldItem(hand);
         if (this.getDamage(stack) == 1){
+            TileEntity tileEntity = world.getTileEntity(pos);
+            if (tileEntity instanceof ICropTile){
+                ICropTile crop = (ICropTile) tileEntity;
+                if (crop.getCrop() instanceof ISeedCrop){
+                    NBTTagCompound nbt = crop.getCustomData();
+                    boolean result = !nbt.getBoolean("SeedDrop");
+                    nbt.setBoolean("SeedDrop", result);
+                    if (IC2.platform.isSimulating())
+                        IC2.platform.messagePlayer(player, Ic2InfoLang.cropDropMode, result ? Ic2InfoLang.cropSeeds : Ic2InfoLang.cropGain);
+                    return EnumActionResult.SUCCESS;
+                }
+            }
             return Ic2Items.electricHoe.getItem().onItemUse(player, world, pos, hand, facing, hitX, hitY, hitZ);
         }else if (this.getDamage(stack) == 2){
             return Ic2Items.electricTreeTap.getItem().onItemUse(player, world, pos, hand, facing, hitX, hitY, hitZ);
@@ -283,6 +301,11 @@ public class ItemToolGravitool extends ItemElectricToolPrecisionWrench implement
     @Override
     public boolean canBeUsed(ItemStack itemStack) {
         return this.getDamage(itemStack) == 0 && ElectricItem.manager.getCharge(itemStack) >= 100;
+    }
+
+    @Override
+    public boolean canScrewdriverBeUsed(ItemStack itemStack) {
+        return this.getDamage(itemStack) == 3 && ElectricItem.manager.getCharge(itemStack) >= 100;
     }
 
     @Override
