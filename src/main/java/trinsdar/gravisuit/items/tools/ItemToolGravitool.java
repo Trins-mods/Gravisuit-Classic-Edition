@@ -73,6 +73,7 @@ public class ItemToolGravitool extends ItemElectricToolPrecisionWrench implement
         this.setHasSubtypes(true);
         this.setMaxDamage(0);
         this.setRegistryName("gravitool");
+        this.setHarvestLevel("wrench", 1);
         this.setUnlocalizedName(GravisuitLang.gravitool);
         this.setCreativeTab(IC2.tabIC2);
     }
