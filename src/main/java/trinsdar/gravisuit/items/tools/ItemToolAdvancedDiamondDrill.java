@@ -355,6 +355,9 @@ public class ItemToolAdvancedDiamondDrill extends ItemElectricTool implements IS
 
     @Override
     public int getHarvestLevel(ItemStack stack, String toolClass, EntityPlayer player, IBlockState blockState) {
+        if (!toolClass.equals("pickaxe") && !toolClass.equals("shovel") && !toolClass.equals("scoop")) {
+            return -1;
+        }
         return 3;
     }
 
@@ -385,7 +388,7 @@ public class ItemToolAdvancedDiamondDrill extends ItemElectricTool implements IS
 
     @Override
     public Set<String> getToolClasses(ItemStack stack) {
-        return ImmutableSet.of("pickaxe", "shovel");
+        return ImmutableSet.of("pickaxe", "shovel", "scoop");
     }
 
     @Override
