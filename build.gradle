@@ -84,11 +84,12 @@ dependencies {
         exclude module: "commons-io"
     }
     compile "curse.maven:baubles:2518667"
-    compile "curse.maven:ic2-classic:2979877"
+    compile "curse.maven:ic2-classic:3076009"
     compileOnly "curse.maven:better-pipes:3050661"
     runtime "curse.maven:better-pipes:3050661"
     compileOnly "curse.maven:ic2c-extras:3057114"
     runtime "curse.maven:ic2c-extras:3057114"
+    runtime "curse.maven:gtclassic:3059975"
     deobfProvided("RebornCore:RebornCore-${mc_version}:${reborn_core_version}:universal") {
         transitive = false
     }
