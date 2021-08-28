@@ -1,10 +1,20 @@
 buildscript {
     repositories {
         jcenter()
-        maven { url = "https://files.minecraftforge.net/maven" }
+        maven { url = "http://files.minecraftforge.net/maven" }
+        maven {
+            name = "jitpack"
+            setUrl("https://jitpack.io")
+        }
+        maven {
+            name = "forge"
+            setUrl("https://maven.minecraftforge.net/")
+        }
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
+        classpath("com.github.GregTechCE:ForgeGradle:FG_2.3-SNAPSHOT") {
+            changing = true
+        }
     }
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
