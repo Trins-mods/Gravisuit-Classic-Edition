@@ -116,34 +116,34 @@ public class GravisuitRecipes {
 
     public static void initShapedRecipes(){
         if (GravisuitConfig.enabledItems.enableMiscCraftingItems){
-            recipes.addRecipe(new ItemStack(Registry.superConductorCover, 3), "AIA", "CCC", "AIA", 'A', Ic2Items.advancedAlloy, 'I', Ic2Items.iridiumPlate, 'C', Ic2Items.carbonPlate);
-            recipes.addRecipe(new ItemStack(Registry.superConductor, 3), "SSS", "GUG", "SSS", 'S', Registry.superConductorCover, 'G', Ic2Items.glassFiberCable, 'U', Ic2Items.uuMatter);
-            recipes.addRecipe(new ItemStack(Registry.coolingCore), "CAC", "HIH", "CAC", 'C', Ic2Items.reactorCoolantCellSix, 'A', Ic2Items.reactorHeatSwitchDiamond, 'H', Ic2Items.reactorPlatingHeat, 'I', Ic2Items.iridiumPlate);
-            recipes.addRecipe(new ItemStack(Registry.gravitationEngine), "TST", "CIC", "TST", 'T', Ic2Items.teslaCoil, 'S', Registry.superConductor, 'C', Registry.coolingCore, 'I', Ic2Items.transformerIV);
-            recipes.addRecipe(new ItemStack(Registry.magnetron), "ICI", "CSC", "ICI", 'I', IC2.getRefinedIron(), 'C', "ingotCopper", 'S', Registry.superConductor);
-            recipes.addRecipe(new ItemStack(Registry.vajraCore), " M ", "ITI", "StS", 'M', Registry.magnetron, 'I', Ic2Items.iridiumPlate, 'T', Ic2Items.teslaCoil, 'S', Registry.superConductor, 't', Ic2Items.transformerIV);
-            recipes.addRecipe(new ItemStack(Registry.engineBoost), "GAG", "COC", "AHA", 'G', "dustGlowstone", 'A', Ic2Items.advancedAlloy, 'C', "circuitAdvanced", 'O', Ic2Items.overClockerUpgrade, 'H', Ic2Items.reactorVentDiamond);
+            recipes.addRecipe(new ItemStack(Registry.SUPER_CONDUCTOR_COVER, 3), "AIA", "CCC", "AIA", 'A', Ic2Items.advancedAlloy, 'I', Ic2Items.iridiumPlate, 'C', Ic2Items.carbonPlate);
+            recipes.addRecipe(new ItemStack(Registry.SUPER_CONDUCTOR, 3), "SSS", "GUG", "SSS", 'S', Registry.SUPER_CONDUCTOR_COVER, 'G', Ic2Items.glassFiberCable, 'U', Ic2Items.uuMatter);
+            recipes.addRecipe(new ItemStack(Registry.COOLING_CORE), "CAC", "HIH", "CAC", 'C', Ic2Items.reactorCoolantCellSix, 'A', Ic2Items.reactorHeatSwitchDiamond, 'H', Ic2Items.reactorPlatingHeat, 'I', Ic2Items.iridiumPlate);
+            recipes.addRecipe(new ItemStack(Registry.GRAVITATION_ENGINE), "TST", "CIC", "TST", 'T', Ic2Items.teslaCoil, 'S', Registry.SUPER_CONDUCTOR, 'C', Registry.COOLING_CORE, 'I', Ic2Items.transformerIV);
+            recipes.addRecipe(new ItemStack(Registry.MAGNETRON), "ICI", "CSC", "ICI", 'I', IC2.getRefinedIron(), 'C', "ingotCopper", 'S', Registry.SUPER_CONDUCTOR);
+            recipes.addRecipe(new ItemStack(Registry.VAJRA_CORE), " M ", "ITI", "StS", 'M', Registry.MAGNETRON, 'I', Ic2Items.iridiumPlate, 'T', Ic2Items.teslaCoil, 'S', Registry.SUPER_CONDUCTOR, 't', Ic2Items.transformerIV);
+            recipes.addRecipe(new ItemStack(Registry.ENGINE_BOOST), "GAG", "COC", "AHA", 'G', "dustGlowstone", 'A', Ic2Items.advancedAlloy, 'C', "circuitAdvanced", 'O', Ic2Items.overClockerUpgrade, 'H', Ic2Items.reactorVentDiamond);
         }
         if (GravisuitConfig.enabledItems.enableMiscCraftingItems && GravisuitConfig.enabledItems.enableUltimateLappack){
-            recipes.addRecipe(new ItemStack(Registry.getUltimateLappack()), "LIL", "LQL", "LSL", 'L', Ic2Items.lapotronCrystal, 'I', Ic2Items.iridiumPlate, 'Q', Ic2Items.quantumPack, 'S', Registry.superConductor);
+            recipes.addRecipe(new ItemStack(Registry.getUltimateLappack()), "LIL", "LQL", "LSL", 'L', Ic2Items.lapotronCrystal, 'I', Ic2Items.iridiumPlate, 'Q', Ic2Items.quantumPack, 'S', Registry.SUPER_CONDUCTOR);
         }
         if (GravisuitConfig.enabledItems.enableAdvancedLappack){
             recipes.addRecipe(new ItemStack(Registry.getAdvancedLappack()), "L", "A", "C", 'L', Ic2Items.lapPack, 'A', "circuitAdvanced", 'C', Ic2Items.lapotronCrystal);
         }
         if (GravisuitConfig.enabledItems.enableAdvancedElectricJetpack && GravisuitConfig.enabledItems.enableMiscCraftingItems && GravisuitConfig.enabledItems.enableAdvancedLappack){
-            recipes.addRecipe(new ItemStack(Registry.getAdvancedElectricJetpack()), "CEC", "BLB", "GAG", 'C', Ic2Items.carbonPlate, 'E', Ic2Items.electricJetpack, 'B', Registry.engineBoost, 'L', Registry.getAdvancedLappack(), 'G', Ic2Items.glassFiberCable, 'A', "circuitAdvanced");
+            recipes.addRecipe(new ItemStack(Registry.getAdvancedElectricJetpack()), "CEC", "BLB", "GAG", 'C', Ic2Items.carbonPlate, 'E', Ic2Items.electricJetpack, 'B', Registry.ENGINE_BOOST, 'L', Registry.getAdvancedLappack(), 'G', Ic2Items.glassFiberCable, 'A', "circuitAdvanced");
         }
         if (GravisuitConfig.enabledItems.enableAdvancedNuclearJetpack && GravisuitConfig.enabledItems.enableMiscCraftingItems && GravisuitConfig.enabledItems.enableAdvancedLappack){
-            recipes.addRecipe(new ItemStack(Registry.getAdvancedNuclearJetpack()), "CEC", "BLB", "GAG", 'C', Ic2Items.carbonPlate, 'E', Ic2Items.nuclearJetpack, 'B', Registry.engineBoost, 'L', Registry.getAdvancedLappack(), 'G', Ic2Items.glassFiberCable, 'A', "circuitAdvanced");
+            recipes.addRecipe(new ItemStack(Registry.getAdvancedNuclearJetpack()), "CEC", "BLB", "GAG", 'C', Ic2Items.carbonPlate, 'E', Ic2Items.nuclearJetpack, 'B', Registry.ENGINE_BOOST, 'L', Registry.getAdvancedLappack(), 'G', Ic2Items.glassFiberCable, 'A', "circuitAdvanced");
             if (GravisuitConfig.enabledItems.enableAdvancedElectricJetpack){
                 recipes.addRecipe(new ItemStack(Registry.getAdvancedNuclearJetpack()), "CTC", "RNR", "CAC", 'C', "circuitBasic", 'T', Ic2Items.transformerEV, 'R', Ic2Items.reactorChamber, 'N', Ic2Items.nuclearReactor, 'A', Registry.getAdvancedElectricJetpack());
             }
         }
         if (GravisuitConfig.enabledItems.enableMiscCraftingItems && GravisuitConfig.enabledItems.enableGravisuit && GravisuitConfig.enabledItems.enableAdvancedNanoChestplate && GravisuitConfig.enabledItems.enableUltimateLappack){
             if (areOverrideRecipesValid()){
-                recipes.addRecipe(new ItemStack(Registry.gravisuit), "SQS", "GTG", "SUS", 'S', Registry.superConductor, 'Q', Ic2Items.quantumJetplate, 'G', Registry.gravitationEngine, 'T', Ic2Items.transformerEV,   'U', Registry.getUltimateLappack());
+                recipes.addRecipe(new ItemStack(Registry.gravisuit), "SQS", "GTG", "SUS", 'S', Registry.SUPER_CONDUCTOR, 'Q', Ic2Items.quantumJetplate, 'G', Registry.GRAVITATION_ENGINE, 'T', Ic2Items.transformerEV,   'U', Registry.getUltimateLappack());
             }else {
-                recipes.addRecipe(new ItemStack(Registry.gravisuit), "SQS", "GAG", "SUS", 'S', Registry.superConductor, 'Q', Ic2Items.quantumJetplate, 'G', Registry.gravitationEngine, 'A', Registry.advancedNanoChestplate, 'U', Registry.getUltimateLappack());
+                recipes.addRecipe(new ItemStack(Registry.gravisuit), "SQS", "GAG", "SUS", 'S', Registry.SUPER_CONDUCTOR, 'Q', Ic2Items.quantumJetplate, 'G', Registry.GRAVITATION_ENGINE, 'A', Registry.advancedNanoChestplate, 'U', Registry.getUltimateLappack());
             }
         }
         if (GravisuitConfig.enabledItems.enableMiscCraftingItems && GravisuitConfig.enabledItems.enableNuclearGravisuit && GravisuitConfig.enabledItems.enableAdvancedNuclearNanoChestplate && GravisuitConfig.enabledItems.enableUltimateLappack){
@@ -151,9 +151,9 @@ public class GravisuitRecipes {
                 recipes.addRecipe(new ItemStack(Registry.nuclearGravisuit), "CTC", "RNR", "CAC", 'C', "circuitBasic", 'T', Ic2Items.transformerEV, 'R', Ic2Items.reactorChamber, 'N', Ic2Items.nuclearReactor, 'A', Registry.gravisuit);
             }
             if (areOverrideRecipesValid()){
-                recipes.addRecipe(new ItemStack(Registry.nuclearGravisuit), "SQS", "GTG", "SUS", 'S', Registry.superConductor, 'Q', Ic2Items.quantumNuclearJetplate, 'G', Registry.gravitationEngine, 'T', Ic2Items.transformerEV, 'U', Registry.getUltimateLappack());
+                recipes.addRecipe(new ItemStack(Registry.nuclearGravisuit), "SQS", "GTG", "SUS", 'S', Registry.SUPER_CONDUCTOR, 'Q', Ic2Items.quantumNuclearJetplate, 'G', Registry.GRAVITATION_ENGINE, 'T', Ic2Items.transformerEV, 'U', Registry.getUltimateLappack());
             }else {
-                recipes.addRecipe(new ItemStack(Registry.nuclearGravisuit), "SQS", "GAG", "SUS", 'S', Registry.superConductor, 'Q', Ic2Items.quantumNuclearJetplate, 'G', Registry.gravitationEngine, 'A', Registry.advancedNuclearNanoChestplate, 'U', Registry.getUltimateLappack());
+                recipes.addRecipe(new ItemStack(Registry.nuclearGravisuit), "SQS", "GAG", "SUS", 'S', Registry.SUPER_CONDUCTOR, 'Q', Ic2Items.quantumNuclearJetplate, 'G', Registry.GRAVITATION_ENGINE, 'A', Registry.advancedNuclearNanoChestplate, 'U', Registry.getUltimateLappack());
             }
         }
         if (GravisuitConfig.enabledItems.enableAdvancedNanoChestplate && GravisuitConfig.enabledItems.enableAdvancedElectricJetpack){
@@ -181,13 +181,13 @@ public class GravisuitRecipes {
 
         }
         if (GravisuitConfig.enabledItems.enableGravitool){
-            recipes.addShapelessRecipe(new ItemStack(Registry.gravitool), (new FlagModifierMetaLess(new ItemStack(Registry.gravitool), "Import", true)).setUsesInput(), Registry.gravitool, Blocks.HOPPER, Ic2Items.importBasicUpgrade.copy());
+            recipes.addShapelessRecipe(new ItemStack(Registry.GRAVITOOL), (new FlagModifierMetaLess(new ItemStack(Registry.GRAVITOOL), "Import", true)).setUsesInput(), Registry.GRAVITOOL, Blocks.HOPPER, Ic2Items.importBasicUpgrade.copy());
             ItemStack wrench = Loader.isModLoaded("ic2c_extras") && Ic2cExtrasCodeHelper.isOverridingLossy() ? Ic2Items.electricWrench : Ic2Items.precisionWrench;
             IRecipeModifier modifier = (Loader.isModLoaded("ic2c_extras") && Ic2cExtrasCodeHelper.isOverridingLossy()) || !GravisuitConfig.enableGravitoolRequiresLosslessPrecisionWrench ? treetap(Ic2Items.treeTap, "Import") : wrench(Ic2Items.precisionWrench);
             if (Loader.isModLoaded("gtc_expansion")){
-                recipes.addRecipe(new ItemStack(Registry.gravitool), "HCS", "AEA", "WaT", modifier, 'C', StackUtil.copyWithSize(Ic2Items.carbonPlate, 2), 'S', GameRegistry.makeItemStack("gtc_expansion:electric_screwdriver", 0, 1, null), 'H', Ic2Items.electricHoe, 'A', Ic2Items.advancedAlloy, 'E', Ic2Items.energyCrystal, 'W', wrench, 'a', "circuitAdvanced", 'T', Ic2Items.electricTreeTap);
+                recipes.addRecipe(new ItemStack(Registry.GRAVITOOL), "HCS", "AEA", "WaT", modifier, 'C', StackUtil.copyWithSize(Ic2Items.carbonPlate, 2), 'S', GameRegistry.makeItemStack("gtc_expansion:electric_screwdriver", 0, 1, null), 'H', Ic2Items.electricHoe, 'A', Ic2Items.advancedAlloy, 'E', Ic2Items.energyCrystal, 'W', wrench, 'a', "circuitAdvanced", 'T', Ic2Items.electricTreeTap);
             } else {
-                recipes.addRecipe(new ItemStack(Registry.gravitool), "CHC", "AEA", "WaT", modifier, 'C', Ic2Items.carbonPlate, 'H', Ic2Items.electricHoe, 'A', Ic2Items.advancedAlloy, 'E', Ic2Items.energyCrystal, 'W', wrench, 'a', "circuitAdvanced", 'T', Ic2Items.electricTreeTap);
+                recipes.addRecipe(new ItemStack(Registry.GRAVITOOL), "CHC", "AEA", "WaT", modifier, 'C', Ic2Items.carbonPlate, 'H', Ic2Items.electricHoe, 'A', Ic2Items.advancedAlloy, 'E', Ic2Items.energyCrystal, 'W', wrench, 'a', "circuitAdvanced", 'T', Ic2Items.electricTreeTap);
             }
         }
         if (GravisuitConfig.enabledItems.enableAdvancedDrill){
@@ -197,7 +197,7 @@ public class GravisuitRecipes {
             recipes.addRecipe(new ItemStack(Registry.advancedChainsaw), " d ", "ODO", "AOA", 'd', "gemDiamond", 'O', StackUtil.copyWithSize(Ic2Items.overClockerUpgrade, 2), 'D', Ic2Items.chainSaw, 'A', "circuitAdvanced");
         }
         if (GravisuitConfig.enabledItems.enableVajra && GravisuitConfig.enabledItems.enableAdvancedChainsaw && GravisuitConfig.enabledItems.enableAdvancedDrill && GravisuitConfig.enabledItems.enableMiscCraftingItems){
-            recipes.addRecipe(new ItemStack(Registry.vajra), "IMI", "DVC", "ALA", 'I', Ic2Items.iridiumPlate, 'M', Ic2Items.miningLaser, 'D', Registry.advancedDiamondDrill, 'V', Registry.vajraCore, 'C', Registry.advancedChainsaw, 'A', Ic2Items.advancedAlloy, 'L', Ic2Items.lapotronCrystal);
+            recipes.addRecipe(new ItemStack(Registry.VAJRA), "IMI", "DVC", "ALA", 'I', Ic2Items.iridiumPlate, 'M', Ic2Items.miningLaser, 'D', Registry.advancedDiamondDrill, 'V', Registry.VAJRA_CORE, 'C', Registry.advancedChainsaw, 'A', Ic2Items.advancedAlloy, 'L', Ic2Items.lapotronCrystal);
         }
     }
 

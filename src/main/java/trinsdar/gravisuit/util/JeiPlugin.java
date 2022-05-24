@@ -46,7 +46,7 @@ public class JeiPlugin implements IModPlugin {
                 blacklist.addIngredientToBlacklist(new ItemStack(Registry.getUltimateLappack()));
             }
             if (!GravisuitConfig.enabledItems.enableGravitool){
-                blacklist.addIngredientToBlacklist(new ItemStack(Registry.gravitool));
+                blacklist.addIngredientToBlacklist(new ItemStack(Registry.GRAVITOOL));
             }
             if (!GravisuitConfig.enabledItems.enableAdvancedDrill){
                 blacklist.addIngredientToBlacklist(new ItemStack(Registry.advancedDiamondDrill));
@@ -55,16 +55,16 @@ public class JeiPlugin implements IModPlugin {
                 blacklist.addIngredientToBlacklist(new ItemStack(Registry.advancedChainsaw));
             }
             if (!GravisuitConfig.enabledItems.enableVajra){
-                blacklist.addIngredientToBlacklist(new ItemStack(Registry.vajra));
+                blacklist.addIngredientToBlacklist(new ItemStack(Registry.VAJRA));
             }
             if (!GravisuitConfig.enabledItems.enableMiscCraftingItems){
-                blacklist.addIngredientToBlacklist(new ItemStack(Registry.superConductorCover));
-                blacklist.addIngredientToBlacklist(new ItemStack(Registry.superConductor));
-                blacklist.addIngredientToBlacklist(new ItemStack(Registry.coolingCore));
-                blacklist.addIngredientToBlacklist(new ItemStack(Registry.gravitationEngine));
-                blacklist.addIngredientToBlacklist(new ItemStack(Registry.magnetron));
-                blacklist.addIngredientToBlacklist(new ItemStack(Registry.vajraCore));
-                blacklist.addIngredientToBlacklist(new ItemStack(Registry.engineBoost));
+                blacklist.addIngredientToBlacklist(new ItemStack(Registry.SUPER_CONDUCTOR_COVER));
+                blacklist.addIngredientToBlacklist(new ItemStack(Registry.SUPER_CONDUCTOR));
+                blacklist.addIngredientToBlacklist(new ItemStack(Registry.COOLING_CORE));
+                blacklist.addIngredientToBlacklist(new ItemStack(Registry.GRAVITATION_ENGINE));
+                blacklist.addIngredientToBlacklist(new ItemStack(Registry.MAGNETRON));
+                blacklist.addIngredientToBlacklist(new ItemStack(Registry.VAJRA_CORE));
+                blacklist.addIngredientToBlacklist(new ItemStack(Registry.ENGINE_BOOST));
             }
 
         }

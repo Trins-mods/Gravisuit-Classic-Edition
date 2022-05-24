@@ -1,48 +1,39 @@
 package trinsdar.gravisuit.util;
 
-import ic2.core.IC2;
-import ic2.core.util.obj.plugins.IBaublesPlugin;
+import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
+import net.minecraft.item.Item;
+import net.minecraft.util.Identifier;
 import trinsdar.gravisuit.items.ItemComponents;
-import trinsdar.gravisuit.items.armor.ItemArmorAdvancedElectricJetpack;
-import trinsdar.gravisuit.items.armor.ItemArmorAdvancedLappack;
-import trinsdar.gravisuit.items.armor.ItemArmorAdvancedNanoChestplate;
-import trinsdar.gravisuit.items.armor.ItemArmorAdvancedNuclearJetpack;
-import trinsdar.gravisuit.items.armor.ItemArmorAdvancedNuclearNanoChestplate;
-import trinsdar.gravisuit.items.armor.ItemArmorGravisuit;
-import trinsdar.gravisuit.items.armor.ItemArmorNuclearGravisuit;
 import trinsdar.gravisuit.items.tools.ItemRelocator;
-import trinsdar.gravisuit.items.tools.ItemToolAdvancedChainsaw;
-import trinsdar.gravisuit.items.tools.ItemToolAdvancedDiamondDrill;
 import trinsdar.gravisuit.items.tools.ItemToolGravitool;
 import trinsdar.gravisuit.items.tools.ItemToolVajra;
-import trinsdar.gravisuit.util.baubles.ItemArmorBaublesAdvancedElectricJetpack;
-import trinsdar.gravisuit.util.baubles.ItemArmorBaublesAdvancedLappack;
-import trinsdar.gravisuit.util.baubles.ItemArmorBaublesAdvancedNuclearJetpack;
+
+import java.util.Map;
 
 public class Registry {
-    private static ItemArmorAdvancedElectricJetpack advancedElectricJetpack;
+    public static final Map<Identifier, Item> REGISTRY = new Object2ObjectArrayMap<>();
+    /*private static ItemArmorAdvancedElectricJetpack advancedElectricJetpack;
     private static ItemArmorAdvancedNuclearJetpack advancedNuclearJetpack;
     public static final ItemArmorAdvancedNanoChestplate advancedNanoChestplate = new ItemArmorAdvancedNanoChestplate(new ItemArmorAdvancedElectricJetpack(false), "advancedNanoChestplate", GravisuitLang.advancedNanoChestplate, "advanced_nano_chestplate", 15);
     public static final ItemArmorAdvancedNuclearNanoChestplate advancedNuclearNanoChestplate = new ItemArmorAdvancedNuclearNanoChestplate();
     public static final ItemArmorGravisuit gravisuit = new ItemArmorGravisuit();
     public static final ItemArmorNuclearGravisuit nuclearGravisuit = new ItemArmorNuclearGravisuit();
     private static ItemArmorAdvancedLappack advancedLappack;
-    private static ItemArmorAdvancedLappack ultimateLappack;
-    public static final ItemToolGravitool gravitool = new ItemToolGravitool();
-    public static final ItemToolAdvancedDiamondDrill advancedDiamondDrill = new ItemToolAdvancedDiamondDrill();
-    public static final ItemToolAdvancedChainsaw advancedChainsaw = new ItemToolAdvancedChainsaw();
-    public static final ItemToolVajra vajra = new ItemToolVajra();
-    public static final ItemRelocator relocator = new ItemRelocator();
-    public static final ItemComponents
-    superConductorCover = new ItemComponents("superConductorCover", 0),
-    superConductor = new ItemComponents("superConductor", 1),
-    coolingCore = new ItemComponents("coolingCore", 2),
-    gravitationEngine = new ItemComponents("gravitationEngine", 3),
-    magnetron = new ItemComponents("magnetron", 4),
-    vajraCore = new ItemComponents("vajraCore", 5),
-    engineBoost = new ItemComponents("engineBoost", 6);
+    private static ItemArmorAdvancedLappack ultimateLappack;*/
+    public static final ItemToolGravitool GRAVITOOL = new ItemToolGravitool();
+    //public static final ItemToolAdvancedDiamondDrill advancedDiamondDrill = new ItemToolAdvancedDiamondDrill();
+    //public static final ItemToolAdvancedChainsaw advancedChainsaw = new ItemToolAdvancedChainsaw();
+    public static final ItemToolVajra VAJRA = new ItemToolVajra();
+    public static final ItemRelocator RELOCATOR = new ItemRelocator();
+    public static final ItemComponents SUPER_CONDUCTOR_COVER = new ItemComponents("super_conductor_cover");
+    public static final ItemComponents SUPER_CONDUCTOR = new ItemComponents("super_conductor");
+    public static final ItemComponents COOLING_CORE = new ItemComponents("cooling_core");
+    public static final ItemComponents GRAVITATION_ENGINE = new ItemComponents("gravitation_engine");
+    public static final ItemComponents MAGNETRON = new ItemComponents("magnetron");
+    public static final ItemComponents VAJRA_CORE = new ItemComponents("vajra_core");
+    public static final ItemComponents ENGINE_BOOST = new ItemComponents("engine_boost");
 
-    public static ItemArmorAdvancedElectricJetpack getAdvancedElectricJetpack() {
+    /*public static ItemArmorAdvancedElectricJetpack getAdvancedElectricJetpack() {
         return advancedElectricJetpack;
     }
 
@@ -56,9 +47,9 @@ public class Registry {
 
     public static ItemArmorAdvancedLappack getUltimateLappack() {
         return ultimateLappack;
-    }
+    }*/
 
-    public static void initVars(){
+    /*public static void initVars(){
         IBaublesPlugin plugin = IC2.loader.getPlugin("baubles", IBaublesPlugin.class);
         if (plugin != null){
             advancedElectricJetpack = new ItemArmorBaublesAdvancedElectricJetpack();
@@ -71,28 +62,8 @@ public class Registry {
             advancedLappack = new ItemArmorAdvancedLappack("advancedLappack", GravisuitLang.advancedLappack, 2, GravisuitConfig.powerValues.advancedLappackStorage, 16, GravisuitConfig.powerValues.advancedLappackTransfer);
             ultimateLappack = new ItemArmorAdvancedLappack("ultimateLappack", GravisuitLang.ultimateLappack, 3, GravisuitConfig.powerValues.ultimateLappackStorage, 19, GravisuitConfig.powerValues.ultimateLappackTransfer);
         }
-    }
+    }*/
 
     public static void init(){
-        IC2.getInstance().createItem(advancedElectricJetpack);
-        IC2.getInstance().createItem(advancedNuclearJetpack);
-        IC2.getInstance().createItem(advancedNanoChestplate);
-        IC2.getInstance().createItem(advancedNuclearNanoChestplate);
-        IC2.getInstance().createItem(gravisuit);
-        IC2.getInstance().createItem(nuclearGravisuit);
-        IC2.getInstance().createItem(advancedLappack);
-        IC2.getInstance().createItem(ultimateLappack);
-        IC2.getInstance().createItem(gravitool);
-        IC2.getInstance().createItem(advancedDiamondDrill);
-        IC2.getInstance().createItem(advancedChainsaw);
-        IC2.getInstance().createItem(vajra);
-        IC2.getInstance().createItem(superConductorCover);
-        IC2.getInstance().createItem(superConductor);
-        IC2.getInstance().createItem(coolingCore);
-        IC2.getInstance().createItem(gravitationEngine);
-        IC2.getInstance().createItem(magnetron);
-        IC2.getInstance().createItem(vajraCore);
-        IC2.getInstance().createItem(engineBoost);
-        IC2.getInstance().createItem(relocator);
     }
 }

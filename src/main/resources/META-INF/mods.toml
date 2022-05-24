@@ -1,0 +1,37 @@
+modLoader="javafml"
+license="Apache-2.0"
+loaderVersion="[40,)"
+issueTrackerURL="https://github.com/Trinsdar/Gravisuit-Classic-Edition/issues"
+
+[[mods]]
+modId="gravisuit"
+version="${version}"
+displayName="Gravisuit Classic"
+displayURL="https://github.com/Trinsdar/Gravisuit-Classic-Edition"
+credits="The Forge and FML guys for forge, CrossVas for helping with some things."
+authors="Trinsdar"
+description='''Gravitation Suite for ic2 classic.'''
+[[dependencies.gravisuit]]
+    modId="forge"
+    mandatory=true
+    versionRange="[36.2.0,)"
+    ordering="AFTER"
+    side="BOTH"
+[[dependencies.gravisuit]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.16.5,)"
+    ordering="AFTER"
+    side="BOTH"
+[[dependencies.gravisuit]]
+    modId="ic2"
+    mandatory=true
+    versionRange="[1.18.2,)"
+    ordering="AFTER"
+    side="BOTH"
+[[dependencies.gravisuit]]
+    modId="ic2-classic-spmod"
+    mandatory=true
+    versionRange=""
+    ordering="AFTER"
+    side="BOTH"
