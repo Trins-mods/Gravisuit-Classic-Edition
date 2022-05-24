@@ -1,3 +1,4 @@
+/*
 package trinsdar.gravisuit.items.armor;
 
 import ic2.core.IC2;
@@ -88,3 +89,4 @@ public class ItemArmorAdvancedNuclearJetpack extends ItemArmorNuclearJetpack {
         return "gravisuit:textures/models/advanced_nuclear_jetpack";
     }
 }
+*/

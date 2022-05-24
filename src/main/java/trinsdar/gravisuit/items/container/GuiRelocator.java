@@ -1,3 +1,4 @@
+/*
 package trinsdar.gravisuit.items.container;
 
 import ic2.core.inventory.container.ContainerComponent;
@@ -23,3 +24,4 @@ public class GuiRelocator  extends GuiComponentContainer {
         this.reloadGui = reloadGui;
     }
 }
+*/

@@ -1,0 +1,11 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "gravisuit:item/gravitool"
+  },
+  "overrides": [
+    {"predicate": {"gravisuit:gravitool": 1.0}, "model": "gravisuit:item/gravitool_hoe"},
+    {"predicate": {"gravisuit:gravitool": 2.0}, "model": "gravisuit:item/gravitool_treetap"},
+    {"predicate": {"gravisuit:gravitool": 3.0}, "model": "gravisuit:item/gravitool_screwdriver"}
+  ]
+}

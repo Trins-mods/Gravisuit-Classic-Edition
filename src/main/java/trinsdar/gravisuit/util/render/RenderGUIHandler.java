@@ -1,20 +1,20 @@
 package trinsdar.gravisuit.util.render;
 
-import net.minecraft.client.Minecraft;
+import net.minecraft.client.MinecraftClient;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class RenderGUIHandler {
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     @SubscribeEvent
     public void onRenderGui(RenderGameOverlayEvent.Post event)
     {
     	if (event.getType() != ElementType.EXPERIENCE) return;
-    	new GUIHandler(Minecraft.getMinecraft());
+    	new GUIHandler(MinecraftClient.getInstance());
     }
 
 }

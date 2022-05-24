@@ -1,23 +1,8 @@
 package trinsdar.gravisuit.util;
 
-import ic2.api.classic.recipe.ClassicRecipes;
-import ic2.api.classic.recipe.crafting.ICraftingRecipeList;
-import ic2.api.classic.recipe.crafting.ICraftingRecipeList.IRecipeModifier;
-import ic2.api.recipe.IRecipeInput;
-import ic2.core.IC2;
-import ic2.core.item.recipe.entry.RecipeInputOreDict;
-import ic2.core.item.recipe.upgrades.FlagModifier;
-import ic2.core.platform.registry.Ic2Items;
-import ic2.core.util.misc.StackUtil;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.fml.common.Loader;
-import net.minecraftforge.fml.common.registry.GameRegistry;
-import trinsdar.gravisuit.compat.ic2c_extras.Ic2cExtrasCodeHelper;
 
 public class GravisuitRecipes {
-    static ICraftingRecipeList recipes = ClassicRecipes.advCrafting;
+    /*static ICraftingRecipeList recipes = ClassicRecipes.advCrafting;
     public static void init(){
         initShapedRecipes();
         initOverrideRecipes();
@@ -217,5 +202,5 @@ public class GravisuitRecipes {
             recipes.addRecipe(Ic2Items.quantumJetplate, "ICI", "cQc", "GLG", 'I', StackUtil.copyWithSize(Ic2Items.iridiumPlate, 2), 'C', Ic2Items.compactedElectricJetpack, 'c', "circuitAdvanced", 'Q', Ic2Items.quantumChest, 'G', Ic2Items.glassFiberCable, 'L', Ic2Items.lapotronCrystal);
             recipes.addRecipe(Ic2Items.quantumNuclearJetplate, "ICI", "cQc", "GLG", 'I', StackUtil.copyWithSize(Ic2Items.iridiumPlate, 2), 'C', Ic2Items.compactedNuclearJetpack, 'c', "circuitAdvanced", 'Q', Ic2Items.quantumChest, 'G', Ic2Items.glassFiberCable, 'L', Ic2Items.lapotronCrystal);
         }
-    }
+    }*/
 }

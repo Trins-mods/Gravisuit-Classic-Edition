@@ -1,29 +1,12 @@
 package trinsdar.gravisuit.util.render;
 
-import ic2.api.item.IElectricItem;
-import ic2.core.IC2;
-import ic2.core.item.armor.base.ItemArmorJetpackBase.HoverMode;
-import ic2.core.platform.registry.Ic2Items;
-import ic2.core.util.misc.StackUtil;
-import ic2.core.util.obj.plugins.IBaublesPlugin;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.fml.common.Loader;
-import trinsdar.gravisuit.util.GravisuitConfig;
-import trinsdar.gravisuit.util.GravisuitConfig.Client.Positions;
-import trinsdar.gravisuit.util.Registry;
-import trinsdar.gravisuit.util.baubles.BaublesLoader;
+import net.minecraft.client.MinecraftClient;
 
-public class GUIHandler extends Gui {
+public class GUIHandler /*extends Gui*/ {
+    //dummy constructor, TODO port the code
+    public GUIHandler(MinecraftClient mc){}
 	
-	public GUIHandler(Minecraft mc) {
+	/*public GUIHandler(Minecraft mc) {
 
 		int offset = 3;
 		int xPos = offset;
@@ -156,6 +139,6 @@ public class GUIHandler extends Gui {
     	NBTTagCompound nbt = StackUtil.getOrCreateNbtData(stack);
     	int e = nbt.getInteger("charge");
     	return e;
-    }
+    }*/
 	
 }

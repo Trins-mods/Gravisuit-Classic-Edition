@@ -1,3 +1,4 @@
+/*
 package trinsdar.gravisuit.items.container;
 
 import ic2.core.inventory.base.IPortableInventory;
@@ -44,3 +45,4 @@ public class ItemContainerRelocatorDisplay extends ContainerItemComponent<ItemIn
         gui.dissableInvName();
     }
 }
+*/

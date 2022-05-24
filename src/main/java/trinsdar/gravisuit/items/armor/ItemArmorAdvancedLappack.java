@@ -1,3 +1,4 @@
+/*
 package trinsdar.gravisuit.items.armor;
 
 import ic2.core.item.armor.electric.ItemArmorElectricPack;
@@ -57,3 +58,4 @@ public class ItemArmorAdvancedLappack extends ItemArmorElectricPack {
         return Ic2Icons.getTextures("gravisuit_items")[index];
     }
 }
+*/

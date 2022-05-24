@@ -1,3 +1,4 @@
+/*
 package trinsdar.gravisuit.items.armor;
 
 import ic2.core.IC2;
@@ -88,3 +89,4 @@ public class ItemArmorAdvancedElectricJetpack extends ItemArmorCompactedElectric
         return "gravisuit:textures/models/advanced_electric_jetpack";
     }
 }
+*/

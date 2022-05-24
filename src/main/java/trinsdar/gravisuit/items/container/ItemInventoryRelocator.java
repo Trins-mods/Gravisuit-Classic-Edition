@@ -1,3 +1,4 @@
+/*
 package trinsdar.gravisuit.items.container;
 
 import ic2.core.inventory.base.IC2ItemInventory;
@@ -48,3 +49,4 @@ public class ItemInventoryRelocator extends IC2ItemInventory {
         return true;
     }
 }
+*/

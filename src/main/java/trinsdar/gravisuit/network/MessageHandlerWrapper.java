@@ -1,16 +1,12 @@
 package trinsdar.gravisuit.network;
 
-import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
-import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
-import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
-import net.minecraftforge.fml.relauncher.Side;
 
 /**
  * Created by brandon3055 on 23/4/2016.
  */
-public abstract class MessageHandlerWrapper<REQ extends IMessage, REPLY extends IMessage> implements IMessageHandler<REQ, REPLY> {
+public abstract class MessageHandlerWrapper/*<REQ extends IMessage, REPLY extends IMessage> implements IMessageHandler<REQ, REPLY>*/ {
 
-    @Override
+    /*@Override
     public REPLY onMessage(REQ message, MessageContext ctx) {
 
         PacketSyncObject<REQ, REPLY> syncObject = new PacketSyncObject<REQ, REPLY>(message, ctx) {
@@ -30,6 +26,6 @@ public abstract class MessageHandlerWrapper<REQ extends IMessage, REPLY extends 
         return syncObject.reply;
     }
 
-    public abstract REPLY handleMessage(REQ message, MessageContext ctx);
+    public abstract REPLY handleMessage(REQ message, MessageContext ctx);*/
 
 }

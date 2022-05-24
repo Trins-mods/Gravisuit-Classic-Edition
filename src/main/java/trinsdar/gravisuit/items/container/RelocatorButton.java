@@ -1,3 +1,4 @@
+/*
 package trinsdar.gravisuit.items.container;
 
 import ic2.core.inventory.gui.buttons.IC2Button;
@@ -42,3 +43,4 @@ public class RelocatorButton extends IC2Button {
         }
     }
 }
+*/

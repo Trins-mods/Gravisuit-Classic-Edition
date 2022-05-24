@@ -1,42 +1,19 @@
 package trinsdar.gravisuit.items.tools;
 
-import ic2.api.item.ElectricItem;
-import ic2.core.IC2;
-import ic2.core.block.machine.high.TileEntityTeleporter;
-import ic2.core.inventory.base.IHandHeldInventory;
-import ic2.core.inventory.base.IHasGui;
-import ic2.core.item.base.BasicElectricItem;
-import ic2.core.platform.registry.Ic2Lang;
-import ic2.core.util.misc.StackUtil;
-import ic2.core.util.obj.ToolTipType;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.world.World;
+import ic2.core.utils.IC2ItemGroup;
+import net.minecraft.item.Item;
+import net.minecraft.util.Identifier;
 import trinsdar.gravisuit.GravisuitClassic;
-import trinsdar.gravisuit.items.container.ItemInventoryRelocator;
-import trinsdar.gravisuit.util.GravisuitLang;
+import trinsdar.gravisuit.util.Registry;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-
-public class ItemRelocator extends BasicElectricItem implements IHandHeldInventory {
+public class ItemRelocator extends Item /*BasicElectricItem implements IHandHeldInventory*/ {
 
     public ItemRelocator() {
-        this.setUnlocalizedName("relocator");
-        this.setRegistryName("relocator");
-        this.setCreativeTab(IC2.tabIC2);
+        super(new Settings().group(IC2ItemGroup.TOOLS));
+        Registry.REGISTRY.put(new Identifier(GravisuitClassic.MODID, "relocator"), this);
     }
 
-    @Override
+   /* @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer player, EnumHand handIn) {
         ItemStack stack = player.getHeldItem(handIn);
 
@@ -284,5 +261,5 @@ public class ItemRelocator extends BasicElectricItem implements IHandHeldInvento
             compound.setDouble("Z", z);
             compound.setInteger("Dimension", dimId);
         }
-    }
+    }*/
 }

@@ -3,7 +3,7 @@ plugins {
     id 'maven-publish'
 }
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+java.toolchain.languageVersion = JavaLanguageVersion.of(8)
 //Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 
 

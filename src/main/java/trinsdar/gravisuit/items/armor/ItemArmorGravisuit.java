@@ -1,3 +1,4 @@
+/*
 package trinsdar.gravisuit.items.armor;
 
 import ic2.api.item.ElectricItem;
@@ -275,3 +276,4 @@ public class ItemArmorGravisuit extends ItemArmorQuantumSuit implements IIndirec
         }
     }
 }
+*/

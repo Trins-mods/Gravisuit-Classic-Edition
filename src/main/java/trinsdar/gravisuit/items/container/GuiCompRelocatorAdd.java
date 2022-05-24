@@ -1,19 +1,11 @@
+/*
 package trinsdar.gravisuit.items.container;
 
 import com.google.common.base.Strings;
 import ic2.core.IC2;
-import ic2.core.inventory.gui.GuiIC2;
 import ic2.core.inventory.gui.components.GuiComponent;
-import ic2.core.util.math.Box2D;
-import ic2.core.util.misc.StackUtil;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiTextField;
-import net.minecraft.entity.player.EntityPlayer;
+import ic2.core.utils.helpers.StackUtil;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumHand;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import trinsdar.gravisuit.GravisuitClassic;
 import trinsdar.gravisuit.items.tools.ItemRelocator;
 import trinsdar.gravisuit.network.PacketRelocator;
@@ -131,3 +123,4 @@ public class GuiCompRelocatorAdd extends GuiComponent {
         return (value >= low) && (value <= high);
     }
 }
+*/

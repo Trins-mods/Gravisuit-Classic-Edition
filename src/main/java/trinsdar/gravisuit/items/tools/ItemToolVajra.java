@@ -1,67 +1,23 @@
 package trinsdar.gravisuit.items.tools;
 
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Multimap;
-import ic2.api.classic.item.IMiningDrill;
-import ic2.api.item.ElectricItem;
-import ic2.core.IC2;
-import ic2.core.item.base.ItemElectricTool;
-import ic2.core.platform.registry.Ic2Lang;
-import ic2.core.platform.textures.Ic2Icons;
-import ic2.core.platform.textures.obj.IStaticTexturedItem;
-import ic2.core.util.misc.StackUtil;
-import ic2.core.util.obj.ToolTipType;
-import net.minecraft.block.Block;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.EnumEnchantmentType;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Enchantments;
-import net.minecraft.init.Items;
-import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockAccess;
-import net.minecraft.world.World;
-import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import trinsdar.gravisuit.util.GravisuitConfig;
-import trinsdar.gravisuit.util.GravisuitLang;
+import ic2.core.utils.IC2ItemGroup;
+import net.minecraft.item.Item;
+import net.minecraft.util.Identifier;
+import trinsdar.gravisuit.GravisuitClassic;
+import trinsdar.gravisuit.util.Registry;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-public class ItemToolVajra extends ItemElectricTool implements IStaticTexturedItem, IMiningDrill {
+public class ItemToolVajra extends Item/*ItemElectricTool implements IMiningDrill*/ {
 
     public ItemToolVajra() {
-        super(0.0F, -3.0F, ToolMaterial.DIAMOND);
-        this.setRegistryName("vajra");
-        this.setUnlocalizedName(GravisuitLang.vajra);
-        this.attackDamage = 1.0F;
+        super(new Settings().group(IC2ItemGroup.TOOLS));
+        Registry.REGISTRY.put(new Identifier(GravisuitClassic.MODID, "vajra"), this);
+        /*this.attackDamage = 1.0F;
         this.maxCharge = GravisuitConfig.powerValues.vajraStorage;
         this.transferLimit = GravisuitConfig.powerValues.vajraTransfer;
-        this.tier = 3;
-        this.setCreativeTab(IC2.tabIC2);
+        this.tier = 3;*/
     }
 
-    public void setTier(int tier){
+    /*public void setTier(int tier){
         this.tier = tier;
     }
 
@@ -258,5 +214,5 @@ public class ItemToolVajra extends ItemElectricTool implements IStaticTexturedIt
     @Override
     public boolean canMineBlock(ItemStack d, IBlockState state, IBlockAccess access, BlockPos pos) {
         return ForgeHooks.canToolHarvestBlock(access, pos, d);
-    }
+    }*/
 }

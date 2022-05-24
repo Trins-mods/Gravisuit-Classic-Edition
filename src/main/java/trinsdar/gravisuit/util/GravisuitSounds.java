@@ -1,8 +1,8 @@
 package trinsdar.gravisuit.util;
 
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.Identifier;
 
 public class GravisuitSounds {
 	
-	  public static ResourceLocation toolGraviToolSound = new ResourceLocation("gravisuit", "sounds/toolgravitoolsound.ogg");
+	  public static Identifier toolGraviToolSound = new Identifier("gravisuit", "sounds/toolgravitoolsound.ogg");
 }

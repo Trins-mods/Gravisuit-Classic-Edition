@@ -1,3 +1,4 @@
+/*
 package trinsdar.gravisuit.items.container;
 
 import ic2.core.IC2;
@@ -136,3 +137,4 @@ public class GuiCompRelocatorDisplay extends GuiComponent {
         return (value >= low) && (value <= high);
     }
 }
+*/

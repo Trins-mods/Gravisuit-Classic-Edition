@@ -1,19 +1,7 @@
 
 package trinsdar.gravisuit.network;
 
-import ic2.core.util.misc.StackUtil;
-import io.netty.buffer.ByteBuf;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumHand;
-import net.minecraftforge.fml.common.network.ByteBufUtils;
-import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
-import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
-import trinsdar.gravisuit.items.tools.ItemRelocator;
-import trinsdar.gravisuit.items.tools.ItemRelocator.TeleportData;
-
-public class PacketRelocator implements IMessage {
+public class PacketRelocator { /*implements IMessage {
     public static final int ADDDESTINATION = 0;
     public static final int REMOVEDESTINATION = 1;
     public static final int ADDDEFAULT= 2;
@@ -120,6 +108,6 @@ public class PacketRelocator implements IMessage {
 
             return null;
         }
-    }
+    }*/
 }
 

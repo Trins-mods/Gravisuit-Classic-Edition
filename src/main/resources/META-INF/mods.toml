@@ -1,6 +1,6 @@
 modLoader="javafml"
 license="Apache-2.0"
-loaderVersion="[40,)"
+loaderVersion="[36,)"
 issueTrackerURL="https://github.com/Trinsdar/Gravisuit-Classic-Edition/issues"
 
 [[mods]]
@@ -26,12 +26,12 @@ description='''Gravitation Suite for ic2 classic.'''
 [[dependencies.gravisuit]]
     modId="ic2"
     mandatory=true
-    versionRange="[1.18.2,)"
+    versionRange="[1.16-Beta-1.0.54,)"
     ordering="AFTER"
     side="BOTH"
 [[dependencies.gravisuit]]
     modId="ic2-classic-spmod"
-    mandatory=true
+    mandatory=false
     versionRange=""
     ordering="AFTER"
     side="BOTH"
