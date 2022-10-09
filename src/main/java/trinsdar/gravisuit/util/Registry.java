@@ -1,22 +1,16 @@
 package trinsdar.gravisuit.util;
 
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
-import net.minecraft.item.Item;
-import net.minecraft.util.Identifier;
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import trinsdar.gravisuit.GravisuitClassic;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
 import trinsdar.gravisuit.items.ItemComponents;
 import trinsdar.gravisuit.items.tools.ItemRelocator;
 import trinsdar.gravisuit.items.tools.ItemToolGravitool;
 import trinsdar.gravisuit.items.tools.ItemToolVajra;
 
 import java.util.Map;
-
-@Mod.EventBusSubscriber(modid = GravisuitClassic.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class Registry {
-    public static final Map<Identifier, Item> REGISTRY = new Object2ObjectArrayMap<>();
+    public static final Map<ResourceLocation, Item> REGISTRY = new Object2ObjectArrayMap<>();
     /*private static ItemArmorAdvancedElectricJetpack advancedElectricJetpack;
     private static ItemArmorAdvancedNuclearJetpack advancedNuclearJetpack;
     public static final ItemArmorGravisuit gravisuit = new ItemArmorGravisuit();
@@ -64,16 +58,6 @@ public class Registry {
             ultimateLappack = new ItemArmorAdvancedLappack("ultimateLappack", GravisuitLang.ultimateLappack, 3, GravisuitConfig.powerValues.ultimateLappackStorage, 19, GravisuitConfig.powerValues.ultimateLappackTransfer);
         }
     }*/
-
-    @SubscribeEvent
-    public static void onRegisterItem(RegistryEvent.Register<Item> event){
-        REGISTRY.forEach((r, i) -> {
-            if (i.getRegistryName() == null){
-                i.setRegistryName(r);
-            }
-            event.getRegistry().register(i);
-        });
-    }
 
     public static void init(){
     }

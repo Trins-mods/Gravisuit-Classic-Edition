@@ -1,18 +1,13 @@
 package trinsdar.gravisuit.util;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockEntityProvider;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.ChestBlock;
-import net.minecraft.block.PistonBlock;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.ChestBlockEntity;
-import net.minecraft.block.enums.ChestType;
-import net.minecraft.util.BlockRotation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.ChestBlock;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.ChestType;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,16 +26,16 @@ public class RotationHelper {
     {
         blacklist.add((w, pos) -> {
             BlockState state = w.getBlockState(pos);
-            return state.getBlock()!=Blocks.CHEST||state.get(ChestBlock.CHEST_TYPE)== ChestType.SINGLE;
+            return state.getBlock()!= Blocks.CHEST||state.getValue(ChestBlock.TYPE)== ChestType.SINGLE;
         });
     }
 
-    public static boolean rotateBlock(World world, BlockPos pos, boolean inverse)
+    public static boolean rotateBlock(Level world, BlockPos pos, boolean inverse)
     {
-        return rotateBlock(world, pos, inverse?BlockRotation.COUNTERCLOCKWISE_90: BlockRotation.CLOCKWISE_90);
+        return rotateBlock(world, pos, inverse?Rotation.COUNTERCLOCKWISE_90: Rotation.CLOCKWISE_90);
     }
 
-    public static boolean rotateBlock(World world, BlockPos pos, BlockRotation rotation) {
+    public static boolean rotateBlock(Level world, BlockPos pos, Rotation rotation) {
         for(RotationBlacklistEntry e : blacklist)
             if(!e.blockRotation(world, pos))
                 return false;
@@ -49,33 +44,33 @@ public class RotationHelper {
         BlockState newState = state.rotate(world, pos, rotation);
         if(newState!=state)
         {
-            world.setBlockState(pos, newState);
+            world.setBlockAndUpdate(pos, newState);
             for(Direction d : Direction.values())
             {
-                final BlockPos otherPos = pos.offset(d);
+                final BlockPos otherPos = pos.relative(d);
                 final BlockState otherState = world.getBlockState(otherPos);
-                final BlockState nextState = newState.getStateForNeighborUpdate(d, otherState, world, pos, otherPos);
+                final BlockState nextState = newState.updateShape(d, otherState, world, pos, otherPos);
                 if(nextState!=newState)
                 {
                     if(!nextState.isAir())
                     {
-                        world.setBlockState(pos, nextState);
+                        world.setBlockAndUpdate(pos, nextState);
                         newState = nextState;
                     }
                     else
                     {
-                        world.setBlockState(pos, state);
+                        world.setBlockAndUpdate(pos, state);
                         return false;
                     }
                 }
             }
             for(Direction d : Direction.values())
             {
-                final BlockPos otherPos = pos.offset(d);
+                final BlockPos otherPos = pos.relative(d);
                 final BlockState otherState = world.getBlockState(otherPos);
-                final BlockState nextOther = otherState.getStateForNeighborUpdate(d.getOpposite(), newState, world, otherPos, pos);
+                final BlockState nextOther = otherState.updateShape(d.getOpposite(), newState, world, otherPos, pos);
                 if(nextOther!=otherState)
-                    world.setBlockState(otherPos, nextOther);
+                    world.setBlockAndUpdate(otherPos, nextOther);
             }
             return true;
         }
@@ -86,7 +81,7 @@ public class RotationHelper {
     @FunctionalInterface
     public interface RotationBlacklistEntry
     {
-        boolean blockRotation(World w, BlockPos pos);
+        boolean blockRotation(Level w, BlockPos pos);
     }
 
 }

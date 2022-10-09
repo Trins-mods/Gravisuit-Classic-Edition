@@ -1,8 +1,5 @@
 package trinsdar.gravisuit.util;
 
-import jdk.jfr.Name;
-
-
 public class GravisuitConfig {
     private static final String CATEGORY_POWER_VALUES = "power values";
     private static final String CATEGORY_ENABLED_ITEMS = "enabled items";

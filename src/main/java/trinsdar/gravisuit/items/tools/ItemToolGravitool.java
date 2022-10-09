@@ -6,18 +6,16 @@ import ic2.core.IC2;
 import ic2.core.audio.AudioManager;
 import ic2.core.item.tool.electric.ElectricWrenchTool;
 import ic2.core.utils.helpers.StackUtil;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUsageContext;
+import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Formatting;
-import net.minecraft.util.Hand;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.TypedActionResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 import trinsdar.gravisuit.GravisuitClassic;
 import trinsdar.gravisuit.proxy.ClientProxy;
@@ -39,7 +37,7 @@ public class ItemToolGravitool extends ElectricWrenchTool {
         this.transferLimit = GravisuitConfig.powerValues.gravitoolTransfer;
         this.tier = 2;
         this.losslessUses = -1;
-        Registry.REGISTRY.put(new Identifier(GravisuitClassic.MODID,"gravitool"), this);
+        Registry.REGISTRY.put(new ResourceLocation(GravisuitClassic.MODID,"gravitool"), this);
         if (IC2.PLATFORM.isRendering()){
             ClientProxy.registerBatteryPropertyOverrides(this);
         }
@@ -74,26 +72,26 @@ public class ItemToolGravitool extends ElectricWrenchTool {
     }*/
 
     @Override
-    public TypedActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
+    public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
         if (IC2.PLATFORM.isSimulating() && IC2.KEYBOARD.isModeSwitchKeyDown(playerIn)){
             IC2.AUDIO.playSound(playerIn, GravisuitSounds.toolGraviToolSound, AudioManager.SoundType.ITEM, IC2.AUDIO.getDefaultVolume(), 1.0f);
-            ItemStack stack = playerIn.getStackInHand(handIn);
+            ItemStack stack = playerIn.getItemInHand(handIn);
             CompoundTag nbt = stack.getOrCreateTag();
             byte mode = nbt.getByte("mode");
             if (mode == 3) {
                 nbt.putByte("mode", (byte) 0);
-                playerIn.sendMessage(this.translate(GravisuitLang.messageWrench, Formatting.AQUA), false);
+                playerIn.displayClientMessage(this.translate(GravisuitLang.messageWrench, ChatFormatting.AQUA), false);
             } else if (mode == 0){
                 nbt.putByte("mode", (byte) 1);
-                playerIn.sendMessage(this.translate(GravisuitLang.messageHoe, Formatting.GOLD), false);
+                playerIn.displayClientMessage(this.translate(GravisuitLang.messageHoe, ChatFormatting.GOLD), false);
             } else if (mode == 1){
                 nbt.putByte("mode", (byte) 2);
-                playerIn.sendMessage(this.translate(GravisuitLang.messageTreetap, Formatting.DARK_GREEN), false);
+                playerIn.displayClientMessage(this.translate(GravisuitLang.messageTreetap, ChatFormatting.DARK_GREEN), false);
             }else {
                 nbt.putByte("mode", (byte) 3);
-                playerIn.sendMessage(this.translate(GravisuitLang.messageScrewdriver, Formatting.LIGHT_PURPLE), false);
+                playerIn.displayClientMessage(this.translate(GravisuitLang.messageScrewdriver, ChatFormatting.LIGHT_PURPLE), false);
             }
-            return TypedActionResult.success(stack);
+            return InteractionResultHolder.success(stack);
         }
         return super.use(worldIn, playerIn, handIn);
     }
@@ -104,7 +102,7 @@ public class ItemToolGravitool extends ElectricWrenchTool {
     }
 
     @Override
-    public ActionResult onItemUseFirst(ItemStack stack, ItemUsageContext context) {
+    public InteractionResult onItemUseFirst(ItemStack stack, UseOnContext context) {
         if (IC2.PLATFORM.isSimulating() && IC2.KEYBOARD.isModeSwitchKeyDown(context.getPlayer())){
 
         }

@@ -14,19 +14,19 @@ description='''Gravitation Suite for ic2 classic.'''
 [[dependencies.gravisuit]]
     modId="forge"
     mandatory=true
-    versionRange="[36.2.0,)"
+    versionRange="[43.1.34,)"
     ordering="AFTER"
     side="BOTH"
 [[dependencies.gravisuit]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.16.5,)"
+    versionRange="[1.19.2,)"
     ordering="AFTER"
     side="BOTH"
 [[dependencies.gravisuit]]
     modId="ic2"
     mandatory=true
-    versionRange="[1.16-Beta-1.0.54,)"
+    versionRange=""
     ordering="AFTER"
     side="BOTH"
 [[dependencies.gravisuit]]

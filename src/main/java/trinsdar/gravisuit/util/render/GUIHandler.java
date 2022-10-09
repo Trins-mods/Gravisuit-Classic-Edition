@@ -1,10 +1,10 @@
 package trinsdar.gravisuit.util.render;
 
-import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.Minecraft;
 
 public class GUIHandler /*extends Gui*/ {
     //dummy constructor, TODO port the code
-    public GUIHandler(MinecraftClient mc){}
+    public GUIHandler(Minecraft mc){}
 	
 	/*public GUIHandler(Minecraft mc) {
 

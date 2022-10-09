@@ -1,16 +1,16 @@
 package trinsdar.gravisuit.items.tools;
 
 import ic2.core.utils.IC2ItemGroup;
-import net.minecraft.item.Item;
-import net.minecraft.util.Identifier;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
 import trinsdar.gravisuit.GravisuitClassic;
 import trinsdar.gravisuit.util.Registry;
 
 public class ItemToolVajra extends Item/*ItemElectricTool implements IMiningDrill*/ {
 
     public ItemToolVajra() {
-        super(new Settings().group(IC2ItemGroup.TOOLS));
-        Registry.REGISTRY.put(new Identifier(GravisuitClassic.MODID, "vajra"), this);
+        super(new Item.Properties().tab(IC2ItemGroup.TAB_TOOLS));
+        Registry.REGISTRY.put(new ResourceLocation(GravisuitClassic.MODID, "vajra"), this);
         /*this.attackDamage = 1.0F;
         this.maxCharge = GravisuitConfig.powerValues.vajraStorage;
         this.transferLimit = GravisuitConfig.powerValues.vajraTransfer;

@@ -1,16 +1,16 @@
 package trinsdar.gravisuit.items.tools;
 
 import ic2.core.utils.IC2ItemGroup;
-import net.minecraft.item.Item;
-import net.minecraft.util.Identifier;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
 import trinsdar.gravisuit.GravisuitClassic;
 import trinsdar.gravisuit.util.Registry;
 
 public class ItemRelocator extends Item /*BasicElectricItem implements IHandHeldInventory*/ {
 
     public ItemRelocator() {
-        super(new Settings().group(IC2ItemGroup.TOOLS));
-        Registry.REGISTRY.put(new Identifier(GravisuitClassic.MODID, "relocator"), this);
+        super(new Item.Properties().tab(IC2ItemGroup.TAB_TOOLS));
+        Registry.REGISTRY.put(new ResourceLocation(GravisuitClassic.MODID, "relocator"), this);
     }
 
    /* @Override
