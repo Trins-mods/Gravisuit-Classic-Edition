@@ -1,7 +1,7 @@
 {
-  "item.gravisuit.gravi_jetpack" : "Gravitation Chestplate",
+  "item.gravisuit.gravitation_jetpack" : "Gravitation Chestplate",
   "item.gravisuit.advanced_electric_jetpack" : "Advanced Electric Jetpack",
-  "item.gravisuit.nuclear_gravi_jetpack" : "Nuclear Gravitation Chestplate",
+  "item.gravisuit.nuclear_gravitation_jetpack" : "Nuclear Gravitation Chestplate",
   "item.gravisuit.advanced_nuclear_jetpack" : "Advanced Nuclear Jetpack",
   "item.gravisuit.advanced_lappack" : "Advanced Lappack",
   "item.gravisuit.ultimate_lappack" : "Ultimate Lappack",
