@@ -62,7 +62,7 @@ dependencies {
     }
 
     forge "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    modImplementation fileTree(include: ['*.jar'], dir: 'libs')
     /*deobfProvided "mezz.jei:jei_${mc_version}:${jei_version}:api"
     runtime "mezz.jei:jei_${mc_version}:${jei_version}"
     runtime("org.spongepowered:mixin:0.8-SNAPSHOT"){
