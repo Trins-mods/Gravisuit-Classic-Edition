@@ -84,13 +84,8 @@ public class ItemAdvancedElectricJetpack extends IC2ElectricJetpackBase {
     }
 
     @Override
-    public TextureAtlasSprite getTexture() {
-        return IC2Textures.getMappedEntriesItem(GravisuitClassic.MODID, this.getTextureFolder()).get(this.getTextureName());
-    }
-
-    @Override
     public String getTextureFolder() {
-        return "";
+        return "jetpack";
     }
 
     @Override

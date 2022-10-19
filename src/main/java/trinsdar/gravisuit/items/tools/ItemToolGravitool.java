@@ -192,4 +192,14 @@ public class ItemToolGravitool extends ElectricWrenchTool implements ICropModifi
     public boolean canChangeSeedMode(ItemStack itemStack) {
         return getMode(itemStack) == 1;
     }
+
+    @Override
+    public boolean shouldLoadModel() {
+        return false;
+    }
+
+    @Override
+    public boolean shouldRenderOverlay(ItemStack stack) {
+        return getMode(stack) == 0;
+    }
 }

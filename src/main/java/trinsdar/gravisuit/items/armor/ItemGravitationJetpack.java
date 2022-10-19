@@ -1,16 +1,14 @@
 package trinsdar.gravisuit.items.armor;
 
 import ic2.core.item.wearable.base.IC2ElectricJetpackBase;
-import ic2.core.platform.rendering.IC2Textures;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
 import trinsdar.gravisuit.GravisuitClassic;
 import trinsdar.gravisuit.util.Registry;
 
-public class ItemGraviJetpack extends IC2ElectricJetpackBase {
-    public ItemGraviJetpack() {
+public class ItemGravitationJetpack extends IC2ElectricJetpackBase {
+    public ItemGravitationJetpack() {
         super("gravitation_jetpack", EquipmentSlot.CHEST, null);
         Registry.REGISTRY.put(new ResourceLocation(GravisuitClassic.MODID,"gravitation_jetpack"), this);
     }
@@ -95,12 +93,12 @@ public class ItemGraviJetpack extends IC2ElectricJetpackBase {
 
     @Override
     public String getTextureFolder() {
-        return "armor/jetpack";
+        return "jetpack";
     }
 
     @Override
     public String getTextureName() {
-        return "electric_jetpack";
+        return "gravitation_jetpack";
     }
 
     @Override

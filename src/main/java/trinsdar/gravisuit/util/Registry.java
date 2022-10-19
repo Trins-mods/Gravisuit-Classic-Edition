@@ -5,7 +5,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import trinsdar.gravisuit.items.ItemComponents;
 import trinsdar.gravisuit.items.armor.ItemAdvancedElectricJetpack;
-import trinsdar.gravisuit.items.armor.ItemGraviJetpack;
+import trinsdar.gravisuit.items.armor.ItemGravitationJetpack;
 import trinsdar.gravisuit.items.tools.ItemRelocator;
 import trinsdar.gravisuit.items.tools.ItemToolGravitool;
 import trinsdar.gravisuit.items.tools.ItemToolVajra;
@@ -13,13 +13,13 @@ import trinsdar.gravisuit.items.tools.ItemToolVajra;
 import java.util.Map;
 public class Registry {
     public static final Map<ResourceLocation, Item> REGISTRY = new Object2ObjectArrayMap<>();
-    //public static final ItemAdvancedElectricJetpack ADVANCED_ELECTRIC_JETPACK = new ItemAdvancedElectricJetpack();
+    public static final ItemAdvancedElectricJetpack ADVANCED_ELECTRIC_JETPACK = new ItemAdvancedElectricJetpack();
     /*private static ItemArmorAdvancedNuclearJetpack advancedNuclearJetpack;
     public static final ItemArmorGravisuit gravisuit = new ItemArmorGravisuit();
     public static final ItemArmorNuclearGravisuit nuclearGravisuit = new ItemArmorNuclearGravisuit();
     private static ItemArmorAdvancedLappack advancedLappack;
     private static ItemArmorAdvancedLappack ultimateLappack;*/
-    public static ItemGraviJetpack GRAVI_JETPACK = new ItemGraviJetpack();
+    public static ItemGravitationJetpack GRAVI_JETPACK = new ItemGravitationJetpack();
     public static final ItemToolGravitool GRAVITOOL = new ItemToolGravitool();
     public static final ItemToolVajra VAJRA = new ItemToolVajra();
     public static final ItemRelocator RELOCATOR = new ItemRelocator();
