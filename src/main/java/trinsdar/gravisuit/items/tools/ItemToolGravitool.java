@@ -50,6 +50,7 @@ import java.util.List;
 import java.util.Map;
 
 public class ItemToolGravitool extends ElectricWrenchTool implements ICropModifier, IItemModel {
+    final ResourceLocation id;
 
     public ItemToolGravitool() {
         super("gravitool", null);
@@ -57,10 +58,13 @@ public class ItemToolGravitool extends ElectricWrenchTool implements ICropModifi
         this.transferLimit = GravisuitConfig.powerValues.gravitoolTransfer;
         this.tier = 2;
         this.losslessUses = -1;
-        Registry.REGISTRY.put(new ResourceLocation(GravisuitClassic.MODID,"gravitool"), this);
-        if (IC2.PLATFORM.isRendering()){
-            ClientProxy.registerBatteryPropertyOverrides(this);
-        }
+        id = new ResourceLocation(GravisuitClassic.MODID,"gravitool");
+        Registry.REGISTRY.put(id, this);
+    }
+
+    @Override
+    public ResourceLocation getRegistryName() {
+        return id;
     }
 
     public void setTier(int tier){

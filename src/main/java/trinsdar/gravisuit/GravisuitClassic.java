@@ -1,17 +1,28 @@
 package trinsdar.gravisuit;
 
 import ic2.core.platform.rendering.IC2Textures;
+import net.minecraft.client.KeyMapping;
+import net.minecraft.client.Minecraft;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLEnvironment;
+import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegisterEvent;
 import org.apache.logging.log4j.Logger;
+import org.lwjgl.glfw.GLFW;
 import trinsdar.gravisuit.proxy.CommonProxy;
+import trinsdar.gravisuit.util.GravisuitKeys;
+import trinsdar.gravisuit.util.GravisuitLang;
 import trinsdar.gravisuit.util.Registry;
 
 import static trinsdar.gravisuit.util.Registry.REGISTRY;
@@ -33,8 +44,29 @@ public class GravisuitClassic {
         }
     }
 
+    @SubscribeEvent
     public void onClientSetup(FMLClientSetupEvent event){
-        //IC2Textures.INSTANCE.loadRenderMaterials();
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    @SubscribeEvent
+    public void onKeyInput(TickEvent.ClientTickEvent evt) {
+
+        if (evt.phase != TickEvent.Phase.END) {
+            return;
+        }
+
+        Minecraft mc = Minecraft.getInstance();
+
+        if (GravisuitKeys.G_KEY.isDown() && mc.isWindowActive()) {
+            //NetworkHandler.INSTANCE.send(PacketDistributor.SERVER.noArg(),
+            //        new CPacketOpenCurios(ItemStack.EMPTY));
+        }
+    }
+
+    @SubscribeEvent
+    public static void registerKeys(final RegisterKeyMappingsEvent evt) {
+        evt.register(GravisuitKeys.G_KEY);
     }
 
     @SubscribeEvent

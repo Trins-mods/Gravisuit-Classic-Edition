@@ -1,10 +1,20 @@
 package trinsdar.gravisuit.items.armor;
 
+import ic2.core.IC2;
 import ic2.core.item.wearable.base.IC2ElectricJetpackBase;
+import ic2.core.platform.player.PlayerHandler;
+import net.minecraft.ChatFormatting;
+import net.minecraft.client.KeyMapping;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import trinsdar.gravisuit.GravisuitClassic;
+import trinsdar.gravisuit.util.GravisuitLang;
 import trinsdar.gravisuit.util.Registry;
 
 public class ItemGravitationJetpack extends IC2ElectricJetpackBase {
@@ -82,8 +92,37 @@ public class ItemGravitationJetpack extends IC2ElectricJetpackBase {
         return switch (hoverMode){
             case NONE -> 25;
             case BASIC -> 30;
-            case ADV -> 512;
+            case ADV -> 40;
         };
+    }
+
+    @Override
+    public void onArmorTick(ItemStack stack, Level world, Player player) {
+        CompoundTag tag = stack.getOrCreateTag();
+        if (tag.contains("engine_on")){
+            boolean enabled = tag.getBoolean("engine_on");
+            byte jetpackTicker = tag.getByte("JetpackTicker");
+            PlayerHandler handler = PlayerHandler.getHandler(player);
+            Entity entity = player.getRootVehicle();
+            boolean server = IC2.PLATFORM.isSimulating();
+            if (enabled) {
+                if (handler.toggleKeyDown && !handler.screenOpen && jetpackTicker <= 0) {
+                    tag.putByte("JetpackTicker", (byte)10);
+                    tag.putBoolean("engine_on", false);
+                    if (server) {
+                        player.displayClientMessage(this.translate(GravisuitLang.graviEngineOff), false);
+                    }
+                }
+                return;
+            } else if (handler.toggleKeyDown && !handler.screenOpen && jetpackTicker <= 0) {
+                tag.putByte("JetpackTicker", (byte)10);
+                tag.putBoolean("engine_on", true);
+                if (server) {
+                    player.displayClientMessage(this.translate(GravisuitLang.graviEngineOn), false);
+                }
+            }
+        }
+        super.onArmorTick(stack, world, player);
     }
 
     /*@Override
@@ -104,5 +143,9 @@ public class ItemGravitationJetpack extends IC2ElectricJetpackBase {
     @Override
     public String getArmorTexture() {
         return "gravisuit:textures/models/advanced_electric_jetpack";
+    }
+
+    public MutableComponent buildKeyDescription(KeyMapping key, String translationKey, Object... args) {
+        return this.buildKeyDescription(combineKeys(key).withStyle(ChatFormatting.GOLD), this.translate(translationKey, args).withStyle(ChatFormatting.UNDERLINE));
     }
 }

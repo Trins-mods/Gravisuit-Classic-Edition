@@ -1,14 +1,9 @@
 package trinsdar.gravisuit.items.armor;
 
-import ic2.core.item.base.PropertiesBuilder;
 import ic2.core.item.wearable.base.IC2ElectricJetpackBase;
-import ic2.core.item.wearable.jetpacks.CompactElectricJetpack;
-import ic2.core.platform.rendering.IC2Textures;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
 import trinsdar.gravisuit.GravisuitClassic;
 import trinsdar.gravisuit.util.Registry;
 
@@ -25,7 +20,7 @@ public class ItemAdvancedElectricJetpack extends IC2ElectricJetpackBase {
 
     @Override
     public int getCapacity(ItemStack itemStack) {
-        return 500000;
+        return 240000;
     }
 
     @Override
@@ -40,7 +35,7 @@ public class ItemAdvancedElectricJetpack extends IC2ElectricJetpackBase {
 
     @Override
     public boolean canDoRocketMode(ItemStack itemStack) {
-        return true;
+        return false;
     }
 
     @Override
@@ -55,22 +50,26 @@ public class ItemAdvancedElectricJetpack extends IC2ElectricJetpackBase {
 
     @Override
     public float getPower(ItemStack itemStack) {
-        return 0;
+        return 1;
     }
 
     @Override
     public float getThruster(ItemStack itemStack, HoverMode hoverMode) {
-        return 0;
+        return switch (hoverMode){
+            case ADV -> 1.35f;
+            case BASIC -> 0.9f;
+            case NONE -> 0.45f;
+        };
     }
 
     @Override
     public float getDropPercentage(ItemStack itemStack) {
-        return 0;
+        return 0.05f;
     }
 
     @Override
     public int getMaxHeight(ItemStack itemStack, int worldHeight) {
-        return (int)((float)worldHeight / 1.05F);
+        return (int)((float)worldHeight / 1.15F);
     }
 
     @Override
@@ -80,7 +79,7 @@ public class ItemAdvancedElectricJetpack extends IC2ElectricJetpackBase {
 
     @Override
     public int getFuelCost(ItemStack itemStack, HoverMode hoverMode) {
-        return 0;
+        return hoverMode == HoverMode.BASIC ? 8 : 14;
     }
 
     @Override

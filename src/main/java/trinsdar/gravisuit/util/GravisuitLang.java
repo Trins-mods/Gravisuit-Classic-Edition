@@ -10,6 +10,9 @@ public class GravisuitLang {
     public static String graviEngineOffInfo = "item_info.graviEngineOffInfo";
     public static String gravisuitToggleCombo = "item_info.gravisuitToggleCombo";
 
+    public static String gravitationKeyInfo = "key.gravisuit.gravitation_engine";
+    public static String gravisuitKeyCategory = "key.gravisuit.category";
+
     public static String toolMode = "item_info.toolMode";
     public static String silkMode = "item_info.silkMode";
     public static String craftingGravitool = "item_info.craftingGravitool";
