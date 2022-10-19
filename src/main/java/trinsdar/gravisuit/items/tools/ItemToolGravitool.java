@@ -8,9 +8,13 @@ import ic2.core.audio.AudioManager;
 import ic2.core.item.tool.electric.ElectricWrenchTool;
 import ic2.core.platform.player.KeyHelper;
 import ic2.core.platform.registries.IC2Items;
+import ic2.core.platform.rendering.IC2Textures;
+import ic2.core.platform.rendering.features.item.IItemModel;
 import ic2.core.utils.helpers.StackUtil;
 import ic2.core.utils.tooltips.ToolTipHelper;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -32,6 +36,7 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.common.ToolActions;
+import org.jetbrains.annotations.Nullable;
 import trinsdar.gravisuit.GravisuitClassic;
 import trinsdar.gravisuit.proxy.ClientProxy;
 import trinsdar.gravisuit.util.GravisuitConfig;
@@ -40,7 +45,11 @@ import trinsdar.gravisuit.util.GravisuitSounds;
 import trinsdar.gravisuit.util.Registry;
 import trinsdar.gravisuit.util.RotationHelper;
 
-public class ItemToolGravitool extends ElectricWrenchTool implements ICropModifier {
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+public class ItemToolGravitool extends ElectricWrenchTool implements ICropModifier, IItemModel {
 
     public ItemToolGravitool() {
         super("gravitool", null);
@@ -194,12 +203,30 @@ public class ItemToolGravitool extends ElectricWrenchTool implements ICropModifi
     }
 
     @Override
-    public boolean shouldLoadModel() {
-        return false;
+    public boolean shouldRenderOverlay(ItemStack stack) {
+        return getMode(stack) == 0;
     }
 
     @Override
-    public boolean shouldRenderOverlay(ItemStack stack) {
-        return getMode(stack) == 0;
+    public List<ItemStack> getModelTypes() {
+        List<ItemStack> stacks = new ObjectArrayList<>();
+        for (int i = 0; i < 4; i++) {
+            ItemStack stack = new ItemStack(this);
+            stack.getOrCreateTag().putByte("mode", (byte)i);
+            stacks.add(stack);
+        }
+        return stacks;
+    }
+
+    @Override
+    public TextureAtlasSprite getSprite(ItemStack itemStack) {
+        Map<String, TextureAtlasSprite> textures = IC2Textures.getMappedEntriesItem("gravisuit", "tools/gravitool");
+        int mode = getMode(itemStack);
+        return textures.get(mode == 0 ? "wrench" : (mode == 1 ? "hoe" : (mode == 2 ? "treetap" : "screwdriver")));
+    }
+
+    @Override
+    public int getModelIndexForStack(ItemStack itemStack, @Nullable LivingEntity livingEntity) {
+        return getMode(itemStack) + 1;
     }
 }

@@ -1,0 +1,6 @@
+{
+	"hoe": "gravisuit:item/tools/gravitool/hoe",
+	"screwdriver": "gravisuit:item/tools/gravitool/screwdriver",
+	"treetap": "gravisuit:item/tools/gravitool/treetap",
+	"wrench": "gravisuit:item/tools/gravitool/wrench"
+}
