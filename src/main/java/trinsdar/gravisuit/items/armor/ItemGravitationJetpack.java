@@ -15,6 +15,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import trinsdar.gravisuit.GravisuitClassic;
 import trinsdar.gravisuit.util.GravisuitLang;
+import trinsdar.gravisuit.util.IGravisuitPlayerHandler;
 import trinsdar.gravisuit.util.Registry;
 
 public class ItemGravitationJetpack extends IC2ElectricJetpackBase {
@@ -99,29 +100,30 @@ public class ItemGravitationJetpack extends IC2ElectricJetpackBase {
     @Override
     public void onArmorTick(ItemStack stack, Level world, Player player) {
         CompoundTag tag = stack.getOrCreateTag();
-        if (tag.contains("engine_on")){
-            boolean enabled = tag.getBoolean("engine_on");
-            byte jetpackTicker = tag.getByte("JetpackTicker");
-            PlayerHandler handler = PlayerHandler.getHandler(player);
-            Entity entity = player.getRootVehicle();
-            boolean server = IC2.PLATFORM.isSimulating();
-            if (enabled) {
-                if (handler.toggleKeyDown && !handler.screenOpen && jetpackTicker <= 0) {
-                    tag.putByte("JetpackTicker", (byte)10);
-                    tag.putBoolean("engine_on", false);
-                    if (server) {
-                        player.displayClientMessage(this.translate(GravisuitLang.graviEngineOff), false);
-                    }
-                }
-                return;
-            } else if (handler.toggleKeyDown && !handler.screenOpen && jetpackTicker <= 0) {
+        boolean enabled = tag.getBoolean("engine_on");
+        byte jetpackTicker = tag.getByte("JetpackTicker");
+        PlayerHandler handler = PlayerHandler.getHandler(player);
+        Entity entity = player.getRootVehicle();
+        boolean server = IC2.PLATFORM.isSimulating();
+        if (enabled) {
+            if (((IGravisuitPlayerHandler)handler).isFlightKeyDown() && !handler.screenOpen && jetpackTicker <= 0) {
                 tag.putByte("JetpackTicker", (byte)10);
+                tag.putBoolean("engine_on", false);
+                if (server) {
+                    player.displayClientMessage(this.translate(GravisuitLang.graviEngineOff), false);
+                }
+            } else if (jetpackTicker > 0){
+                tag.putByte("JetpackTicker", --jetpackTicker);
+            }
+            return;
+        } else if (((IGravisuitPlayerHandler) handler).isFlightKeyDown())
+            if (!handler.screenOpen && jetpackTicker <= 0) {
+                tag.putByte("JetpackTicker", (byte) 10);
                 tag.putBoolean("engine_on", true);
                 if (server) {
                     player.displayClientMessage(this.translate(GravisuitLang.graviEngineOn), false);
                 }
             }
-        }
         super.onArmorTick(stack, world, player);
     }
 

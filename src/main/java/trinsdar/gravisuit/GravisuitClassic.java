@@ -1,5 +1,8 @@
 package trinsdar.gravisuit;
 
+import ic2.core.IC2;
+import ic2.core.networking.PacketManager;
+import ic2.core.networking.packets.server.KeyPacket;
 import ic2.core.platform.rendering.IC2Textures;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
@@ -46,22 +49,6 @@ public class GravisuitClassic {
 
     @SubscribeEvent
     public void onClientSetup(FMLClientSetupEvent event){
-    }
-
-    @OnlyIn(Dist.CLIENT)
-    @SubscribeEvent
-    public void onKeyInput(TickEvent.ClientTickEvent evt) {
-
-        if (evt.phase != TickEvent.Phase.END) {
-            return;
-        }
-
-        Minecraft mc = Minecraft.getInstance();
-
-        if (GravisuitKeys.G_KEY.isDown() && mc.isWindowActive()) {
-            //NetworkHandler.INSTANCE.send(PacketDistributor.SERVER.noArg(),
-            //        new CPacketOpenCurios(ItemStack.EMPTY));
-        }
     }
 
     @SubscribeEvent

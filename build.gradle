@@ -10,6 +10,9 @@ java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 loom {
     silentMojangMappingsLicense()
+    forge {
+        mixinConfigs = ["gravisuit.mixins.json"]
+    }
 }
 
 version = "${mod_version}"
