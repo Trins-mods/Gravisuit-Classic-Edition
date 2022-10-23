@@ -75,6 +75,8 @@
   "item_info.gravisuitToggleCombo" : "%1$s & %2$s",
   "miscInfo.doubleJump" : "Double %1$s",
   "item_info.jetpackJumpToCreativeFly" : "Fly like in Creative",
-  "item_info.graviEngineToggle" : "Enable/Disable the Gravitation Engine"
+  "item_info.graviEngineToggle" : "Enable/Disable the Gravitation Engine",
+  "key.gravisuit.gravitation_engine" : "Gravi Fly Key",
+  "key.gravisuit.category": "Gravisuit Classic"
 }
 
