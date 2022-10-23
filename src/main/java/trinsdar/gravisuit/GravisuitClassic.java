@@ -52,7 +52,7 @@ public class GravisuitClassic {
     }
 
     @SubscribeEvent
-    public static void registerKeys(final RegisterKeyMappingsEvent evt) {
+    public void registerKeys(final RegisterKeyMappingsEvent evt) {
         evt.register(GravisuitKeys.G_KEY);
     }
 
