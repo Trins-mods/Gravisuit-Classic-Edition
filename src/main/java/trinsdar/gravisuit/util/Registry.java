@@ -1,10 +1,13 @@
 package trinsdar.gravisuit.util;
 
+import ic2.core.item.wearable.armor.electric.ElectricPackArmor;
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Rarity;
 import trinsdar.gravisuit.items.ItemComponents;
 import trinsdar.gravisuit.items.armor.ItemAdvancedElectricJetpack;
+import trinsdar.gravisuit.items.armor.ItemAdvancedLappack;
 import trinsdar.gravisuit.items.armor.ItemGravitationJetpack;
 import trinsdar.gravisuit.items.armor.ItemNuclearGravitationJetpack;
 import trinsdar.gravisuit.items.tools.ItemRelocator;
@@ -15,11 +18,11 @@ import java.util.Map;
 public class Registry {
     public static final Map<ResourceLocation, Item> REGISTRY = new Object2ObjectArrayMap<>();
     public static final ItemAdvancedElectricJetpack ADVANCED_ELECTRIC_JETPACK = new ItemAdvancedElectricJetpack();
-    /*private static ItemArmorAdvancedNuclearJetpack advancedNuclearJetpack;
-    private static ItemArmorAdvancedLappack advancedLappack;
-    private static ItemArmorAdvancedLappack ultimateLappack;*/
-    public static ItemGravitationJetpack GRAVITATION_JETPACK = new ItemGravitationJetpack();
-    public static ItemNuclearGravitationJetpack NUCLEAR_GRAVITATION_JETPACK = new ItemNuclearGravitationJetpack();
+    //private static ItemArmorAdvancedNuclearJetpack advancedNuclearJetpack;
+    public static final ElectricPackArmor ADVANCED_LAPPACK = new ItemAdvancedLappack("advanced_lappack", Rarity.UNCOMMON, 600000, 2, 500);
+    public static final ElectricPackArmor ULTIMATE_LAPPACK = new ItemAdvancedLappack("ultimate_lappack", Rarity.EPIC, 10000000, 3, 4000);
+    public static final ItemGravitationJetpack GRAVITATION_JETPACK = new ItemGravitationJetpack();
+    public static final ItemNuclearGravitationJetpack NUCLEAR_GRAVITATION_JETPACK = new ItemNuclearGravitationJetpack();
     public static final ItemToolGravitool GRAVITOOL = new ItemToolGravitool();
     public static final ItemToolVajra VAJRA = new ItemToolVajra();
     public static final ItemRelocator RELOCATOR = new ItemRelocator();
