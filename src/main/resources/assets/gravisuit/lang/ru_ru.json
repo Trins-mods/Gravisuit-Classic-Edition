@@ -72,4 +72,6 @@
   "item_info.graviEngineOnInfo": "Gravitation Engine On",
   "item_info.graviEngineOffInfo": "Gravitation Engine Off",
   "item_info.graviEngineToggle": "Вкл/Выкл гравитационный двигатель"
+  "key.gravisuit.gravitation_engine" : "Gravi Fly Key",
+  "key.gravisuit.category": "Gravisuit Classic"
 }
