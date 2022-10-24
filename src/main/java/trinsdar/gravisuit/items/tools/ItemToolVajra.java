@@ -14,6 +14,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -25,14 +26,19 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.BaseFireBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Material;
 import trinsdar.gravisuit.GravisuitClassic;
 import trinsdar.gravisuit.util.GravisuitLang;
 import trinsdar.gravisuit.util.Registry;
 
+import javax.annotation.Nullable;
 import java.util.Map;
 
 public class ItemToolVajra extends DrillTool {
@@ -101,7 +107,7 @@ public class ItemToolVajra extends DrillTool {
         SoundType soundType = block.getSoundType(blockState, world, pos, player);
         if (ElectricItem.MANAGER.getCharge(stack) >= getEnergyCost(stack) && shouldBreak(player, world, pos) && IC2.PLATFORM.isSimulating()){
             ElectricItem.MANAGER.use(stack, this.getEnergyCost(stack), player);
-            world.destroyBlock(pos, true, player);
+            destroyBlock(world, pos, true, player, stack);
             //blockState.getBlock().harvestBlock(world, player, pos, blockState, world.getTileEntity(pos), stack);
             //world.playSound(null, pos, soundType.getBreakSound(), SoundCategory.BLOCKS, (soundType.getVolume() + 1.0F) / 2.0F, soundType.getPitch() * 0.8F);
             //world.setBlockToAir(pos);
@@ -109,6 +115,30 @@ public class ItemToolVajra extends DrillTool {
             return InteractionResult.SUCCESS;
         }
         return super.useOn(context);
+    }
+
+    public boolean destroyBlock(Level level, BlockPos pos, boolean dropBlock, @Nullable Entity entity, ItemStack item) {
+        BlockState blockstate = level.getBlockState(pos);
+        if (blockstate.isAir()) {
+            return false;
+        } else {
+            FluidState fluidstate = level.getFluidState(pos);
+            if (!(blockstate.getBlock() instanceof BaseFireBlock)) {
+                level.levelEvent(2001, pos, Block.getId(blockstate));
+            }
+
+            if (dropBlock) {
+                BlockEntity blockentity = blockstate.hasBlockEntity() ? level.getBlockEntity(pos) : null;
+                Block.dropResources(blockstate, level, pos, blockentity, entity, item);
+            }
+
+            boolean flag = level.setBlock(pos, fluidstate.createLegacyBlock(), 3, 512);
+            if (flag) {
+                level.gameEvent(GameEvent.BLOCK_DESTROY, pos, GameEvent.Context.of(entity, blockstate));
+            }
+
+            return flag;
+        }
     }
 
     @Override
