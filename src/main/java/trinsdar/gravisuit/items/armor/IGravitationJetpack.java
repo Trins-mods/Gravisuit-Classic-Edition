@@ -10,6 +10,9 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -38,21 +41,26 @@ public interface IGravitationJetpack extends ILangHelper {
             }
         }
         if (enabled) {
-            if (ElectricItem.MANAGER.getCharge(stack) >= 1024){
+            if (ElectricItem.MANAGER.getCharge(stack) >= 512){
                 if (jetpackTicker > 0) {
                     --jetpackTicker;
                     tag.putByte("JetpackTicker", jetpackTicker);
                 }
                 if (!player.isCreative() && !player.isSpectator()){
-                    if (handler.boostKeyDown && player.isSprinting() && hasQuantumLegs(player)){
+                    /*if (handler.boostKeyDown && player.isSprinting() && hasQuantumLegs(player)){
                         this.useEu(player, stack, 1024);
                     }else {
                         this.useEu(player, stack, 512);
-                    }
+                    }*/
+                    this.useEu(player, stack, player.getAbilities().flying ? 512 : 256);
                 }
                 player.getAbilities().mayfly = true;
                 player.maxUpStep = 1.0625F;
                 boolean flying = player.getAbilities().flying;
+                Attribute flyingSpeed = Attributes.FLYING_SPEED;
+                if (flying && hasQuantumLegs(player)){
+                    //AttributeModifier currentModifier = player.getAttribute(flyingSpeed).getModifier();
+                }
                 /*if(flying){
                     boolean sneaking = player.isCrouching();
 
@@ -98,46 +106,29 @@ public interface IGravitationJetpack extends ILangHelper {
         }
     }
 
-    Map<Player, ItemStack> previousItems = new WeakHashMap<>();
+    Map<Player, Boolean> playersWithFlight = new WeakHashMap<>();
 
 
 
     default void onLivingTickEvent(LivingEvent.LivingTickEvent event){
         if (event.getEntity() instanceof Player player) {
             ItemStack stack = player.getItemBySlot(EquipmentSlot.CHEST);
-            if (previousItems.containsKey(player)){
-                ItemStack previous = previousItems.get(player);
-                if (isStackGravisuit(previous) && !previous.equals(stack)){
-                    player.maxUpStep = 0.6F;
-                    if (!player.isCreative() && !player.isSpectator()) {
-                        player.getAbilities().mayfly = false;
-                        player.getAbilities().flying = false;
-                    }
-
-                }
-                previousItems.put(player, stack);
-            } else {
-
-                previousItems.put(player, stack);
+            boolean flight = isStackGravisuit(stack);
+            if (!playersWithFlight.containsKey(player)) {
+                playersWithFlight.put(player, false);
             }
-            /*String key = playerKey(player);
-            ItemStack stack = new ItemStack(Registry.gravisuit);
-            NBTTagCompound nbt = StackUtil.getOrCreateNbtData(stack);
-            boolean disabled = nbt.getBoolean("disabled");
-
-            Boolean hasSet = ItemArmorGravisuit.hasGravisuit(player);
-            if (playersWithSet.contains(key)) {
-                if (!hasSet) {
-                    player.stepHeight = 0.6F;
-                    if (!player.capabilities.isCreativeMode && !player.isSpectator()) {
-                        player.capabilities.allowFlying = false;
-                        player.capabilities.isFlying = false;
-                    }
-                    playersWithSet.remove(key);
+            if (!playersWithFlight.get(player) && flight){
+                playersWithFlight.put(player, true);
+            }
+            if (playersWithFlight.get(player) && !flight) {
+                playersWithFlight.put(player, false);
+                player.maxUpStep = 0.6F;
+                if (!player.isCreative() && !player.isSpectator()) {
+                    player.getAbilities().mayfly = false;
+                    player.getAbilities().flying = false;
+                    player.onUpdateAbilities();
                 }
-            } else if (hasSet) {
-                playersWithSet.add(key);
-            }*/
+            }
         }
     }
 
