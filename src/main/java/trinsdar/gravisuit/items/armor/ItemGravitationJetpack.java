@@ -139,7 +139,7 @@ public class ItemGravitationJetpack extends IC2ElectricJetpackBase implements IG
 
     @Override
     public String getArmorTexture() {
-        return "gravisuit:textures/models/advanced_electric_jetpack";
+        return "gravisuit:textures/models/gravitation_jetpack";
     }
 
     @Override

@@ -132,7 +132,7 @@ public class ItemNuclearGravitationJetpack extends NuclearJetpack implements IGr
 
     @Override
     public String getArmorTexture() {
-        return "gravisuit:textures/models/advanced_electric_jetpack";
+        return "gravisuit:textures/models/nuclear_gravitation_jetpack";
     }
 
     @Override
