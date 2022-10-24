@@ -6,8 +6,12 @@ import ic2.core.item.wearable.armor.electric.QuantumSuit;
 import ic2.core.item.wearable.base.IC2ModularElectricArmor;
 import ic2.core.platform.player.PlayerHandler;
 import ic2.core.utils.tooltips.ILangHelper;
+import ic2.core.utils.tooltips.ToolTipHelper;
+import net.minecraft.ChatFormatting;
+import net.minecraft.client.KeyMapping;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -15,8 +19,10 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.event.entity.living.LivingEvent;
+import trinsdar.gravisuit.util.GravisuitKeys;
 import trinsdar.gravisuit.util.GravisuitLang;
 import trinsdar.gravisuit.util.IGravisuitPlayerHandler;
 
@@ -94,6 +100,18 @@ public interface IGravitationJetpack extends ILangHelper {
             }
         }
         return true;
+    }
+
+    default void toolTip(ItemStack stack, Player player, TooltipFlag type, ToolTipHelper helper) {
+        helper.addKeybindingTooltip(buildKeyDescription(GravisuitKeys.G_KEY, GravisuitLang.graviEngineToggle));
+        CompoundTag tag = this.nbtData(stack, true);
+        boolean enabled = tag.getBoolean("engine_on");
+        String lang = enabled ? GravisuitLang.graviEngineOnInfo : GravisuitLang.graviEngineOffInfo;
+        helper.addSimpleToolTip(lang);
+    }
+
+    default MutableComponent buildKeyDescription(KeyMapping key, String translationKey, Object... args) {
+        return this.buildKeyDescription(combineKeys(key).withStyle(ChatFormatting.GOLD), this.translate(translationKey, args).withStyle(ChatFormatting.UNDERLINE));
     }
 
     CompoundTag nbtData(ItemStack stack, boolean create);

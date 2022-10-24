@@ -7,6 +7,7 @@ import ic2.core.item.wearable.base.IC2ElectricJetpackBase;
 import ic2.core.item.wearable.base.IC2ModularElectricArmor;
 import ic2.core.platform.player.PlayerHandler;
 import ic2.core.utils.helpers.StackUtil;
+import ic2.core.utils.tooltips.ToolTipHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.nbt.CompoundTag;
@@ -18,11 +19,13 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import trinsdar.gravisuit.GravisuitClassic;
+import trinsdar.gravisuit.util.GravisuitKeys;
 import trinsdar.gravisuit.util.GravisuitLang;
 import trinsdar.gravisuit.util.IGravisuitPlayerHandler;
 import trinsdar.gravisuit.util.Registry;
@@ -139,8 +142,16 @@ public class ItemGravitationJetpack extends IC2ElectricJetpackBase implements IG
         return "gravisuit:textures/models/advanced_electric_jetpack";
     }
 
-    public MutableComponent buildKeyDescription(KeyMapping key, String translationKey, Object... args) {
-        return this.buildKeyDescription(combineKeys(key).withStyle(ChatFormatting.GOLD), this.translate(translationKey, args).withStyle(ChatFormatting.UNDERLINE));
+    @Override
+    public void addToolTip(ItemStack stack, Player player, TooltipFlag type, ToolTipHelper helper) {
+        super.addToolTip(stack, player, type, helper);
+        toolTip(stack, player, type, helper);
+    }
+
+    @Override
+    public void addToolTip(ItemStack armor, ItemStack stack, Player player, TooltipFlag type, ToolTipHelper helper) {
+        super.addToolTip(armor, stack, player, type, helper);
+        toolTip(stack, player, type, helper);
     }
 
     @Override

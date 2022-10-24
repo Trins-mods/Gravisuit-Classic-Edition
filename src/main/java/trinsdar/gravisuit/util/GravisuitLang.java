@@ -5,10 +5,8 @@ public class GravisuitLang {
     public static String graviEngineToggle = "item_info.graviEngineToggle";
     public static String graviEngineOn = "message.graviEngineOn";
     public static String graviEngineOff = "message.graviEngineOff";
-    public static String creativeFly = "item_info.jetpackJumpToCreativeFly";
     public static String graviEngineOnInfo = "item_info.graviEngineOnInfo";
     public static String graviEngineOffInfo = "item_info.graviEngineOffInfo";
-    public static String gravisuitToggleCombo = "item_info.gravisuitToggleCombo";
 
     public static String gravitationKeyInfo = "key.gravisuit.gravitation_engine";
     public static String gravisuitKeyCategory = "key.gravisuit.category";
