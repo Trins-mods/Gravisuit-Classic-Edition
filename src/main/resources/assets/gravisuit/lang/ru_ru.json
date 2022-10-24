@@ -1,82 +1,75 @@
-item.gravisuit.name="Гравитационный реактивный ранец"
-item.advancedNanoChestplate.name="Улучшенный нановолоконный жилет"
-item.advancedElectricJetpack.name="Улучшенный реактивный ранец"
-item.nuclearGravisuit.name="Ядерный гравитационный реактивный ранец"
-item.advancedNuclearNanoChestplate.name="Улучшенный ядерно-нановолоконный нагрудник"
-item.advancedNuclearJetpack.name="Улучшенный ядерный реактивный ранец"
-item.advancedLappack.name="Улучшенный мультиранец"
-item.ultimateLappack.name="Совершенный мультиранец"
-item.gravitool.name="Гравитул"
-item.advancedDrill.name="Улучшенный алмазный бур"
-item.advancedChainsaw.name="Улучшенная цепная пила"
-item.advancedDiamondChainsaw.name="Улучшенная алмазная цепная пила"
-item.vajra.name="Ваджра"
-item.relocator.name="Релокатор"
-item.superConductorCover.name="Изоляция сверхпроводника"
-item.superConductor.name="Сверхпроводник"
-item.coolingCore.name="Охлаждающий элемент"
-item.gravitationEngine.name="Гравитационный двигатель"
-item.magnetron.name="Магнетрон"
-item.vajraCore.name="Ядро ваджры"
-item.engineBoost.name="Ускоритель двигателя"
+{
+  "item.gravisuit.gravitation_jetpack": "Гравитационный реактивный ранец",
+  "item.gravisuit.advanced_electric_jetpack": "Улучшенный реактивный ранец",
+  "item.gravisuit.nuclear_gravitation_jetpack": "Ядерный гравитационный реактивный ранец",
+  "item.gravisuit.advanced_nuclear_jetpack": "Улучшенный ядерный реактивный ранец",
+  "item.gravisuit.advanced_lappack": "Улучшенный мультиранец",
+  "item.gravisuit.ultimate_lappack": "Совершенный мультиранец",
+  "item.gravisuit.gravitool": "Гравитул",
+  "item.gravisuit.vajra": "Ваджра",
+  "item.gravisuit.relocator": "Релокатор",
+  "item.gravisuit.super_conductor_cover": "Изоляция сверхпроводника",
+  "item.gravisuit.super_conductor": "Сверхпроводник",
+  "item.gravisuit.cooling_core": "Охлаждающий элемент",
+  "item.gravisuit.gravitation_engine": "Гравитационный двигатель",
+  "item.gravisuit.magnetron": "Магнетрон",
+  "item.gravisuit.vajra_core": "Ядро ваджры",
+  "item.gravisuit.engine_boost": "Ускоритель двигателя",
 
-tooltip.gravisuit.wip=Work in progress
+  "tooltip.gravisuit.wip": "Work in progress",
 
+  "item_info.toolMode": "Режим: %1$s",
+  "item_info.multiModes": "Циклическое переключение между различными режимами",
+  "item_info.silkMode": "Режим шелкового касания: %1$s",
+  "item_info.craftingGravitool": "Примечание: по умолчанию требуется режим гаечного ключа без потерь",
+  "item_info.wrench": "Гаечный ключ",
+  "item_info.hoe": "Мотыга",
+  "item_info.treetap": "Краник",
+  "item_info.screwdriver": "Отвертка",
+  "item_info.advancedChainsawTreeCuttingToggle": "Вкл/Выкл Рубку дерева",
+  "item_info.advancedChainsawShearToggle": "Вкл/Выкл Стрижку",
+  "item_info.advancedDrillNormal": "Нормальный",
+  "item_info.advancedDrillLowPower": "Маломощный",
+  "item_info.advancedDrillFine": "Точный",
+  "item_info.advancedDrillBigHoles": "Большие отверстия",
+  "item_info.advancedDrillMediumHoles": "Средние отверстия",
+  "item_info.advancedDrillTunnelHoles": "Туннельные отверстия",
+  "item_info.relocatorPersonal": "Личный",
+  "item_info.relocatorPortal": "Портал",
+  "item_info.relocatorTranslocator": "в транслокаторе",
+  "item_info.vajraSilktouchToggle": "Вкл/Выкл Шелковое касание",
+  "item_info.vajraSilktouchOn": "Включено",
+  "item_info.vajraSilktouchOff": "Выключено",
 
-itemInfo.toolMode.name="Режим: %1$s"
-itemInfo.multiModes.name="Циклическое переключение между различными режимами"
-itemInfo.silkMode.name="Режим шелкового касания: %1$s"
-itenInfo.craftingGravitool.name="Примечание: по умолчанию требуется режим гаечного ключа без потерь"
-itemInfo.wrench.name="Гаечный ключ"
-itemInfo.hoe.name="Мотыга"
-itemInfo.treetap.name="Краник"
-itemInfo.screwdriver.name="Отвертка"
-itemInfo.advancedChainsawTreeCuttingToggle.name="Вкл/Выкл Рубку дерева"
-itemInfo.advancedChainsawShearToggle.name="Вкл/Выкл Стрижку"
-itemInfo.advancedDrillNormal.name="Нормальный"
-itemInfo.advancedDrillLowPower.name="Маломощный"
-itemInfo.advancedDrillFine.name="Точный"
-itemInfo.advancedDrillBigHoles.name="Большие отверстия"
-itemInfo.advancedDrillMediumHoles.name="Средние отверстия"
-itemInfo.advancedDrillTunnelHoles.name="Туннельные отверстия"
-itemInfo.relocatorPersonal.name="Личный"
-itemInfo.relocatorPortal.name="Портал"
-itemInfo.relocatorTranslocator.name="в транслокаторе"
-itemInfo.vajraSilktouchToggle.name="Вкл/Выкл Шелковое касание"
-itemInfo.vajraSilktouchOn.name="Включено"
-itemInfo.vajraSilktouchOff.name="Выключено"
+  "message.advancedChainsawTreeCuttingOn": "Включена рубка дерева",
+  "message.advancedChainsawTreeCuttingOff": "Отключена рубка дерева",
+  "message.advancedChainsawNormal": "Включена стрижка",
+  "message.advancedChainsawNoShear": "Отключена стрижка",
+  "message.advancedDrillNormal": "Установлен нормальный режим",
+  "message.advancedDrillLowPower": "Установлен режим низкого потребления",
+  "message.advancedDrillFine": "Установлен режим точный",
+  "message.advancedDrillBigHoles": "Установлен режим больших отверстий",
+  "message.advancedDrillMediumHoles": "Установлен режим средних отверстий",
+  "message.advancedDrillTunnelHoles": "Установлен режим туннельных отверстий",
+  "message.relocatorPersonal": "Установлен режим личный",
+  "message.relocatorPortal": "Установлен режим портал",
+  "message.relocatorTranslocator": "Установлен режим транслокатор",
+  "message.wrench": "Установлен режим гаечного ключа",
+  "message.hoe": "Установлен режим мотыги",
+  "message.treetap": "Установлен режим краника",
+  "message.screwdriver": "Установлен режим отвёртки",
+  "message.graviEngineOn": "Гравитационный двигатель включен",
+  "message.graviEngineOff": "Гравитационный двигатель отключен",
+  "message.silkTouchOn": "Шелковое касание включено",
+  "message.silkTouchOff": "Шелковое касание отключено",
 
-message.advancedChainsawTreeCuttingOn.name="Включена рубка дерева"
-message.advancedChainsawTreeCuttingOff.name="Отключена рубка дерева"
-message.advancedChainsawNormal.name="Включена стрижка"
-message.advancedChainsawNoShear.name="Отключена стрижка"
-message.advancedDrillNormal.name="Установлен нормальный режим"
-message.advancedDrillLowPower.name="Установлен режим низкого потребления"
-message.advancedDrillFine.name="Установлен режим точный"
-message.advancedDrillBigHoles.name="Установлен режим больших отверстий"
-message.advancedDrillMediumHoles.name="Установлен режим средних отверстий"
-message.advancedDrillTunnelHoles.name="Установлен режим туннельных отверстий"
-message.relocatorPersonal.name="Установлен режим личный"
-message.relocatorPortal.name="Установлен режим портал"
-message.relocatorTranslocator.name="Установлен режим транслокатор"
-message.wrench.name="Установлен режим гаечного ключа"
-message.hoe.name="Установлен режим мотыги"
-message.treetap.name="Установлен режим краника"
-message.screwdriver.name="Установлен режим отвёртки"
-message.graviEngineOn.name="Гравитационный двигатель включен"
-message.graviEngineOff.name="Гравитационный двигатель отключен"
-message.silkTouchOn.name="Шелковое касание включено"
-message.silkTouchOff.name="Шелковое касание отключено"
+  "panelInfo.energyLevel": "Заряд",
+  "panelInfo.jetpackEngineOn": "Реактивный ранец включен",
+  "panelInfo.jetpackHoverMode": "Режим зависания",
+  "panelInfo.jetpackExtremeHoverMode": "Экстремальный режим зависания",
+  "panelInfo.gravitationEngineOn": "Грави-двигатель включен",
 
-panelInfo.energyLevel="Заряд"
-panelInfo.jetpackEngineOn="Реактивный ранец включен"
-panelInfo.jetpackHoverMode="Режим зависания"
-panelInfo.jetpackExtremeHoverMode="Экстремальный режим зависания"
-panelInfo.gravitationEngineOn="Грави-двигатель включен"
-
-itemInfo.graviEngineOnInfo.name="Когда гравитационный двигатель включен,"
-itemInfo.graviEngineOffInfo.name="Когда гравитационный двигатель выключен,"
-itemInfo.gravisuitToggleCombo.name="%1$s & %2$s"
-miscInfo.doubleJump.name="Double %1$s"
-itemInfo.jetpackJumpToCreativeFly.name="Полет как в креативе"
-itemInfo.graviEngineToggle.name="Вкл/Выкл гравитационный двигатель"
+  "item_info.graviEngineOnInfo": "Когда гравитационный двигатель включен,",
+  "item_info.graviEngineOffInfo": "Когда гравитационный двигатель выключен,",
+  "item_info.graviEngineToggle": "Вкл/Выкл гравитационный двигатель"
+}
