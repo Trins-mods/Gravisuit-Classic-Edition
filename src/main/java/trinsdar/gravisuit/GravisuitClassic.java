@@ -3,6 +3,7 @@ package trinsdar.gravisuit;
 import ic2.core.IC2;
 import ic2.core.networking.PacketManager;
 import ic2.core.networking.packets.server.KeyPacket;
+import ic2.core.platform.recipes.misc.AdvRecipeRegistry;
 import ic2.core.platform.rendering.IC2Textures;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
@@ -16,6 +17,7 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.network.PacketDistributor;
@@ -26,6 +28,7 @@ import org.lwjgl.glfw.GLFW;
 import trinsdar.gravisuit.proxy.CommonProxy;
 import trinsdar.gravisuit.util.GravisuitKeys;
 import trinsdar.gravisuit.util.GravisuitLang;
+import trinsdar.gravisuit.util.GravisuitRecipes;
 import trinsdar.gravisuit.util.Registry;
 
 import static trinsdar.gravisuit.util.Registry.REGISTRY;
@@ -45,6 +48,11 @@ public class GravisuitClassic {
         if (!FMLEnvironment.production){
             System.setProperty("ic2workspace", "true");
         }
+    }
+
+    @SubscribeEvent
+    public void onCommonSetup(FMLCommonSetupEvent event){
+        AdvRecipeRegistry.INSTANCE.registerListener(GravisuitRecipes::loadRecipes);
     }
 
     @SubscribeEvent

@@ -1,43 +1,56 @@
 package trinsdar.gravisuit.util;
 
+import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.fml.config.ModConfig;
+import org.apache.commons.lang3.tuple.Pair;
+import trinsdar.gravisuit.GravisuitClassic;
+
 public class GravisuitConfig {
     private static final String CATEGORY_POWER_VALUES = "power values";
     private static final String CATEGORY_ENABLED_ITEMS = "enabled items";
     private static final String CATEGORY_MISC = "misc";
 
-    //@Comment("Enable or Disable the 3x3 mining mode of the advanced drill here.")
-    public static boolean enableAdvancedDrill3x3Mode = true;
-    //@Comment("Enable or Disable the 2x3 mining mode of the advanced drill here.")
-    public static boolean enableAdvancedDrill2x3Mode = true;
-    //@Comment("Enable or Disable the 1x2 mining mode of the advanced drill here.")
-    public static boolean enableAdvancedDrill1x2Mode = true;
-    //@Comment("Enable or Disable the compacted electric jetpack charging items like a lappack does here.")
-    //@RequiresMcRestart
-    public static boolean enableCompactedElectricJetpackOverride = true;
-    //@Comment("Enable or Disable the compacted nuclear jetpack charging items like a lappack does here.")
-    //@RequiresMcRestart
-    public static boolean enableCompactedNuclearJetpackOverride = true;
-    //@Comment("Enable or Disable the quantum jetplate charging items like a lappack does here.")
-    //@RequiresMcRestart
-    public static boolean enableQuantumJetplateOverride = true;
-    //@Comment("Enable or Disable the quantum nuclear jetplate charging items like a lappack does here.")
-    //@RequiresMcRestart
-    public static boolean enableQuantumNuclearJetplateOverride = true;
-    //@Comment("Enable or Disable the overriding of compacted jetpack and jetplate recipes here. Also requires that the configs for making them charge items also be enabled.")
-    //@RequiresMcRestart
-    public static boolean enableIc2JetpackRecipOverrides = true;
-    //@Comment("Enable or Disable the gravitool requiring the completly lossless version of the precision wrench here.")
-    //@RequiresMcRestart
-    public static boolean enableGravitoolRequiresLosslessPrecisionWrench = true;
-    /*@Comment({
-            "Enables the gravitation chestplate tier being tier 4.",
-            "WARNING: If you don't have gtclassic or tech reborn or another mod with tier 4 energy storage, you will have to get a pesu in order to charge it."
-    })*/
-    public static boolean enableGravisuitTier4 = false;
+    //public static final ClientConfig CLIENT_CONFIG;
+    //public static final ForgeConfigSpec CLIENT_SPEC;
+    //public static final CommonConfig COMMON_CONFIG;
+    //public static final ForgeConfigSpec COMMON_SPEC;
+
+    static {
+
+        //final Pair<CommonConfig, ForgeConfigSpec> COMMON_PAIR = new ForgeConfigSpec.Builder().configure(CommonConfig::new);
+        //final Pair<ClientConfig, ForgeConfigSpec> CLIENT_PAIR = new ForgeConfigSpec.Builder().configure(ClientConfig::new);
+        //CLIENT_CONFIG = CLIENT_PAIR.getLeft();
+        //CLIENT_SPEC = CLIENT_PAIR.getRight();
+        //COMMON_CONFIG = COMMON_PAIR.getLeft();
+        //COMMON_SPEC = COMMON_PAIR.getRight();
+
+    }
+
+    public static void onModConfigEvent(final ModConfig e) {
+        if (e.getModId().equals(GravisuitClassic.MODID)){
+            //if (e.getSpec() == CLIENT_SPEC) bakeClientConfig();
+            //else if (e.getSpec() == COMMON_SPEC) bakeCommonConfig();
+        }
+    }
 
     //@Comment(value = "Set the max EU storage and max EU transfer of each item here.")
     //@Name(value = "power values")
     public static PowerValues powerValues = new PowerValues();
+
+    public static class General{
+        //@Comment("Enable or Disable the compacted electric jetpack charging items like a lappack does here.")
+        //@RequiresMcRestart
+        public boolean ENABLE_COMPACTED_ELECTRIC_JETPACK_OVERRIDE;
+        //@Comment("Enable or Disable the compacted nuclear jetpack charging items like a lappack does here.")
+        //@RequiresMcRestart
+        public boolean ENABLE_COMPACTED_NUCLEAR_JETPACK_OVERRIDE;
+        //@Comment("Enable or Disable the overriding of compacted jetpack and jetplate recipes here. Also requires that the configs for making them charge items also be enabled.")
+        //@RequiresMcRestart
+        public boolean ENABLE_IC2_JETPACK_RECIPE_OVERRIDES;
+        //@Comment("Enable or Disable the gravitool requiring the completly lossless version of the precision wrench here.")
+        //@RequiresMcRestart
+        public boolean ENABLE_GRAVITOOL_REQUIRES_LOSSLESS_PRECISION_WRENCH;
+    }
 
     public static class PowerValues {
 
@@ -131,17 +144,9 @@ public class GravisuitConfig {
         //@RequiresMcRestart
         public boolean enableUltimateLappack = true;
         //@RequiresMcRestart
-        public boolean enableAdvancedNanoChestplate = true;
+        public boolean enableGravitationJetpack = true;
         //@RequiresMcRestart
-        public boolean enableAdvancedNuclearNanoChestplate = true;
-        //@RequiresMcRestart
-        public boolean enableGravisuit = true;
-        //@RequiresMcRestart
-        public boolean enableNuclearGravisuit = true;
-        //@RequiresMcRestart
-        public boolean enableAdvancedChainsaw = true;
-        //@RequiresMcRestart
-        public boolean enableAdvancedDrill = true;
+        public boolean enableNuclearGravitationJetpack = true;
         //@RequiresMcRestart
         public boolean enableGravitool = true;
         //@RequiresMcRestart

@@ -1,7 +1,45 @@
 package trinsdar.gravisuit.util;
 
 
+import ic2.api.recipes.registries.IAdvancedCraftingManager;
+import ic2.core.IC2;
+import ic2.core.platform.registries.IC2Blocks;
+import ic2.core.platform.registries.IC2Items;
+import ic2.core.platform.registries.IC2Tags;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.common.Tags;
+import trinsdar.gravisuit.GravisuitClassic;
+
 public class GravisuitRecipes {
+
+    public static void loadRecipes(IAdvancedCraftingManager registry){
+        //Components
+        registry.addShapedRecipe(new ResourceLocation(GravisuitClassic.MODID, "super_conductor_cover"), new ItemStack(Registry.SUPER_CONDUCTOR_COVER, 3), "AIA", "CCC", "AIA", 'A', IC2Items.PLATE_ADVANCED_ALLOY, 'I', IC2Items.PLATE_IRIDIUM, 'C', IC2Items.CARBON_PLATE);
+        registry.addShapedRecipe(new ResourceLocation(GravisuitClassic.MODID, "super_conductor"), new ItemStack(Registry.SUPER_CONDUCTOR, 3), "SSS", "GUG", "SSS", 'S', Registry.SUPER_CONDUCTOR_COVER, 'G', IC2Items.GLASSFIBER_CABLE, 'U', IC2Items.UUMATTER);
+        registry.addShapedRecipe(new ResourceLocation(GravisuitClassic.MODID, "cooling_core"), new ItemStack(Registry.COOLING_CORE), "CAC", "HIH", "CAC", 'C', IC2Items.COOLANT_CELL_60K, 'A', IC2Items.HEAT_EXCHANGER_ADVANCED, 'H', IC2Items.PLATING_HEAT_CAPACITY, 'I', IC2Items.PLATE_IRIDIUM);
+        registry.addShapedRecipe(new ResourceLocation(GravisuitClassic.MODID, "gravitation_engine"), new ItemStack(Registry.GRAVITATION_ENGINE), "TST", "CIC", "TST", 'T', IC2Blocks.TESLA_COIL, 'S', Registry.SUPER_CONDUCTOR, 'C', Registry.COOLING_CORE, 'I', IC2Blocks.TRANSFORMER_IV);
+        registry.addShapedRecipe(new ResourceLocation(GravisuitClassic.MODID, "magnetron"), new ItemStack(Registry.MAGNETRON), "ICI", "CSC", "ICI", 'I', IC2Tags.INGOT_REFINED_IRON, 'C', IC2Tags.INGOT_COPPER, 'S', Registry.SUPER_CONDUCTOR);
+        registry.addShapedRecipe(new ResourceLocation(GravisuitClassic.MODID, "vajra_core"), new ItemStack(Registry.VAJRA_CORE), " M ", "ITI", "StS", 'M', Registry.MAGNETRON, 'I', IC2Items.PLATE_IRIDIUM, 'T', IC2Blocks.TESLA_COIL, 'S', Registry.SUPER_CONDUCTOR, 't', IC2Blocks.TRANSFORMER_IV);
+        //TODO circuit tags
+        registry.addShapedRecipe(new ResourceLocation(GravisuitClassic.MODID, "engine_boost"), new ItemStack(Registry.ENGINE_BOOST), "GAG", "COC", "AHA", 'G', Tags.Items.DUSTS_GLOWSTONE, 'A', IC2Items.PLATE_ADVANCED_ALLOY, 'C', IC2Items.ADVANCED_CIRCUIT, 'O', IC2Items.OVERCLOCKER_UPGRADE, 'H', IC2Items.VENT_HEAT_ADVANCED);
+
+        //Jetpacks
+        registry.addShapedRecipe(new ResourceLocation(GravisuitClassic.MODID, "advanced_electric_jetpack"), new ItemStack(Registry.ADVANCED_ELECTRIC_JETPACK), "CEC", "BLB", "GAG", 'C', IC2Items.CARBON_PLATE, 'E', IC2Items.JETPACK_ELECTRIC, 'B', Registry.ENGINE_BOOST, 'L', Registry.ADVANCED_LAPPACK, 'G', IC2Items.GLASSFIBER_CABLE, 'A', IC2Items.ADVANCED_CIRCUIT);
+        registry.addShapedRecipe(new ResourceLocation(GravisuitClassic.MODID, "advanced_nuclear_jetpack"), new ItemStack(Registry.ADVANCED_NUCLEAR_JETPACK), "CEC", "BLB", "GAG", 'C', IC2Items.CARBON_PLATE, 'E', IC2Items.JETPACK_NUCLEAR, 'B', Registry.ENGINE_BOOST, 'L', Registry.ADVANCED_LAPPACK, 'G', IC2Items.GLASSFIBER_CABLE, 'A', IC2Items.ADVANCED_CIRCUIT);
+        registry.addShapedRecipe(new ResourceLocation(GravisuitClassic.MODID, "advanced_nuclear_jetpack_upgrade"), new ItemStack(Registry.ADVANCED_NUCLEAR_JETPACK), "CTC", "RNR", "CAC", 'C', IC2Items.ADVANCED_CIRCUIT, 'T', IC2Blocks.TRANSFORMER_EV, 'R', IC2Blocks.REACTOR_CHAMBER, 'N', IC2Blocks.NUCLEAR_REACTOR, 'A', Registry.ADVANCED_ELECTRIC_JETPACK);
+        registry.addShapedIC2Recipe("compacted_nuclear_jetpack_1", new ItemStack(IC2Items.JETPACK_NUCLEAR_COMPACT), " B ", "XYX", "CVC", 'Y', Registry.ADVANCED_NUCLEAR_JETPACK, 'C', IC2Items.BAT_PACK, 'X', new ItemStack(IC2Items.ADVANCED_CIRCUIT, 4), 'V', Registry.ADVANCED_ELECTRIC_JETPACK, 'B', IC2Items.LAP_PACK);
+        registry.addShapedIC2Recipe("compacted_electric_jetpack", new ItemStack(IC2Items.JETPACK_ELECTRIC_COMPACT), " C ", "XYX", "VBV", 'C', IC2Items.TRANSFORMER_UPGRADE, 'Y', IC2Items.BAT_PACK, 'X', new ItemStack(IC2Items.ADVANCED_CIRCUIT, 4), 'V', Registry.ADVANCED_ELECTRIC_JETPACK, 'B', IC2Items.LAP_PACK);
+        registry.addShapedRecipe(new ResourceLocation(GravisuitClassic.MODID, "gravitation_jetpack"), new ItemStack(Registry.GRAVITATION_JETPACK), "SJS", "GTG", "SUS", 'S', Registry.SUPER_CONDUCTOR, 'J', IC2Items.JETPACK_ELECTRIC_COMPACT, 'G', Registry.GRAVITATION_ENGINE, 'T', IC2Blocks.TRANSFORMER_EV, 'U', Registry.ULTIMATE_LAPPACK);
+        registry.addShapedRecipe(new ResourceLocation(GravisuitClassic.MODID, "nuclear_gravitation_jetpack"), new ItemStack(Registry.NUCLEAR_GRAVITATION_JETPACK), "SJS", "GTG", "SUS", 'S', Registry.SUPER_CONDUCTOR, 'J', IC2Items.JETPACK_NUCLEAR_COMPACT, 'G', Registry.GRAVITATION_ENGINE, 'T', IC2Blocks.TRANSFORMER_EV, 'U', Registry.ULTIMATE_LAPPACK);
+        registry.addShapedRecipe(new ResourceLocation(GravisuitClassic.MODID, "nuclear_gravitation_jetpack_upgrade"), new ItemStack(Registry.NUCLEAR_GRAVITATION_JETPACK), "CTC", "RNR", "CAC", 'C', IC2Items.ADVANCED_CIRCUIT, 'T', IC2Blocks.TRANSFORMER_EV, 'R', IC2Blocks.REACTOR_CHAMBER, 'N', IC2Blocks.NUCLEAR_REACTOR, 'A', Registry.GRAVITATION_JETPACK);
+
+        //lappacks
+        registry.addShapedRecipe(new ResourceLocation(GravisuitClassic.MODID, "ultimate_lappack"), new ItemStack(Registry.ULTIMATE_LAPPACK), "LIL", "LQL", "LSL", 'L', IC2Items.GLOWTRONIC_CRYSTAL, 'I', IC2Items.PLATE_IRIDIUM, 'Q', IC2Items.QUANTUM_PACK, 'S', Registry.SUPER_CONDUCTOR);
+        registry.addShapedRecipe(new ResourceLocation(GravisuitClassic.MODID, "advanced_lappack"), new ItemStack(Registry.ADVANCED_LAPPACK), "L", "A", "C", 'L', IC2Items.LAP_PACK, 'A', IC2Items.ADVANCED_CIRCUIT, 'C', IC2Items.LAPATRON_CRYSTAL);
+        registry.addShapedIC2Recipe("quantum_pack", new ItemStack(IC2Items.QUANTUM_PACK), " X ", "YCY", " V ", 'Y', IC2Items.PLATE_IRIDIUM, 'X', IC2Items.ADVANCED_CIRCUIT, 'C', Registry.ADVANCED_LAPPACK, 'V', IC2Items.LAPATRON_CRYSTAL);
+    }
+
     /*static ICraftingRecipeList recipes = ClassicRecipes.advCrafting;
     public static void init(){
         initShapedRecipes();
@@ -140,30 +178,6 @@ public class GravisuitRecipes {
             }else {
                 recipes.addRecipe(new ItemStack(Registry.nuclearGravisuit), "SQS", "GAG", "SUS", 'S', Registry.SUPER_CONDUCTOR, 'Q', Ic2Items.quantumNuclearJetplate, 'G', Registry.GRAVITATION_ENGINE, 'A', Registry.advancedNuclearNanoChestplate, 'U', Registry.getUltimateLappack());
             }
-        }
-        if (GravisuitConfig.enabledItems.enableAdvancedNanoChestplate && GravisuitConfig.enabledItems.enableAdvancedElectricJetpack){
-            if (Loader.isModLoaded("ic2c_extras")){
-                recipes.addShapelessRecipe(new ItemStack(Registry.advancedNanoChestplate), (new FlagModifier(new ItemStack(Registry.advancedNanoChestplate), "ReactorPlating", true)).setUsesInput(), new ItemStack(Registry.advancedNanoChestplate), Ic2Items.reactorPlating.copy());
-            }
-            if (areOverrideRecipesValid()) {
-                recipes.addRecipe(new ItemStack(Registry.advancedNanoChestplate), "CAC", "CNC", "GcG", treetap(Ic2Items.nanoChest, "ReactorPlating"), 'C', Ic2Items.carbonPlate, 'A', Ic2Items.compactedElectricJetpack, 'N', Ic2Items.nanoChest, 'G', Ic2Items.glassFiberCable, 'c', "circuitAdvanced");
-            }else {
-                recipes.addRecipe(new ItemStack(Registry.advancedNanoChestplate), "CAC", "CNC", "GcG", treetap(Ic2Items.nanoChest, "ReactorPlating"), 'C', Ic2Items.carbonPlate, 'A', Registry.getAdvancedElectricJetpack(), 'N', Ic2Items.nanoChest, 'G', Ic2Items.glassFiberCable, 'c', "circuitAdvanced");
-            }
-        }
-        if (GravisuitConfig.enabledItems.enableAdvancedNuclearNanoChestplate && GravisuitConfig.enabledItems.enableAdvancedNuclearJetpack){
-            if (Loader.isModLoaded("ic2c_extras")){
-                recipes.addShapelessRecipe(new ItemStack(Registry.advancedNuclearNanoChestplate), (new FlagModifier(new ItemStack(Registry.advancedNuclearNanoChestplate), "ReactorPlating", true)).setUsesInput(), new ItemStack(Registry.advancedNuclearNanoChestplate), Ic2Items.reactorPlating.copy());
-            }
-            if (GravisuitConfig.enabledItems.enableAdvancedNanoChestplate){
-                recipes.addRecipe(new ItemStack(Registry.advancedNuclearNanoChestplate), "CTC", "RNR", "CAC", treetap(new ItemStack(Registry.advancedNanoChestplate), "ReactorPlating"), 'C', "circuitBasic", 'T', Ic2Items.transformerEV, 'R', Ic2Items.reactorChamber, 'N', Ic2Items.nuclearReactor, 'A', Registry.advancedNanoChestplate);
-            }
-            if (areOverrideRecipesValid()){
-                recipes.addRecipe(new ItemStack(Registry.advancedNuclearNanoChestplate), "CAC", "CNC", "GcG", treetap(Ic2Items.nanoChest, "ReactorPlating"), 'C', Ic2Items.carbonPlate, 'A', Ic2Items.compactedNuclearJetpack, 'N', Ic2Items.nanoChest, 'G', Ic2Items.glassFiberCable, 'c', "circuitAdvanced");
-            }else {
-                recipes.addRecipe(new ItemStack(Registry.advancedNuclearNanoChestplate), "CAC", "CNC", "GcG", treetap(Ic2Items.nanoChest, "ReactorPlating"), 'C', Ic2Items.carbonPlate, 'A', Registry.getAdvancedNuclearJetpack(), 'N', Ic2Items.nanoChest, 'G', Ic2Items.glassFiberCable, 'c', "circuitAdvanced");
-            }
-
         }
         if (GravisuitConfig.enabledItems.enableGravitool){
             recipes.addShapelessRecipe(new ItemStack(Registry.GRAVITOOL), (new FlagModifierMetaLess(new ItemStack(Registry.GRAVITOOL), "Import", true)).setUsesInput(), Registry.GRAVITOOL, Blocks.HOPPER, Ic2Items.importBasicUpgrade.copy());
