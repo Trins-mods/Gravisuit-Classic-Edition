@@ -1,6 +1,6 @@
 {
-	"advanced_electric_jetpack": "gravisuit:item/jetpack/advanced_electric_jetpack",
-	"advanced_nuclear_jetpack": "gravisuit:item/jetpack/advanced_nuclear_jetpack",
-	"gravitation_jetpack": "gravisuit:item/jetpack/gravitation_jetpack",
-	"nuclear_gravitation_jetpack": "gravisuit:item/jetpack/nuclear_gravitation_jetpack"
+	"advanced_electric_jetpack": "gravisuit:item/jetpack/advanced_electric",
+	"advanced_nuclear_jetpack": "gravisuit:item/jetpack/advanced_nuclear",
+	"gravitation_jetpack": "gravisuit:item/jetpack/gravitation",
+	"nuclear_gravitation_jetpack": "gravisuit:item/jetpack/nuclear_gravitation"
 }
