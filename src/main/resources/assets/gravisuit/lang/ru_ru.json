@@ -16,7 +16,7 @@
   "item.gravisuit.vajra_core": "Ядро ваджры",
   "item.gravisuit.engine_boost": "Ускоритель двигателя",
 
-  "tooltip.gravisuit.wip": "Work in progress",
+  "tooltip.gravisuit.wip": "работа в процессе",
 
   "item_info.toolMode": "Режим: %1$s",
   "item_info.multiModes": "Циклическое переключение между различными режимами",
@@ -69,9 +69,9 @@
   "panelInfo.jetpackExtremeHoverMode": "Экстремальный режим зависания",
   "panelInfo.gravitationEngineOn": "Грави-двигатель включен",
 
-  "item_info.graviEngineOnInfo": "Gravitation Engine On",
-  "item_info.graviEngineOffInfo": "Gravitation Engine Off",
-  "item_info.graviEngineToggle": "Вкл/Выкл гравитационный двигатель"
-  "key.gravisuit.gravitation_engine" : "Gravi Fly Key",
-  "key.gravisuit.category": "Gravisuit Classic"
+  "item_info.graviEngineOnInfo": "Гравитационный двигатель включен",
+  "item_info.graviEngineOffInfo": "Гравитационный двигатель выключен",
+  "item_info.graviEngineToggle": "Вкл/Выкл гравитационный двигатель",
+  "key.gravisuit.gravitation_engine" : "Ключ Грави Флай",
+  "key.gravisuit.category": "Грависюит Классик"
 }
