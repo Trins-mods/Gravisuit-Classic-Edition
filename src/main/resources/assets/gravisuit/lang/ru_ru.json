@@ -69,7 +69,7 @@
   "panelInfo.jetpackExtremeHoverMode": "Экстремальный режим зависания",
   "panelInfo.gravitationEngineOn": "Грави-двигатель включен",
 
-  "item_info.graviEngineOnInfo": "Когда гравитационный двигатель включен,",
-  "item_info.graviEngineOffInfo": "Когда гравитационный двигатель выключен,",
+  "item_info.graviEngineOnInfo": "Gravitation Engine On",
+  "item_info.graviEngineOffInfo": "Gravitation Engine Off",
   "item_info.graviEngineToggle": "Вкл/Выкл гравитационный двигатель"
 }
