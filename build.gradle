@@ -56,6 +56,9 @@ repositories{
         url 'https://dvs1.progwml6.com/files/maven/'
     }
     maven { url "https://maven.shedaniel.me" }
+    maven {
+        url "https://cursemaven.com"
+    }
 }
 
 dependencies {
@@ -66,7 +69,8 @@ dependencies {
     }
 
     forge "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
-    modImplementation fileTree(include: ['*.jar'], dir: 'libs')
+    //modImplementation fileTree(include: ['*.jar'], dir: 'libs')
+    modImplementation("curse.maven:ic2_classic-242942:4041302")
     modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-forge:${rootProject.rei_version}"
     modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-plugin-compatibilities-forge:9.1.530"
     /*deobfProvided "mezz.jei:jei_${mc_version}:${jei_version}:api"
