@@ -1,14 +1,21 @@
 package trinsdar.gravisuit.util;
 
 
+import com.google.gson.JsonObject;
 import ic2.api.recipes.registries.IAdvancedCraftingManager;
-import ic2.core.IC2;
+import ic2.core.item.wearable.base.IC2ModularElectricArmor;
+import ic2.core.platform.recipes.mods.IRecipeModifier;
 import ic2.core.platform.registries.IC2Blocks;
 import ic2.core.platform.registries.IC2Items;
 import ic2.core.platform.registries.IC2Tags;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraftforge.common.Tags;
+import net.minecraftforge.registries.ForgeRegistries;
 import trinsdar.gravisuit.GravisuitClassic;
 
 public class GravisuitRecipes {
@@ -38,6 +45,64 @@ public class GravisuitRecipes {
         registry.addShapedRecipe(new ResourceLocation(GravisuitClassic.MODID, "ultimate_lappack"), new ItemStack(Registry.ULTIMATE_LAPPACK), "LIL", "LQL", "LSL", 'L', IC2Items.GLOWTRONIC_CRYSTAL, 'I', IC2Items.PLATE_IRIDIUM, 'Q', IC2Items.QUANTUM_PACK, 'S', Registry.SUPER_CONDUCTOR);
         registry.addShapedRecipe(new ResourceLocation(GravisuitClassic.MODID, "advanced_lappack"), new ItemStack(Registry.ADVANCED_LAPPACK), "L", "A", "C", 'L', IC2Items.LAP_PACK, 'A', IC2Items.ADVANCED_CIRCUIT, 'C', IC2Items.LAPATRON_CRYSTAL);
         registry.addShapedIC2Recipe("quantum_pack", new ItemStack(IC2Items.QUANTUM_PACK), " X ", "YCY", " V ", 'Y', IC2Items.PLATE_IRIDIUM, 'X', IC2Items.ADVANCED_CIRCUIT, 'C', Registry.ADVANCED_LAPPACK, 'V', IC2Items.LAPATRON_CRYSTAL);
+
+        //tools
+        ItemStack importTreeTap = new ItemStack(Registry.GRAVITOOL);
+        CompoundTag nbt_import = importTreeTap.getOrCreateTag();
+        nbt_import.putBoolean("inv_import", true);
+        registry.addShapelessRecipe(new ResourceLocation(GravisuitClassic.MODID, "gravitool_upgrade"), importTreeTap, Registry.GRAVITOOL, Items.HOPPER, IC2Items.IMPORT_UPGRADE_SIMPLE);
+        registry.addShapedRecipe(new ResourceLocation(GravisuitClassic.MODID, "gravitool"), new ItemStack(Registry.GRAVITOOL), "CHC", "AEA", "WaT", new TreetapModifier(), 'C', IC2Items.CARBON_PLATE, 'H', IC2Items.ELECTRIC_HOE, 'A', IC2Items.PLATE_ADVANCED_ALLOY, 'E', IC2Items.ENERGY_CRYSTAL, 'W', IC2Items.PRECISION_WRENCH, 'a', IC2Items.ADVANCED_CIRCUIT, 'T', IC2Items.ELECTRIC_TREETAP);
+        registry.addShapedRecipe(new ResourceLocation(GravisuitClassic.MODID, "vajra"), new ItemStack(Registry.VAJRA), "IMI", "DVC", "ALA", 'I', IC2Items.PLATE_IRIDIUM, 'M', IC2Items.MINING_LASER, 'D', IC2Items.DRILL_ADVANCED, 'V', Registry.VAJRA_CORE, 'C', IC2Items.CHAINSAW_ADVANCED, 'A', IC2Items.PLATE_ADVANCED_ALLOY, 'L', IC2Items.LAPATRON_CRYSTAL);
+    }
+
+    public static class TreetapModifier implements IRecipeModifier {
+        ItemStack original;
+
+        public TreetapModifier() {
+        }
+
+        public TreetapModifier(JsonObject obj) {
+        }
+
+        public TreetapModifier(FriendlyByteBuf buffer) {
+        }
+
+        public void reset() {
+            this.original = null;
+        }
+
+        public boolean isSlotValid(ItemStack input) {
+            if (input.getItem() == IC2Items.ELECTRIC_TREETAP) {
+                if (this.original != null) {
+                    return false;
+                }
+
+                this.original = input.copy();
+            }
+
+            return true;
+        }
+
+        public boolean isOutputItem(ItemStack input) {
+            return false;
+        }
+
+        public ItemStack applyChanges(ItemStack input, boolean forDisplay) {
+            if (this.original != null) {
+                CompoundTag nbt_import = this.original.getOrCreateTag();
+                if (nbt_import.contains("inv_import") && nbt_import.getBoolean("inv_import")){
+                    input.getOrCreateTag().putBoolean("inv_import", true);
+                }
+            }
+            return input;
+        }
+
+        public void serialize(FriendlyByteBuf buffer) {
+        }
+
+        public JsonObject serialize() {
+            return new JsonObject();
+        }
     }
 
     /*static ICraftingRecipeList recipes = ClassicRecipes.advCrafting;
