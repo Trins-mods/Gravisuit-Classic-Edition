@@ -50,21 +50,6 @@ public class ItemNuclearGravitationJetpack extends NuclearJetpack implements IGr
     }
 
     @Override
-    public boolean canDoRocketMode(ItemStack itemStack) {
-        return true;
-    }
-
-    @Override
-    public boolean canDoAdvHoverMode(ItemStack itemStack) {
-        return true;
-    }
-
-    @Override
-    public boolean isElectricJetpack(ItemStack itemStack) {
-        return true;
-    }
-
-    @Override
     public float getPower(ItemStack itemStack) {
         return 1.4f;
     }

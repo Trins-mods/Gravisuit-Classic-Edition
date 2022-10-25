@@ -6,7 +6,9 @@
     "KeyboardClientMixin"
   ],
   "mixins": [
-    "PlayerHandlerMixin"
+    "PlayerHandlerMixin",
+    "CompactedJetpackMixin",
+    "CompactedNuclearJetpackMixin"
   ],
   "minVersion": "0.8"
 }
