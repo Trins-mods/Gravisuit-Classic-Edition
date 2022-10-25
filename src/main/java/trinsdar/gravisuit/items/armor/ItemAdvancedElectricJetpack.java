@@ -20,7 +20,7 @@ public class ItemAdvancedElectricJetpack extends IC2ElectricJetpackBase {
 
     @Override
     public int getCapacity(ItemStack itemStack) {
-        return 240000;
+        return 200000;
     }
 
     @Override

@@ -19,7 +19,7 @@ public class ItemAdvancedNuclearJetpack extends NuclearJetpack {
 
     @Override
     public int getCapacity(ItemStack itemStack) {
-        return 240000;
+        return 200000;
     }
 
     @Override
