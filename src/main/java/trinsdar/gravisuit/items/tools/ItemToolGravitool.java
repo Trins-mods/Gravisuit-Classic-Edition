@@ -20,6 +20,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
@@ -29,6 +30,7 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Tiers;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
@@ -133,6 +135,20 @@ public class ItemToolGravitool extends ElectricWrenchTool implements ICropModifi
             return IC2Items.ELECTRIC_HOE.mineBlock(stack, level, state, pos, miningEntity);
         }
         return super.mineBlock(stack, level, state, pos, miningEntity);
+    }
+
+    @Override
+    public boolean isCorrectToolForDrops(ItemStack stack, BlockState state) {
+        if (getMode(stack) == 1){
+            boolean isHoe = state.is(BlockTags.MINEABLE_WITH_HOE);
+            return super.isCorrectToolForDrops(stack, state) || isHoe;
+        }
+        return super.isCorrectToolForDrops(stack, state);
+    }
+
+    @Override
+    public float getDestroySpeed(ItemStack stack, BlockState state) {
+        return isCorrectToolForDrops(stack, state) ? Tiers.IRON.getSpeed() : super.getDestroySpeed(stack, state);
     }
 
     public boolean canPerformAction(ItemStack stack, ToolAction toolAction) {
