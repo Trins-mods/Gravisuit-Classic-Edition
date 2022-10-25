@@ -33,7 +33,7 @@ public class ItemArmorAdvancedNanoChestplate extends ItemArmorNanoSuit implement
     public ItemArmorAdvancedNanoChestplate(ItemArmorJetpackBase jetpack, String name, LocaleComp comp, String tex, int index) {
         super(44, EntityEquipmentSlot.CHEST);
         this.setRegistryName(name.toLowerCase());
-        this.setUnlocalizedName(comp);
+        this.setTranslationKey(comp);
         this.setCreativeTab(IC2.tabIC2);
         this.jetpack = jetpack;
         this.texture = tex;

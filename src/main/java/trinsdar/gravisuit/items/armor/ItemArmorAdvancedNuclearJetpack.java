@@ -29,7 +29,7 @@ public class ItemArmorAdvancedNuclearJetpack extends ItemArmorNuclearJetpack {
         this.transferLimit = GravisuitConfig.powerValues.advancedNuclearJetpackTransfer;
         if (register){
             this.setRegistryName("advancednuclearjetpack");
-            this.setUnlocalizedName(GravisuitLang.advancedNuclearJetpack);
+            this.setTranslationKey(GravisuitLang.advancedNuclearJetpack);
             this.setCreativeTab(IC2.tabIC2);
         }
     }

@@ -94,10 +94,11 @@ dependencies {
         exclude module: "commons-io"
     }
     compile "curse.maven:baubles-227083:2518667"
-    compile "curse.maven:ic2_classic-242942:3076009"
+    deobfCompile "curse.maven:ic2_classic-242942:4048720"
     compileOnly "curse.maven:better_pipes-402834:3050661"
     runtime "curse.maven:better_pipes-402834:3050661"
     compileOnly "curse.maven:ic2c_extras-302906:3057114"
+    compileOnly "curse.maven:gtc_expansion-349126:3113621"
     runtime "curse.maven:ic2c_extras-302906:3057114"
     runtime "curse.maven:gtclassic-324021:3059975"
     deobfProvided("RebornCore:RebornCore-${mc_version}:${reborn_core_version}:universal") {

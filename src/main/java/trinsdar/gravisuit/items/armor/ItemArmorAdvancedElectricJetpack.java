@@ -25,7 +25,7 @@ public class ItemArmorAdvancedElectricJetpack extends ItemArmorCompactedElectric
         this.transferLimit = GravisuitConfig.powerValues.advancedElectricJetpackTransfer;
         if (register){
             this.setRegistryName("advancedelectricjetpack");
-            this.setUnlocalizedName(GravisuitLang.advancedElectricJetpack);
+            this.setTranslationKey(GravisuitLang.advancedElectricJetpack);
             this.setCreativeTab(IC2.tabIC2);
         }
     }

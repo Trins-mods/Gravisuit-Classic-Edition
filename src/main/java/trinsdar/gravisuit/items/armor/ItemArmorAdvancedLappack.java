@@ -21,7 +21,7 @@ public class ItemArmorAdvancedLappack extends ItemArmorElectricPack {
         this.storage = max;
         this.maxTransfer = limit;
         this.setRegistryName(name.toLowerCase());
-        this.setUnlocalizedName(comp);
+        this.setTranslationKey(comp);
     }
 
     public void setTier(int tier){
