@@ -36,18 +36,18 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.common.ToolActions;
 import org.jetbrains.annotations.Nullable;
 import trinsdar.gravisuit.GravisuitClassic;
-import trinsdar.gravisuit.proxy.ClientProxy;
 import trinsdar.gravisuit.util.GravisuitConfig;
 import trinsdar.gravisuit.util.GravisuitLang;
 import trinsdar.gravisuit.util.GravisuitSounds;
 import trinsdar.gravisuit.util.Registry;
 import trinsdar.gravisuit.util.RotationHelper;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -238,6 +238,7 @@ public class ItemToolGravitool extends ElectricWrenchTool implements ICropModifi
         return stacks;
     }
 
+    @OnlyIn(Dist.CLIENT)
     @Override
     public TextureAtlasSprite getSprite(ItemStack itemStack) {
         Map<String, TextureAtlasSprite> textures = IC2Textures.getMappedEntriesItem("gravisuit", "tools/gravitool");

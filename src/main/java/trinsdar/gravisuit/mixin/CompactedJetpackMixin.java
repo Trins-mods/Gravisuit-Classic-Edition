@@ -7,7 +7,6 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
 
 @Mixin(CompactElectricJetpack.class)
 public abstract class CompactedJetpackMixin extends IC2ElectricJetpackBase {

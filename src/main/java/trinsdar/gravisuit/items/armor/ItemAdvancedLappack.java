@@ -2,9 +2,7 @@ package trinsdar.gravisuit.items.armor;
 
 import ic2.core.item.wearable.armor.electric.ElectricPackArmor;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.Rarity;
-import org.jetbrains.annotations.Nullable;
 import trinsdar.gravisuit.GravisuitClassic;
 import trinsdar.gravisuit.util.Registry;
 

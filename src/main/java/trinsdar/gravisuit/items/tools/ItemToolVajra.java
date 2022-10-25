@@ -37,6 +37,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Material;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import trinsdar.gravisuit.GravisuitClassic;
 import trinsdar.gravisuit.util.GravisuitLang;
 import trinsdar.gravisuit.util.Registry;
@@ -150,6 +152,7 @@ public class ItemToolVajra extends DrillTool {
         return multimap;
     }
 
+    @OnlyIn(Dist.CLIENT)
     @Override
     public TextureAtlasSprite getTexture() {
         return IC2Textures.getMappedEntriesItem(GravisuitClassic.MODID, "tools").get("vajra");

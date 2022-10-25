@@ -10,17 +10,17 @@ import ic2.core.utils.tooltips.ToolTipHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attribute;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import trinsdar.gravisuit.util.GravisuitKeys;
 import trinsdar.gravisuit.util.GravisuitLang;
@@ -102,6 +102,7 @@ public interface IGravitationJetpack extends ILangHelper {
         return true;
     }
 
+    @OnlyIn(Dist.CLIENT)
     default void toolTip(ItemStack stack, Player player, TooltipFlag type, ToolTipHelper helper) {
         helper.addKeybindingTooltip(buildKeyDescription(GravisuitKeys.G_KEY, GravisuitLang.graviEngineToggle));
         CompoundTag tag = this.nbtData(stack, true);
@@ -110,6 +111,7 @@ public interface IGravitationJetpack extends ILangHelper {
         helper.addSimpleToolTip(lang);
     }
 
+    @OnlyIn(Dist.CLIENT)
     default MutableComponent buildKeyDescription(KeyMapping key, String translationKey, Object... args) {
         return this.buildKeyDescription(combineKeys(key).withStyle(ChatFormatting.GOLD), this.translate(translationKey, args).withStyle(ChatFormatting.UNDERLINE));
     }

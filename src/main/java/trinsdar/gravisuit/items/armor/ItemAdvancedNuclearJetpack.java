@@ -1,9 +1,7 @@
 package trinsdar.gravisuit.items.armor;
 
-import ic2.core.item.wearable.base.IC2ElectricJetpackBase;
 import ic2.core.item.wearable.jetpacks.NuclearJetpack;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
 import trinsdar.gravisuit.GravisuitClassic;
 import trinsdar.gravisuit.util.Registry;

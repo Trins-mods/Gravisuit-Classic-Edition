@@ -3,7 +3,6 @@ package trinsdar.gravisuit.util;
 
 import com.google.gson.JsonObject;
 import ic2.api.recipes.registries.IAdvancedCraftingManager;
-import ic2.core.item.wearable.base.IC2ModularElectricArmor;
 import ic2.core.platform.recipes.mods.IRecipeModifier;
 import ic2.core.platform.registries.IC2Blocks;
 import ic2.core.platform.registries.IC2Items;
@@ -11,11 +10,9 @@ import ic2.core.platform.registries.IC2Tags;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.common.Tags;
-import net.minecraftforge.registries.ForgeRegistries;
 import trinsdar.gravisuit.GravisuitClassic;
 
 public class GravisuitRecipes {

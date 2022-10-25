@@ -1,8 +1,6 @@
 package trinsdar.gravisuit.util;
 
-import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.config.ModConfig;
-import org.apache.commons.lang3.tuple.Pair;
 import trinsdar.gravisuit.GravisuitClassic;
 
 public class GravisuitConfig {

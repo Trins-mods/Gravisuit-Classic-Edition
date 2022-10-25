@@ -1,39 +1,21 @@
 package trinsdar.gravisuit.items.armor;
 
-import ic2.api.items.electric.ElectricItem;
-import ic2.core.IC2;
-import ic2.core.item.wearable.armor.electric.QuantumSuit;
 import ic2.core.item.wearable.base.IC2ElectricJetpackBase;
-import ic2.core.item.wearable.base.IC2ModularElectricArmor;
-import ic2.core.platform.player.PlayerHandler;
-import ic2.core.utils.helpers.StackUtil;
 import ic2.core.utils.tooltips.ToolTipHelper;
-import net.minecraft.ChatFormatting;
-import net.minecraft.client.KeyMapping;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import trinsdar.gravisuit.GravisuitClassic;
-import trinsdar.gravisuit.util.GravisuitKeys;
-import trinsdar.gravisuit.util.GravisuitLang;
-import trinsdar.gravisuit.util.IGravisuitPlayerHandler;
 import trinsdar.gravisuit.util.Registry;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.WeakHashMap;
 
 public class ItemGravitationJetpack extends IC2ElectricJetpackBase implements IGravitationJetpack {
     public ItemGravitationJetpack() {
@@ -142,12 +124,14 @@ public class ItemGravitationJetpack extends IC2ElectricJetpackBase implements IG
         return "gravisuit:textures/models/gravitation_jetpack";
     }
 
+    @OnlyIn(Dist.CLIENT)
     @Override
     public void addToolTip(ItemStack stack, Player player, TooltipFlag type, ToolTipHelper helper) {
         super.addToolTip(stack, player, type, helper);
         toolTip(stack, player, type, helper);
     }
 
+    @OnlyIn(Dist.CLIENT)
     @Override
     public void addToolTip(ItemStack armor, ItemStack stack, Player player, TooltipFlag type, ToolTipHelper helper) {
         super.addToolTip(armor, stack, player, type, helper);

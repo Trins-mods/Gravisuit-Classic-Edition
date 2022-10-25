@@ -1,25 +1,20 @@
 package trinsdar.gravisuit.items.armor;
 
 import ic2.core.item.logic.TickableItemLogic;
-import ic2.core.item.wearable.base.IC2ElectricJetpackBase;
 import ic2.core.item.wearable.jetpacks.NuclearJetpack;
 import ic2.core.utils.tooltips.ToolTipHelper;
-import net.minecraft.ChatFormatting;
-import net.minecraft.client.KeyMapping;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import trinsdar.gravisuit.GravisuitClassic;
-import trinsdar.gravisuit.util.GravisuitKeys;
-import trinsdar.gravisuit.util.GravisuitLang;
 import trinsdar.gravisuit.util.Registry;
 
 public class ItemNuclearGravitationJetpack extends NuclearJetpack implements IGravitationJetpack {
@@ -120,12 +115,14 @@ public class ItemNuclearGravitationJetpack extends NuclearJetpack implements IGr
         return "gravisuit:textures/models/nuclear_gravitation_jetpack";
     }
 
+    @OnlyIn(Dist.CLIENT)
     @Override
     public void addToolTip(ItemStack stack, Player player, TooltipFlag type, ToolTipHelper helper) {
         super.addToolTip(stack, player, type, helper);
         toolTip(stack, player, type, helper);
     }
 
+    @OnlyIn(Dist.CLIENT)
     @Override
     public void addToolTip(ItemStack armor, ItemStack stack, Player player, TooltipFlag type, ToolTipHelper helper) {
         super.addToolTip(armor, stack, player, type, helper);
