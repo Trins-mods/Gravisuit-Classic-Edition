@@ -229,6 +229,11 @@ public class ItemArmorNuclearGravisuit extends ItemArmorQuantumSuit implements I
                         nbt.setByte("JetpackTicker", (byte)10);
                         nbt.setBoolean("enabled", false);
                         IC2.platform.messagePlayer(player, GravisuitLang.graviEngineOff);
+                        if (!player.capabilities.isCreativeMode && !player.isSpectator()){
+                            player.stepHeight = 0.6F;
+                            player.capabilities.allowFlying = false;
+                            player.capabilities.isFlying = false;
+                        }
                     }
                 }
 
@@ -246,48 +251,42 @@ public class ItemArmorNuclearGravisuit extends ItemArmorQuantumSuit implements I
                 }
             }
 
-            if (enabled){
-                if (ElectricItem.manager.getCharge(stack) >= 1024){
-                    if (!player.capabilities.isCreativeMode && !player.isSpectator()){
-                        if (handler.quantumArmorBoostSprint && player.isSprinting() && ItemArmorGravisuit.hasQuantumLegs(player)){
-                            this.useEnergy(player, stack, 1024);
-                        }else {
-                            this.useEnergy(player, stack, 512);
+            if (enabled && ElectricItem.manager.getCharge(stack) >= 1024){
+                if (!player.capabilities.isCreativeMode && !player.isSpectator()){
+                    if (handler.quantumArmorBoostSprint && player.isSprinting() && ItemArmorGravisuit.hasQuantumLegs(player)){
+                        this.useEnergy(player, stack, 1024);
+                    }else {
+                        this.useEnergy(player, stack, 512);
+                    }
+                    if (ElectricItem.manager.getCharge(stack) <= 512){
+                        if (!player.capabilities.isCreativeMode && !player.isSpectator()){
+                            player.stepHeight = 0.6F;
+                            player.capabilities.allowFlying = false;
+                            player.capabilities.isFlying = false;
                         }
                     }
-                    player.capabilities.allowFlying = true;
-                    player.stepHeight = 1.0625F;
-                    boolean flying = player.capabilities.isFlying;
-                    if(flying){
-                        boolean sneaking = player.isSneaking();
+                }
+                player.capabilities.allowFlying = true;
+                player.stepHeight = 1.0625F;
+                boolean flying = player.capabilities.isFlying;
+                if(flying){
+                    boolean sneaking = player.isSneaking();
 
-                        float speed = 0.08f
-                                * (flying ? 0.6f : 1.0f)
-                                * (sneaking ? 0.1f : 1.0f);
+                    float speed = 0.08f
+                            * (flying ? 0.6f : 1.0f)
+                            * (sneaking ? 0.1f : 1.0f);
 
-                        if (player.moveForward > 0f) {
-                            player.moveRelative(0f, 0f, 1f, speed);
-                        } else if (player.moveForward < 0f) {
-                            player.moveRelative(0f, 0f, 1f, -speed * 0.3f);
-                        }
-
-                        if (player.moveStrafing != 0f) {
-                            player.moveRelative(1f, 0f, 0f, speed * 0.5f * Math.signum(player.moveStrafing));
-                        }
+                    if (player.moveForward > 0f) {
+                        player.moveRelative(0f, 0f, 1f, speed);
+                    } else if (player.moveForward < 0f) {
+                        player.moveRelative(0f, 0f, 1f, -speed * 0.3f);
                     }
-                }else {
-                    if (!player.capabilities.isCreativeMode && !player.isSpectator()){
-                        player.stepHeight = 0.6F;
-                        player.capabilities.allowFlying = false;
-                        player.capabilities.isFlying = false;
+
+                    if (player.moveStrafing != 0f) {
+                        player.moveRelative(1f, 0f, 0f, speed * 0.5f * Math.signum(player.moveStrafing));
                     }
                 }
             }else {
-                if (!player.capabilities.isCreativeMode && !player.isSpectator()){
-                    player.stepHeight = 0.6F;
-                    player.capabilities.allowFlying = false;
-                    player.capabilities.isFlying = false;
-                }
                 super.onArmorTick(world, player, stack);
             }
         }
