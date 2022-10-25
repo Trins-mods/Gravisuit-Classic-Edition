@@ -58,26 +58,26 @@ repositories{
     }
     maven { // CCL, CCC, NEI
         name 'Chickenbones Repo'
-        url 'http://chickenbones.net/maven/'
+        url 'https://chickenbones.net/maven/'
     }
 
     maven { // The One Probe, EnderIO, EnderCore
         name 'tterrag'
-        url 'http://maven.tterrag.com/'
+        url 'https://maven.tterrag.com/'
     }
     maven { // CoFH
         name 'Covers Maven'
-        url 'http://maven.covers1624.net/'
+        url 'https://maven.covers1624.net/'
     }
     maven { // McJtyLib
-        url "http://modmaven.k-4u.nl"
+        url "https://modmaven.k-4u.nl"
     }
     maven {
         url = "https://www.cursemaven.com"
     }
     maven { // JEI
         name 'DVS1 Maven FS'
-        url 'http://dvs1.progwml6.com/files/maven/'
+        url 'https://dvs1.progwml6.com/files/maven/'
     }
 }
 
