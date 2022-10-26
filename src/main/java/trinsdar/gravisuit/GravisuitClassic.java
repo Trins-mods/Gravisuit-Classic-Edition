@@ -12,9 +12,11 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
+import net.minecraftforge.oredict.OreDictionary;
 import org.apache.logging.log4j.Logger;
 import trinsdar.gravisuit.compat.better_pipes.BetterPipesInit;
 import trinsdar.gravisuit.proxy.CommonProxy;
+import trinsdar.gravisuit.util.Registry;
 
 @Mod(modid = GravisuitClassic.MODID, name = GravisuitClassic.MODNAME, version = GravisuitClassic.MODVERSION, dependencies = GravisuitClassic.DEPENDS)
 public class GravisuitClassic {
@@ -39,6 +41,7 @@ public class GravisuitClassic {
         logger = event.getModLog();
         proxy.preInit(event);
         MinecraftForge.EVENT_BUS.register(this);
+        OreDictionary.registerOre("craftingSuperconductor", Registry.superConductor);
     }
 
     @SubscribeEvent

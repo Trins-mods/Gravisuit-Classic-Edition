@@ -119,13 +119,13 @@ public class GravisuitRecipes {
             recipes.addRecipe(new ItemStack(Registry.superConductorCover, 3), "AIA", "CCC", "AIA", 'A', Ic2Items.advancedAlloy, 'I', Ic2Items.iridiumPlate, 'C', Ic2Items.carbonPlate);
             recipes.addRecipe(new ItemStack(Registry.superConductor, 3), "SSS", "GUG", "SSS", 'S', Registry.superConductorCover, 'G', Ic2Items.glassFiberCable, 'U', Ic2Items.uuMatter);
             recipes.addRecipe(new ItemStack(Registry.coolingCore), "CAC", "HIH", "CAC", 'C', Ic2Items.reactorCoolantCellSix, 'A', Ic2Items.reactorHeatSwitchDiamond, 'H', Ic2Items.reactorPlatingHeat, 'I', Ic2Items.iridiumPlate);
-            recipes.addRecipe(new ItemStack(Registry.gravitationEngine), "TST", "CIC", "TST", 'T', Ic2Items.teslaCoil, 'S', Registry.superConductor, 'C', Registry.coolingCore, 'I', Ic2Items.transformerIV);
-            recipes.addRecipe(new ItemStack(Registry.magnetron), "ICI", "CSC", "ICI", 'I', IC2.getRefinedIron(), 'C', "ingotCopper", 'S', Registry.superConductor);
-            recipes.addRecipe(new ItemStack(Registry.vajraCore), " M ", "ITI", "StS", 'M', Registry.magnetron, 'I', Ic2Items.iridiumPlate, 'T', Ic2Items.teslaCoil, 'S', Registry.superConductor, 't', Ic2Items.transformerIV);
+            recipes.addRecipe(new ItemStack(Registry.gravitationEngine), "TST", "CIC", "TST", 'T', Ic2Items.teslaCoil, 'S', "craftingSuperconductor", 'C', Registry.coolingCore, 'I', Ic2Items.transformerIV);
+            recipes.addRecipe(new ItemStack(Registry.magnetron), "ICI", "CSC", "ICI", 'I', IC2.getRefinedIron(), 'C', "ingotCopper", 'S', "craftingSuperconductor");
+            recipes.addRecipe(new ItemStack(Registry.vajraCore), " M ", "ITI", "StS", 'M', Registry.magnetron, 'I', Ic2Items.iridiumPlate, 'T', Ic2Items.teslaCoil, 'S', "craftingSuperconductor", 't', Ic2Items.transformerIV);
             recipes.addRecipe(new ItemStack(Registry.engineBoost), "GAG", "COC", "AHA", 'G', "dustGlowstone", 'A', Ic2Items.advancedAlloy, 'C', "circuitAdvanced", 'O', Ic2Items.overClockerUpgrade, 'H', Ic2Items.reactorVentDiamond);
         }
         if (GravisuitConfig.enabledItems.enableMiscCraftingItems && GravisuitConfig.enabledItems.enableUltimateLappack){
-            recipes.addRecipe(new ItemStack(Registry.getUltimateLappack()), "LIL", "LQL", "LSL", 'L', Ic2Items.lapotronCrystal, 'I', Ic2Items.iridiumPlate, 'Q', Ic2Items.quantumPack, 'S', Registry.superConductor);
+            recipes.addRecipe(new ItemStack(Registry.getUltimateLappack()), "LIL", "LQL", "LSL", 'L', Ic2Items.lapotronCrystal, 'I', Ic2Items.iridiumPlate, 'Q', Ic2Items.quantumPack, 'S', "craftingSuperconductor");
         }
         if (GravisuitConfig.enabledItems.enableAdvancedLappack){
             recipes.addRecipe(new ItemStack(Registry.getAdvancedLappack()), "L", "A", "C", 'L', Ic2Items.lapPack, 'A', "circuitAdvanced", 'C', Ic2Items.lapotronCrystal);
@@ -141,9 +141,9 @@ public class GravisuitRecipes {
         }
         if (GravisuitConfig.enabledItems.enableMiscCraftingItems && GravisuitConfig.enabledItems.enableGravisuit && GravisuitConfig.enabledItems.enableAdvancedNanoChestplate && GravisuitConfig.enabledItems.enableUltimateLappack){
             if (areOverrideRecipesValid()){
-                recipes.addRecipe(new ItemStack(Registry.gravisuit), "SQS", "GTG", "SUS", 'S', Registry.superConductor, 'Q', Ic2Items.quantumJetplate, 'G', Registry.gravitationEngine, 'T', Ic2Items.transformerEV,   'U', Registry.getUltimateLappack());
+                recipes.addRecipe(new ItemStack(Registry.gravisuit), "SQS", "GTG", "SUS", 'S', "craftingSuperconductor", 'Q', Ic2Items.quantumJetplate, 'G', Registry.gravitationEngine, 'T', Ic2Items.transformerEV,   'U', Registry.getUltimateLappack());
             }else {
-                recipes.addRecipe(new ItemStack(Registry.gravisuit), "SQS", "GAG", "SUS", 'S', Registry.superConductor, 'Q', Ic2Items.quantumJetplate, 'G', Registry.gravitationEngine, 'A', Registry.advancedNanoChestplate, 'U', Registry.getUltimateLappack());
+                recipes.addRecipe(new ItemStack(Registry.gravisuit), "SQS", "GAG", "SUS", 'S', "craftingSuperconductor", 'Q', Ic2Items.quantumJetplate, 'G', Registry.gravitationEngine, 'A', Registry.advancedNanoChestplate, 'U', Registry.getUltimateLappack());
             }
         }
         if (GravisuitConfig.enabledItems.enableMiscCraftingItems && GravisuitConfig.enabledItems.enableNuclearGravisuit && GravisuitConfig.enabledItems.enableAdvancedNuclearNanoChestplate && GravisuitConfig.enabledItems.enableUltimateLappack){
@@ -151,9 +151,9 @@ public class GravisuitRecipes {
                 recipes.addRecipe(new ItemStack(Registry.nuclearGravisuit), "CTC", "RNR", "CAC", 'C', "circuitBasic", 'T', Ic2Items.transformerEV, 'R', Ic2Items.reactorChamber, 'N', Ic2Items.nuclearReactor, 'A', Registry.gravisuit);
             }
             if (areOverrideRecipesValid()){
-                recipes.addRecipe(new ItemStack(Registry.nuclearGravisuit), "SQS", "GTG", "SUS", 'S', Registry.superConductor, 'Q', Ic2Items.quantumNuclearJetplate, 'G', Registry.gravitationEngine, 'T', Ic2Items.transformerEV, 'U', Registry.getUltimateLappack());
+                recipes.addRecipe(new ItemStack(Registry.nuclearGravisuit), "SQS", "GTG", "SUS", 'S', "craftingSuperconductor", 'Q', Ic2Items.quantumNuclearJetplate, 'G', Registry.gravitationEngine, 'T', Ic2Items.transformerEV, 'U', Registry.getUltimateLappack());
             }else {
-                recipes.addRecipe(new ItemStack(Registry.nuclearGravisuit), "SQS", "GAG", "SUS", 'S', Registry.superConductor, 'Q', Ic2Items.quantumNuclearJetplate, 'G', Registry.gravitationEngine, 'A', Registry.advancedNuclearNanoChestplate, 'U', Registry.getUltimateLappack());
+                recipes.addRecipe(new ItemStack(Registry.nuclearGravisuit), "SQS", "GAG", "SUS", 'S', "craftingSuperconductor", 'Q', Ic2Items.quantumNuclearJetplate, 'G', Registry.gravitationEngine, 'A', Registry.advancedNuclearNanoChestplate, 'U', Registry.getUltimateLappack());
             }
         }
         if (GravisuitConfig.enabledItems.enableAdvancedNanoChestplate && GravisuitConfig.enabledItems.enableAdvancedElectricJetpack){
