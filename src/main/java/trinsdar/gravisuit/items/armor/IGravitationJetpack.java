@@ -45,6 +45,11 @@ public interface IGravitationJetpack extends ILangHelper {
                 String lang = disabled ? GravisuitLang.graviEngineOn : GravisuitLang.graviEngineOff;
                 player.displayClientMessage(this.translate(lang), false);
             }
+            if ( enabled && !player.isCreative() && !player.isSpectator()){
+                player.maxUpStep = 0.6F;
+                player.getAbilities().mayfly = false;
+                player.getAbilities().flying = false;
+            }
         }
         if (enabled) {
             if (ElectricItem.MANAGER.getCharge(stack) >= 512){
@@ -59,6 +64,9 @@ public interface IGravitationJetpack extends ILangHelper {
                         this.useEu(player, stack, 512);
                     }*/
                     this.useEu(player, stack, player.getAbilities().flying ? 512 : 256);
+                    if (ElectricItem.MANAGER.getCharge(stack) < 512){
+                        tag.putBoolean("ResetFlying", true);
+                    }
                 }
                 player.getAbilities().mayfly = true;
                 player.maxUpStep = 1.0625F;
@@ -86,17 +94,14 @@ public interface IGravitationJetpack extends ILangHelper {
                 }*/
                 return false;
             }else {
-                if (!player.isCreative() && !player.isSpectator()){
-                    player.maxUpStep = 0.6F;
-                    player.getAbilities().mayfly = false;
-                    player.getAbilities().flying = false;
+                if (tag.contains("ResetFlying")) {
+                    tag.remove("ResetFlying");
+                    if (!player.isCreative() && !player.isSpectator()){
+                        player.maxUpStep = 0.6F;
+                        player.getAbilities().mayfly = false;
+                        player.getAbilities().flying = false;
+                    }
                 }
-            }
-        } else {
-            if (!player.isCreative() && !player.isSpectator() && player.getAbilities().flying){
-                player.maxUpStep = 0.6F;
-                player.getAbilities().mayfly = false;
-                player.getAbilities().flying = false;
             }
         }
         return true;
