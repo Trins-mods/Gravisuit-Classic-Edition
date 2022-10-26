@@ -9,6 +9,7 @@ import ic2.core.item.armor.electric.ItemArmorElectricJetpack;
 import ic2.core.item.armor.electric.ItemArmorQuantumSuit;
 import ic2.core.item.inv.inventories.NuclearJetpackInventory;
 import ic2.core.item.inv.logics.NuclearJetpackLogic;
+import ic2.core.platform.lang.components.base.LocaleComp;
 import ic2.core.platform.lang.storage.Ic2InfoLang;
 import ic2.core.platform.player.PlayerHandler;
 import ic2.core.platform.registry.Ic2Lang;
@@ -220,50 +221,35 @@ public class ItemArmorNuclearGravisuit extends ItemArmorQuantumSuit implements I
             PlayerHandler handler = PlayerHandler.getHandlerForPlayer(player);
             byte jetpackTicker = nbt.getByte("JetpackTicker");
             boolean server = IC2.platform.isSimulating();
-            if (enabled) {
+            if (handler.toggleKeyDown && handler.boostKeyDown && jetpackTicker <= 0) {
+                boolean disabled = !enabled;
+                nbt.setByte("JetpackTicker", (byte)10);
+                nbt.setBoolean("enabled", disabled);
                 if (server) {
-                    if (jetpackTicker > 0) {
-                        --jetpackTicker;
-                        nbt.setByte("JetpackTicker", jetpackTicker);
-                    } else if (handler.toggleKeyDown && handler.boostKeyDown) {
-                        nbt.setByte("JetpackTicker", (byte)10);
-                        nbt.setBoolean("enabled", false);
-                        IC2.platform.messagePlayer(player, GravisuitLang.graviEngineOff);
-                        if (!player.capabilities.isCreativeMode && !player.isSpectator()){
-                            player.stepHeight = 0.6F;
-                            player.capabilities.allowFlying = false;
-                            player.capabilities.isFlying = false;
-                        }
-                    }
+                    LocaleComp lang = disabled ? GravisuitLang.graviEngineOn : GravisuitLang.graviEngineOff;
+                    IC2.platform.messagePlayer(player, lang);
                 }
-
-            } else {
-                if (handler.toggleKeyDown && handler.boostKeyDown && jetpackTicker <= 0) {
-                    if (server) {
-                        nbt.setBoolean("enabled", true);
-                        nbt.setByte("JetpackTicker", (byte)10);
-                        IC2.platform.messagePlayer(player, GravisuitLang.graviEngineOn);
-                        return;
-                    }
-                } else if (jetpackTicker > 0) {
-                    --jetpackTicker;
-                    nbt.setByte("JetpackTicker", jetpackTicker);
+                if (enabled && !player.capabilities.isCreativeMode && !player.isSpectator()){
+                    player.stepHeight = 0.6F;
+                    player.capabilities.allowFlying = false;
+                    player.capabilities.isFlying = false;
                 }
+                enabled = disabled;
             }
 
             if (enabled && ElectricItem.manager.getCharge(stack) >= 1024){
+                if (jetpackTicker > 0) {
+                    --jetpackTicker;
+                    nbt.setByte("JetpackTicker", jetpackTicker);
+                }
                 if (!player.capabilities.isCreativeMode && !player.isSpectator()){
                     if (handler.quantumArmorBoostSprint && player.isSprinting() && ItemArmorGravisuit.hasQuantumLegs(player)){
                         this.useEnergy(player, stack, 1024);
                     }else {
                         this.useEnergy(player, stack, 512);
                     }
-                    if (ElectricItem.manager.getCharge(stack) <= 512){
-                        if (!player.capabilities.isCreativeMode && !player.isSpectator()){
-                            player.stepHeight = 0.6F;
-                            player.capabilities.allowFlying = false;
-                            player.capabilities.isFlying = false;
-                        }
+                    if (ElectricItem.manager.getCharge(stack) < 1024){
+                        nbt.setBoolean("ResetFlying", true);
                     }
                 }
                 player.capabilities.allowFlying = true;
@@ -287,6 +273,14 @@ public class ItemArmorNuclearGravisuit extends ItemArmorQuantumSuit implements I
                     }
                 }
             }else {
+                if (nbt.hasKey("ResetFlying")) {
+                    nbt.removeTag("ResetFlying");
+                    if (!player.isCreative() && !player.isSpectator()){
+                        player.stepHeight = 0.6F;
+                        player.capabilities.allowFlying = false;
+                        player.capabilities.isFlying = false;
+                    }
+                }
                 super.onArmorTick(world, player, stack);
             }
         }
