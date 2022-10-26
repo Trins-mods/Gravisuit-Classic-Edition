@@ -99,8 +99,8 @@ dependencies {
     runtime "curse.maven:better_pipes-402834:3050661"
     compileOnly "curse.maven:ic2c_extras-302906:3057114"
     compileOnly "curse.maven:gtc_expansion-349126:3113621"
-    runtime "curse.maven:ic2c_extras-302906:3057114"
-    runtime "curse.maven:gtclassic-324021:3059975"
+    //runtime "curse.maven:ic2c_extras-302906:3057114"
+    //runtime "curse.maven:gtclassic-324021:3059975"
     deobfProvided("RebornCore:RebornCore-${mc_version}:${reborn_core_version}:universal") {
         transitive = false
     }
