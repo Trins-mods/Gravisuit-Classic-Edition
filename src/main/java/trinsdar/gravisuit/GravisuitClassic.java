@@ -20,7 +20,7 @@ import trinsdar.gravisuit.proxy.CommonProxy;
 import trinsdar.gravisuit.util.GravisuitKeys;
 import trinsdar.gravisuit.util.GravisuitRecipes;
 import trinsdar.gravisuit.util.Registry;
-import trinsdar.gravisuit.util.render.GUIHandler;
+import trinsdar.gravisuit.util.render.GraviSuitOverlay;
 
 import static trinsdar.gravisuit.util.Registry.REGISTRY;
 
@@ -67,6 +67,6 @@ public class GravisuitClassic {
 
     @SubscribeEvent
     public void loadComplete(FMLLoadCompleteEvent e) {
-        MinecraftForge.EVENT_BUS.register(new GUIHandler(Minecraft.getInstance(), Minecraft.getInstance().getItemRenderer()));
+        MinecraftForge.EVENT_BUS.register(new GraviSuitOverlay(Minecraft.getInstance(), Minecraft.getInstance().getItemRenderer()));
     }
 }
