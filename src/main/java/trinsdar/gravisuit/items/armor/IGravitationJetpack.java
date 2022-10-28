@@ -30,6 +30,7 @@ import java.util.Map;
 import java.util.WeakHashMap;
 
 public interface IGravitationJetpack extends ILangHelper {
+
     default boolean armorTick(ItemStack stack, Level world, Player player){
         CompoundTag tag = this.nbtData(stack, true);
         boolean enabled = tag.getBoolean("engine_on");
@@ -166,5 +167,4 @@ public interface IGravitationJetpack extends ILangHelper {
 
         return !legs.isEmpty() && legs.getItem() instanceof QuantumSuit;
     }
-
 }
