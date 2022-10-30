@@ -1,10 +1,14 @@
 package trinsdar.gravisuit.util;
 
 import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.fml.event.config.ModConfigEvent;
 import org.apache.commons.lang3.tuple.Pair;
 import trinsdar.gravisuit.GravisuitClassic;
 
+@Mod.EventBusSubscriber(modid = GravisuitClassic.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class GravisuitConfig {
     public static final Client CLIENT = new Client();
     public static final EnabledItems ENABLED_ITEMS = new EnabledItems();
@@ -25,6 +29,11 @@ public class GravisuitConfig {
         COMMON_CONFIG = COMMON_PAIR.getLeft();
         COMMON_SPEC = COMMON_PAIR.getRight();
 
+    }
+
+    @SubscribeEvent
+    public static void onModConfigEvent(final ModConfigEvent e) {
+        onModConfigEvent(e.getConfig());
     }
 
     public static void onModConfigEvent(final ModConfig e) {
