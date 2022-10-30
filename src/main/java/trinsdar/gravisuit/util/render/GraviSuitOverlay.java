@@ -3,7 +3,10 @@ package trinsdar.gravisuit.util.render;
 import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.vertex.PoseStack;
 import ic2.api.items.electric.ElectricItem;
+import ic2.core.item.wearable.armor.electric.ElectricPackArmor;
+import ic2.core.item.wearable.base.IC2ElectricJetpackBase;
 import ic2.core.item.wearable.base.IC2JetpackBase;
+import ic2.core.item.wearable.base.IC2ModularElectricArmor;
 import ic2.core.utils.helpers.StackUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
@@ -64,9 +67,16 @@ public class GraviSuitOverlay extends Gui {
 		yPos3 = yPos2 + fontRenderer.lineHeight + 2;
 		yPos4 = yPos3 + fontRenderer.lineHeight + 2;
 
-		if (itemArmor instanceof IHasOverlay) {
+		if (itemArmor instanceof IHasOverlay overlay && overlay.isEnabled(stackArmor)) {
 
-			CompoundTag tag = StackUtil.getNbtData(stackArmor);
+			CompoundTag tag = overlay.getArmorNBT(stackArmor, true);
+
+			if (itemArmor instanceof IC2ModularElectricArmor armor){
+				IC2JetpackBase base = armor.getJetpack(stackArmor);
+				if (base != null){
+					itemArmor = base;
+				}
+			}
 
 			// Energy stats starts
 
@@ -110,21 +120,16 @@ public class GraviSuitOverlay extends Gui {
 			String graviEngineString = "message.info.gravitation";
 			Component graviEngineToDisplay = formatComplexMessage(ChatFormatting.AQUA, graviEngineString, graviEngineStatusColor, graviEngineStatus);
 
-			if (itemArmor instanceof ItemAdvancedLappack) {
+			if (itemArmor instanceof ElectricPackArmor) {
 				fontRenderer.drawShadow(matrix, energyToDisplay, getXOffset(energyToDisplay.getString(), window), yPos1, 0);
 			}
-			if (itemArmor instanceof ItemAdvancedNuclearJetpack || itemArmor instanceof ItemAdvancedElectricJetpack) {
+			if (itemArmor instanceof IC2ElectricJetpackBase) {
 				fontRenderer.drawShadow(matrix, energyToDisplay, getXOffset(energyToDisplay.getString(), window), yPos1, 0);
 				fontRenderer.drawShadow(matrix, engineToDisplay, getXOffset(engineToDisplay.getString(), window), yPos2, 0);
 				fontRenderer.drawShadow(matrix, hoverToDisplay, getXOffset(hoverToDisplay.getString(), window), yPos3, 0);
 			}
-
-			if (itemArmor instanceof ItemGravitationJetpack || itemArmor instanceof ItemNuclearGravitationJetpack) {
-				fontRenderer.drawShadow(matrix, energyToDisplay, getXOffset(energyToDisplay.getString(), window), yPos1, 0);
-				fontRenderer.drawShadow(matrix, engineToDisplay, getXOffset(engineToDisplay.getString(), window), yPos2, 0);
-				fontRenderer.drawShadow(matrix, hoverToDisplay, getXOffset(hoverToDisplay.getString(), window), yPos3, 0);
+			if (itemArmor instanceof IGravitationJetpack) {
 				fontRenderer.drawShadow(matrix, graviEngineToDisplay, getXOffset(graviEngineToDisplay.getString(), window), yPos4, 0);
-
 			}
 		}
 	}
@@ -168,7 +173,7 @@ public class GraviSuitOverlay extends Gui {
 	}
 
 	private static IC2JetpackBase.HoverMode getHoverStatus(ItemStack stack) {
-		CompoundTag tag = StackUtil.getNbtData(stack);
+		CompoundTag tag = stack.getItem() instanceof IC2ModularElectricArmor ? StackUtil.getNbtData(stack).getCompound("jetpack_data") : StackUtil.getNbtData(stack);
 		return IC2JetpackBase.HoverMode.byIndex(tag.getByte("HoverMode"));
 	}
 

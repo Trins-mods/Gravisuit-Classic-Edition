@@ -8,7 +8,10 @@
   "mixins": [
     "PlayerHandlerMixin",
     "CompactedJetpackMixin",
-    "CompactedNuclearJetpackMixin"
+    "CompactedNuclearJetpackMixin",
+    "IC2ElectricJetpackBaseMixin",
+    "IC2ModularElectricArmorMixin",
+    "ElectricPackArmorMixin"
   ],
   "minVersion": "0.8"
 }

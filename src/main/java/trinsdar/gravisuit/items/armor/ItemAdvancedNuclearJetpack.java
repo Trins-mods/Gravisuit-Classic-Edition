@@ -6,7 +6,7 @@ import net.minecraft.world.item.ItemStack;
 import trinsdar.gravisuit.GravisuitClassic;
 import trinsdar.gravisuit.util.Registry;
 
-public class ItemAdvancedNuclearJetpack extends NuclearJetpack implements IHasOverlay {
+public class ItemAdvancedNuclearJetpack extends NuclearJetpack {
     public ItemAdvancedNuclearJetpack() {
         super("advanced_electric_jetpack");
         Registry.REGISTRY.put(new ResourceLocation(GravisuitClassic.MODID,"advanced_nuclear_jetpack"), this);

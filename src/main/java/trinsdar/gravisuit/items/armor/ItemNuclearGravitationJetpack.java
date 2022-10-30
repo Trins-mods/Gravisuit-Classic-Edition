@@ -17,7 +17,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import trinsdar.gravisuit.GravisuitClassic;
 import trinsdar.gravisuit.util.Registry;
 
-public class ItemNuclearGravitationJetpack extends NuclearJetpack implements IGravitationJetpack, IHasOverlay {
+public class ItemNuclearGravitationJetpack extends NuclearJetpack implements IGravitationJetpack {
     public ItemNuclearGravitationJetpack() {
         super("nuclear_gravitation_jetpack");
         Registry.REGISTRY.put(new ResourceLocation(GravisuitClassic.MODID,"nuclear_gravitation_jetpack"), this);

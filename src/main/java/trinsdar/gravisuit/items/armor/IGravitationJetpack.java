@@ -29,7 +29,7 @@ import trinsdar.gravisuit.util.IGravisuitPlayerHandler;
 import java.util.Map;
 import java.util.WeakHashMap;
 
-public interface IGravitationJetpack extends ILangHelper {
+public interface IGravitationJetpack extends ILangHelper, IHasOverlay {
 
     default boolean armorTick(ItemStack stack, Level world, Player player){
         CompoundTag tag = this.nbtData(stack, true);

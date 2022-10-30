@@ -17,7 +17,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import trinsdar.gravisuit.GravisuitClassic;
 import trinsdar.gravisuit.util.Registry;
 
-public class ItemGravitationJetpack extends IC2ElectricJetpackBase implements IGravitationJetpack, IHasOverlay {
+public class ItemGravitationJetpack extends IC2ElectricJetpackBase implements IGravitationJetpack {
     public ItemGravitationJetpack() {
         super("gravitation_jetpack", EquipmentSlot.CHEST, null);
         Registry.REGISTRY.put(new ResourceLocation(GravisuitClassic.MODID,"gravitation_jetpack"), this);
