@@ -1,5 +1,6 @@
 package trinsdar.gravisuit;
 
+import ic2.core.IC2;
 import ic2.core.platform.recipes.misc.AdvRecipeRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.api.distmarker.Dist;
@@ -72,6 +73,8 @@ public class GravisuitClassic {
 
     @SubscribeEvent
     public void loadComplete(FMLLoadCompleteEvent e) {
-        MinecraftForge.EVENT_BUS.register(new GraviSuitOverlay(Minecraft.getInstance(), Minecraft.getInstance().getItemRenderer()));
+        if (IC2.PLATFORM.isRendering()) {
+            MinecraftForge.EVENT_BUS.register(new GraviSuitOverlay(Minecraft.getInstance(), Minecraft.getInstance().getItemRenderer()));
+        }
     }
 }
