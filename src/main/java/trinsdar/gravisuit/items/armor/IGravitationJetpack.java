@@ -51,6 +51,7 @@ public interface IGravitationJetpack extends ILangHelper {
                 player.getAbilities().mayfly = false;
                 player.getAbilities().flying = false;
             }
+            enabled = disabled;
         }
         if (enabled) {
             if (ElectricItem.MANAGER.getCharge(stack) >= 512){
