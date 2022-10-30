@@ -56,7 +56,7 @@ public class GraviSuitOverlay extends Gui {
 		ItemStack stackArmor = player.getItemBySlot(EquipmentSlot.CHEST);
 		Item itemArmor = stackArmor.getItem();
 
-		if (GravisuitConfig.client.positions == GravisuitConfig.Client.Positions.BOTTOMLEFT || GravisuitConfig.client.positions == GravisuitConfig.Client.Positions.BOTTOMRIGHT) {
+		if (GravisuitConfig.CLIENT.POSITIONS == GravisuitConfig.Client.Positions.BOTTOMLEFT || GravisuitConfig.CLIENT.POSITIONS == GravisuitConfig.Client.Positions.BOTTOMRIGHT) {
 			yPos1 = window.getGuiScaledHeight() - ((fontRenderer.lineHeight * 2) + 5);
 		}
 
@@ -130,13 +130,11 @@ public class GraviSuitOverlay extends Gui {
 	}
 
 	private static int getXOffset(String value, Window window) {
-		int xPos = 0;
-		switch (GravisuitConfig.client.positions) {
-			case TOPLEFT, BOTTOMLEFT -> xPos = offset;
-			case TOPRIGHT, BOTTOMRIGHT -> xPos = window.getGuiScaledWidth() - 3 - fontRenderer.width(value);
-			case TOPMIDDLE -> xPos = (int) (window.getGuiScaledWidth() * 0.50F) - (fontRenderer.width(value) / 2);
-		}
-		return xPos;
+		return switch (GravisuitConfig.CLIENT.POSITIONS) {
+			case TOPLEFT, BOTTOMLEFT -> offset;
+			case TOPRIGHT, BOTTOMRIGHT -> window.getGuiScaledWidth() - 3 - fontRenderer.width(value);
+			case TOPMIDDLE -> (int) (window.getGuiScaledWidth() * 0.50F) - (fontRenderer.width(value) / 2);
+		};
 	}
 
 	public boolean or(Item compare, Item... items){

@@ -56,8 +56,8 @@ public class ItemToolGravitool extends ElectricWrenchTool implements ICropModifi
 
     public ItemToolGravitool() {
         super("gravitool", null);
-        this.capacity = GravisuitConfig.powerValues.gravitoolStorage;
-        this.transferLimit = GravisuitConfig.powerValues.gravitoolTransfer;
+        this.capacity = GravisuitConfig.POWER_VALUES.GRAVITOOL_STORAGE;
+        this.transferLimit = GravisuitConfig.POWER_VALUES.GRAVITOOL_TRANSFER;
         this.tier = 2;
         this.losslessUses = -1;
         id = new ResourceLocation(GravisuitClassic.MODID,"gravitool");

@@ -7,7 +7,9 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
@@ -17,6 +19,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegisterEvent;
 import org.apache.logging.log4j.Logger;
 import trinsdar.gravisuit.proxy.CommonProxy;
+import trinsdar.gravisuit.util.GravisuitConfig;
 import trinsdar.gravisuit.util.GravisuitKeys;
 import trinsdar.gravisuit.util.GravisuitRecipes;
 import trinsdar.gravisuit.util.Registry;
@@ -36,6 +39,8 @@ public class GravisuitClassic {
     public static Logger logger;
     public GravisuitClassic(){
         FMLJavaModLoadingContext.get().getModEventBus().register(this);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, GravisuitConfig.CLIENT_SPEC);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, GravisuitConfig.COMMON_SPEC);
         if (!FMLEnvironment.production){
             System.setProperty("ic2workspace", "true");
         }
