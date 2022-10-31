@@ -56,8 +56,6 @@ public class ItemToolGravitool extends ElectricWrenchTool implements ICropModifi
 
     public ItemToolGravitool() {
         super("gravitool", null);
-        this.capacity = GravisuitConfig.POWER_VALUES.GRAVITOOL_STORAGE;
-        this.transferLimit = GravisuitConfig.POWER_VALUES.GRAVITOOL_TRANSFER;
         this.tier = 2;
         this.losslessUses = -1;
         id = new ResourceLocation(GravisuitClassic.MODID,"gravitool");
@@ -69,16 +67,15 @@ public class ItemToolGravitool extends ElectricWrenchTool implements ICropModifi
         return id;
     }
 
-    public void setTier(int tier){
-        this.tier = tier;
+
+    @Override
+    public int getCapacity(ItemStack stack) {
+        return GravisuitConfig.POWER_VALUES.GRAVITOOL_STORAGE;
     }
 
-    public void setMaxCharge(int storage){
-        this.capacity = storage;
-    }
-
-    public void setMaxTransfer(int maxTransfer) {
-        this.transferLimit = maxTransfer;
+    @Override
+    public int getTransferLimit(ItemStack stack) {
+        return GravisuitConfig.POWER_VALUES.GRAVITOOL_TRANSFER;
     }
 
     @Override

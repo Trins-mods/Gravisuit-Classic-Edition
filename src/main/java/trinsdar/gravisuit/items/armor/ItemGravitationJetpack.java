@@ -15,6 +15,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import trinsdar.gravisuit.GravisuitClassic;
+import trinsdar.gravisuit.util.GravisuitConfig;
 import trinsdar.gravisuit.util.Registry;
 
 public class ItemGravitationJetpack extends IC2ElectricJetpackBase implements IGravitationJetpack {
@@ -31,7 +32,7 @@ public class ItemGravitationJetpack extends IC2ElectricJetpackBase implements IG
 
     @Override
     public int getCapacity(ItemStack itemStack) {
-        return 500000;
+        return GravisuitConfig.POWER_VALUES.GRAVITATION_JETPACK_STORAGE;
     }
 
     @Override
@@ -41,7 +42,7 @@ public class ItemGravitationJetpack extends IC2ElectricJetpackBase implements IG
 
     @Override
     public int getTransferLimit(ItemStack itemStack) {
-        return 1000;
+        return GravisuitConfig.POWER_VALUES.GRAVITATION_JETPACK_TRANSFER;
     }
 
     @Override

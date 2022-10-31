@@ -4,6 +4,7 @@ import ic2.core.item.wearable.jetpacks.NuclearJetpack;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import trinsdar.gravisuit.GravisuitClassic;
+import trinsdar.gravisuit.util.GravisuitConfig;
 import trinsdar.gravisuit.util.Registry;
 
 public class ItemAdvancedNuclearJetpack extends NuclearJetpack {
@@ -19,7 +20,7 @@ public class ItemAdvancedNuclearJetpack extends NuclearJetpack {
 
     @Override
     public int getCapacity(ItemStack itemStack) {
-        return 200000;
+        return GravisuitConfig.POWER_VALUES.ADVANCED_NUCLEAR_JETPACK_STORAGE;
     }
 
     @Override
@@ -29,7 +30,7 @@ public class ItemAdvancedNuclearJetpack extends NuclearJetpack {
 
     @Override
     public int getTransferLimit(ItemStack itemStack) {
-        return 500;
+        return GravisuitConfig.POWER_VALUES.ADVANCED_NUCLEAR_JETPACK_TRANSFER;
     }
 
     @Override

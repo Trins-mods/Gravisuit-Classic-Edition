@@ -5,6 +5,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
 import trinsdar.gravisuit.GravisuitClassic;
+import trinsdar.gravisuit.util.GravisuitConfig;
 import trinsdar.gravisuit.util.Registry;
 
 public class ItemAdvancedElectricJetpack extends IC2ElectricJetpackBase {
@@ -20,7 +21,7 @@ public class ItemAdvancedElectricJetpack extends IC2ElectricJetpackBase {
 
     @Override
     public int getCapacity(ItemStack itemStack) {
-        return 200000;
+        return GravisuitConfig.POWER_VALUES.ADVANCED_ELECTRIC_JETPACK_STORAGE;
     }
 
     @Override
@@ -30,7 +31,7 @@ public class ItemAdvancedElectricJetpack extends IC2ElectricJetpackBase {
 
     @Override
     public int getTransferLimit(ItemStack itemStack) {
-        return 500;
+        return GravisuitConfig.POWER_VALUES.ADVANCED_ELECTRIC_JETPACK_TRANSFER;
     }
 
     @Override

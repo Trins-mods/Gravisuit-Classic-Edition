@@ -1,16 +1,39 @@
 package trinsdar.gravisuit.items.tools;
 
+import ic2.api.items.electric.IDamagelessElectricItem;
 import ic2.core.utils.IC2ItemGroup;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import trinsdar.gravisuit.GravisuitClassic;
+import trinsdar.gravisuit.util.GravisuitConfig;
 import trinsdar.gravisuit.util.Registry;
 
-public class ItemRelocator extends Item /*BasicElectricItem implements IHandHeldInventory*/ {
+public class ItemRelocator extends Item implements IDamagelessElectricItem /*BasicElectricItem implements IHandHeldInventory*/ {
 
     public ItemRelocator() {
         super(new Item.Properties().tab(IC2ItemGroup.TAB_TOOLS));
         Registry.REGISTRY.put(new ResourceLocation(GravisuitClassic.MODID, "relocator"), this);
+    }
+
+    @Override
+    public boolean canProvideEnergy(ItemStack itemStack) {
+        return false;
+    }
+
+    @Override
+    public int getCapacity(ItemStack stack) {
+        return GravisuitConfig.POWER_VALUES.RELOCATOR_STORAGE;
+    }
+
+    @Override
+    public int getTier(ItemStack itemStack) {
+        return 5;
+    }
+
+    @Override
+    public int getTransferLimit(ItemStack stack) {
+        return GravisuitConfig.POWER_VALUES.RELOCATOR_TRANSFER;
     }
 
    /* @Override

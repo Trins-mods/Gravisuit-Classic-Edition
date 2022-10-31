@@ -40,6 +40,7 @@ import net.minecraft.world.level.material.Material;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import trinsdar.gravisuit.GravisuitClassic;
+import trinsdar.gravisuit.util.GravisuitConfig;
 import trinsdar.gravisuit.util.GravisuitLang;
 import trinsdar.gravisuit.util.Registry;
 
@@ -55,6 +56,16 @@ public class ItemToolVajra extends DrillTool {
         this.capacity = 3000000;
         this.transferLimit = 1000;
         this.tier = 3;
+    }
+
+    @Override
+    public int getCapacity(ItemStack stack) {
+        return GravisuitConfig.POWER_VALUES.VAJRA_STORAGE;
+    }
+
+    @Override
+    public int getTransferLimit(ItemStack stack) {
+        return GravisuitConfig.POWER_VALUES.VAJRA_TRANSFER;
     }
 
     @Override
