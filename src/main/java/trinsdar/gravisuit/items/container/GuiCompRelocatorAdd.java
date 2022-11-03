@@ -1,39 +1,48 @@
-/*
 package trinsdar.gravisuit.items.container;
 
 import com.google.common.base.Strings;
 import ic2.core.IC2;
-import ic2.core.inventory.gui.components.GuiComponent;
+import ic2.core.inventory.gui.IC2Screen;
+import ic2.core.inventory.gui.components.GuiWidget;
 import ic2.core.utils.helpers.StackUtil;
-import net.minecraft.item.ItemStack;
+import ic2.core.utils.math.geometry.Box2i;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import trinsdar.gravisuit.GravisuitClassic;
 import trinsdar.gravisuit.items.tools.ItemRelocator;
 import trinsdar.gravisuit.network.PacketRelocator;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
-public class GuiCompRelocatorAdd extends GuiComponent {
+public class GuiCompRelocatorAdd extends GuiWidget {
 
     ItemStack relocator;
-    EntityPlayer player;
-    EnumHand hand;
+    Player player;
+    InteractionHand hand;
     int y;
-    private Box2D BOX;
+    private Box2i BOX;
     private GuiTextField textBox;
 
-    public GuiCompRelocatorAdd(EnumHand hand, EntityPlayer player) {
-        super(new Box2D(21, 18, 1, 11));
-        BOX = new Box2D(21, 18, 18, 11);
-        this.relocator = player.getHeldItem(hand);
+    public GuiCompRelocatorAdd(InteractionHand hand, Player player) {
+        super(new Box2i(21, 18, 1, 11));
+        BOX = new Box2i(21, 18, 18, 11);
+        this.relocator = player.getItemInHand(hand);
         this.hand = hand;
         this.y = 18;
         this.player = player;
     }
 
     @Override
-    public List<ActionRequest> getNeededRequests() {
-        return Arrays.asList(ActionRequest.GuiInit, ActionRequest.ButtonNotify, ActionRequest.ToolTip, ActionRequest.KeyPressed, ActionRequest.MouseClick, ActionRequest.PostDraw);
+    protected void addRequests(Set<ActionRequest> set) {
+        set.addAll(Arrays.asList(ActionRequest.GUI_INIT, ActionRequest.MOUSE_INPUT, ActionRequest.TOOLTIP, ActionRequest.KEY_INPUT, ActionRequest.DRAW_POST));
+    }
+
+    @Override
+    public void init(IC2Screen gui) {
+        super.init(gui);
     }
 
     @Override
@@ -123,4 +132,3 @@ public class GuiCompRelocatorAdd extends GuiComponent {
         return (value >= low) && (value <= high);
     }
 }
-*/
