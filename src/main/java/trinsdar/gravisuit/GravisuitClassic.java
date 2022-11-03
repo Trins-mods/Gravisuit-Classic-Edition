@@ -55,6 +55,7 @@ public class GravisuitClassic {
     @OnlyIn(Dist.CLIENT)
     @SubscribeEvent
     public void onClientSetup(FMLClientSetupEvent event){
+        MinecraftForge.EVENT_BUS.register(new GraviSuitOverlay(Minecraft.getInstance(), Minecraft.getInstance().getItemRenderer()));
     }
 
     @OnlyIn(Dist.CLIENT)
@@ -68,13 +69,6 @@ public class GravisuitClassic {
         if (event.getRegistryKey().equals(ForgeRegistries.Keys.ITEMS)){
             Registry.init();
             REGISTRY.forEach((r, i) -> event.register(ForgeRegistries.Keys.ITEMS, r, () -> i));
-        }
-    }
-
-    @SubscribeEvent
-    public void loadComplete(FMLLoadCompleteEvent e) {
-        if (IC2.PLATFORM.isRendering()) {
-            MinecraftForge.EVENT_BUS.register(new GraviSuitOverlay(Minecraft.getInstance(), Minecraft.getInstance().getItemRenderer()));
         }
     }
 }
