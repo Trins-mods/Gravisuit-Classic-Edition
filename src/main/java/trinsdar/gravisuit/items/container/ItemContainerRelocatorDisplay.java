@@ -31,5 +31,6 @@ public class ItemContainerRelocatorDisplay extends ItemContainer<ItemInventoryRe
         super.onGuiLoaded(screen);
         screen.setYSize(116);
         screen.setGuiName(Component.empty());
+        screen.clearFlag(IC2Screen.SHOW_PLAYER_INVENTORY_NAME);
     }
 }

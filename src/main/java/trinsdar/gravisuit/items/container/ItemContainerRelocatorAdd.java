@@ -3,6 +3,7 @@ package trinsdar.gravisuit.items.container;
 import ic2.core.IC2;
 import ic2.core.inventory.container.ItemContainer;
 import ic2.core.inventory.gui.IC2Screen;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
@@ -29,5 +30,7 @@ public class ItemContainerRelocatorAdd extends ItemContainer<ItemInventoryReloca
     public void onGuiLoaded(IC2Screen screen) {
         super.onGuiLoaded(screen);
         screen.setYSize(66);
+        screen.setGuiName(Component.empty());
+        screen.clearFlag(IC2Screen.SHOW_PLAYER_INVENTORY_NAME);
     }
 }
