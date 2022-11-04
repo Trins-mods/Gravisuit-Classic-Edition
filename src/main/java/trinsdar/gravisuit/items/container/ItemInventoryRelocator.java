@@ -1,52 +1,41 @@
-/*
 package trinsdar.gravisuit.items.container;
 
-import ic2.core.inventory.base.IC2ItemInventory;
-import ic2.core.inventory.container.ContainerIC2;
-import ic2.core.util.misc.StackUtil;
-import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumHand;
+import ic2.core.inventory.container.IC2Container;
+import ic2.core.inventory.inv.PortableInventory;
+import ic2.core.utils.helpers.StackUtil;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import trinsdar.gravisuit.items.tools.ItemRelocator;
 
-public class ItemInventoryRelocator extends IC2ItemInventory {
+public class ItemInventoryRelocator extends PortableInventory {
     ItemStack relocator;
-    EnumHand hand;
-    public ItemInventoryRelocator(EntityPlayer player, ItemRelocator inv, ItemStack relocator, EnumHand hand) {
-        super(player, inv, relocator);
+    InteractionHand hand;
+    public ItemInventoryRelocator(Player player, ItemRelocator inv, ItemStack relocator, InteractionHand hand) {
+        super(player, inv, relocator, null);
         this.relocator = relocator;
         this.hand = hand;
     }
 
     @Override
-    public int getInventorySize() {
-        return 1;
-    }
-
-    @Override
-    public ContainerIC2 getGuiContainer(EntityPlayer player) {
-        NBTTagCompound nbt = StackUtil.getNbtData(relocator);
-        if (player.isSneaking() && nbt.getByte("TeleportMode") == 0){
-            return new ItemContainerRelocatorAdd(this, this.getID(), hand, player);
+    public IC2Container createContainer(Player player, InteractionHand interactionHand, Direction direction, int i) {
+        CompoundTag nbt = StackUtil.getNbtData(relocator);
+        if (player.isCrouching() /*&& nbt.getByte("TeleportMode") == 0*/){
+            return new ItemContainerRelocatorAdd(this, this.getID(), hand, player, i);
         }
-        return new ItemContainerRelocatorDisplay(this, this.getID(), hand, player);
+        return null;
+        //return new ItemContainerRelocatorDisplay(this, this.getID(), hand, player);
     }
 
     @Override
-    public Class<? extends GuiScreen> getGuiClass(EntityPlayer player) {
-        return GuiRelocator.class;
+    public boolean hasGui(Player player, InteractionHand hand, Direction side) {
+        return super.hasGui(player, hand, side) && player.isCrouching();
     }
 
     @Override
-    public boolean canInteractWith(EntityPlayer entityPlayer) {
-        return !entityPlayer.isDead;
-    }
-
-    @Override
-    public boolean hasGui(EntityPlayer entityPlayer) {
-        return true;
+    public int getSlotCount() {
+        return 0;
     }
 }
-*/

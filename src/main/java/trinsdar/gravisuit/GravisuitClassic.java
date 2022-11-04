@@ -1,8 +1,8 @@
 package trinsdar.gravisuit;
 
-import ic2.core.IC2;
 import ic2.core.platform.recipes.misc.AdvRecipeRegistry;
 import net.minecraft.client.Minecraft;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
@@ -13,18 +13,22 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLEnvironment;
+import net.minecraftforge.network.NetworkRegistry;
+import net.minecraftforge.network.simple.SimpleChannel;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegisterEvent;
 import org.apache.logging.log4j.Logger;
+import trinsdar.gravisuit.network.PacketRelocator;
 import trinsdar.gravisuit.proxy.CommonProxy;
 import trinsdar.gravisuit.util.GravisuitConfig;
 import trinsdar.gravisuit.util.GravisuitKeys;
 import trinsdar.gravisuit.util.GravisuitRecipes;
 import trinsdar.gravisuit.util.Registry;
 import trinsdar.gravisuit.util.render.GraviSuitOverlay;
+
+import java.sql.Ref;
 
 import static trinsdar.gravisuit.util.Registry.REGISTRY;
 
@@ -33,11 +37,16 @@ public class GravisuitClassic {
     public static final String MODID = "gravisuit";
     public static final String networkChannelName = MODID;
 
-   // public static SimpleNetworkWrapper network;
+    private static final String MAIN_CHANNEL = "main_channel";
+    private static final String PROTOCOL_VERSION = Integer.toString(1);
+
+    public static SimpleChannel NETWORK;
 
     public static CommonProxy proxy;
 
     public static Logger logger;
+    private int currMessageId = 0;
+
     public GravisuitClassic(){
         FMLJavaModLoadingContext.get().getModEventBus().register(this);
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, GravisuitConfig.CLIENT_SPEC);
@@ -45,6 +54,13 @@ public class GravisuitClassic {
         if (!FMLEnvironment.production){
             System.setProperty("ic2workspace", "true");
         }
+        NETWORK = NetworkRegistry.ChannelBuilder.
+                named(new ResourceLocation(MODID, MAIN_CHANNEL)).
+                clientAcceptedVersions(PROTOCOL_VERSION::equals).
+                serverAcceptedVersions(PROTOCOL_VERSION::equals).
+                networkProtocolVersion(() -> PROTOCOL_VERSION).
+                simpleChannel();
+        NETWORK.registerMessage(currMessageId++, PacketRelocator.class, PacketRelocator::encode, PacketRelocator::decode, PacketRelocator::handle);
     }
 
     @SubscribeEvent

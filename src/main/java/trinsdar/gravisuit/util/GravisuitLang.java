@@ -47,6 +47,8 @@ public class GravisuitLang {
     public static String messageRelocatorPersonal = "message.relocatorPersonal";
     public static String messageRelocatorPortal = "message.relocatorPortal";
     public static String messageRelocatorTranslocator = "message.relocatorTranslocator";
+    public static String messageRelocatorAddTeleport = "message.relocatorAddTeleport";
+    public static String messageRelocatorMaxTeleport = "message.relocatorMaxTeleport";
     public static String messageWrench = "message.wrench";
     public static String messageHoe = "message.hoe";
     public static String messageTreetap = "message.treetap";

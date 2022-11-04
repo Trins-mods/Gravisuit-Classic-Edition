@@ -1,20 +1,16 @@
-/*
 package trinsdar.gravisuit.items.container;
 
-import ic2.core.inventory.base.IPortableInventory;
-import ic2.core.inventory.container.ContainerItemComponent;
-import ic2.core.inventory.gui.GuiIC2;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import ic2.core.inventory.container.ItemContainer;
+import ic2.core.inventory.gui.IC2Screen;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.player.Player;
 import trinsdar.gravisuit.GravisuitClassic;
 
-public class ItemContainerRelocatorAdd extends ContainerItemComponent<ItemInventoryRelocator> {
+public class ItemContainerRelocatorAdd extends ItemContainer<ItemInventoryRelocator> {
     public static ResourceLocation TEXTURE = new ResourceLocation(GravisuitClassic.MODID, "textures/gui/relocator_add.png");
-    public ItemContainerRelocatorAdd(IPortableInventory inv, int id, EnumHand hand, EntityPlayer player) {
-        super(inv, id);
+    public ItemContainerRelocatorAdd(ItemInventoryRelocator inv, int id, InteractionHand hand, Player player, int windowId) {
+        super(inv, player, id, windowId);
         addComponent(new GuiCompRelocatorAdd(hand, player));
     }
 
@@ -24,11 +20,8 @@ public class ItemContainerRelocatorAdd extends ContainerItemComponent<ItemInvent
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public void onGuiLoaded(GuiIC2 gui) {
-        gui.setMaxGuiY(66);
-        gui.disableName();
-        gui.dissableInvName();
+    public void onGuiLoaded(IC2Screen screen) {
+        super.onGuiLoaded(screen);
+        screen.setYSize(66);
     }
 }
-*/

@@ -1,15 +1,25 @@
 package trinsdar.gravisuit.items.tools;
 
 import ic2.api.items.electric.IDamagelessElectricItem;
+import ic2.core.IC2;
+import ic2.core.inventory.base.IHasHeldGui;
+import ic2.core.inventory.base.IPortableInventory;
 import ic2.core.utils.IC2ItemGroup;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import trinsdar.gravisuit.GravisuitClassic;
+import trinsdar.gravisuit.items.container.ItemInventoryRelocator;
 import trinsdar.gravisuit.util.GravisuitConfig;
 import trinsdar.gravisuit.util.Registry;
 
-public class ItemRelocator extends Item implements IDamagelessElectricItem /*BasicElectricItem implements IHandHeldInventory*/ {
+public class ItemRelocator extends Item implements IDamagelessElectricItem, IHasHeldGui /*BasicElectricItem implements IHandHeldInventory*/ {
 
     public ItemRelocator() {
         super(new Item.Properties().tab(IC2ItemGroup.TAB_TOOLS));
@@ -36,7 +46,22 @@ public class ItemRelocator extends Item implements IDamagelessElectricItem /*Bas
         return GravisuitConfig.POWER_VALUES.RELOCATOR_TRANSFER;
     }
 
-   /* @Override
+    @Override
+    public IPortableInventory getInventory(Player player, InteractionHand interactionHand, ItemStack itemStack) {
+        return new ItemInventoryRelocator(player, this, itemStack, interactionHand);
+    }
+
+    @Override
+    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+        ItemStack stack = player.getItemInHand(hand);
+        if (IC2.PLATFORM.isSimulating()) {
+            IC2.PLATFORM.launchGui(player, hand, null, this.getInventory(player, hand, stack));
+            return InteractionResultHolder.success(stack);
+        }
+        return super.use(level, player, hand);
+    }
+
+    /* @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer player, EnumHand handIn) {
         ItemStack stack = player.getHeldItem(handIn);
 
@@ -194,24 +219,19 @@ public class ItemRelocator extends Item implements IDamagelessElectricItem /*Bas
 
             }
         }
-    }
+    }*/
 
     public enum TeleportMode {
         PERSONAL,
         PORTAL,
         TRANSLOCATOR;
 
-        private TeleportMode() {
-        }
-
         public TeleportMode getNext() {
-            if (this == PERSONAL) {
-                return PORTAL;
-            } else if (this == PORTAL) {
-                return TRANSLOCATOR;
-            } else {
-                return PERSONAL;
-            }
+            return switch (this){
+                case PERSONAL -> PORTAL;
+                case PORTAL -> TRANSLOCATOR;
+                case TRANSLOCATOR -> PERSONAL;
+            };
         }
     }
 
@@ -219,10 +239,10 @@ public class ItemRelocator extends Item implements IDamagelessElectricItem /*Bas
         int x;
         int y;
         int z;
-        int dimId;
+        String dimId;
         String name;
 
-        public TeleportData(int x, int y, int z, int dimId, String name){
+        public TeleportData(int x, int y, int z, String dimId, String name){
             this.x = x;
             this.y = y;
             this.z = z;
@@ -234,7 +254,7 @@ public class ItemRelocator extends Item implements IDamagelessElectricItem /*Bas
             this.x = 0;
             this.y = 0;
             this.z = 0;
-            this.dimId = 0;
+            this.dimId = "minecraft:overworld";
             this.name = name;
         }
 
@@ -250,7 +270,7 @@ public class ItemRelocator extends Item implements IDamagelessElectricItem /*Bas
             return z;
         }
 
-        public int getDimId() {
+        public String getDimId() {
             return dimId;
         }
 
@@ -274,15 +294,15 @@ public class ItemRelocator extends Item implements IDamagelessElectricItem /*Bas
             this.z = z;
         }
 
-        public void setDimId(int dimId) {
+        public void setDimId(String dimId) {
             this.dimId = dimId;
         }
 
-        public void writeToNBT(NBTTagCompound compound) {
-            compound.setDouble("X", x);
-            compound.setDouble("Y", y);
-            compound.setDouble("Z", z);
-            compound.setInteger("Dimension", dimId);
+        public void writeToNBT(CompoundTag compound) {
+            compound.putDouble("X", x);
+            compound.putDouble("Y", y);
+            compound.putDouble("Z", z);
+            compound.putString("Dimension", dimId);
         }
-    }*/
+    }
 }
