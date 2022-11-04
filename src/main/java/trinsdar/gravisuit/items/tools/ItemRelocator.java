@@ -3,6 +3,7 @@ package trinsdar.gravisuit.items.tools;
 import ic2.api.items.electric.IDamagelessElectricItem;
 import ic2.api.tiles.teleporter.TeleporterTarget;
 import ic2.core.IC2;
+import ic2.core.audio.AudioManager;
 import ic2.core.inventory.base.IHasHeldGui;
 import ic2.core.inventory.base.IPortableInventory;
 import ic2.core.item.base.IC2ElectricItem;
@@ -11,6 +12,7 @@ import ic2.core.platform.registries.IC2Items;
 import ic2.core.platform.rendering.IC2Textures;
 import ic2.core.platform.rendering.features.item.ISimpleItemModel;
 import ic2.core.utils.IC2ItemGroup;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -29,6 +31,8 @@ import net.minecraftforge.server.ServerLifecycleHooks;
 import trinsdar.gravisuit.GravisuitClassic;
 import trinsdar.gravisuit.items.container.ItemInventoryRelocator;
 import trinsdar.gravisuit.util.GravisuitConfig;
+import trinsdar.gravisuit.util.GravisuitLang;
+import trinsdar.gravisuit.util.GravisuitSounds;
 import trinsdar.gravisuit.util.Registry;
 
 public class ItemRelocator extends IC2ElectricItem implements ISimpleItemModel, IHasHeldGui /*BasicElectricItem implements IHandHeldInventory*/ {
@@ -71,7 +75,22 @@ public class ItemRelocator extends IC2ElectricItem implements ISimpleItemModel, 
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
-        if (IC2.PLATFORM.isSimulating()) {
+        CompoundTag nbt = stack.getOrCreateTag();
+        if (IC2.PLATFORM.isSimulating() && IC2.KEYBOARD.isModeSwitchKeyDown(player)){
+            byte mode = nbt.getByte("mode");
+            if (mode == 2) {
+                nbt.putByte("mode", (byte) 0);
+                player.displayClientMessage(this.translate(GravisuitLang.messageRelocatorPersonal, ChatFormatting.GREEN), false);
+            } else if (mode == 0){
+                nbt.putByte("mode", (byte) 1);
+                player.displayClientMessage(this.translate(GravisuitLang.messageRelocatorTranslocator, ChatFormatting.GOLD), false);
+            } else {
+                nbt.putByte("mode", (byte) 2);
+                player.displayClientMessage(this.translate(GravisuitLang.messageRelocatorPortal, ChatFormatting.AQUA), false);
+            }
+            return InteractionResultHolder.success(stack);
+        }
+        if (IC2.PLATFORM.isSimulating() && (player.isCrouching() || nbt.getByte("mode") == 0)) {
             IC2.PLATFORM.launchGui(player, hand, null, this.getInventory(player, hand, stack));
             return InteractionResultHolder.success(stack);
         }

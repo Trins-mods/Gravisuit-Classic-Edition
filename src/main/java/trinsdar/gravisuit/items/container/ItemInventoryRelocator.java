@@ -22,7 +22,7 @@ public class ItemInventoryRelocator extends PortableInventory {
     @Override
     public IC2Container createContainer(Player player, InteractionHand interactionHand, Direction direction, int i) {
         CompoundTag nbt = StackUtil.getNbtData(relocator);
-        if (player.isCrouching() /*&& nbt.getByte("TeleportMode") == 0*/){
+        if (player.isCrouching() && nbt.getByte("mode") == 0){
             return new ItemContainerRelocatorAdd(this, this.getID(), hand, player, i);
         }
         return new ItemContainerRelocatorDisplay(this, this.getID(), hand, player, i);

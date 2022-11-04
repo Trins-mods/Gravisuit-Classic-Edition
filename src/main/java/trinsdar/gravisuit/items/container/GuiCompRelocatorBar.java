@@ -65,7 +65,7 @@ public class GuiCompRelocatorBar extends GuiWidget {
                 location = ItemRelocator.TeleportData.fromNBT(entry, name);
             }
             if (successful) {
-                boolean shift = Screen.hasShiftDown();
+                boolean shift = Screen.hasShiftDown() || nbt.getByte("mode") != 0;
                 if (shift) {
                     GravisuitClassic.NETWORK.sendToServer(new PacketRelocator(location, PacketRelocator.TeleportFunction.ADDDEFAULT, hand));
                     player.displayClientMessage(this.translate(GravisuitLang.messageRelocatorAddDefaultTeleport, ChatFormatting.GREEN, Component.literal(name).withStyle(ChatFormatting.YELLOW)), false);
