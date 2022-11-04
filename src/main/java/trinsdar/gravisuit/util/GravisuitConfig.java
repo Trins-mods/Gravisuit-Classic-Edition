@@ -127,7 +127,7 @@ public class GravisuitConfig {
             NUCLEAR_GRAVITATION_JETPACK_STORAGE = builder.defineInRange("NUCLEAR_GRAVITATION_JETPACK_STORAGE", 500000, 1, Integer.MAX_VALUE);
             GRAVITOOL_STORAGE = builder.defineInRange("GRAVITOOL_STORAGE", 50000, 1, Integer.MAX_VALUE);
             VAJRA_STORAGE = builder.defineInRange("VAJRA_STORAGE", 3000000, 1 , Integer.MAX_VALUE);
-            RELOCATOR_STORAGE = builder.defineInRange("RELOCATOR_STORAGE", 10000000, 1, Integer.MAX_VALUE);
+            RELOCATOR_STORAGE = builder.defineInRange("RELOCATOR_STORAGE", 50000000, 1, Integer.MAX_VALUE);
             builder.pop();
             builder.push("Transfer");
             ADVANCED_ELECTRIC_JETPACK_TRANSFER = builder.defineInRange("ADVANCED_ELECTRIC_JETPACK_TRANSFER", 500, 1, Integer.MAX_VALUE);
