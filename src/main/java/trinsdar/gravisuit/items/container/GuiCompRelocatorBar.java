@@ -68,7 +68,7 @@ public class GuiCompRelocatorBar extends GuiWidget {
                 boolean shift = Screen.hasShiftDown();
                 if (shift) {
                     GravisuitClassic.NETWORK.sendToServer(new PacketRelocator(location, PacketRelocator.TeleportFunction.ADDDEFAULT, hand));
-                    player.displayClientMessage(this.translate(GravisuitLang.messageRelocatorAddDefaultTeleport, ChatFormatting.GREEN, name), false);
+                    player.displayClientMessage(this.translate(GravisuitLang.messageRelocatorAddDefaultTeleport, ChatFormatting.GREEN, Component.literal(name).withStyle(ChatFormatting.YELLOW)), false);
                     nbt.putString("DefaultLocation", name);
                 } else {
                     GravisuitClassic.NETWORK.sendToServer(new PacketRelocator(location, PacketRelocator.TeleportFunction.TELEPORT, hand));
@@ -88,7 +88,7 @@ public class GuiCompRelocatorBar extends GuiWidget {
             boolean successful = map.contains(name);
             if (successful) {
                 GravisuitClassic.NETWORK.sendToServer(new PacketRelocator(location, PacketRelocator.TeleportFunction.REMOVEDESTINATION, hand));
-                player.displayClientMessage(this.translate(GravisuitLang.messageRelocatorRemoveTeleport, ChatFormatting.GREEN, name), false);
+                player.displayClientMessage(this.translate(GravisuitLang.messageRelocatorRemoveTeleport, ChatFormatting.GREEN, Component.literal(name).withStyle(ChatFormatting.YELLOW)), false);
                 map.remove(name);
             } else {
                 player.displayClientMessage(this.translate(GravisuitLang.messageRelocatorNotContainsTeleport, ChatFormatting.RED), false);

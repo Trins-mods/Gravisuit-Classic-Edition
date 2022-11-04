@@ -82,7 +82,7 @@ public class GuiCompRelocatorAdd extends GuiWidget {
                 }
                 if (successful) {
                     GravisuitClassic.NETWORK.sendToServer(new PacketRelocator(location, PacketRelocator.TeleportFunction.ADDDESTINATION, hand));
-                    player.displayClientMessage(this.translate(GravisuitLang.messageRelocatorAddTeleport, ChatFormatting.GREEN, name), false);
+                    player.displayClientMessage(this.translate(GravisuitLang.messageRelocatorAddTeleport, ChatFormatting.GREEN, Component.literal(name).withStyle(ChatFormatting.YELLOW)), false);
                 } else {
                     player.displayClientMessage(this.translate(GravisuitLang.messageRelocatorMaxTeleport, ChatFormatting.RED), false);
                 }
