@@ -1,6 +1,7 @@
 package trinsdar.gravisuit.items.container;
 
 import com.google.common.base.Strings;
+import com.mojang.blaze3d.vertex.PoseStack;
 import ic2.core.inventory.gui.IC2Screen;
 import ic2.core.inventory.gui.components.GuiWidget;
 import ic2.core.utils.helpers.StackUtil;
@@ -14,7 +15,9 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import trinsdar.gravisuit.GravisuitClassic;
 import trinsdar.gravisuit.items.tools.ItemRelocator;
+import trinsdar.gravisuit.network.PacketRelocator;
 import trinsdar.gravisuit.util.GravisuitLang;
 
 import java.util.Arrays;
@@ -40,7 +43,7 @@ public class GuiCompRelocatorAdd extends GuiWidget {
 
     @Override
     protected void addRequests(Set<ActionRequest> set) {
-        set.addAll(Arrays.asList(ActionRequest.GUI_INIT, ActionRequest.MOUSE_INPUT, ActionRequest.TOOLTIP, ActionRequest.KEY_INPUT));
+        set.addAll(Arrays.asList(ActionRequest.GUI_INIT, ActionRequest.MOUSE_INPUT, ActionRequest.TOOLTIP, ActionRequest.KEY_INPUT, ActionRequest.DRAW_BACKGROUND));
     }
 
     @Override
@@ -69,18 +72,24 @@ public class GuiCompRelocatorAdd extends GuiWidget {
                 ItemRelocator.TeleportData location = new ItemRelocator.TeleportData(x, y, z, dimId, name);
                 CompoundTag map = nbt.getCompound("Locations");
                 boolean successful = false;
-                if (map.size() < 10) {
+                if (map.size() < 11) {
                     successful = true;
                 }
+                if (map.contains(name)){
+                    player.displayClientMessage(this.translate(GravisuitLang.messageRelocatorContainsTeleport, ChatFormatting.RED), false);
+                    player.playSound(SoundEvents.UI_BUTTON_CLICK);
+                    player.closeContainer();
+                    return true;
+                }
                 if (successful) {
-                    //GravisuitClassic.NETWORK.sendToServer(new PacketRelocator(location, PacketRelocator.TeleportFunction.ADDDESTINATION, hand));
+                    GravisuitClassic.NETWORK.sendToServer(new PacketRelocator(location, PacketRelocator.TeleportFunction.ADDDESTINATION, hand));
                     player.displayClientMessage(this.translate(GravisuitLang.messageRelocatorAddTeleport, ChatFormatting.GREEN, name), false);
                 } else {
                     player.displayClientMessage(this.translate(GravisuitLang.messageRelocatorMaxTeleport, ChatFormatting.RED), false);
                 }
                 player.playSound(SoundEvents.UI_BUTTON_CLICK);
                 player.closeContainer();
-                return false;
+                return true;
             }
             player.playSound(SoundEvents.UI_BUTTON_CLICK);
         }
@@ -106,6 +115,17 @@ public class GuiCompRelocatorAdd extends GuiWidget {
             return true;
         }
         return super.onKeyTyped(keyCode);
+    }
+
+    @Override
+    public void drawBackground(PoseStack matrix, int mouseX, int mouseY, float partialTicks) {
+        if (this.isWithinSetButton(mouseX, mouseY)){
+            gui.drawTextureRegion(matrix, bX(gui,BOX.getX() + 1), bY(gui,BOX.getY() + 1), 177, 1, 24, 11);
+        }
+        if (this.isWithinClearButton(mouseX, mouseY)){
+            gui.drawTextureRegion(matrix, bX(gui,BOX.getX() + 33), bY(gui,BOX.getY() + 1), 209, 1, 24, 11);
+        }
+        super.drawBackground(matrix, mouseX, mouseY, partialTicks);
     }
 
     String name;

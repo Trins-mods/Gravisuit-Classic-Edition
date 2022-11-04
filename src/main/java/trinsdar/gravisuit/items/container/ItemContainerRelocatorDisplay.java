@@ -1,35 +1,18 @@
-/*
 package trinsdar.gravisuit.items.container;
 
-import ic2.core.inventory.base.IPortableInventory;
-import ic2.core.inventory.container.ContainerItemComponent;
-import ic2.core.inventory.gui.GuiIC2;
-import ic2.core.util.misc.StackUtil;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import ic2.core.inventory.container.ItemContainer;
+import ic2.core.inventory.gui.IC2Screen;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.player.Player;
 import trinsdar.gravisuit.GravisuitClassic;
 
-public class ItemContainerRelocatorDisplay extends ContainerItemComponent<ItemInventoryRelocator> {
+public class ItemContainerRelocatorDisplay extends ItemContainer<ItemInventoryRelocator> {
     public static ResourceLocation TEXTURE = new ResourceLocation(GravisuitClassic.MODID, "textures/gui/relocator_display.png");
-    public ItemContainerRelocatorDisplay(IPortableInventory inv, int id, EnumHand hand, EntityPlayer player) {
-        super(inv, id);
-        ItemStack item = player.getHeldItem(hand);
-        NBTTagCompound nbt = StackUtil.getNbtData(item);
-        if (nbt.hasKey("Locations")){
-            NBTTagCompound map = nbt.getCompoundTag("Locations");
-            if (map.getSize() > 0 && map.getSize() < 11){
-                int i = 0;
-                for (String name : map.getKeySet()){
-                    addComponent(new GuiCompRelocatorDisplay(hand, i, player, name));
-                    i++;
-                }
-            }
-        }
+    public ItemContainerRelocatorDisplay(ItemInventoryRelocator inv, int id, InteractionHand hand, Player player, int windowID) {
+        super(inv, player, id, windowID);
+        addComponent(new GuiCompRelocatorDisplay(player, hand));
     }
 
     @Override
@@ -38,11 +21,9 @@ public class ItemContainerRelocatorDisplay extends ContainerItemComponent<ItemIn
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public void onGuiLoaded(GuiIC2 gui) {
-        gui.setMaxGuiY(116);
-        gui.disableName();
-        gui.dissableInvName();
+    public void onGuiLoaded(IC2Screen screen) {
+        super.onGuiLoaded(screen);
+        screen.setYSize(116);
+        screen.setGuiName(Component.empty());
     }
 }
-*/

@@ -1,140 +1,75 @@
-/*
 package trinsdar.gravisuit.items.container;
 
-import ic2.core.IC2;
-import ic2.core.inventory.gui.GuiIC2;
-import ic2.core.inventory.gui.components.GuiComponent;
-import ic2.core.util.math.Box2D;
-import ic2.core.util.misc.StackUtil;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumHand;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import trinsdar.gravisuit.GravisuitClassic;
-import trinsdar.gravisuit.items.tools.ItemRelocator;
-import trinsdar.gravisuit.network.PacketRelocator;
+import com.mojang.blaze3d.vertex.PoseStack;
+import ic2.core.inventory.gui.IC2Screen;
+import ic2.core.inventory.gui.components.GuiWidget;
+import ic2.core.utils.helpers.StackUtil;
+import ic2.core.utils.math.geometry.Box2i;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 
-import java.awt.Color;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
-public class GuiCompRelocatorDisplay extends GuiComponent {
-
+public class GuiCompRelocatorDisplay extends GuiWidget {
+    List<GuiCompRelocatorBar> buttons;
     ItemStack relocator;
-    EntityPlayer player;
-    int y;
-    String name;
-    EnumHand hand;
-    private Box2D BOX;
-
-    public GuiCompRelocatorDisplay(EnumHand hand, int y, EntityPlayer player, String name) {
-        super(new Box2D(3, 3 + (y * 18), 170, 11));
-        BOX = new Box2D(3, 3 + (y * 18), 170, 11);
-        this.relocator = player.getHeldItem(hand);
-        this.hand = hand;
-        this.y = 3 + (y * 18);
-        this.name = name;
+    Player player;
+    InteractionHand hand;
+    public GuiCompRelocatorDisplay(Player player, InteractionHand hand) {
+        super(new Box2i(3, 3, 170, 110));
+        this.relocator = player.getItemInHand(hand);
         this.player = player;
+        this.hand = hand;
+        buttons = new ArrayList<>();
     }
 
     @Override
-    public List<ActionRequest> getNeededRequests() {
-        return Arrays.asList(ActionRequest.GuiInit, ActionRequest.ButtonNotify, ActionRequest.ToolTip, ActionRequest.BackgroundDraw, ActionRequest.FrontgroundDraw);
+    public void init(IC2Screen gui) {
+        super.init(gui);
+        reload();
     }
 
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void onGuiInit(GuiIC2 gui) {
-        gui.registerButton((new RelocatorButton(2, bX(gui, 4), bY(gui, y + 1), 156, 9, false, false)));// -1
-        gui.registerButton((new RelocatorButton(1, bX(gui, 163), bY(gui, y + 1), 9, 9, false, true)));// -64
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void onButtonClick(GuiIC2 gui, GuiButton button) {
-        ItemRelocator item;
-        if (relocator.getItem() instanceof ItemRelocator){
-            item = (ItemRelocator)relocator.getItem();
-        } else {
-            return;
-        }
-        if (button.id == 2) {
-            NBTTagCompound nbt = StackUtil.getNbtData(relocator);
-            int function = nbt.getByte("TeleportMode") == 0 ? PacketRelocator.TELEPORT : PacketRelocator.ADDDEFAULT;
-            ItemRelocator.TeleportData location = new ItemRelocator.TeleportData(name);
-            GravisuitClassic.network.sendToServer(new PacketRelocator(location, function, PacketRelocator.handToBool(hand)));
-            if (function == PacketRelocator.TELEPORT) {
-                player.closeScreen();
-            } else {
-                IC2.platform.messagePlayer(player, name + " set as default");
-            }
-        }
-        if (button.id == 1) {
-            ItemRelocator.TeleportData location = new ItemRelocator.TeleportData(name);
-            GravisuitClassic.network.sendToServer(new PacketRelocator(location, PacketRelocator.REMOVEDESTINATION, PacketRelocator.handToBool(hand)));
-            if (gui instanceof GuiRelocator){
-                ((GuiRelocator)gui).setReloadGui(true);
-            }
-        }
-    }
-
-
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void onToolTipCollecting(GuiIC2 gui, int mouseX, int mouseY, List<String> tooltips) {
-        if (this.isMouseOver(mouseX, mouseY)) {
-            if (within(mouseY, 40, 56)) {
-                //tooltips.add(I18n.format(GTLang.BUTTON_AESU_SUB1));
-            }
-            if (within(mouseY, 57, 72)) {
-                //tooltips.add(I18n.format(GTLang.BUTTON_AESU_SUB64));
+    private void reload(){
+        CompoundTag nbt = StackUtil.getNbtData(relocator);
+        buttons.clear();
+        if (nbt.contains("Locations")){
+            CompoundTag map = nbt.getCompound("Locations");
+            if (map.size() > 0 && map.size() < 11){
+                int i = 0;
+                for (String name : map.getAllKeys()){
+                    GuiCompRelocatorBar bar = new GuiCompRelocatorBar(hand, i, player, name, relocator);
+                    bar.setOwner(gui);
+                    buttons.add(bar);
+                    i++;
+                }
             }
         }
     }
 
     @Override
-    public void drawBackground(GuiIC2 gui, int mouseX, int mouseY, float particalTicks) {
-        int x = gui.getXOffset();
-        int y = gui.getYOffset();
-        Box2D box = this.getPosition();
-        NBTTagCompound nbt = StackUtil.getNbtData(relocator);
-        int textureY = 116;
-        if (nbt.getString("DefaultLocation").equals(name)){
-            textureY = 155;
-        }
-        NBTTagCompound map = nbt.getCompoundTag("Locations");
-        if (map.hasKey(name)){
-            gui.drawTexturedModalRect(x + box.getX(), y + box.getY(), 0, textureY, box.getLenght(),
-                    box.getHeight());
-        }
+    protected void addRequests(Set<ActionRequest> set) {
+        set.addAll(Arrays.asList(ActionRequest.GUI_INIT, ActionRequest.MOUSE_INPUT, ActionRequest.DRAW_BACKGROUND, ActionRequest.DRAW_FOREGROUND, ActionRequest.TOOLTIP));
     }
 
     @Override
-    public void drawFrontground(GuiIC2 gui, int mouseX, int mouseY) {
-        int x = gui.getXOffset();
-        int y = gui.getYOffset();
-        Box2D box = this.getPosition();
-        NBTTagCompound nbt = StackUtil.getNbtData(relocator);
-        NBTTagCompound map = nbt.getCompoundTag("Locations");
-        if (map.hasKey(name)){
-            gui.drawString(name, 4, box.getY() + 2, Color.WHITE.getRGB());
-        }
+    public void drawBackground(PoseStack matrix, int mouseX, int mouseY, float partialTicks) {
+        buttons.forEach(g -> g.drawBackground(matrix, mouseX, mouseY, partialTicks));
     }
 
-    private int bX(GuiIC2 gui, int position) {
-        return gui.getXOffset() + position;
+    @Override
+    public void drawForeground(PoseStack matrix, int mouseX, int mouseY) {
+        buttons.forEach(g -> g.drawForeground(matrix, mouseX, mouseY));
     }
 
-    private int bY(GuiIC2 gui, int position) {
-        return gui.getYOffset() + position;
-    }
-
-    public static boolean within(int value, int low, int high) {
-        return (value >= low) && (value <= high);
+    @Override
+    public boolean onMouseClick(int mouseX, int mouseY, int mouseButton) {
+        boolean changed = buttons.stream().anyMatch(g -> g.onMouseClick(mouseX, mouseY, mouseButton));
+        if (changed) reload();
+        return changed;
     }
 }
-*/

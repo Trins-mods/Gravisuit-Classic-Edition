@@ -25,13 +25,12 @@ public class ItemInventoryRelocator extends PortableInventory {
         if (player.isCrouching() /*&& nbt.getByte("TeleportMode") == 0*/){
             return new ItemContainerRelocatorAdd(this, this.getID(), hand, player, i);
         }
-        return null;
-        //return new ItemContainerRelocatorDisplay(this, this.getID(), hand, player);
+        return new ItemContainerRelocatorDisplay(this, this.getID(), hand, player, i);
     }
 
     @Override
     public boolean hasGui(Player player, InteractionHand hand, Direction side) {
-        return super.hasGui(player, hand, side) && player.isCrouching();
+        return super.hasGui(player, hand, side);
     }
 
     @Override
