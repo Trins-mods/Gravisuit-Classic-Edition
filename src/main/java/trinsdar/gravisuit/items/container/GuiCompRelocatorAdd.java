@@ -9,6 +9,7 @@ import ic2.core.utils.math.geometry.Box2i;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.gui.components.EditBox;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
@@ -64,12 +65,10 @@ public class GuiCompRelocatorAdd extends GuiWidget {
         if (isWithinSetButton(mouseX, mouseY) && mouseButton == 0) {
             if (!Strings.isNullOrEmpty(textBox.getValue())) {
                 CompoundTag nbt = StackUtil.getNbtData(relocator);
-                int x = (int) player.getX();
-                int y = (int) player.getY();
-                int z = (int) player.getZ();
+                long pos = new BlockPos(player.position()).asLong();
                 String dimId = player.getLevel().dimension().location().toString();
                 String name = textBox.getValue();
-                ItemRelocator.TeleportData location = new ItemRelocator.TeleportData(x, y, z, dimId, name);
+                ItemRelocator.TeleportData location = new ItemRelocator.TeleportData(pos, dimId, name);
                 CompoundTag map = nbt.getCompound("Locations");
                 boolean successful = false;
                 if (map.size() < 11) {

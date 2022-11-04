@@ -1,12 +1,21 @@
 package trinsdar.gravisuit.items.tools;
 
 import ic2.api.items.electric.IDamagelessElectricItem;
+import ic2.api.tiles.teleporter.TeleporterTarget;
 import ic2.core.IC2;
 import ic2.core.inventory.base.IHasHeldGui;
 import ic2.core.inventory.base.IPortableInventory;
+import ic2.core.item.base.IC2ElectricItem;
+import ic2.core.item.tool.electric.PortableTeleporter;
+import ic2.core.platform.registries.IC2Items;
+import ic2.core.platform.rendering.IC2Textures;
+import ic2.core.platform.rendering.features.item.ISimpleItemModel;
 import ic2.core.utils.IC2ItemGroup;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -14,16 +23,24 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.server.ServerLifecycleHooks;
 import trinsdar.gravisuit.GravisuitClassic;
 import trinsdar.gravisuit.items.container.ItemInventoryRelocator;
 import trinsdar.gravisuit.util.GravisuitConfig;
 import trinsdar.gravisuit.util.Registry;
 
-public class ItemRelocator extends Item implements IDamagelessElectricItem, IHasHeldGui /*BasicElectricItem implements IHandHeldInventory*/ {
+public class ItemRelocator extends IC2ElectricItem implements ISimpleItemModel, IHasHeldGui /*BasicElectricItem implements IHandHeldInventory*/ {
 
     public ItemRelocator() {
-        super(new Item.Properties().tab(IC2ItemGroup.TAB_TOOLS));
+        super("relocator");
         Registry.REGISTRY.put(new ResourceLocation(GravisuitClassic.MODID, "relocator"), this);
+    }
+
+    @Override
+    protected int getEnergyCost(ItemStack itemStack) {
+        return 1000000;
     }
 
     @Override
@@ -59,6 +76,16 @@ public class ItemRelocator extends Item implements IDamagelessElectricItem, IHas
             return InteractionResultHolder.success(stack);
         }
         return super.use(level, player, hand);
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    @Override
+    public TextureAtlasSprite getTexture() {
+        return IC2Textures.getMappedEntriesItem(GravisuitClassic.MODID, "tools").get("relocator");
+    }
+
+    public static void teleportEntity(Player player, CompoundTag teleportData, ItemStack stack){
+        ((PortableTeleporter)IC2Items.PORTABLE_TELEPORTER).teleportEntity(player, TeleporterTarget.read(teleportData), player.getMotionDirection(), stack);
     }
 
     /* @Override
@@ -236,38 +263,24 @@ public class ItemRelocator extends Item implements IDamagelessElectricItem, IHas
     }
 
     public static class TeleportData {
-        int x;
-        int y;
-        int z;
+        long pos;
         String dimId;
         String name;
 
-        public TeleportData(int x, int y, int z, String dimId, String name){
-            this.x = x;
-            this.y = y;
-            this.z = z;
+        public TeleportData(long pos, String dimId, String name){
+            this.pos = pos;
             this.dimId = dimId;
             this.name = name;
         }
 
         public TeleportData(String name){
-            this.x = 0;
-            this.y = 0;
-            this.z = 0;
+            this.pos = 0;
             this.dimId = "minecraft:overworld";
             this.name = name;
         }
 
-        public int getX() {
-            return x;
-        }
-
-        public int getY() {
-            return y;
-        }
-
-        public int getZ() {
-            return z;
+        public long getPos() {
+            return pos;
         }
 
         public String getDimId() {
@@ -282,27 +295,18 @@ public class ItemRelocator extends Item implements IDamagelessElectricItem, IHas
             this.name = name;
         }
 
-        public void setX(int x) {
-            this.x = x;
-        }
-
-        public void setY(int y) {
-            this.y = y;
-        }
-
-        public void setZ(int z) {
-            this.z = z;
-        }
-
         public void setDimId(String dimId) {
             this.dimId = dimId;
         }
 
-        public void writeToNBT(CompoundTag compound) {
-            compound.putDouble("X", x);
-            compound.putDouble("Y", y);
-            compound.putDouble("Z", z);
-            compound.putString("Dimension", dimId);
+        public CompoundTag writeToNBT(CompoundTag compound) {
+            compound.putLong("pos", pos);
+            compound.putString("id", dimId);
+            return compound;
+        }
+
+        public static TeleportData fromNBT(CompoundTag tag, String name){
+            return new TeleportData(tag.getLong("pos"), tag.getString("id"), name);
         }
     }
 }

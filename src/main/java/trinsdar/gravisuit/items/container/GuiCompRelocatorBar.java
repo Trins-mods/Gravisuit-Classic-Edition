@@ -62,7 +62,7 @@ public class GuiCompRelocatorBar extends GuiWidget {
             if (map.contains(name)){
                 successful = true;
                 CompoundTag entry = map.getCompound(name);
-                location = new ItemRelocator.TeleportData(entry.getInt("X"), entry.getInt("Y"), entry.getInt("Z"), entry.getString("Dimension"), name);
+                location = ItemRelocator.TeleportData.fromNBT(entry, name);
             }
             if (successful) {
                 boolean shift = Screen.hasShiftDown();

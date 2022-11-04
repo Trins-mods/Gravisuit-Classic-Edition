@@ -32,13 +32,11 @@ public class PacketRelocator  {
     public static void encode(PacketRelocator relocator, FriendlyByteBuf bytes) {
         bytes.writeEnum(relocator.function);
         if (relocator.function == TeleportFunction.ADDDESTINATION) {
-            bytes.writeInt(relocator.location.getX());
-            bytes.writeInt(relocator.location.getY());
-            bytes.writeInt(relocator.location.getZ());
-            ByteBufUtil.writeUtf8(bytes, relocator.location.getDimId());
-            ByteBufUtil.writeUtf8(bytes, relocator.location.getName());
+            bytes.writeLong(relocator.location.getPos());
+            bytes.writeUtf(relocator.location.getDimId());
+            bytes.writeUtf(relocator.location.getName());
         }else {
-            ByteBufUtil.writeUtf8(bytes, relocator.location.getName());
+            bytes.writeUtf(relocator.location.getName());
         }
         bytes.writeEnum(relocator.hand);
     }
@@ -46,11 +44,11 @@ public class PacketRelocator  {
 
     public static PacketRelocator decode(FriendlyByteBuf bytes) {
         TeleportFunction function = bytes.readEnum(TeleportFunction.class);
-        TeleportData location = null;
+        TeleportData location;
         if (function == TeleportFunction.ADDDESTINATION) {
-            //location = new TeleportData(bytes.readInt(), bytes.readInt(), bytes.readInt(), ByteBufUtils.readUTF8String(bytes), ByteBufUtils.readUTF8String(bytes));
+            location = new TeleportData(bytes.readLong(), bytes.readUtf(), bytes.readUtf());
         } else {
-            //location = new TeleportData(ByteBufUtils.readUTF8String(bytes));
+            location = new TeleportData(bytes.readUtf());
         }
         InteractionHand hand = bytes.readEnum(InteractionHand.class);
         return new PacketRelocator(location, function, hand);
@@ -72,32 +70,28 @@ public class PacketRelocator  {
                 ItemStack teleporter = sender.getItemInHand(msg.hand);
                 if (teleporter.isEmpty()) return;
                 CompoundTag nbt = StackUtil.getNbtData(teleporter);
-                if (nbt.contains("Locations")){
-                    CompoundTag map = nbt.getCompound("Locations");
-                    if (msg.function == TeleportFunction.REMOVEDESTINATION){
-                        if (map.contains(msg.location.getName())){
-                            map.remove(msg.location.getName());
-                        }
-                    }
-
-                    if (msg.function == TeleportFunction.ADDDEFAULT && map.contains(msg.location.getName())){
-                        nbt.putString("DefaultLocation", msg.location.getName());
-                    }
-                    if (msg.function == TeleportFunction.ADDDESTINATION){
-                        CompoundTag entry = new CompoundTag();
-                        entry.putInt("X", msg.location.getX());
-                        entry.putInt("Y", msg.location.getY());
-                        entry.putInt("Z", msg.location.getZ());
-                        entry.putString("Dimension", msg.location.getDimId());
-                        map.put(msg.location.getName(), entry);
-                    }
-                    if (msg.function == TeleportFunction.TELEPORT){
-                        if (map.contains(msg.location.getName())){
-                            CompoundTag entry = map.getCompound(msg.location.getName());
-                            //ItemRelocator.teleportEntity(sender, entry.getInt("X"), entry.getInt("Y"), entry.getInt("Z"), entry.getString("Dimension"), teleporter);
-                        }
+                CompoundTag map = nbt.getCompound("Locations");
+                if (msg.function == TeleportFunction.REMOVEDESTINATION){
+                    if (map.contains(msg.location.getName())){
+                        map.remove(msg.location.getName());
                     }
                 }
+
+                if (msg.function == TeleportFunction.ADDDEFAULT && map.contains(msg.location.getName())){
+                    nbt.putString("DefaultLocation", msg.location.getName());
+                }
+                if (msg.function == TeleportFunction.ADDDESTINATION){
+                    CompoundTag entry = new CompoundTag();
+                    msg.location.writeToNBT(entry);
+                    map.put(msg.location.getName(), entry);
+                }
+                if (msg.function == TeleportFunction.TELEPORT){
+                    if (map.contains(msg.location.getName())){
+                        CompoundTag entry = map.getCompound(msg.location.getName());
+                        ItemRelocator.teleportEntity(sender, entry, teleporter);
+                    }
+                }
+                nbt.put("Locations", map);
             }
         });
         ctx.get().setPacketHandled(true);
