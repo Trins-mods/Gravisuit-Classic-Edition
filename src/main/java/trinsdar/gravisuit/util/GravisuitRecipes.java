@@ -50,6 +50,7 @@ public class GravisuitRecipes {
         registry.addShapelessRecipe(new ResourceLocation(GravisuitClassic.MODID, "gravitool_upgrade"), importTreeTap, Registry.GRAVITOOL, Items.HOPPER, IC2Items.IMPORT_UPGRADE_SIMPLE);
         registry.addShapedRecipe(new ResourceLocation(GravisuitClassic.MODID, "gravitool"), new ItemStack(Registry.GRAVITOOL), "CHC", "AEA", "WaT", new TreetapModifier(), 'C', IC2Items.CARBON_PLATE, 'H', IC2Items.ELECTRIC_HOE, 'A', IC2Items.PLATE_ADVANCED_ALLOY, 'E', IC2Items.ENERGY_CRYSTAL, 'W', IC2Items.PRECISION_WRENCH, 'a', IC2Items.ADVANCED_CIRCUIT, 'T', IC2Items.ELECTRIC_TREETAP);
         registry.addShapedRecipe(new ResourceLocation(GravisuitClassic.MODID, "vajra"), new ItemStack(Registry.VAJRA), "IMI", "DVC", "ALA", 'I', IC2Items.PLATE_IRIDIUM, 'M', IC2Items.MINING_LASER, 'D', IC2Items.DRILL_ADVANCED, 'V', Registry.VAJRA_CORE, 'C', IC2Items.CHAINSAW_ADVANCED, 'A', IC2Items.PLATE_ADVANCED_ALLOY, 'L', IC2Items.LAPATRON_CRYSTAL);
+        registry.addShapedRecipe(new ResourceLocation(GravisuitClassic.MODID, "relocator"), new ItemStack(Registry.RELOCATOR), "MEM", "ETE", "MEM", 'M', IC2Items.MEMORY_STICK, 'E', Items.ENDER_PEARL, 'T', IC2Items.PORTABLE_TELEPORTER);
     }
 
     public static class TreetapModifier implements IRecipeModifier {

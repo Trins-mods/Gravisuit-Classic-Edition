@@ -86,5 +86,8 @@ public class GravisuitClassic {
             Registry.init();
             REGISTRY.forEach((r, i) -> event.register(ForgeRegistries.Keys.ITEMS, r, () -> i));
         }
+        if (event.getRegistryKey().equals(ForgeRegistries.Keys.ENTITY_TYPES)){
+            event.register(ForgeRegistries.Keys.ENTITY_TYPES, new ResourceLocation(MODID, "plasma_ball"), () -> Registry.PLASMA_BALL_ENTITY_TYPE);
+        }
     }
 }

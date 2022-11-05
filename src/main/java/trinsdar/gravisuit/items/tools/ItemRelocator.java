@@ -1,9 +1,7 @@
 package trinsdar.gravisuit.items.tools;
 
-import ic2.api.items.electric.IDamagelessElectricItem;
 import ic2.api.tiles.teleporter.TeleporterTarget;
 import ic2.core.IC2;
-import ic2.core.audio.AudioManager;
 import ic2.core.inventory.base.IHasHeldGui;
 import ic2.core.inventory.base.IPortableInventory;
 import ic2.core.item.base.IC2ElectricItem;
@@ -11,28 +9,22 @@ import ic2.core.item.tool.electric.PortableTeleporter;
 import ic2.core.platform.registries.IC2Items;
 import ic2.core.platform.rendering.IC2Textures;
 import ic2.core.platform.rendering.features.item.ISimpleItemModel;
-import ic2.core.utils.IC2ItemGroup;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.server.ServerLifecycleHooks;
 import trinsdar.gravisuit.GravisuitClassic;
+import trinsdar.gravisuit.entity.PlasmaBall;
 import trinsdar.gravisuit.items.container.ItemInventoryRelocator;
 import trinsdar.gravisuit.util.GravisuitConfig;
 import trinsdar.gravisuit.util.GravisuitLang;
-import trinsdar.gravisuit.util.GravisuitSounds;
 import trinsdar.gravisuit.util.Registry;
 
 public class ItemRelocator extends IC2ElectricItem implements ISimpleItemModel, IHasHeldGui /*BasicElectricItem implements IHandHeldInventory*/ {
@@ -90,10 +82,24 @@ public class ItemRelocator extends IC2ElectricItem implements ISimpleItemModel, 
             }
             return InteractionResultHolder.success(stack);
         }
-        if (IC2.PLATFORM.isSimulating() && (player.isCrouching() || nbt.getByte("mode") == 0)) {
-            IC2.PLATFORM.launchGui(player, hand, null, this.getInventory(player, hand, stack));
-            return InteractionResultHolder.success(stack);
-        }
+        if (IC2.PLATFORM.isSimulating())
+            if (player.isCrouching() || nbt.getByte("mode") == 0) {
+                IC2.PLATFORM.launchGui(player, hand, null, this.getInventory(player, hand, stack));
+                return InteractionResultHolder.success(stack);
+            } else if (nbt.getByte("mode") == 1){
+                if (nbt.contains("DefaultLocation")){
+                    if (nbt.contains("Locations")){
+                        CompoundTag map = nbt.getCompound("Locations");
+                        String name = nbt.getString("DefaultLocation");
+                        if (map.contains(name)){
+                            PlasmaBall entity = new PlasmaBall(player.level, TeleportData.fromNBT(map.getCompound(name), name), stack);
+                            entity.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, 1.5F, 0.0F);
+                            return InteractionResultHolder.success(stack);
+                        }
+                    }
+                }
+
+            }
         return super.use(level, player, hand);
     }
 
@@ -326,6 +332,11 @@ public class ItemRelocator extends IC2ElectricItem implements ISimpleItemModel, 
 
         public static TeleportData fromNBT(CompoundTag tag, String name){
             return new TeleportData(tag.getLong("pos"), tag.getString("id"), name);
+        }
+
+        public TeleporterTarget toTeleportTarget(){
+            CompoundTag compoundTag = writeToNBT(new CompoundTag());
+            return TeleporterTarget.read(compoundTag);
         }
     }
 }

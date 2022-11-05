@@ -3,8 +3,12 @@ package trinsdar.gravisuit.util;
 import ic2.core.item.wearable.armor.electric.ElectricPackArmor;
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
+import trinsdar.gravisuit.GravisuitClassic;
+import trinsdar.gravisuit.entity.PlasmaBall;
 import trinsdar.gravisuit.items.ItemComponents;
 import trinsdar.gravisuit.items.armor.ItemAdvancedElectricJetpack;
 import trinsdar.gravisuit.items.armor.ItemAdvancedLappack;
@@ -34,6 +38,8 @@ public class Registry {
     public static final ItemComponents MAGNETRON = new ItemComponents("magnetron");
     public static final ItemComponents VAJRA_CORE = new ItemComponents("vajra_core");
     public static final ItemComponents ENGINE_BOOST = new ItemComponents("engine_boost");
+
+    public static final EntityType<PlasmaBall> PLASMA_BALL_ENTITY_TYPE = EntityType.Builder.<PlasmaBall>of(PlasmaBall::new, MobCategory.MISC).sized(1.0f, 1.0f).setShouldReceiveVelocityUpdates(true).clientTrackingRange(4).updateInterval(20).setCustomClientFactory(PlasmaBall::new).build(GravisuitClassic.MODID + ":plasma_ball");
 
     public static void init(){
     }
