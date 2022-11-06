@@ -92,8 +92,8 @@ public class ItemRelocator extends IC2ElectricItem implements ISimpleItemModel, 
                         CompoundTag map = nbt.getCompound("Locations");
                         String name = nbt.getString("DefaultLocation");
                         if (map.contains(name)){
-                            PlasmaBall entity = new PlasmaBall(player.level, TeleportData.fromNBT(map.getCompound(name), name), stack);
-                            entity.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, 1.5F, 0.0F);
+                            PlasmaBall entity = new PlasmaBall(player.level, player, TeleportData.fromNBT(map.getCompound(name), name), stack);
+                            level.addFreshEntity(entity);
                             return InteractionResultHolder.success(stack);
                         }
                     }

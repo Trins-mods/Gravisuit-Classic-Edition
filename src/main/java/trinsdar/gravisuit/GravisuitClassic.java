@@ -5,6 +5,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -27,6 +28,7 @@ import trinsdar.gravisuit.util.GravisuitKeys;
 import trinsdar.gravisuit.util.GravisuitRecipes;
 import trinsdar.gravisuit.util.Registry;
 import trinsdar.gravisuit.util.render.GraviSuitOverlay;
+import trinsdar.gravisuit.util.render.PlasmaBallRenderer;
 
 import java.sql.Ref;
 
@@ -72,6 +74,12 @@ public class GravisuitClassic {
     @SubscribeEvent
     public void onClientSetup(FMLClientSetupEvent event){
         MinecraftForge.EVENT_BUS.register(new GraviSuitOverlay(Minecraft.getInstance(), Minecraft.getInstance().getItemRenderer()));
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    @SubscribeEvent
+    public void onEntityRenderersAdd(EntityRenderersEvent.RegisterRenderers event){
+        event.registerEntityRenderer(Registry.PLASMA_BALL_ENTITY_TYPE, PlasmaBallRenderer::new);
     }
 
     @OnlyIn(Dist.CLIENT)

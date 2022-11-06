@@ -14,6 +14,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.PlayMessages;
 import trinsdar.gravisuit.items.tools.ItemRelocator;
 import trinsdar.gravisuit.util.Registry;
@@ -21,10 +22,15 @@ import trinsdar.gravisuit.util.Registry;
 public class PlasmaBall extends ThrowableProjectile {
     ItemRelocator.TeleportData data;
     ItemStack relocator;
-    public PlasmaBall(Level level, ItemRelocator.TeleportData data, ItemStack relocator) {
+    public PlasmaBall(Level level, LivingEntity shooter, ItemRelocator.TeleportData data, ItemStack relocator) {
         super(Registry.PLASMA_BALL_ENTITY_TYPE, level);
         this.data = data;
         this.relocator = relocator;
+        double y = shooter.getY() + (double)shooter.getEyeHeight() - 0.1;
+        double yaw = Math.toRadians(shooter.getYRot());
+        double pitch = Math.toRadians(shooter.getXRot());
+        this.setPos(shooter.getX() - Math.cos(yaw) * 0.16, y, shooter.getZ() - Math.sin(yaw) * 0.16);
+        this.setLaserHeading(-Math.sin(yaw) * Math.cos(pitch), -Math.sin(pitch), Math.cos(yaw) * Math.cos(pitch), 1.0);
     }
 
     public PlasmaBall(EntityType<PlasmaBall> plasmaBallEntityEntityType, Level level) {
@@ -34,6 +40,23 @@ public class PlasmaBall extends ThrowableProjectile {
 
     public PlasmaBall(PlayMessages.SpawnEntity spawnEntity, Level level) {
         super(Registry.PLASMA_BALL_ENTITY_TYPE, level);
+    }
+
+    @Override
+    protected float getGravity() {
+        return 0.0f;
+    }
+
+    public void setLaserHeading(Vec3 motion, double speed) {
+        this.setLaserHeading(motion.x(), motion.y(), motion.z(), speed);
+    }
+
+    public void setLaserHeading(double newMotionX, double newMotionY, double newMotionZ, double speed) {
+        double newSpeed = 1.0 / Math.sqrt(newMotionX * newMotionX + newMotionY * newMotionY + newMotionZ * newMotionZ) * speed;
+        this.setDeltaMovement(newMotionX * newSpeed, newMotionY * newSpeed, newMotionZ * newSpeed);
+        Vec3 motion = this.getDeltaMovement();
+        this.setYRot(this.yRotO = (float)Math.toDegrees(Math.atan2(motion.x(), motion.z())));
+        this.setXRot(this.xRotO = (float)Math.toDegrees(Math.atan2(motion.y(), Math.sqrt(motion.x() * motion.x() + motion.z() * motion.z()))));
     }
 
     @Override
