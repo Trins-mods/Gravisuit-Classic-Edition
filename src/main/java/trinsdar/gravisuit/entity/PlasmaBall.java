@@ -5,30 +5,43 @@ import ic2.api.tiles.teleporter.TeleporterTarget;
 import ic2.core.utils.helpers.TeleportUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ThrowableProjectile;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.entity.IEntityAdditionalSpawnData;
 import net.minecraftforge.network.PlayMessages;
 import trinsdar.gravisuit.items.tools.ItemRelocator;
 import trinsdar.gravisuit.util.Registry;
 
-public class PlasmaBall extends ThrowableProjectile {
+import java.util.UUID;
+
+public class PlasmaBall extends ThrowableProjectile implements IEntityAdditionalSpawnData {
     ItemRelocator.TeleportData data;
     ItemStack relocator;
-    public PlasmaBall(Level level, LivingEntity shooter, ItemRelocator.TeleportData data, ItemStack relocator) {
+    String uuid = "";
+    Player shooter;
+    InteractionHand hand;
+
+    public PlasmaBall(Level level, Player shooter, ItemRelocator.TeleportData data, InteractionHand hand) {
         super(Registry.PLASMA_BALL_ENTITY_TYPE, level);
         this.data = data;
-        this.relocator = relocator;
+        this.relocator = shooter.getItemInHand(hand);
+        this.shooter = shooter;
+        this.hand = hand;
         double y = shooter.getY() + (double)shooter.getEyeHeight() - 0.1;
         double yaw = Math.toRadians(shooter.getYRot());
         double pitch = Math.toRadians(shooter.getXRot());
+        uuid = shooter.getStringUUID();
         this.setPos(shooter.getX() - Math.cos(yaw) * 0.16, y, shooter.getZ() - Math.sin(yaw) * 0.16);
         this.setLaserHeading(-Math.sin(yaw) * Math.cos(pitch), -Math.sin(pitch), Math.cos(yaw) * Math.cos(pitch), 1.0);
     }
@@ -67,7 +80,7 @@ public class PlasmaBall extends ThrowableProjectile {
     @Override
     protected void onHitEntity(EntityHitResult result) {
         Entity entity = result.getEntity();
-        if (entity instanceof LivingEntity livingEntity){
+        if (entity instanceof LivingEntity livingEntity && !relocator.isEmpty()){
             teleportEntity(livingEntity, data.toTeleportTarget(), entity.getMotionDirection(), relocator);
             this.discard();
         }
@@ -86,6 +99,24 @@ public class PlasmaBall extends ThrowableProjectile {
             if (ElectricItem.MANAGER.use(stack, (int)((double)weight * TeleportUtil.getDistanceCost(player.getLevel(), player.blockPosition(), server, pos) * 5.0), player)) {
                 TeleportUtil.teleportEntity(player, server, pos, dir);
             }
+        }
+    }
+
+    @Override
+    public void writeSpawnData(FriendlyByteBuf arg) {
+        arg.writeEnum(hand);
+        arg.writeUtf(uuid);
+    }
+
+    @Override
+    public void readSpawnData(FriendlyByteBuf arg) {
+        hand = arg.readEnum(InteractionHand.class);
+        uuid = arg.readUtf();
+        shooter = this.getLevel().getPlayerByUUID(UUID.fromString(uuid));
+        if (shooter != null) {
+            relocator = shooter.getItemInHand(hand);
+        } else {
+            relocator = ItemStack.EMPTY;
         }
     }
 }
