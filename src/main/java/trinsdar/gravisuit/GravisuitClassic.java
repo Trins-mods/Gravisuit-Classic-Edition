@@ -6,6 +6,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -70,10 +71,16 @@ public class GravisuitClassic {
         AdvRecipeRegistry.INSTANCE.registerListener(GravisuitRecipes::loadRecipes);
     }
 
+//    @OnlyIn(Dist.CLIENT)
+//    @SubscribeEvent
+//    public void onClientSetup(FMLClientSetupEvent event){
+//        MinecraftForge.EVENT_BUS.register(new GraviSuitOverlay(Minecraft.getInstance()));
+//    }
+
     @OnlyIn(Dist.CLIENT)
     @SubscribeEvent
-    public void onClientSetup(FMLClientSetupEvent event){
-        MinecraftForge.EVENT_BUS.register(new GraviSuitOverlay(Minecraft.getInstance(), Minecraft.getInstance().getItemRenderer()));
+    public void registerOverlay(RegisterGuiOverlaysEvent event) {
+        event.registerAboveAll("gravisuit_overlay", new GraviSuitOverlay(Minecraft.getInstance()));
     }
 
     @OnlyIn(Dist.CLIENT)
