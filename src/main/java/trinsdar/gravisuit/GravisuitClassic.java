@@ -8,12 +8,10 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLEnvironment;
@@ -30,8 +28,6 @@ import trinsdar.gravisuit.util.GravisuitRecipes;
 import trinsdar.gravisuit.util.Registry;
 import trinsdar.gravisuit.util.render.GraviSuitOverlay;
 import trinsdar.gravisuit.util.render.PlasmaBallRenderer;
-
-import java.sql.Ref;
 
 import static trinsdar.gravisuit.util.Registry.REGISTRY;
 
