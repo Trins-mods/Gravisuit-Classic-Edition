@@ -11,8 +11,6 @@ import ic2.core.utils.helpers.StackUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.Gui;
-import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -20,12 +18,13 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.client.event.RenderGuiOverlayEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import trinsdar.gravisuit.items.armor.*;
+import net.minecraftforge.client.gui.overlay.ForgeGui;
+import net.minecraftforge.client.gui.overlay.IGuiOverlay;
+import trinsdar.gravisuit.items.armor.IGravitationJetpack;
+import trinsdar.gravisuit.items.armor.IHasOverlay;
 import trinsdar.gravisuit.util.GravisuitConfig;
 
-public class GraviSuitOverlay extends Gui {
+public class GraviSuitOverlay implements IGuiOverlay {
 
 	/**
 	 *  TODO 1: Finish it
@@ -41,26 +40,20 @@ public class GraviSuitOverlay extends Gui {
 	int yPos1 = offset;
 	int yPos2, yPos3, yPos4;
 
-	public GraviSuitOverlay(Minecraft mc, ItemRenderer itemRenderer) {
-		super(mc, itemRenderer);
-
+	public GraviSuitOverlay(Minecraft mc) {
 		GraviSuitOverlay.mc = mc;
 		fontRenderer = mc.font;
 	}
 
-	@SubscribeEvent
-	public void renderOverlay(RenderGuiOverlayEvent e) {
-
-		Window window = e.getWindow();
-		PoseStack matrix = e.getPoseStack();
-
+	@Override
+	public void render(ForgeGui gui, PoseStack poseStack, float partialTick, int screenWidth, int screenHeight) {
 		Player player = mc.player;
 		assert player != null;
 		ItemStack stackArmor = player.getItemBySlot(EquipmentSlot.CHEST);
 		Item itemArmor = stackArmor.getItem();
 
 		if (GravisuitConfig.CLIENT.POSITIONS == GravisuitConfig.Client.Positions.BOTTOMLEFT || GravisuitConfig.CLIENT.POSITIONS == GravisuitConfig.Client.Positions.BOTTOMRIGHT) {
-			yPos1 = window.getGuiScaledHeight() - ((fontRenderer.lineHeight * 2) + 5);
+			yPos1 = screenHeight - ((fontRenderer.lineHeight * 2) + 5);
 		}
 
 		yPos2 = yPos1 + fontRenderer.lineHeight + 2;
@@ -121,15 +114,15 @@ public class GraviSuitOverlay extends Gui {
 			Component graviEngineToDisplay = formatComplexMessage(ChatFormatting.AQUA, graviEngineString, graviEngineStatusColor, graviEngineStatus);
 
 			if (itemArmor instanceof ElectricPackArmor) {
-				fontRenderer.drawShadow(matrix, energyToDisplay, getXOffset(energyToDisplay.getString(), window), yPos1, 0);
+				fontRenderer.drawShadow(poseStack, energyToDisplay, getXOffset(energyToDisplay.getString(), gui.getMinecraft().getWindow()), yPos1, 0);
 			}
 			if (itemArmor instanceof IC2ElectricJetpackBase) {
-				fontRenderer.drawShadow(matrix, energyToDisplay, getXOffset(energyToDisplay.getString(), window), yPos1, 0);
-				fontRenderer.drawShadow(matrix, engineToDisplay, getXOffset(engineToDisplay.getString(), window), yPos2, 0);
-				fontRenderer.drawShadow(matrix, hoverToDisplay, getXOffset(hoverToDisplay.getString(), window), yPos3, 0);
+				fontRenderer.drawShadow(poseStack, energyToDisplay, getXOffset(energyToDisplay.getString(), gui.getMinecraft().getWindow()), yPos1, 0);
+				fontRenderer.drawShadow(poseStack, engineToDisplay, getXOffset(engineToDisplay.getString(), gui.getMinecraft().getWindow()), yPos2, 0);
+				fontRenderer.drawShadow(poseStack, hoverToDisplay, getXOffset(hoverToDisplay.getString(), gui.getMinecraft().getWindow()), yPos3, 0);
 			}
 			if (itemArmor instanceof IGravitationJetpack) {
-				fontRenderer.drawShadow(matrix, graviEngineToDisplay, getXOffset(graviEngineToDisplay.getString(), window), yPos4, 0);
+				fontRenderer.drawShadow(poseStack, graviEngineToDisplay, getXOffset(graviEngineToDisplay.getString(), gui.getMinecraft().getWindow()), yPos4, 0);
 			}
 		}
 	}
