@@ -3,10 +3,9 @@ package trinsdar.gravisuit.util.render;
 import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.vertex.PoseStack;
 import ic2.api.items.electric.ElectricItem;
-import ic2.core.item.wearable.armor.electric.ElectricPackArmor;
-import ic2.core.item.wearable.base.IC2ElectricJetpackBase;
 import ic2.core.item.wearable.base.IC2JetpackBase;
 import ic2.core.item.wearable.base.IC2ModularElectricArmor;
+import ic2.core.platform.registries.IC2Items;
 import ic2.core.utils.helpers.StackUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
@@ -23,22 +22,23 @@ import net.minecraftforge.client.gui.overlay.IGuiOverlay;
 import trinsdar.gravisuit.items.armor.IGravitationJetpack;
 import trinsdar.gravisuit.items.armor.IHasOverlay;
 import trinsdar.gravisuit.util.GravisuitConfig;
+import trinsdar.gravisuit.util.Registry;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GraviSuitOverlay implements IGuiOverlay {
-
-	/**
-	 *  TODO 1: Finish it
-	 *  TODO 2: Re-ad IC2 armor. If needed, remove {@link IHasOverlay} and check by instance.
-	 *  TODO 3: Re-implement Config values
-	 * */
 
 	public static Minecraft mc;
 	public static Font fontRenderer;
 
 	static int offset = 3;
-	int xPos = offset;
-	int yPos1 = offset;
-	int yPos2, yPos3, yPos4;
+	static int yPos = offset;
+	static int yPos1, yPos2, yPos3;
+	static int lineHeight;
+
+	public static List<Item> electricArmors = new ArrayList<>();
+	public static List<Item> jetpacks = new ArrayList<>();
 
 	public GraviSuitOverlay(Minecraft mc) {
 		GraviSuitOverlay.mc = mc;
@@ -52,13 +52,17 @@ public class GraviSuitOverlay implements IGuiOverlay {
 		ItemStack stackArmor = player.getItemBySlot(EquipmentSlot.CHEST);
 		Item itemArmor = stackArmor.getItem();
 
-		if (GravisuitConfig.CLIENT.POSITIONS == GravisuitConfig.Client.Positions.BOTTOMLEFT || GravisuitConfig.CLIENT.POSITIONS == GravisuitConfig.Client.Positions.BOTTOMRIGHT) {
-			yPos1 = screenHeight - ((fontRenderer.lineHeight * 2) + 5);
+		switch (GravisuitConfig.CLIENT.POSITIONS) {
+			case TOPLEFT, TOPRIGHT -> yPos1 = yPos = offset;
+			case BOTTOMLEFT, BOTTOMRIGHT -> {
+				yPos = screenHeight - (fontRenderer.lineHeight + offset);
+				yPos1 = screenHeight - ((fontRenderer.lineHeight * 3) + offset * 3);
+				lineHeight = fontRenderer.lineHeight + offset;
+			}
 		}
 
-		yPos2 = yPos1 + fontRenderer.lineHeight + 2;
-		yPos3 = yPos2 + fontRenderer.lineHeight + 2;
-		yPos4 = yPos3 + fontRenderer.lineHeight + 2;
+		yPos2 = yPos1 + offset + fontRenderer.lineHeight;
+		yPos3 = yPos2 + offset + fontRenderer.lineHeight;
 
 		if (itemArmor instanceof IHasOverlay overlay && overlay.isEnabled(stackArmor)) {
 
@@ -113,16 +117,19 @@ public class GraviSuitOverlay implements IGuiOverlay {
 			String graviEngineString = "message.info.gravitation";
 			Component graviEngineToDisplay = formatComplexMessage(ChatFormatting.AQUA, graviEngineString, graviEngineStatusColor, graviEngineStatus);
 
-			if (itemArmor instanceof ElectricPackArmor) {
-				fontRenderer.drawShadow(poseStack, energyToDisplay, getXOffset(energyToDisplay.getString(), gui.getMinecraft().getWindow()), yPos1, 0);
+			if (electricArmors.contains(itemArmor)) {
+				fontRenderer.drawShadow(poseStack, energyToDisplay, getXOffset(energyToDisplay.getString(), gui.getMinecraft().getWindow()), yPos, 0);
 			}
-			if (itemArmor instanceof IC2ElectricJetpackBase) {
+			if (jetpacks.contains(itemArmor)) {
 				fontRenderer.drawShadow(poseStack, energyToDisplay, getXOffset(energyToDisplay.getString(), gui.getMinecraft().getWindow()), yPos1, 0);
 				fontRenderer.drawShadow(poseStack, engineToDisplay, getXOffset(engineToDisplay.getString(), gui.getMinecraft().getWindow()), yPos2, 0);
 				fontRenderer.drawShadow(poseStack, hoverToDisplay, getXOffset(hoverToDisplay.getString(), gui.getMinecraft().getWindow()), yPos3, 0);
 			}
 			if (itemArmor instanceof IGravitationJetpack) {
-				fontRenderer.drawShadow(poseStack, graviEngineToDisplay, getXOffset(graviEngineToDisplay.getString(), gui.getMinecraft().getWindow()), yPos4, 0);
+				fontRenderer.drawShadow(poseStack, energyToDisplay, getXOffset(energyToDisplay.getString(), gui.getMinecraft().getWindow()), yPos1 - lineHeight, 0);
+				fontRenderer.drawShadow(poseStack, engineToDisplay, getXOffset(engineToDisplay.getString(), gui.getMinecraft().getWindow()), yPos2 - lineHeight, 0);
+				fontRenderer.drawShadow(poseStack, hoverToDisplay, getXOffset(hoverToDisplay.getString(), gui.getMinecraft().getWindow()), yPos3 - lineHeight, 0);
+				fontRenderer.drawShadow(poseStack, graviEngineToDisplay, getXOffset(graviEngineToDisplay.getString(), gui.getMinecraft().getWindow()), yPos3, 0);
 			}
 		}
 	}
@@ -130,20 +137,11 @@ public class GraviSuitOverlay implements IGuiOverlay {
 	private static int getXOffset(String value, Window window) {
 		return switch (GravisuitConfig.CLIENT.POSITIONS) {
 			case TOPLEFT, BOTTOMLEFT -> offset;
-			case TOPRIGHT, BOTTOMRIGHT -> window.getGuiScaledWidth() - 3 - fontRenderer.width(value);
+			case TOPRIGHT, BOTTOMRIGHT -> window.getGuiScaledWidth() - offset - fontRenderer.width(value);
 			case TOPMIDDLE -> (int) (window.getGuiScaledWidth() * 0.50F) - (fontRenderer.width(value) / 2);
 		};
 	}
 
-	public boolean or(Item compare, Item... items){
-		for (Item item : items){
-			if (compare == item){
-				return true;
-			}
-		}
-		return false;
-	}
-		
 	public static ChatFormatting getEnergyTextColor(double energyLevel) {
 		if (energyLevel == 100) {
 			return ChatFormatting.GREEN;
@@ -195,11 +193,20 @@ public class GraviSuitOverlay implements IGuiOverlay {
 		}
 	}
 
-	// TODO: Check usability of this method
-	@Deprecated
-	public static int getCharge(ItemStack stack) {
-		CompoundTag nbt = StackUtil.getNbtData(stack);
-		int e = nbt.getInt("charge");
-		return e;
+	static {
+		electricArmors.add(IC2Items.BAT_PACK);
+		electricArmors.add(IC2Items.LAP_PACK);
+		electricArmors.add(IC2Items.QUANTUM_PACK);
+		electricArmors.add(IC2Items.NANOSUIT_CHESTPLATE);
+		electricArmors.add(IC2Items.QUANTUM_SUIT_CHESTPLATE);
+		electricArmors.add(Registry.ADVANCED_LAPPACK);
+		electricArmors.add(Registry.ULTIMATE_LAPPACK);
+
+		jetpacks.add(IC2Items.JETPACK_ELECTRIC);
+		jetpacks.add(IC2Items.JETPACK_NUCLEAR);
+		jetpacks.add(IC2Items.JETPACK_ELECTRIC_COMPACT);
+		jetpacks.add(IC2Items.JETPACK_NUCLEAR_COMPACT);
+		jetpacks.add(Registry.ADVANCED_ELECTRIC_JETPACK);
+		jetpacks.add(Registry.ADVANCED_NUCLEAR_JETPACK);
 	}
 }
