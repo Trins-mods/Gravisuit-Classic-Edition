@@ -34,7 +34,7 @@ public class GraviSuitOverlay implements IGuiOverlay {
 
 	static int offset = 3;
 	static int yPos = offset;
-	static int yPos1, yPos2, yPos3;
+	static int yPos1, yPos2, yPos3, yPos4;
 	static int lineHeight;
 
 	public static List<Item> electricArmors = new ArrayList<>();
@@ -63,6 +63,7 @@ public class GraviSuitOverlay implements IGuiOverlay {
 
 		yPos2 = yPos1 + offset + fontRenderer.lineHeight;
 		yPos3 = yPos2 + offset + fontRenderer.lineHeight;
+		yPos4 = yPos3 + offset + fontRenderer.lineHeight;
 
 		if (itemArmor instanceof IHasOverlay overlay && overlay.isEnabled(stackArmor)) {
 
@@ -129,7 +130,7 @@ public class GraviSuitOverlay implements IGuiOverlay {
 				fontRenderer.drawShadow(poseStack, energyToDisplay, getXOffset(energyToDisplay.getString(), gui.getMinecraft().getWindow()), yPos1 - lineHeight, 0);
 				fontRenderer.drawShadow(poseStack, engineToDisplay, getXOffset(engineToDisplay.getString(), gui.getMinecraft().getWindow()), yPos2 - lineHeight, 0);
 				fontRenderer.drawShadow(poseStack, hoverToDisplay, getXOffset(hoverToDisplay.getString(), gui.getMinecraft().getWindow()), yPos3 - lineHeight, 0);
-				fontRenderer.drawShadow(poseStack, graviEngineToDisplay, getXOffset(graviEngineToDisplay.getString(), gui.getMinecraft().getWindow()), yPos3, 0);
+				fontRenderer.drawShadow(poseStack, graviEngineToDisplay, getXOffset(graviEngineToDisplay.getString(), gui.getMinecraft().getWindow()), yPos4 - lineHeight, 0);
 			}
 		}
 	}
