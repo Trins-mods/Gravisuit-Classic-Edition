@@ -77,7 +77,7 @@ public class GraviSuitOverlay implements IGuiOverlay {
 			int maxCapacity = ElectricItem.MANAGER.getCapacity(stackArmor);
 			int energyLevel = (int) Math.round((double) currentCharge / (double) maxCapacity * 100);
 
-			/** ENERGY STATS GENERAL */
+			/** ENERGY STATS MISC */
 			String energyString = "message.info.energy";
 			Component energyToDisplay = formatComplexMessage(ChatFormatting.YELLOW, energyString, getEnergyTextColor(energyLevel), energyLevel + "%");
 
@@ -87,7 +87,7 @@ public class GraviSuitOverlay implements IGuiOverlay {
 			String engineStatus = isEngineOn ? "message.info.on" : "message.info.off";
 			ChatFormatting engineStatusColor = isEngineOn ? ChatFormatting.GREEN : ChatFormatting.RED;
 
-			/** ENGINE STATUS GENERAL */
+			/** ENGINE STATUS MISC */
 
 			String engineString = "message.info.jetpack.engine";
 			Component engineToDisplay = formatComplexMessage(ChatFormatting.YELLOW, engineString, engineStatusColor, engineStatus);
@@ -97,7 +97,7 @@ public class GraviSuitOverlay implements IGuiOverlay {
 			String hoverModeS = getWorkStatus(stackArmor);
 			ChatFormatting hoverModeC = getWorkStatusColor(stackArmor);
 
-			/** HOVER STATUS GENERAL */
+			/** HOVER STATUS MISC */
 
 			String hoverString = "message.info.jetpack.hover";
 			Component hoverToDisplay = formatComplexMessage(ChatFormatting.YELLOW, hoverString, hoverModeC, hoverModeS);
@@ -108,7 +108,7 @@ public class GraviSuitOverlay implements IGuiOverlay {
 			String graviEngineStatus = isGraviEngineOn ? "message.info.on" : "message.info.off";
 			ChatFormatting graviEngineStatusColor = isGraviEngineOn ? ChatFormatting.GREEN : ChatFormatting.RED;
 
-			/** ENGINE STATUS GENERAL */
+			/** ENGINE STATUS MISC */
 
 			String graviEngineString = "message.info.gravitation";
 			Component graviEngineToDisplay = formatComplexMessage(ChatFormatting.AQUA, graviEngineString, graviEngineStatusColor, graviEngineStatus);

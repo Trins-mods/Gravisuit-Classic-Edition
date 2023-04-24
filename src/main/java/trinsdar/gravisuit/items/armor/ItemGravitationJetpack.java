@@ -27,7 +27,7 @@ public class ItemGravitationJetpack extends IC2ElectricJetpackBase implements IG
 
     @Override
     public boolean canProvideEnergy(ItemStack itemStack) {
-        return true;
+        return GravisuitConfig.MISC.GRAVITATION_JETPACK_PROVIDE_ENERGY;
     }
 
     @Override

@@ -13,7 +13,7 @@ public class GravisuitConfig {
     public static final Client CLIENT = new Client();
     public static final EnabledItems ENABLED_ITEMS = new EnabledItems();
     public static final PowerValues POWER_VALUES = new PowerValues();
-    public static final General GENERAL = new General();
+    public static final Misc MISC = new Misc();
 
     public static final ClientConfig CLIENT_CONFIG;
     public static final ForgeConfigSpec CLIENT_SPEC;
@@ -43,19 +43,9 @@ public class GravisuitConfig {
         }
     }
 
-    public static class General{
-        //@Comment("Enable or Disable the compacted electric jetpack charging items like a lappack does here.")
-        //@RequiresMcRestart
-        public boolean ENABLE_COMPACTED_ELECTRIC_JETPACK_OVERRIDE;
-        //@Comment("Enable or Disable the compacted nuclear jetpack charging items like a lappack does here.")
-        //@RequiresMcRestart
-        public boolean ENABLE_COMPACTED_NUCLEAR_JETPACK_OVERRIDE;
-        //@Comment("Enable or Disable the overriding of compacted jetpack and jetplate recipes here. Also requires that the configs for making them charge items also be enabled.")
-        //@RequiresMcRestart
-        public boolean ENABLE_IC2_JETPACK_RECIPE_OVERRIDES;
-        //@Comment("Enable or Disable the gravitool requiring the completly lossless version of the precision wrench here.")
-        //@RequiresMcRestart
-        public boolean ENABLE_GRAVITOOL_REQUIRES_LOSSLESS_PRECISION_WRENCH;
+    public static class Misc {
+        public boolean ADVANCED_JETPACK_PROVIDE_ENERGY, ADVANCED_N_JETPACK_PROVIDE_ENERGY, COMPACTED_JETPACK_PROVIDE_ENERGY, COMPACTED_N_JETPACK_PROVIDE_ENERGY,
+                GRAVITATION_JETPACK_PROVIDE_ENERGY, GRAVITATION_N_JETPACK_PROVIDE_ENERGY;
     }
 
     public static class PowerValues {
@@ -116,6 +106,8 @@ public class GravisuitConfig {
         public final ForgeConfigSpec.IntValue ADVANCED_ELECTRIC_JETPACK_TRANSFER, ADVANCED_NUCLEAR_JETPACK_TRANSFER, ADVANCED_LAPPACK_TRANSFER, ULTIMATE_LAPPACK_TRANSFER, GRAVITATION_JETPACK_TRANSFER,
                 NUCLEAR_GRAVITATION_JETPACK_TRANSFER, GRAVITOOL_TRANSFER, VAJRA_TRANSFER, RELOCATOR_TRANSFER;
 
+        public final ForgeConfigSpec.BooleanValue ADVANCED_JETPACK_PROVIDE_ENERGY, ADVANCED_N_JETPACK_PROVIDE_ENERGY, COMPACTED_JETPACK_PROVIDE_ENERGY, COMPACTED_N_JETPACK_PROVIDE_ENERGY,
+                GRAVITATION_JETPACK_PROVIDE_ENERGY, GRAVITATION_N_JETPACK_PROVIDE_ENERGY;
         public CommonConfig(ForgeConfigSpec.Builder builder) {
             builder.push("PowerValues");
             builder.push("Storage");
@@ -140,6 +132,20 @@ public class GravisuitConfig {
             VAJRA_TRANSFER = builder.defineInRange("VAJRA_TRANSFER", 1000, 1 , Integer.MAX_VALUE);
             RELOCATOR_TRANSFER = builder.defineInRange("RELOCATOR_TRANSFER", 4000, 1, Integer.MAX_VALUE);
             builder.pop();
+            builder.pop();
+            builder.push("Misc");
+            ADVANCED_JETPACK_PROVIDE_ENERGY = builder.comment("Enables the Advanced Electric jetpack charging items. Default: false")
+                    .define("ADVANCED_JETPACK_PROVIDE_ENERGY", false);
+            ADVANCED_N_JETPACK_PROVIDE_ENERGY = builder.comment("Enables the Advanced Nuclear jetpack charging items. Default: true")
+                    .define("ADVANCED_N_JETPACK_PROVIDE_ENERGY", true);
+            COMPACTED_JETPACK_PROVIDE_ENERGY = builder.comment("Enables the Compacted jetpack charging items. Default: false")
+                    .define("COMPACTEd_JETPACK_PROVIDE_ENERGY", false);
+            COMPACTED_N_JETPACK_PROVIDE_ENERGY = builder.comment("Enables the Compacted Nuclear jetpack charging items. Default: true")
+                    .define("COMPACTEd_N_JETPACK_PROVIDE_ENERGY", true);
+            GRAVITATION_JETPACK_PROVIDE_ENERGY = builder.comment("Enables the Gravitation jetpack charging items. Default: false")
+                    .define("GRAVITATION_JETPACK_PROVIDE_ENERGY", false);
+            GRAVITATION_N_JETPACK_PROVIDE_ENERGY = builder.comment("Enables the Gravitation Nuclear jetpack charging items. Default: true")
+                    .define("GRAVITATION_N_JETPACK_PROVIDE_ENERGY", true);
             builder.pop();
         }
     }
@@ -168,5 +174,12 @@ public class GravisuitConfig {
         POWER_VALUES.GRAVITOOL_TRANSFER = COMMON_CONFIG.GRAVITOOL_TRANSFER.get();
         POWER_VALUES.VAJRA_TRANSFER = COMMON_CONFIG.VAJRA_TRANSFER.get();
         POWER_VALUES.RELOCATOR_TRANSFER = COMMON_CONFIG.RELOCATOR_TRANSFER.get();
+
+        MISC.ADVANCED_JETPACK_PROVIDE_ENERGY = COMMON_CONFIG.ADVANCED_JETPACK_PROVIDE_ENERGY.get();
+        MISC.ADVANCED_N_JETPACK_PROVIDE_ENERGY = COMMON_CONFIG.ADVANCED_N_JETPACK_PROVIDE_ENERGY.get();
+        MISC.COMPACTED_JETPACK_PROVIDE_ENERGY = COMMON_CONFIG.COMPACTED_JETPACK_PROVIDE_ENERGY.get();
+        MISC.COMPACTED_N_JETPACK_PROVIDE_ENERGY = COMMON_CONFIG.COMPACTED_N_JETPACK_PROVIDE_ENERGY.get();
+        MISC.GRAVITATION_JETPACK_PROVIDE_ENERGY = COMMON_CONFIG.GRAVITATION_JETPACK_PROVIDE_ENERGY.get();
+        MISC.GRAVITATION_N_JETPACK_PROVIDE_ENERGY = COMMON_CONFIG.GRAVITATION_N_JETPACK_PROVIDE_ENERGY.get();
     }
 }

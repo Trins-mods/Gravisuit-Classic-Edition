@@ -16,7 +16,7 @@ public class ItemAdvancedElectricJetpack extends IC2ElectricJetpackBase {
 
     @Override
     public boolean canProvideEnergy(ItemStack itemStack) {
-        return true;
+        return GravisuitConfig.MISC.ADVANCED_JETPACK_PROVIDE_ENERGY;
     }
 
     @Override

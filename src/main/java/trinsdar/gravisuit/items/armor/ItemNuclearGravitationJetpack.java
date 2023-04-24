@@ -27,7 +27,7 @@ public class ItemNuclearGravitationJetpack extends NuclearJetpack implements IGr
 
     @Override
     public boolean canProvideEnergy(ItemStack itemStack) {
-        return true;
+        return GravisuitConfig.MISC.GRAVITATION_N_JETPACK_PROVIDE_ENERGY;
     }
 
     @Override
