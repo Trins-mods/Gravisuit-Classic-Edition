@@ -12,6 +12,6 @@ import trinsdar.gravisuit.util.Registry;
 public abstract class CurioModuleMixin {
 	@Inject(method = "postInit", at = @At("TAIL"), remap = false)
 	private void injectPostInit(CallbackInfo info) {
-		IC2Tags.registerSimpleTag("curios", "back", Registry.ADVANCED_ELECTRIC_JETPACK, Registry.ADVANCED_NUCLEAR_JETPACK, Registry.GRAVITATION_JETPACK, Registry.NUCLEAR_GRAVITATION_JETPACK);
+		IC2Tags.registerSimpleTag("curios", "back", Registry.ADVANCED_ELECTRIC_JETPACK, Registry.ADVANCED_NUCLEAR_JETPACK, Registry.GRAVITATION_JETPACK, Registry.NUCLEAR_GRAVITATION_JETPACK, Registry.ADVANCED_LAPPACK, Registry.ULTIMATE_LAPPACK);
 	}
 }
