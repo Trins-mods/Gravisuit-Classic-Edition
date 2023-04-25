@@ -11,7 +11,9 @@
     "CompactedNuclearJetpackMixin",
     "IC2ElectricJetpackBaseMixin",
     "IC2ModularElectricArmorMixin",
-    "ElectricPackArmorMixin"
+    "ElectricPackArmorMixin",
+    "CurioPluginMixin",
+    "CurioModuleMixin"
   ],
   "minVersion": "0.8"
 }
