@@ -2,9 +2,11 @@ package trinsdar.gravisuit.entity;
 
 import ic2.api.items.electric.ElectricItem;
 import ic2.api.tiles.teleporter.TeleporterTarget;
+import ic2.core.IC2;
 import ic2.core.utils.helpers.TeleportUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
@@ -25,7 +27,7 @@ import trinsdar.gravisuit.util.Registry;
 
 import java.util.UUID;
 
-public class PlasmaBall extends ThrowableProjectile implements IEntityAdditionalSpawnData {
+public class PlasmaBall extends ThrowableProjectile {
     ItemRelocator.TeleportData data;
     ItemStack relocator;
     String uuid = "";
@@ -80,7 +82,7 @@ public class PlasmaBall extends ThrowableProjectile implements IEntityAdditional
     @Override
     protected void onHitEntity(EntityHitResult result) {
         Entity entity = result.getEntity();
-        if (entity instanceof LivingEntity livingEntity && !relocator.isEmpty()){
+        if (entity instanceof LivingEntity livingEntity && IC2.PLATFORM.isSimulating() && !relocator.isEmpty()){
             teleportEntity(livingEntity, data.toTeleportTarget(), entity.getMotionDirection(), relocator);
             this.discard();
         }
@@ -103,20 +105,14 @@ public class PlasmaBall extends ThrowableProjectile implements IEntityAdditional
     }
 
     @Override
-    public void writeSpawnData(FriendlyByteBuf arg) {
-        arg.writeEnum(hand);
-        arg.writeUtf(uuid);
+    protected void addAdditionalSaveData(CompoundTag compound) {
+        super.addAdditionalSaveData(compound);
+        compound.put("relocator", relocator.save(new CompoundTag()));
     }
 
     @Override
-    public void readSpawnData(FriendlyByteBuf arg) {
-        hand = arg.readEnum(InteractionHand.class);
-        uuid = arg.readUtf();
-        shooter = this.getLevel().getPlayerByUUID(UUID.fromString(uuid));
-        if (shooter != null) {
-            relocator = shooter.getItemInHand(hand);
-        } else {
-            relocator = ItemStack.EMPTY;
-        }
+    protected void readAdditionalSaveData(CompoundTag compound) {
+        super.readAdditionalSaveData(compound);
+        relocator = ItemStack.of(compound.getCompound("relocator"));
     }
 }
