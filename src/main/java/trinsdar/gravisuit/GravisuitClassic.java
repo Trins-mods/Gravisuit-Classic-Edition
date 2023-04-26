@@ -2,16 +2,20 @@ package trinsdar.gravisuit;
 
 import ic2.core.platform.recipes.misc.AdvRecipeRegistry;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLEnvironment;
@@ -67,11 +71,11 @@ public class GravisuitClassic {
         AdvRecipeRegistry.INSTANCE.registerListener(GravisuitRecipes::loadRecipes);
     }
 
-//    @OnlyIn(Dist.CLIENT)
-//    @SubscribeEvent
-//    public void onClientSetup(FMLClientSetupEvent event){
-//        MinecraftForge.EVENT_BUS.register(new GraviSuitOverlay(Minecraft.getInstance()));
-//    }
+    @OnlyIn(Dist.CLIENT)
+    @SubscribeEvent
+    public void onClientSetup(FMLClientSetupEvent event){
+        ItemBlockRenderTypes.setRenderLayer(Registry.PLASMA_PORTAL, RenderType.cutoutMipped());
+    }
 
     @OnlyIn(Dist.CLIENT)
     @SubscribeEvent
@@ -93,12 +97,18 @@ public class GravisuitClassic {
 
     @SubscribeEvent
     public void onRegisterItem(RegisterEvent event){
-        if (event.getRegistryKey().equals(ForgeRegistries.Keys.ITEMS)){
+        if (event.getRegistryKey().equals(ForgeRegistries.Keys.BLOCKS)){
             Registry.init();
+            event.register(ForgeRegistries.Keys.BLOCKS, new ResourceLocation(MODID, "plasma_portal"), () -> Registry.PLASMA_PORTAL);
+        }
+        if (event.getRegistryKey().equals(ForgeRegistries.Keys.ITEMS)){
             REGISTRY.forEach((r, i) -> event.register(ForgeRegistries.Keys.ITEMS, r, () -> i));
         }
         if (event.getRegistryKey().equals(ForgeRegistries.Keys.ENTITY_TYPES)){
             event.register(ForgeRegistries.Keys.ENTITY_TYPES, new ResourceLocation(MODID, "plasma_ball"), () -> Registry.PLASMA_BALL_ENTITY_TYPE);
+        }
+        if (event.getRegistryKey().equals(ForgeRegistries.Keys.BLOCK_ENTITY_TYPES)){
+            event.register(ForgeRegistries.Keys.BLOCK_ENTITY_TYPES, new ResourceLocation(MODID, "plasma_portal"), () -> Registry.PLASMA_PORTAL_BLOCK_ENTITY);
         }
     }
 }

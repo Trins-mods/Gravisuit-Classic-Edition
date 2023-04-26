@@ -1,0 +1,6 @@
+{
+  "parent": "gravisuit:block/orb",
+  "textures": {
+    "cross": "gravisuit:block/plasma_portal"
+  }
+}

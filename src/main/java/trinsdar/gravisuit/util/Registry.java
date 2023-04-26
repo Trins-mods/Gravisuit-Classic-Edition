@@ -7,7 +7,11 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import trinsdar.gravisuit.GravisuitClassic;
+import trinsdar.gravisuit.block.BlockEntityPlasmaPortal;
+import trinsdar.gravisuit.block.BlockPlasmaPortal;
 import trinsdar.gravisuit.entity.PlasmaBall;
 import trinsdar.gravisuit.items.ItemComponents;
 import trinsdar.gravisuit.items.armor.ItemAdvancedElectricJetpack;
@@ -41,6 +45,9 @@ public class Registry {
 
     public static final EntityType<PlasmaBall> PLASMA_BALL_ENTITY_TYPE = EntityType.Builder.<PlasmaBall>of(PlasmaBall::new, MobCategory.MISC).sized(1.0f, 1.0f).setShouldReceiveVelocityUpdates(true).clientTrackingRange(4).updateInterval(20).setCustomClientFactory(PlasmaBall::new).build(GravisuitClassic.MODID + ":plasma_ball");
 
+    public static final Block PLASMA_PORTAL = new BlockPlasmaPortal();
+
+    public static final BlockEntityType<?> PLASMA_PORTAL_BLOCK_ENTITY = BlockEntityType.Builder.of(BlockEntityPlasmaPortal::new, PLASMA_PORTAL).build(null);
     public static void init(){
     }
 }
