@@ -14,6 +14,7 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
@@ -21,9 +22,11 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import trinsdar.gravisuit.GravisuitClassic;
+import trinsdar.gravisuit.block.BlockEntityPlasmaPortal;
 import trinsdar.gravisuit.entity.PlasmaBall;
 import trinsdar.gravisuit.items.container.ItemInventoryRelocator;
 import trinsdar.gravisuit.util.GravisuitConfig;
@@ -117,7 +120,23 @@ public class ItemRelocator extends IC2ElectricItem implements ISimpleItemModel, 
                         CompoundTag map = nbt.getCompound("Locations");
                         String name = nbt.getString("DefaultLocation");
                         if (map.contains(name)){
-                            context.getLevel().setBlock(context.getClickedPos().relative(context.getClickedFace()), Registry.PLASMA_PORTAL.defaultBlockState(), 3);
+                            BlockPos pos = context.getClickedPos().relative(context.getClickedFace());
+                            context.getLevel().setBlock(pos, Registry.PLASMA_PORTAL.defaultBlockState(), 3);
+                            BlockEntity be = context.getLevel().getBlockEntity(pos);
+                            TeleportData teleportData = TeleportData.fromNBT(map.getCompound(name), name);
+                            BlockPos teleportPos = BlockPos.of(teleportData.getPos());
+                            TeleportData origin = new TeleportData(pos.asLong(), context.getLevel().dimension().location().toString(), "origin");
+                            if (be instanceof BlockEntityPlasmaPortal portal){
+                                portal.setOtherEnd(teleportData);
+                            }
+                            TeleporterTarget teleporterTarget = teleportData.toTeleportTarget();
+                            ServerLevel teleportWorld = teleporterTarget.getWorld();
+                            teleportWorld.setBlock(teleportPos, Registry.PLASMA_PORTAL.defaultBlockState(), 3);
+                            BlockEntity teleportBE = teleportWorld.getBlockEntity(teleportPos);
+                            if (teleportBE instanceof BlockEntityPlasmaPortal portal){
+                                portal.setOtherEnd(origin);
+                            }
+
                             return InteractionResult.SUCCESS;
                         }
                     }
