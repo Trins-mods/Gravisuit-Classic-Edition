@@ -46,7 +46,7 @@ public class BlockPlasmaPortal extends Block implements EntityBlock {
         if (entity instanceof LivingEntity living){
             BlockEntity blockEntity = level.getBlockEntity(pos);
             if (blockEntity instanceof BlockEntityPlasmaPortal portal && portal.otherEnd != null){
-                portal.teleportEntity(living, portal.otherEnd.toTeleportTarget(), living.getDirection());
+                portal.addEntityToTeleport(living);
             }
         }
     }

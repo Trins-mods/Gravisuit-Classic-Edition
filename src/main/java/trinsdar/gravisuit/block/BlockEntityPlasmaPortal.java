@@ -18,11 +18,14 @@ import trinsdar.gravisuit.GravisuitClassic;
 import trinsdar.gravisuit.items.tools.ItemRelocator;
 import trinsdar.gravisuit.util.Registry;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BlockEntityPlasmaPortal extends BlockEntity {
     ItemRelocator.TeleportData otherEnd = null;
 
+    boolean insidePortal = false;
+    List<LivingEntity> entitesToTeleport = new ArrayList<>();
 
     int ticker = 0;
     public BlockEntityPlasmaPortal(BlockPos arg2, BlockState arg3) {
@@ -33,6 +36,14 @@ public class BlockEntityPlasmaPortal extends BlockEntity {
         this.otherEnd = otherEnd;
     }
 
+    public void setInsidePortal(boolean insidePortal) {
+        this.insidePortal = insidePortal;
+    }
+
+    public void addEntityToTeleport(LivingEntity entity){
+        entitesToTeleport.add(entity);
+    }
+
     public static void tick(Level level, BlockPos pos, BlockState state, BlockEntity blockEntity){
         if (blockEntity instanceof BlockEntityPlasmaPortal portal) {
             portal.onTick(level, pos, state);
@@ -41,6 +52,12 @@ public class BlockEntityPlasmaPortal extends BlockEntity {
 
     public void onTick(Level level, BlockPos pos, BlockState state){
         ticker++;
+        if (!this.entitesToTeleport.isEmpty() && otherEnd != null){
+            entitesToTeleport.forEach(e -> {
+                teleportEntity(e, otherEnd.toTeleportTarget(), e.getDirection());
+            });
+            entitesToTeleport.clear();
+        }
         if (ticker >= 500){
             level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
         }

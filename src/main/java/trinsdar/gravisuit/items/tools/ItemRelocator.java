@@ -1,5 +1,6 @@
 package trinsdar.gravisuit.items.tools;
 
+import ic2.api.items.electric.ElectricItem;
 import ic2.api.tiles.teleporter.TeleporterTarget;
 import ic2.core.IC2;
 import ic2.core.inventory.base.IHasHeldGui;
@@ -92,14 +93,19 @@ public class ItemRelocator extends IC2ElectricItem implements ISimpleItemModel, 
             if (player.isCrouching() || nbt.getByte("mode") == 0) {
                 IC2.PLATFORM.launchGui(player, hand, null, this.getInventory(player, hand, stack));
                 return InteractionResultHolder.success(stack);
-            } else if (nbt.getByte("mode") == 1){
+            } else if (nbt.getByte("mode") >= 1){
                 if (nbt.contains("DefaultLocation")){
                     if (nbt.contains("Locations")){
                         CompoundTag map = nbt.getCompound("Locations");
                         String name = nbt.getString("DefaultLocation");
                         if (map.contains(name)){
-                            PlasmaBall entity = new PlasmaBall(player.level, player, TeleportData.fromNBT(map.getCompound(name), name), hand);
-                            level.addFreshEntity(entity);
+                            boolean portal = nbt.getByte("mode") == 2;
+                            if (!portal || ElectricItem.MANAGER.canUse(stack, 10000000)) {
+                                PlasmaBall entity = new PlasmaBall(player.level, player, TeleportData.fromNBT(map.getCompound(name), name), hand);
+                                level.addFreshEntity(entity);
+                                if (portal) ElectricItem.MANAGER.use(stack, 10000000, player);
+                            }
+
                             return InteractionResultHolder.success(stack);
                         }
                     }
@@ -107,43 +113,6 @@ public class ItemRelocator extends IC2ElectricItem implements ISimpleItemModel, 
 
             }
         return super.use(level, player, hand);
-    }
-
-    @Override
-    public InteractionResult useOn(UseOnContext context) {
-        ItemStack stack = context.getItemInHand();
-        CompoundTag nbt = stack.getOrCreateTag();
-        if (IC2.PLATFORM.isSimulating()){
-            if (nbt.getByte("mode") == 2){
-                if (nbt.contains("DefaultLocation")){
-                    if (nbt.contains("Locations")){
-                        CompoundTag map = nbt.getCompound("Locations");
-                        String name = nbt.getString("DefaultLocation");
-                        if (map.contains(name)){
-                            BlockPos pos = context.getClickedPos().relative(context.getClickedFace());
-                            context.getLevel().setBlock(pos, Registry.PLASMA_PORTAL.defaultBlockState(), 3);
-                            BlockEntity be = context.getLevel().getBlockEntity(pos);
-                            TeleportData teleportData = TeleportData.fromNBT(map.getCompound(name), name);
-                            BlockPos teleportPos = BlockPos.of(teleportData.getPos());
-                            TeleportData origin = new TeleportData(pos.asLong(), context.getLevel().dimension().location().toString(), "origin");
-                            if (be instanceof BlockEntityPlasmaPortal portal){
-                                portal.setOtherEnd(teleportData);
-                            }
-                            TeleporterTarget teleporterTarget = teleportData.toTeleportTarget();
-                            ServerLevel teleportWorld = teleporterTarget.getWorld();
-                            teleportWorld.setBlock(teleportPos, Registry.PLASMA_PORTAL.defaultBlockState(), 3);
-                            BlockEntity teleportBE = teleportWorld.getBlockEntity(teleportPos);
-                            if (teleportBE instanceof BlockEntityPlasmaPortal portal){
-                                portal.setOtherEnd(origin);
-                            }
-
-                            return InteractionResult.SUCCESS;
-                        }
-                    }
-                }
-            }
-        }
-        return super.useOn(context);
     }
 
     @OnlyIn(Dist.CLIENT)

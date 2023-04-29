@@ -17,11 +17,13 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ThrowableProjectile;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.entity.IEntityAdditionalSpawnData;
 import net.minecraftforge.network.PlayMessages;
+import trinsdar.gravisuit.block.BlockEntityPlasmaPortal;
 import trinsdar.gravisuit.items.tools.ItemRelocator;
 import trinsdar.gravisuit.util.Registry;
 
@@ -83,13 +85,36 @@ public class PlasmaBall extends ThrowableProjectile {
     protected void onHitEntity(EntityHitResult result) {
         Entity entity = result.getEntity();
         if (entity instanceof LivingEntity livingEntity && IC2.PLATFORM.isSimulating() && !relocator.isEmpty()){
-            teleportEntity(livingEntity, data.toTeleportTarget(), entity.getMotionDirection(), relocator);
-            this.discard();
+            CompoundTag nbt = relocator.getOrCreateTag();
+            if (nbt.getByte("mode") == 1){
+                teleportEntity(livingEntity, data.toTeleportTarget(), entity.getMotionDirection(), relocator);
+                this.discard();
+            }
         }
     }
 
     @Override
     protected void onHitBlock(BlockHitResult result) {
+        if (IC2.PLATFORM.isSimulating() && !relocator.isEmpty() && ElectricItem.MANAGER.canUse(relocator, 10000000)){
+            CompoundTag nbt = relocator.getOrCreateTag();
+            if (nbt.getByte("mode") == 2){
+                BlockPos pos = result.getBlockPos().relative(result.getDirection());
+                this.getLevel().setBlock(pos, Registry.PLASMA_PORTAL.defaultBlockState(), 3);
+                BlockEntity be = this.getLevel().getBlockEntity(pos);
+                BlockPos teleportPos = BlockPos.of(data.getPos());
+                ItemRelocator.TeleportData origin = new ItemRelocator.TeleportData(pos.asLong(), this.getLevel().dimension().location().toString(), "origin");
+                if (be instanceof BlockEntityPlasmaPortal portal){
+                    portal.setOtherEnd(data);
+                }
+                TeleporterTarget teleporterTarget = data.toTeleportTarget();
+                ServerLevel teleportWorld = teleporterTarget.getWorld();
+                teleportWorld.setBlock(teleportPos, Registry.PLASMA_PORTAL.defaultBlockState(), 3);
+                BlockEntity teleportBE = teleportWorld.getBlockEntity(teleportPos);
+                if (teleportBE instanceof BlockEntityPlasmaPortal portal){
+                    portal.setOtherEnd(origin);
+                }
+            }
+        }
         this.discard();
     }
 
