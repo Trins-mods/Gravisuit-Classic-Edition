@@ -130,7 +130,7 @@ public class GravisuitConfig {
             NUCLEAR_GRAVITATION_JETPACK_TRANSFER = builder.defineInRange("NUCLEAR_GRAVITATION_JETPACK_TRANSFER", 1000, 1, Integer.MAX_VALUE);
             GRAVITOOL_TRANSFER = builder.defineInRange("GRAVITOOL_TRANSFER", 400, 1, Integer.MAX_VALUE);
             VAJRA_TRANSFER = builder.defineInRange("VAJRA_TRANSFER", 1000, 1 , Integer.MAX_VALUE);
-            RELOCATOR_TRANSFER = builder.defineInRange("RELOCATOR_TRANSFER", 4000, 1, Integer.MAX_VALUE);
+            RELOCATOR_TRANSFER = builder.defineInRange("RELOCATOR_TRANSFER", 25000, 1, Integer.MAX_VALUE);
             builder.pop();
             builder.pop();
             builder.push("Misc");

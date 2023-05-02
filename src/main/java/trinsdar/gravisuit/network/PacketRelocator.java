@@ -81,8 +81,7 @@ public class PacketRelocator  {
                     nbt.putString("DefaultLocation", msg.location.getName());
                 }
                 if (msg.function == TeleportFunction.ADDDESTINATION){
-                    CompoundTag entry = new CompoundTag();
-                    msg.location.writeToNBT(entry);
+                    CompoundTag entry = msg.location.writeToNBT();
                     map.put(msg.location.getName(), entry);
                 }
                 if (msg.function == TeleportFunction.TELEPORT){

@@ -17,7 +17,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ThrowableProjectile;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
@@ -113,6 +115,15 @@ public class PlasmaBall extends ThrowableProjectile {
                 if (teleportBE instanceof BlockEntityPlasmaPortal portal){
                     portal.setOtherEnd(origin);
                 }
+                if (nbt.contains("lastPosition")){
+                    CompoundTag tag = nbt.getCompound("lastPosition");
+                    TeleporterTarget lastTeleporterTarget = ItemRelocator.TeleportData.fromNBT(tag, "lastPosition").toTeleportTarget();
+                    ServerLevel lastLevel = lastTeleporterTarget.getWorld();
+                    if (lastLevel.getBlockState(lastTeleporterTarget.getTargetPosition()).getBlock() == Registry.PLASMA_PORTAL){
+                        lastLevel.setBlock(teleporterTarget.getTargetPosition(), Blocks.AIR.defaultBlockState(), 3);
+                    }
+                }
+                nbt.put("lastPosition", origin.writeToNBT());
             }
         }
         this.discard();

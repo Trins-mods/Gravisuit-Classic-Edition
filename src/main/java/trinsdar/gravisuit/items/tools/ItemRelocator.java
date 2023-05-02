@@ -176,7 +176,8 @@ public class ItemRelocator extends IC2ElectricItem implements ISimpleItemModel, 
             this.dimId = dimId;
         }
 
-        public CompoundTag writeToNBT(CompoundTag compound) {
+        public CompoundTag writeToNBT() {
+            CompoundTag compound = new CompoundTag();
             compound.putLong("pos", pos);
             compound.putString("id", dimId);
             return compound;
@@ -187,7 +188,7 @@ public class ItemRelocator extends IC2ElectricItem implements ISimpleItemModel, 
         }
 
         public TeleporterTarget toTeleportTarget(){
-            CompoundTag compoundTag = writeToNBT(new CompoundTag());
+            CompoundTag compoundTag = writeToNBT();
             return TeleporterTarget.read(compoundTag);
         }
     }
