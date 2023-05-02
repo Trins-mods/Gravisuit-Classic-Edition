@@ -59,6 +59,7 @@
   "message.relocatorMaxTeleport" : "Can't add point. Memory is full.",
   "message.relocatorRemoveTeleport" : "%s removed from teleport list",
   "message.relocatorAddDefaultTeleport" : "%s set as default location",
+  "message.relocatorNotEnoughPower" : "Not Enough Power to teleport",
   "message.wrench" : "Set Mode to Wrench",
   "message.hoe" : "Set Mode to Hoe",
   "message.treetap" : "Set Mode to Treetap",
