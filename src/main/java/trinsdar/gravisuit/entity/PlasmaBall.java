@@ -120,7 +120,7 @@ public class PlasmaBall extends ThrowableProjectile {
                     TeleporterTarget lastTeleporterTarget = ItemRelocator.TeleportData.fromNBT(tag, "lastPosition").toTeleportTarget();
                     ServerLevel lastLevel = lastTeleporterTarget.getWorld();
                     if (lastLevel.getBlockState(lastTeleporterTarget.getTargetPosition()).getBlock() == Registry.PLASMA_PORTAL){
-                        lastLevel.setBlock(teleporterTarget.getTargetPosition(), Blocks.AIR.defaultBlockState(), 3);
+                        lastLevel.setBlock(lastTeleporterTarget.getTargetPosition(), Blocks.AIR.defaultBlockState(), 3);
                     }
                 }
                 nbt.put("lastPosition", origin.writeToNBT());
