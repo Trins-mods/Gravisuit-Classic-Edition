@@ -7,6 +7,9 @@ import ic2.core.item.wearable.base.IC2ModularElectricArmor;
 import ic2.core.platform.player.PlayerHandler;
 import ic2.core.utils.tooltips.ILangHelper;
 import ic2.core.utils.tooltips.ToolTipHelper;
+import io.github.ladysnake.pal.AbilitySource;
+import io.github.ladysnake.pal.Pal;
+import io.github.ladysnake.pal.VanillaAbilities;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.nbt.CompoundTag;
@@ -22,6 +25,7 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.entity.living.LivingEvent;
+import trinsdar.gravisuit.GravisuitClassic;
 import trinsdar.gravisuit.util.GravisuitKeys;
 import trinsdar.gravisuit.util.GravisuitLang;
 import trinsdar.gravisuit.util.IGravisuitPlayerHandler;
@@ -31,6 +35,7 @@ import java.util.WeakHashMap;
 
 public interface IGravitationJetpack extends ILangHelper, IHasOverlay {
 
+    AbilitySource SOURCE = Pal.getAbilitySource(GravisuitClassic.MODID, "gravisuit");
     default boolean armorTick(ItemStack stack, Level world, Player player){
         CompoundTag tag = this.nbtData(stack, true);
         boolean enabled = tag.getBoolean("engine_on");
@@ -46,10 +51,8 @@ public interface IGravitationJetpack extends ILangHelper, IHasOverlay {
                 String lang = disabled ? GravisuitLang.graviEngineOn : GravisuitLang.graviEngineOff;
                 player.displayClientMessage(this.translate(lang), false);
             }
-            if ( enabled && !player.isCreative() && !player.isSpectator()){
-                player.maxUpStep = 0.6F;
-                player.getAbilities().mayfly = false;
-                player.getAbilities().flying = false;
+            if (server && enabled && !player.isCreative() && !player.isSpectator()){
+                SOURCE.revokeFrom(player, VanillaAbilities.ALLOW_FLYING);
             }
             enabled = disabled;
         }
@@ -70,8 +73,8 @@ public interface IGravitationJetpack extends ILangHelper, IHasOverlay {
                         tag.putBoolean("ResetFlying", true);
                     }
                 }
-                player.getAbilities().mayfly = true;
-                player.maxUpStep = 1.0625F;
+                if (server) SOURCE.grantTo(player, VanillaAbilities.ALLOW_FLYING);
+                //player.maxUpStep = 1.0625F;
                 boolean flying = player.getAbilities().flying;
                 Attribute flyingSpeed = Attributes.FLYING_SPEED;
                 if (flying && hasQuantumLegs(player)){
@@ -98,10 +101,8 @@ public interface IGravitationJetpack extends ILangHelper, IHasOverlay {
             }else {
                 if (tag.contains("ResetFlying")) {
                     tag.remove("ResetFlying");
-                    if (!player.isCreative() && !player.isSpectator()){
-                        player.maxUpStep = 0.6F;
-                        player.getAbilities().mayfly = false;
-                        player.getAbilities().flying = false;
+                    if (server && !player.isCreative() && !player.isSpectator()){
+                        SOURCE.revokeFrom(player, VanillaAbilities.ALLOW_FLYING);
                     }
                 }
             }
@@ -149,11 +150,8 @@ public interface IGravitationJetpack extends ILangHelper, IHasOverlay {
             }
             if (playersWithFlight.get(player) && !flight) {
                 playersWithFlight.put(player, false);
-                player.maxUpStep = 0.6F;
-                if (!player.isCreative() && !player.isSpectator()) {
-                    player.getAbilities().mayfly = false;
-                    player.getAbilities().flying = false;
-                    player.onUpdateAbilities();
+                if (!player.level.isClientSide && !player.isCreative() && !player.isSpectator()) {
+                    SOURCE.revokeFrom(player, VanillaAbilities.ALLOW_FLYING);
                 }
             }
         }

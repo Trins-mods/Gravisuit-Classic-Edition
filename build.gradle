@@ -59,6 +59,7 @@ repositories{
     maven {
         url "https://cursemaven.com"
     }
+    maven { url 'https://jitpack.io' }
 }
 
 dependencies {
@@ -74,6 +75,7 @@ dependencies {
     modImplementation("curse.maven:curios-309927:3871347")
     modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-forge:${rootProject.rei_version}"
     modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-plugin-compatibilities-forge:9.1.530"
+    modImplementation include('com.github.Trins-mods:PlayerAbilityLib-forge:b2d633b0ae')
     /*deobfProvided "mezz.jei:jei_${mc_version}:${jei_version}:api"
     runtime "mezz.jei:jei_${mc_version}:${jei_version}"
     runtime("org.spongepowered:mixin:0.8-SNAPSHOT"){
