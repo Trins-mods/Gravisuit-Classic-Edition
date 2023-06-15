@@ -127,7 +127,7 @@ public class ItemNuclearGravitationJetpack extends NuclearJetpack implements IGr
     @Override
     public void addToolTip(ItemStack armor, ItemStack stack, Player player, TooltipFlag type, ToolTipHelper helper) {
         super.addToolTip(armor, stack, player, type, helper);
-        toolTip(stack, player, type, helper);
+        toolTip(armor, player, type, helper);
     }
 
     @Override

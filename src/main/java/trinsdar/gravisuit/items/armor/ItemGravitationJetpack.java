@@ -136,7 +136,7 @@ public class ItemGravitationJetpack extends IC2ElectricJetpackBase implements IG
     @Override
     public void addToolTip(ItemStack armor, ItemStack stack, Player player, TooltipFlag type, ToolTipHelper helper) {
         super.addToolTip(armor, stack, player, type, helper);
-        toolTip(stack, player, type, helper);
+        toolTip(armor, player, type, helper);
     }
 
     @Override
