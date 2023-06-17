@@ -113,8 +113,7 @@ public interface IGravitationJetpack extends ILangHelper, IHasOverlay {
     @OnlyIn(Dist.CLIENT)
     default void toolTip(ItemStack stack, Player player, TooltipFlag type, ToolTipHelper helper) {
         helper.addKeybindingTooltip(buildKeyDescription(GravisuitKeys.G_KEY, GravisuitLang.graviEngineToggle));
-        CompoundTag tag = this.nbtData(stack, true);
-        boolean enabled = tag.getBoolean("engine_on");
+        boolean enabled = isJetpackEnabled(stack);
         String lang = enabled ? GravisuitLang.graviEngineOnInfo : GravisuitLang.graviEngineOffInfo;
         helper.addSimpleToolTip(lang);
     }
@@ -125,6 +124,12 @@ public interface IGravitationJetpack extends ILangHelper, IHasOverlay {
     }
 
     CompoundTag nbtData(ItemStack stack, boolean create);
+
+    default boolean isJetpackEnabled(ItemStack stack){
+        CompoundTag tag = this.nbtData(stack, false);
+        if (tag == null) return false;
+        return tag.getBoolean("engine_on");
+    }
 
     default void useEu(Player player, ItemStack stack, int amount){
         if (stack.getItem() != this) {
@@ -139,18 +144,19 @@ public interface IGravitationJetpack extends ILangHelper, IHasOverlay {
 
 
     default void onLivingTickEvent(LivingEvent.LivingTickEvent event){
-        if (event.getEntity() instanceof Player player) {
+        if (event.getEntity() instanceof Player player && !player.level.isClientSide) {
             ItemStack stack = player.getItemBySlot(EquipmentSlot.CHEST);
-            boolean flight = isStackGravisuit(stack);
+            boolean flight = isStackGravisuit(stack) && isJetpackEnabled(stack);
             if (!playersWithFlight.containsKey(player)) {
                 playersWithFlight.put(player, false);
             }
-            if (!playersWithFlight.get(player) && flight){
+            boolean previousHasFlight = playersWithFlight.get(player);
+            if (!previousHasFlight && flight){
                 playersWithFlight.put(player, true);
             }
-            if (playersWithFlight.get(player) && !flight) {
+            if (previousHasFlight && !flight) {
                 playersWithFlight.put(player, false);
-                if (!player.level.isClientSide && !player.isCreative() && !player.isSpectator()) {
+                if (!player.isCreative() && !player.isSpectator()) {
                     SOURCE.revokeFrom(player, VanillaAbilities.ALLOW_FLYING);
                 }
             }
