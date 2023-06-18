@@ -74,17 +74,12 @@ public class ItemToolVajra extends DrillTool {
             ItemStack stack = playerIn.getItemInHand(handIn);
             CompoundTag nbt = stack.getOrCreateTag();
             boolean silkTouch = nbt.getBoolean("silkTouch");
-            Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(stack);
             if (IC2.PLATFORM.isSimulating()) {
                 if (silkTouch){
                     nbt.putBoolean("silkTouch", false);
-                    enchantments.remove(Enchantments.SILK_TOUCH, 1);
-                    EnchantmentHelper.setEnchantments(enchantments, stack);
                     playerIn.displayClientMessage(this.translate(GravisuitLang.silkTouchOff), false);
                 }else {
                     nbt.putBoolean("silkTouch", true);
-                    enchantments.put(Enchantments.SILK_TOUCH, 1);
-                    EnchantmentHelper.setEnchantments(enchantments, stack);
                     playerIn.displayClientMessage(this.translate(GravisuitLang.silkTouchOn), false);
                 }
                 return InteractionResultHolder.success(stack);
@@ -136,9 +131,19 @@ public class ItemToolVajra extends DrillTool {
                 level.levelEvent(2001, pos, Block.getId(blockstate));
             }
 
+            CompoundTag tag = item.getTag();
             if (dropBlock) {
                 BlockEntity blockentity = blockstate.hasBlockEntity() ? level.getBlockEntity(pos) : null;
+                Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(item);
+                if (tag != null && tag.getBoolean("silkTouch")){
+                    enchantments.put(Enchantments.SILK_TOUCH, 1);
+                    EnchantmentHelper.setEnchantments(enchantments, item);
+                }
                 Block.dropResources(blockstate, level, pos, blockentity, entity, item);
+                if (tag != null && tag.getBoolean("silkTouch")){
+                    enchantments.remove(Enchantments.SILK_TOUCH);
+                    EnchantmentHelper.setEnchantments(enchantments, item);
+                }
             }
 
             boolean flag = level.setBlock(pos, fluidstate.createLegacyBlock(), 3, 512);
@@ -161,6 +166,11 @@ public class ItemToolVajra extends DrillTool {
             }
         }
         return multimap;
+    }
+
+    @Override
+    public InteractionResult getEnchantmentCompatibility(ItemStack stack, Enchantment ench) {
+        return ench == Enchantments.BLOCK_EFFICIENCY ? InteractionResult.FAIL : super.getEnchantmentCompatibility(stack, ench);
     }
 
     @OnlyIn(Dist.CLIENT)

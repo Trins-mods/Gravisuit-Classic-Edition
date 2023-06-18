@@ -13,7 +13,8 @@
     "IC2ModularElectricArmorMixin",
     "ElectricPackArmorMixin",
     "CurioPluginMixin",
-    "CurioModuleMixin"
+    "CurioModuleMixin",
+    "BlockMixin"
   ],
   "minVersion": "0.8"
 }
