@@ -72,6 +72,7 @@ dependencies {
     forge "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
     //modImplementation fileTree(include: ['*.jar'], dir: 'libs')
     modImplementation("curse.maven:ic2_classic-242942:4563059")
+    modImplementation("curse.maven:ic2c_additions-304040:4360883")
     modImplementation("curse.maven:curios-309927:3871347")
     modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-forge:${rootProject.rei_version}"
     modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-plugin-compatibilities-forge:9.1.530"

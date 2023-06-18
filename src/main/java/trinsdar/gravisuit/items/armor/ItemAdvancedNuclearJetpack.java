@@ -1,5 +1,6 @@
 package trinsdar.gravisuit.items.armor;
 
+import ic2.api.items.armor.IArmorModule;
 import ic2.core.item.wearable.jetpacks.NuclearJetpack;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -80,6 +81,20 @@ public class ItemAdvancedNuclearJetpack extends NuclearJetpack {
     @Override
     public int getFuelCost(ItemStack itemStack, HoverMode hoverMode) {
         return hoverMode == HoverMode.BASIC ? 8 : 14;
+    }
+
+    public void onInstall(ItemStack stack, ItemStack armor, IArmorModule.IArmorModuleHolder holder) {
+        super.onInstall(stack, armor, holder);
+        if (canProvideEnergy(stack)) {
+            holder.addAddModifier(armor, ArmorMod.ENERGY_PROVIDER, 1001);
+        }
+    }
+
+    public void onUninstall(ItemStack stack, ItemStack armor, IArmorModule.IArmorModuleHolder holder) {
+        super.onUninstall(stack, armor, holder);
+        if (canProvideEnergy(stack)) {
+            holder.removeAddModifier(armor, ArmorMod.ENERGY_PROVIDER, 1001);
+        }
     }
 
     @Override

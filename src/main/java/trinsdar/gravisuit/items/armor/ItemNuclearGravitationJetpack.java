@@ -1,5 +1,6 @@
 package trinsdar.gravisuit.items.armor;
 
+import ic2.api.items.armor.IArmorModule;
 import ic2.core.item.logic.TickableItemLogic;
 import ic2.core.item.wearable.jetpacks.NuclearJetpack;
 import ic2.core.utils.tooltips.ToolTipHelper;
@@ -92,6 +93,20 @@ public class ItemNuclearGravitationJetpack extends NuclearJetpack implements IGr
                 logic.onTick(stack);
                 logic.save(stack);
             }
+        }
+    }
+
+    public void onInstall(ItemStack stack, ItemStack armor, IArmorModule.IArmorModuleHolder holder) {
+        super.onInstall(stack, armor, holder);
+        if (canProvideEnergy(stack)) {
+            holder.addAddModifier(armor, ArmorMod.ENERGY_PROVIDER, 1001);
+        }
+    }
+
+    public void onUninstall(ItemStack stack, ItemStack armor, IArmorModule.IArmorModuleHolder holder) {
+        super.onUninstall(stack, armor, holder);
+        if (canProvideEnergy(stack)) {
+            holder.removeAddModifier(armor, ArmorMod.ENERGY_PROVIDER, 1001);
         }
     }
 
