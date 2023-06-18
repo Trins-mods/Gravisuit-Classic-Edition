@@ -41,7 +41,7 @@ public class ItemNuclearGravitationJetpack extends NuclearJetpack implements IGr
 
     @Override
     public int getTransferLimit(ItemStack itemStack) {
-        return GravisuitConfig.POWER_VALUES.NUCLEAR_GRAVITATION_JETPACK_TRANSFER;
+        return 0;
     }
 
     @Override

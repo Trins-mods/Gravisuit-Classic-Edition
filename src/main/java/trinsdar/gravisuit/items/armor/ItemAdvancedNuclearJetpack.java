@@ -30,7 +30,7 @@ public class ItemAdvancedNuclearJetpack extends NuclearJetpack {
 
     @Override
     public int getTransferLimit(ItemStack itemStack) {
-        return GravisuitConfig.POWER_VALUES.ADVANCED_NUCLEAR_JETPACK_TRANSFER;
+        return 0;
     }
 
     @Override
