@@ -82,6 +82,9 @@
   "item_info.graviEngineOffInfo" : "Gravitation Engine Off",
   "item_info.graviEngineToggle" : "Enable/Disable the Gravitation Engine",
   "key.gravisuit.gravitation_engine" : "Gravi Fly Key",
-  "key.gravisuit.category": "Gravisuit Classic"
+  "key.gravisuit.category": "Gravisuit Classic",
+  "wiki.gravisuit.preview.gravitool.desc": "The Gravitool is an all in one hoe, wrench, treetap, and screwdriver. No longer do you need 3 different tools in your toolbox/hotbar, now you can have just 1!",
+  "wiki.gravisuit.preview.relocator.desc": "The Relocator is an upgrade to the teleporter with 3 different modes: Personal, Translocator, and Portal. in Additon you can store 10 locations instead of 1.",
+  "wiki.gravisuit.preview.vajra.desc": "The Vajra is an advanced mining tool that allows you to mine at creative speed with right click, and even faster with left click. It can also enable silk touch."
 }
 
