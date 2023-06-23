@@ -39,6 +39,8 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Material;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.level.BlockEvent;
 import trinsdar.gravisuit.GravisuitClassic;
 import trinsdar.gravisuit.util.GravisuitConfig;
 import trinsdar.gravisuit.util.GravisuitLang;
@@ -132,8 +134,13 @@ public class ItemToolVajra extends DrillTool {
             }
 
             CompoundTag tag = item.getTag();
+            BlockEntity blockentity = blockstate.hasBlockEntity() ? level.getBlockEntity(pos) : null;
+            BlockEvent.BreakEvent event = new BlockEvent.BreakEvent(level, pos, blockstate, entity instanceof Player player ? player : null);
+            MinecraftForge.EVENT_BUS.post(event);
+            if (event.isCanceled()){
+                return false;
+            }
             if (dropBlock) {
-                BlockEntity blockentity = blockstate.hasBlockEntity() ? level.getBlockEntity(pos) : null;
                 Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(item);
                 if (tag != null && tag.getBoolean("silkTouch")){
                     enchantments.put(Enchantments.SILK_TOUCH, 1);
