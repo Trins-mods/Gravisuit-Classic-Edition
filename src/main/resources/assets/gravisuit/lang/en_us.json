@@ -88,6 +88,9 @@
   "wiki.gravisuit.preview.gravisuit_main.desc": "Gravisuit adds a few tools and armor that you may find useful. Here you can find info on what they do.",
   "wiki.gravisuit.preview.gravitool.desc": "The Gravitool is an all in one hoe, wrench, treetap, and screwdriver. No longer do you need 3 different tools in your toolbox/hotbar, now you can have just 1!",
   "wiki.gravisuit.preview.relocator.desc": "The Relocator is an upgrade to the teleporter with 3 different modes: Personal - Right click opens a gui with up to 10 different teleport locations, shift right click to add a location. Translocator - Sends an orb that teleports an entity it hits to the default teleport location, shift right click to set the default teleport location. Portal - Spawns a portal that teleports whatever enters it to the default teleport location, lasts 25 seconds. Shift right click to set default location.",
-  "wiki.gravisuit.preview.vajra.desc": "The Vajra is an advanced mining tool that allows you to mine at creative speed with right click, and even faster with left click. It can also enable silk touch."
+  "wiki.gravisuit.preview.vajra.desc": "The Vajra is an advanced mining tool that allows you to mine at creative speed with right click, and even faster with left click. It can also enable silk touch.",
+  "wiki.gravisuit.preview.advanced_lappack.desc": "The Advanced Lappack and Ultimate Lappack are better versions of the lappack and quantum pack respectively.",
+  "wiki.gravisuit.preview.advanced_electric_jetpack.desc": "The advanced electric jetpacks are better versions of the electric jetpack, with a max height of 278.",
+  "wiki.gravisuit.preview.gravitation_jetpack.desc": "The gravitation jetpack is top tier jetpack that allows one to use creative flight, press g to activate."
 }
 
