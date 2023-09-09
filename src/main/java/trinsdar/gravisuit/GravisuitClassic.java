@@ -1,5 +1,6 @@
 package trinsdar.gravisuit;
 
+import ic2.core.IC2;
 import ic2.core.platform.events.impl.WikiEvent;
 import ic2.core.platform.recipes.misc.AdvRecipeRegistry;
 import net.minecraft.client.Minecraft;
@@ -53,9 +54,7 @@ public class GravisuitClassic {
         FMLJavaModLoadingContext.get().getModEventBus().register(this);
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, GravisuitConfig.CLIENT_SPEC);
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, GravisuitConfig.COMMON_SPEC);
-        MinecraftForge.EVENT_BUS.register(GravisuitWiki.class);
-        //todo remove once ic2c updates
-        MinecraftForge.EVENT_BUS.start();
+        IC2.EVENT_BUS.register(GravisuitWiki.class);
         if (!FMLEnvironment.production){
             System.setProperty("ic2workspace", "true");
         }

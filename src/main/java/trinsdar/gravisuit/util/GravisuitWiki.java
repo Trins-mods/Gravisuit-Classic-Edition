@@ -18,9 +18,9 @@ public class GravisuitWiki {
         if (event instanceof WikiEvent.WikiSetupEvent setupEvent){
             setupEvent.builder.addChapterBuilder(GravisuitWiki::createWiki);
         }
-        if (event instanceof WikiEvent.TableOfContentsSetupEvent setupEvent){
-            IChapterBuilder builder = setupEvent.chapterBuilder;
-            builder.addSimplePage(new HeaderObj("wiki.ic2.page.table.head"), new CategoryObj("wiki.ic2.category.general", new CategoryObj.Link(Registry.GRAVITOOL, "gravisuit:items").with("wiki.gravisuit.category.main")));
+        if (event instanceof WikiEvent.AddonSetupEvent setupEvent) setupEvent.enableAddons();
+        if (event instanceof WikiEvent.AddonPageEvent setupEvent){
+            setupEvent.registerChapters(new CategoryObj("wiki.ic2.category.general", new CategoryObj.Link(Registry.GRAVITOOL, "gravisuit:items").with("wiki.gravisuit.category.main")));
         }
     }
 
