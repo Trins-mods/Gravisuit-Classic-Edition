@@ -68,13 +68,15 @@ public class ItemToolGravitool extends ElectricWrenchTool implements ICropModifi
     @Override
     public void addToolTip(ItemStack stack, Player player, TooltipFlag type, ToolTipHelper helper) {
         ToolMode mode = getToolMode(stack);
-        if (this.isImport(stack)) {
-            helper.addSimpleToolTip("tooltip.item.ic2.electric_tree_tap.inv_import");
-        }
         helper.addSimpleToolTip(Component.translatable("item_info.toolMode", Component.translatable(mode.localeName).withStyle(mode.color)).withStyle(ChatFormatting.BLUE));
         helper.addKeybindingTooltip(this.buildKeyDescription(KeyHelper.MODE_KEY, KeyHelper.RIGHT_CLICK, Component.translatable("item_info.multiModes").withStyle(ChatFormatting.GRAY)));
         if (mode == ToolMode.HOE) {
             helper.addKeybindingTooltip(this.buildKeyDescription(KeyHelper.BLOCK_CLICK, "tooltip.item.ic2.hoe.seedmode"));
+        }
+        if (mode == ToolMode.TREETAP) {
+            if (this.isImport(stack)) {
+                helper.addSimpleToolTip("tooltip.item.ic2.electric_tree_tap.inv_import");
+            }
         }
 
         /*if (GravisuitConfig.enableGravitoolRequiresLosslessPrecisionWrench && !(Loader.isModLoaded("ic2c_extras") && Ic2cExtrasCodeHelper.isOverridingLossy())){
