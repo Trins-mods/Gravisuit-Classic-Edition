@@ -35,11 +35,14 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.common.ToolActions;
+import net.minecraftforge.fml.ModList;
 import org.jetbrains.annotations.Nullable;
 import trinsdar.gravisuit.GravisuitClassic;
 import trinsdar.gravisuit.util.GravisuitConfig;
@@ -121,9 +124,41 @@ public class ItemToolGravitool extends ElectricWrenchTool implements ICropModifi
                 return IC2Items.ELECTRIC_TREETAP.useOn(context);
             } else if (getMode(stack) == 1){
                 return IC2Items.ELECTRIC_HOE.useOn(context);
+            } else if (getMode(stack) == 0){
+                if (ModList.get().isLoaded("ae2")) {
+                    return onPlayerUseBlock(context.getPlayer(), context.getLevel(), context.getHand(),
+                            new BlockHitResult(context.getClickLocation(), context.getClickedFace(), context.getClickedPos(), context.isInside()));
+                }
             }
         }
         return super.useOn(context);
+    }
+
+    public static InteractionResult onPlayerUseBlock(Player player, Level level, InteractionHand hand, BlockHitResult hitResult) {
+
+        if (player.isSpectator() || hand != InteractionHand.MAIN_HAND) {
+            return InteractionResult.PASS;
+        }
+
+        if (appeng.util.InteractionUtil.isInAlternateUseMode(player)) {
+            BlockEntity be = level.getBlockEntity(hitResult.getBlockPos());
+            if (be instanceof appeng.blockentity.AEBaseBlockEntity baseBlockEntity) {
+                if (!appeng.util.Platform.hasPermissions(new appeng.api.util.DimensionalBlockPos(level, hitResult.getBlockPos()), player)) {
+                    return InteractionResult.FAIL;
+                }
+                return baseBlockEntity.disassembleWithWrench(player, level, hitResult);
+            }
+        } else if (!appeng.util.InteractionUtil.isInAlternateUseMode(player)) {
+            BlockEntity be = level.getBlockEntity(hitResult.getBlockPos());
+            if (be instanceof appeng.blockentity.AEBaseBlockEntity baseBlockEntity) {
+                if (!appeng.util.Platform.hasPermissions(new appeng.api.util.DimensionalBlockPos(level, hitResult.getBlockPos()), player)) {
+                    return InteractionResult.FAIL;
+                }
+
+                return baseBlockEntity.rotateWithWrench(player, level, hitResult);
+            }
+        }
+        return InteractionResult.PASS;
     }
 
     @Override
