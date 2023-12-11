@@ -47,7 +47,10 @@ import net.minecraftforge.common.ToolActions;
 import net.minecraftforge.fml.ModList;
 import org.jetbrains.annotations.Nullable;
 import trinsdar.gravisuit.GravisuitClassic;
-import trinsdar.gravisuit.util.*;
+import trinsdar.gravisuit.util.GravisuitConfig;
+import trinsdar.gravisuit.util.GravisuitSounds;
+import trinsdar.gravisuit.util.Registry;
+import trinsdar.gravisuit.util.RotationHelper;
 
 import java.util.List;
 import java.util.Map;
@@ -226,9 +229,10 @@ public class ItemToolGravitool extends ElectricWrenchTool implements ICropModifi
     @Override
     public List<ItemStack> getModelTypes() {
         List<ItemStack> stacks = new ObjectArrayList<>();
-        for (int i = 0; i < ToolMode.values().length; i++) {
+        int modes = ToolMode.values().length;
+        for (int i = 0; i < modes; i++) {
             ItemStack stack = new ItemStack(this);
-            stack.getOrCreateTag().putByte("mode", (byte)i);
+            stack.getOrCreateTag().putByte("mode", (byte) i);
             stacks.add(stack);
         }
         return stacks;
