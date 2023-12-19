@@ -297,16 +297,16 @@ public class ItemToolGravitool extends ElectricWrenchTool implements ICropModifi
 
     public static ToolMode getToolMode(ItemStack tool) {
         CompoundTag tag = StackUtil.getNbtData(tool);
-        return ToolMode.getFromId(tag.getInt("mode"));
+        return ToolMode.getFromId(tag.getByte("mode"));
     }
 
     public static ToolMode getNextToolMode(ItemStack tool) {
         CompoundTag tag = StackUtil.getNbtData(tool);
-        return ToolMode.getFromId(tag.getInt("mode") + 1);
+        return ToolMode.getFromId(tag.getByte("mode") + 1);
     }
 
     public static void saveToolMode(ItemStack tool, ToolMode mode) {
         CompoundTag tag = StackUtil.getNbtData(tool);
-        tag.putInt("mode", mode.ordinal());
+        tag.putByte("mode", (byte) mode.ordinal());
     }
 }
