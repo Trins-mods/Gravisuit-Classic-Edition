@@ -74,8 +74,8 @@
   "message.info.basic": "Базовий",
   "message.info.adv": "Розширений",
   "message.info.energy" : "Рівень енергії: ",
-  "message.info.jetpack.engine" : "Двигун реактивного ранця: ",
-  "message.info.jetpack.hover" : "Режим польоту: ",
+  "message.info.jetpack.engine" : "Двигун ранця: ",
+  "message.info.jetpack.hover" : "Режим глайдингу: ",
   "message.info.gravitation" : "Антигравітаційний двигун: ",
 
   "item_info.graviEngineOnInfo" : "Гравітаційний двигун увімкнено",
