@@ -21,7 +21,7 @@
   "item_info.toolMode" : "Поточний режим інструменту: %1$s",
   "item_info.multiModes" : "Циклічне перемикання різних режимів",
   "item_info.silkMode" : "Режим шовкового дотику: %1$s",
-  "item_info.craftingGravitool" : "Примітка: За замовчуванням вимагається абсолютно безвтратний гаечний ключ.",
+  "item_info.craftingGravitool" : "Примітка: За замовчуванням вимагається абсолютно безвтратний прецизійний ключ.",
   "item_info.wrench" : "Ключ",
   "item_info.hoe" : "Мотика",
   "item_info.treetap" : "Краник",
