@@ -1,7 +1,6 @@
 package trinsdar.gravisuit;
 
 import ic2.core.IC2;
-import ic2.core.platform.events.impl.WikiEvent;
 import ic2.core.platform.recipes.misc.AdvRecipeRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
@@ -12,11 +11,8 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -52,8 +48,6 @@ public class GravisuitClassic {
 
     public GravisuitClassic(){
         FMLJavaModLoadingContext.get().getModEventBus().register(this);
-        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, GravisuitConfig.CLIENT_SPEC);
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, GravisuitConfig.COMMON_SPEC);
         IC2.EVENT_BUS.register(GravisuitWiki.class);
         if (!FMLEnvironment.production){
             System.setProperty("ic2workspace", "true");
@@ -65,6 +59,7 @@ public class GravisuitClassic {
                 networkProtocolVersion(() -> PROTOCOL_VERSION).
                 simpleChannel();
         NETWORK.registerMessage(currMessageId++, PacketRelocator.class, PacketRelocator::encode, PacketRelocator::decode, PacketRelocator::handle);
+        GravisuitConfig.createConfig();
     }
 
     @SubscribeEvent

@@ -11,7 +11,7 @@ import trinsdar.gravisuit.util.GravisuitConfig;
 public abstract class CompactedNuclearJetpackMixin extends NuclearJetpack {
     @Override
     public boolean canProvideEnergy(ItemStack itemStack) {
-        return GravisuitConfig.MISC.COMPACTED_N_JETPACK_PROVIDE_ENERGY;
+        return GravisuitConfig.COMPACTED_N_JETPACK_PROVIDE_ENERGY.get();
     }
 
     public void onInstall(ItemStack stack, ItemStack armor, IArmorModule.IArmorModuleHolder holder) {

@@ -17,6 +17,6 @@ public abstract class CompactedJetpackMixin extends IC2ElectricJetpackBase {
 
     @Override
     public boolean canProvideEnergy(ItemStack itemStack) {
-        return GravisuitConfig.MISC.COMPACTED_JETPACK_PROVIDE_ENERGY;
+        return GravisuitConfig.COMPACTED_JETPACK_PROVIDE_ENERGY.get();
     }
 }

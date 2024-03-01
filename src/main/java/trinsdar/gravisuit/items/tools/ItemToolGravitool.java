@@ -185,12 +185,12 @@ public class ItemToolGravitool extends ElectricWrenchTool implements ICropModifi
      * */
     @Override
     public int getCapacity(ItemStack stack) {
-        return GravisuitConfig.POWER_VALUES.GRAVITOOL_STORAGE;
+        return GravisuitConfig.GRAVITOOL_STORAGE.get();
     }
 
     @Override
     public int getTransferLimit(ItemStack stack) {
-        return GravisuitConfig.POWER_VALUES.GRAVITOOL_TRANSFER;
+        return GravisuitConfig.GRAVITOOL_TRANSFER.get();
     }
 
     @Override

@@ -27,12 +27,12 @@ public class ItemGravitationJetpack extends IC2ElectricJetpackBase implements IG
 
     @Override
     public boolean canProvideEnergy(ItemStack itemStack) {
-        return GravisuitConfig.MISC.GRAVITATION_JETPACK_PROVIDE_ENERGY;
+        return GravisuitConfig.GRAVITATION_JETPACK_PROVIDE_ENERGY.get();
     }
 
     @Override
     public int getCapacity(ItemStack itemStack) {
-        return GravisuitConfig.POWER_VALUES.GRAVITATION_JETPACK_STORAGE;
+        return GravisuitConfig.GRAVITATION_JETPACK_STORAGE.get();
     }
 
     @Override
@@ -42,7 +42,7 @@ public class ItemGravitationJetpack extends IC2ElectricJetpackBase implements IG
 
     @Override
     public int getTransferLimit(ItemStack itemStack) {
-        return GravisuitConfig.POWER_VALUES.GRAVITATION_JETPACK_TRANSFER;
+        return GravisuitConfig.GRAVITATION_JETPACK_TRANSFER.get();
     }
 
     @Override

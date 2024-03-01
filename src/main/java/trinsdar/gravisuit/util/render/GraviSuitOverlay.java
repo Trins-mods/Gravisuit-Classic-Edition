@@ -52,7 +52,7 @@ public class GraviSuitOverlay implements IGuiOverlay {
 		ItemStack stackArmor = player.getItemBySlot(EquipmentSlot.CHEST);
 		Item itemArmor = stackArmor.getItem();
 
-		if (GravisuitConfig.CLIENT.POSITIONS == GravisuitConfig.Client.Positions.BOTTOMLEFT || GravisuitConfig.CLIENT.POSITIONS == GravisuitConfig.Client.Positions.BOTTOMRIGHT) {
+		if (GravisuitConfig.POSITIONS.get() == GravisuitConfig.Positions.BOTTOMLEFT || GravisuitConfig.POSITIONS.get() == GravisuitConfig.Positions.BOTTOMRIGHT) {
 			yPos1 = screenHeight - ((fontRenderer.lineHeight * 2) + 5);
 		}
 
@@ -128,7 +128,7 @@ public class GraviSuitOverlay implements IGuiOverlay {
 	}
 
 	private static int getXOffset(String value, Window window) {
-		return switch (GravisuitConfig.CLIENT.POSITIONS) {
+		return switch (GravisuitConfig.POSITIONS.get()) {
 			case TOPLEFT, BOTTOMLEFT -> offset;
 			case TOPRIGHT, BOTTOMRIGHT -> window.getGuiScaledWidth() - 3 - fontRenderer.width(value);
 			case TOPMIDDLE -> (int) (window.getGuiScaledWidth() * 0.50F) - (fontRenderer.width(value) / 2);

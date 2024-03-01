@@ -16,12 +16,12 @@ public class ItemAdvancedNuclearJetpack extends NuclearJetpack {
 
     @Override
     public boolean canProvideEnergy(ItemStack itemStack) {
-        return GravisuitConfig.MISC.ADVANCED_N_JETPACK_PROVIDE_ENERGY;
+        return GravisuitConfig.ADVANCED_N_JETPACK_PROVIDE_ENERGY.get();
     }
 
     @Override
     public int getCapacity(ItemStack itemStack) {
-        return GravisuitConfig.POWER_VALUES.ADVANCED_NUCLEAR_JETPACK_STORAGE;
+        return GravisuitConfig.ADVANCED_NUCLEAR_JETPACK_STORAGE.get();
     }
 
     @Override
