@@ -62,7 +62,7 @@ public class GravisuitConfig {
         if (Files.exists(configFile)){
             try {
                 CommentedConfig forgeConfig = PARSER.parse(configFile, FileNotFoundAction.READ_NOTHING);
-                if (forgeConfig.get("POSITIONS") instanceof String string) {
+                if (forgeConfig.get("POSITION") instanceof String string) {
                     try {
                         Positions centerIngot = Positions.valueOf(string);
                         POSITIONS.set(centerIngot);
