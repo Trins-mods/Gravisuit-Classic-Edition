@@ -3,6 +3,7 @@ package trinsdar.gravisuit.util.render;
 import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.vertex.PoseStack;
 import ic2.api.items.electric.ElectricItem;
+import ic2.core.IC2;
 import ic2.core.item.wearable.armor.electric.ElectricPackArmor;
 import ic2.core.item.wearable.base.IC2ElectricJetpackBase;
 import ic2.core.item.wearable.base.IC2JetpackBase;
@@ -180,7 +181,11 @@ public class GraviSuitOverlay implements IGuiOverlay {
 
 	private static IC2JetpackBase.HoverMode getHoverStatus(ItemStack stack) {
 		CompoundTag tag = stack.getItem() instanceof IC2ModularElectricArmor ? StackUtil.getNbtData(stack).getCompound("jetpack_data") : StackUtil.getNbtData(stack);
-		return IC2JetpackBase.HoverMode.byIndex(tag.getByte("HoverMode"));
+		IC2JetpackBase.HoverMode hoverMode = IC2JetpackBase.HoverMode.byIndex(tag.getByte("HoverMode"));
+		if (IC2.KEYBOARD.isAltKeyDown(mc.player)) {
+            hoverMode = hoverMode == IC2JetpackBase.HoverMode.NONE ? IC2JetpackBase.HoverMode.BASIC : IC2JetpackBase.HoverMode.NONE;
+        }
+		return hoverMode;
 	}
 
 	public static String getWorkStatus(ItemStack stack) {
