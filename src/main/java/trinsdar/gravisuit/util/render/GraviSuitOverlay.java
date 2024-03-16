@@ -19,6 +19,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.client.gui.overlay.ForgeGui;
+import net.minecraftforge.client.gui.overlay.GuiOverlayManager;
 import net.minecraftforge.client.gui.overlay.IGuiOverlay;
 import trinsdar.gravisuit.items.armor.IGravitationJetpack;
 import trinsdar.gravisuit.items.armor.IHasOverlay;
@@ -36,9 +37,6 @@ public class GraviSuitOverlay implements IGuiOverlay {
 	public static Font fontRenderer;
 
 	static int offset = 3;
-	int xPos = offset;
-	int yPos1 = offset;
-	int yPos2, yPos3, yPos4;
 
 	public GraviSuitOverlay(Minecraft mc) {
 		GraviSuitOverlay.mc = mc;
@@ -47,18 +45,27 @@ public class GraviSuitOverlay implements IGuiOverlay {
 
 	@Override
 	public void render(ForgeGui gui, PoseStack poseStack, float partialTick, int screenWidth, int screenHeight) {
+		if (GravisuitConfig.HUD_MODE.get() == GravisuitConfig.HudMode.OFF){
+			return;
+		}
 		Player player = mc.player;
-		assert player != null;
+		if (player == null) return;
 		ItemStack stackArmor = player.getItemBySlot(EquipmentSlot.CHEST);
 		Item itemArmor = stackArmor.getItem();
-
+		if (GravisuitConfig.HUD_MODE.get() == GravisuitConfig.HudMode.REQUIRES_HUD_UPGRADE){
+			ItemStack headArmor = player.getItemBySlot(EquipmentSlot.HEAD);
+			if (!(headArmor.getItem() instanceof IC2ModularElectricArmor armor) || !armor.isHudEnabled(headArmor)){
+				return;
+			}
+		}
+		int yPos1 = 3;
 		if (GravisuitConfig.POSITIONS.get() == GravisuitConfig.Positions.BOTTOMLEFT || GravisuitConfig.POSITIONS.get() == GravisuitConfig.Positions.BOTTOMRIGHT) {
-			yPos1 = screenHeight - ((fontRenderer.lineHeight * 2) + 5);
+			yPos1 = screenHeight - ((fontRenderer.lineHeight * 4) + 6);
 		}
 
-		yPos2 = yPos1 + fontRenderer.lineHeight + 2;
-		yPos3 = yPos2 + fontRenderer.lineHeight + 2;
-		yPos4 = yPos3 + fontRenderer.lineHeight + 2;
+		int yPos2 = yPos1 + fontRenderer.lineHeight + 2;
+		int yPos3 = yPos2 + fontRenderer.lineHeight + 2;
+		int yPos4 = yPos3 + fontRenderer.lineHeight + 2;
 
 		if (itemArmor instanceof IHasOverlay overlay && overlay.isEnabled(stackArmor)) {
 
@@ -131,6 +138,12 @@ public class GraviSuitOverlay implements IGuiOverlay {
 		return switch (GravisuitConfig.POSITIONS.get()) {
 			case TOPLEFT, BOTTOMLEFT -> offset;
 			case TOPRIGHT, BOTTOMRIGHT -> window.getGuiScaledWidth() - 3 - fontRenderer.width(value);
+			case BOTTOMLEFT_HOTBAR -> {
+				yield offset;
+			}
+			case BOTTOMRIGHT_HOTBAR -> {
+				yield window.getGuiScaledWidth() - 3 - fontRenderer.width(value);
+			}
 			case TOPMIDDLE -> (int) (window.getGuiScaledWidth() * 0.50F) - (fontRenderer.width(value) / 2);
 		};
 	}

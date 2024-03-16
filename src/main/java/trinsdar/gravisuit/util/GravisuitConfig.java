@@ -16,6 +16,7 @@ import java.nio.file.Path;
 
 public class GravisuitConfig {
     public static ConfigEntry.EnumValue<Positions> POSITIONS;
+    public static ConfigEntry.EnumValue<HudMode> HUD_MODE;
 
     public static ConfigEntry.IntValue ADVANCED_ELECTRIC_JETPACK_STORAGE, ADVANCED_NUCLEAR_JETPACK_STORAGE, ADVANCED_LAPPACK_STORAGE, ULTIMATE_LAPPACK_STORAGE, GRAVITATION_JETPACK_STORAGE,
             NUCLEAR_GRAVITATION_JETPACK_STORAGE, GRAVITOOL_STORAGE, VAJRA_STORAGE, RELOCATOR_STORAGE;
@@ -30,6 +31,7 @@ public class GravisuitConfig {
         Config config = new Config("ic2c/gravisuit");
         ConfigSection client = config.add("client");
         POSITIONS = client.addEnum("positions", Positions.TOPLEFT, Positions.class, "Position of the gravisuit Hud");
+        HUD_MODE = client.addEnum("hud_mode", HudMode.ON, HudMode.class, "Hud mode for the gravisuit Hud");
         ConfigSection powerValues = config.add("power_values");
         ConfigSection storage = powerValues.addSubSection("storage");
         ADVANCED_ELECTRIC_JETPACK_STORAGE = storage.addInt("advanced_electric_jetpack_storage", 200000).setMin(1);
@@ -130,6 +132,10 @@ public class GravisuitConfig {
     }
 
     public enum Positions {
-        TOPLEFT, TOPRIGHT, TOPMIDDLE, BOTTOMLEFT, BOTTOMRIGHT
+        TOPLEFT, TOPRIGHT, TOPMIDDLE, BOTTOMLEFT, BOTTOMRIGHT, BOTTOMLEFT_HOTBAR, BOTTOMRIGHT_HOTBAR
+    }
+
+    public enum HudMode {
+        OFF, REQUIRES_HUD_UPGRADE, ON
     }
 }
