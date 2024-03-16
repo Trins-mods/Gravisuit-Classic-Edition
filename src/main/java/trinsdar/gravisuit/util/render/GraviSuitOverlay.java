@@ -26,6 +26,8 @@ import trinsdar.gravisuit.items.armor.IGravitationJetpack;
 import trinsdar.gravisuit.items.armor.IHasOverlay;
 import trinsdar.gravisuit.util.GravisuitConfig;
 
+import static trinsdar.gravisuit.util.GravisuitConfig.Positions.*;
+
 public class GraviSuitOverlay implements IGuiOverlay {
 
 	/**
@@ -60,7 +62,7 @@ public class GraviSuitOverlay implements IGuiOverlay {
 			}
 		}
 		int yPos1 = 3;
-		if (GravisuitConfig.POSITIONS.get() == GravisuitConfig.Positions.BOTTOMLEFT || GravisuitConfig.POSITIONS.get() == GravisuitConfig.Positions.BOTTOMRIGHT) {
+		if (GravisuitConfig.POSITIONS.get() == BOTTOMLEFT || GravisuitConfig.POSITIONS.get() == BOTTOMRIGHT || GravisuitConfig.POSITIONS.get() == BOTTOMLEFT_HOTBAR || GravisuitConfig.POSITIONS.get() == BOTTOMRIGHT_HOTBAR) {
 			yPos1 = screenHeight - ((fontRenderer.lineHeight * 4) + 6);
 		}
 
@@ -139,12 +141,8 @@ public class GraviSuitOverlay implements IGuiOverlay {
 		return switch (GravisuitConfig.POSITIONS.get()) {
 			case TOPLEFT, BOTTOMLEFT -> offset;
 			case TOPRIGHT, BOTTOMRIGHT -> window.getGuiScaledWidth() - 3 - fontRenderer.width(value);
-			case BOTTOMLEFT_HOTBAR -> {
-				yield offset;
-			}
-			case BOTTOMRIGHT_HOTBAR -> {
-				yield window.getGuiScaledWidth() - 3 - fontRenderer.width(value);
-			}
+			case BOTTOMLEFT_HOTBAR -> (window.getGuiScaledWidth() / 2) - 91 - 3 - fontRenderer.width(value);
+			case BOTTOMRIGHT_HOTBAR -> (window.getGuiScaledWidth() / 2) + 3 + 91;
 			case TOPMIDDLE -> (int) (window.getGuiScaledWidth() * 0.50F) - (fontRenderer.width(value) / 2);
 		};
 	}
