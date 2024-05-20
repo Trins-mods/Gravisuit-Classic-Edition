@@ -62,12 +62,12 @@ public class ItemToolVajra extends DrillTool {
 
     @Override
     public int getCapacity(ItemStack stack) {
-        return GravisuitConfig.POWER_VALUES.VAJRA_STORAGE;
+        return GravisuitConfig.VAJRA_STORAGE.get();
     }
 
     @Override
     public int getTransferLimit(ItemStack stack) {
-        return GravisuitConfig.POWER_VALUES.VAJRA_TRANSFER;
+        return GravisuitConfig.VAJRA_TRANSFER.get();
     }
 
     @Override

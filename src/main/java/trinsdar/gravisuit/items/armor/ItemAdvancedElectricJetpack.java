@@ -16,12 +16,12 @@ public class ItemAdvancedElectricJetpack extends IC2ElectricJetpackBase {
 
     @Override
     public boolean canProvideEnergy(ItemStack itemStack) {
-        return GravisuitConfig.MISC.ADVANCED_JETPACK_PROVIDE_ENERGY;
+        return GravisuitConfig.ADVANCED_JETPACK_PROVIDE_ENERGY.get();
     }
 
     @Override
     public int getCapacity(ItemStack itemStack) {
-        return GravisuitConfig.POWER_VALUES.ADVANCED_ELECTRIC_JETPACK_STORAGE;
+        return GravisuitConfig.ADVANCED_ELECTRIC_JETPACK_STORAGE.get();
     }
 
     @Override
@@ -31,7 +31,7 @@ public class ItemAdvancedElectricJetpack extends IC2ElectricJetpackBase {
 
     @Override
     public int getTransferLimit(ItemStack itemStack) {
-        return GravisuitConfig.POWER_VALUES.ADVANCED_ELECTRIC_JETPACK_TRANSFER;
+        return GravisuitConfig.ADVANCED_ELECTRIC_JETPACK_TRANSFER.get();
     }
 
     @Override

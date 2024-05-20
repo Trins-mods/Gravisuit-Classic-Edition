@@ -28,8 +28,8 @@ public class Registry {
     public static final Map<ResourceLocation, Item> REGISTRY = new Object2ObjectArrayMap<>();
     public static final ItemAdvancedElectricJetpack ADVANCED_ELECTRIC_JETPACK = new ItemAdvancedElectricJetpack();
     public static final ItemAdvancedNuclearJetpack ADVANCED_NUCLEAR_JETPACK = new ItemAdvancedNuclearJetpack();
-    public static final ElectricPackArmor ADVANCED_LAPPACK = new ItemAdvancedLappack("advanced_lappack", Rarity.UNCOMMON, () -> GravisuitConfig.POWER_VALUES.ADVANCED_LAPPACK_STORAGE, 2, () -> GravisuitConfig.POWER_VALUES.ADVANCED_LAPPACK_TRANSFER);
-    public static final ElectricPackArmor ULTIMATE_LAPPACK = new ItemAdvancedLappack("ultimate_lappack", Rarity.EPIC, () -> GravisuitConfig.POWER_VALUES.ULTIMATE_LAPPACK_STORAGE, 3, () -> GravisuitConfig.POWER_VALUES.ULTIMATE_LAPPACK_TRANSFER);
+    public static final ElectricPackArmor ADVANCED_LAPPACK = new ItemAdvancedLappack("advanced_lappack", Rarity.UNCOMMON, () -> GravisuitConfig.ADVANCED_LAPPACK_STORAGE.get(), 2, () -> GravisuitConfig.ADVANCED_LAPPACK_TRANSFER.get());
+    public static final ElectricPackArmor ULTIMATE_LAPPACK = new ItemAdvancedLappack("ultimate_lappack", Rarity.EPIC, () -> GravisuitConfig.ULTIMATE_LAPPACK_STORAGE.get(), 3, () -> GravisuitConfig.ULTIMATE_LAPPACK_TRANSFER.get());
     public static final ItemGravitationJetpack GRAVITATION_JETPACK = new ItemGravitationJetpack();
     public static final ItemNuclearGravitationJetpack NUCLEAR_GRAVITATION_JETPACK = new ItemNuclearGravitationJetpack();
     public static final ItemToolGravitool GRAVITOOL = new ItemToolGravitool();

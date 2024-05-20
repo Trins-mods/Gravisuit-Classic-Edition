@@ -3,6 +3,7 @@ package trinsdar.gravisuit.util.render;
 import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.vertex.PoseStack;
 import ic2.api.items.electric.ElectricItem;
+import ic2.core.IC2;
 import ic2.core.item.wearable.armor.electric.ElectricPackArmor;
 import ic2.core.item.wearable.base.IC2ElectricJetpackBase;
 import ic2.core.item.wearable.base.IC2JetpackBase;
@@ -19,10 +20,13 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.client.gui.overlay.ForgeGui;
+import net.minecraftforge.client.gui.overlay.GuiOverlayManager;
 import net.minecraftforge.client.gui.overlay.IGuiOverlay;
 import trinsdar.gravisuit.items.armor.IGravitationJetpack;
 import trinsdar.gravisuit.items.armor.IHasOverlay;
 import trinsdar.gravisuit.util.GravisuitConfig;
+
+import static trinsdar.gravisuit.util.GravisuitConfig.Positions.*;
 
 public class GraviSuitOverlay implements IGuiOverlay {
 
@@ -36,9 +40,6 @@ public class GraviSuitOverlay implements IGuiOverlay {
 	public static Font fontRenderer;
 
 	static int offset = 3;
-	int xPos = offset;
-	int yPos1 = offset;
-	int yPos2, yPos3, yPos4;
 
 	public GraviSuitOverlay(Minecraft mc) {
 		GraviSuitOverlay.mc = mc;
@@ -47,18 +48,27 @@ public class GraviSuitOverlay implements IGuiOverlay {
 
 	@Override
 	public void render(ForgeGui gui, PoseStack poseStack, float partialTick, int screenWidth, int screenHeight) {
+		if (GravisuitConfig.HUD_MODE.get() == GravisuitConfig.HudMode.OFF){
+			return;
+		}
 		Player player = mc.player;
-		assert player != null;
+		if (player == null) return;
 		ItemStack stackArmor = player.getItemBySlot(EquipmentSlot.CHEST);
 		Item itemArmor = stackArmor.getItem();
-
-		if (GravisuitConfig.CLIENT.POSITIONS == GravisuitConfig.Client.Positions.BOTTOMLEFT || GravisuitConfig.CLIENT.POSITIONS == GravisuitConfig.Client.Positions.BOTTOMRIGHT) {
-			yPos1 = screenHeight - ((fontRenderer.lineHeight * 2) + 5);
+		if (GravisuitConfig.HUD_MODE.get() == GravisuitConfig.HudMode.REQUIRES_HUD_UPGRADE){
+			ItemStack headArmor = player.getItemBySlot(EquipmentSlot.HEAD);
+			if (!(headArmor.getItem() instanceof IC2ModularElectricArmor armor) || !armor.isHudEnabled(headArmor)){
+				return;
+			}
+		}
+		int yPos1 = 3;
+		if (GravisuitConfig.POSITIONS.get() == BOTTOMLEFT || GravisuitConfig.POSITIONS.get() == BOTTOMRIGHT || GravisuitConfig.POSITIONS.get() == BOTTOMLEFT_HOTBAR || GravisuitConfig.POSITIONS.get() == BOTTOMRIGHT_HOTBAR) {
+			yPos1 = screenHeight - ((fontRenderer.lineHeight * 4) + 6);
 		}
 
-		yPos2 = yPos1 + fontRenderer.lineHeight + 2;
-		yPos3 = yPos2 + fontRenderer.lineHeight + 2;
-		yPos4 = yPos3 + fontRenderer.lineHeight + 2;
+		int yPos2 = yPos1 + fontRenderer.lineHeight + 2;
+		int yPos3 = yPos2 + fontRenderer.lineHeight + 2;
+		int yPos4 = yPos3 + fontRenderer.lineHeight + 2;
 
 		if (itemArmor instanceof IHasOverlay overlay && overlay.isEnabled(stackArmor)) {
 
@@ -128,9 +138,11 @@ public class GraviSuitOverlay implements IGuiOverlay {
 	}
 
 	private static int getXOffset(String value, Window window) {
-		return switch (GravisuitConfig.CLIENT.POSITIONS) {
+		return switch (GravisuitConfig.POSITIONS.get()) {
 			case TOPLEFT, BOTTOMLEFT -> offset;
 			case TOPRIGHT, BOTTOMRIGHT -> window.getGuiScaledWidth() - 3 - fontRenderer.width(value);
+			case BOTTOMLEFT_HOTBAR -> (window.getGuiScaledWidth() / 2) - 91 - 3 - fontRenderer.width(value);
+			case BOTTOMRIGHT_HOTBAR -> (window.getGuiScaledWidth() / 2) + 3 + 91;
 			case TOPMIDDLE -> (int) (window.getGuiScaledWidth() * 0.50F) - (fontRenderer.width(value) / 2);
 		};
 	}
@@ -167,7 +179,11 @@ public class GraviSuitOverlay implements IGuiOverlay {
 
 	private static IC2JetpackBase.HoverMode getHoverStatus(ItemStack stack) {
 		CompoundTag tag = stack.getItem() instanceof IC2ModularElectricArmor ? StackUtil.getNbtData(stack).getCompound("jetpack_data") : StackUtil.getNbtData(stack);
-		return IC2JetpackBase.HoverMode.byIndex(tag.getByte("HoverMode"));
+		IC2JetpackBase.HoverMode hoverMode = IC2JetpackBase.HoverMode.byIndex(tag.getByte("HoverMode"));
+		if (IC2.KEYBOARD.isAltKeyDown(mc.player)) {
+            hoverMode = hoverMode == IC2JetpackBase.HoverMode.NONE ? IC2JetpackBase.HoverMode.BASIC : IC2JetpackBase.HoverMode.NONE;
+        }
+		return hoverMode;
 	}
 
 	public static String getWorkStatus(ItemStack stack) {

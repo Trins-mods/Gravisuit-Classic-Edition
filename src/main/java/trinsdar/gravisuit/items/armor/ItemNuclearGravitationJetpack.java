@@ -12,9 +12,6 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.entity.living.LivingEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import trinsdar.gravisuit.GravisuitClassic;
 import trinsdar.gravisuit.util.GravisuitConfig;
 import trinsdar.gravisuit.util.Registry;
@@ -27,12 +24,12 @@ public class ItemNuclearGravitationJetpack extends NuclearJetpack implements IGr
 
     @Override
     public boolean canProvideEnergy(ItemStack itemStack) {
-        return GravisuitConfig.MISC.GRAVITATION_N_JETPACK_PROVIDE_ENERGY;
+        return GravisuitConfig.GRAVITATION_N_JETPACK_PROVIDE_ENERGY.get();
     }
 
     @Override
     public int getCapacity(ItemStack itemStack) {
-        return GravisuitConfig.POWER_VALUES.NUCLEAR_GRAVITATION_JETPACK_STORAGE;
+        return GravisuitConfig.NUCLEAR_GRAVITATION_JETPACK_STORAGE.get();
     }
 
     @Override

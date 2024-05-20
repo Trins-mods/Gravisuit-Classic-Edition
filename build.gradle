@@ -59,6 +59,9 @@ repositories{
     maven {
         url "https://cursemaven.com"
     }
+    maven {
+        url = "https://api.modrinth.com/maven"
+    }
     maven { url 'https://jitpack.io' }
 }
 
@@ -71,12 +74,14 @@ dependencies {
 
     forge "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
     //modImplementation fileTree(include: ['*.jar'], dir: 'libs')
-    modImplementation("curse.maven:ic2_classic-242942:4744334")
+    modImplementation("curse.maven:ic2_classic-242942:5137503")
     modImplementation("curse.maven:ic2c_additions-304040:4360883")
     modImplementation("curse.maven:curios-309927:3871347")
     modImplementation("curse.maven:lootr-361276:4596364")
-    modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-forge:${rootProject.rei_version}"
-    modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-plugin-compatibilities-forge:9.1.530"
+    modImplementation("curse.maven:applied-energistics-2-223794:4733119")
+    modImplementation(include("maven.modrinth:carbon-config:l6LTuPIs"))
+//    modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-forge:${rootProject.rei_version}"
+//    modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-plugin-compatibilities-forge:9.1.530"
     modImplementation include('com.github.Trins-mods:PlayerAbilityLib-forge:b2d633b0ae')
     /*deobfProvided "mezz.jei:jei_${mc_version}:${jei_version}:api"
     runtime "mezz.jei:jei_${mc_version}:${jei_version}"
