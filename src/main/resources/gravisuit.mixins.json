@@ -16,5 +16,6 @@
     "CurioModuleMixin",
     "BlockMixin"
   ],
-  "minVersion": "0.8"
+  "minVersion": "0.8",
+  "refmap": "gravisuit.mixins.refmap.json"
 }

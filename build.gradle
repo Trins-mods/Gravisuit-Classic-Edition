@@ -1,6 +1,10 @@
+import org.gradle.api.tasks.bundling.Jar
+
 plugins {
-    id 'dev.architectury.loom' version '0.12.0-SNAPSHOT'
+    id 'net.minecraftforge.gradle' version '[6.0,6.2)'
     id 'maven-publish'
+    id 'org.spongepowered.mixin' version '0.7.+'
+    id 'org.parchmentmc.librarian.forgegradle' version '1.+'
 }
 apply plugin: "java"
 
@@ -8,16 +12,65 @@ java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 //Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 
 
-loom {
-    silentMojangMappingsLicense()
-    forge {
-        mixinConfigs = ["gravisuit.mixins.json"]
-    }
+base {
+    archivesName = "gravisuit"
 }
+
+jarJar.enable()
 
 version = "${mod_version}"
 group = "trinsdar.gravisuit" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = "gravisuit"
+
+minecraft {
+    mappings channel: "parchment", version: "${rootProject.mappings_version}-${rootProject.minecraft_version}"
+
+    copyIdeResources = true
+
+    runs {
+        // applies to all the run configs below
+        configureEach {
+            workingDirectory project.file('run')
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+
+            // Comma-separated list of namespaces to load gametests from. Empty = all namespaces.
+            property 'forge.enabledGameTestNamespaces', mod_id
+
+            mods {
+                "${mod_id}" {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        client {
+            property 'forge.enabledGameTestNamespaces', mod_id
+        }
+
+        server {
+            workingDirectory project.file('run/server')
+            property 'forge.enabledGameTestNamespaces', mod_id
+            args '--nogui'
+        }
+
+        // This run config launches GameTestServer and runs all registered gametests, then exits.
+        // By default, the server will crash when no gametests are provided.
+        // The gametest system is also enabled by default for other run configs under the /test command.
+        gameTestServer {
+            property 'forge.enabledGameTestNamespaces', mod_id
+        }
+
+        data {
+            // example of overriding the workingDirectory set in configureEach above
+            workingDirectory project.file('run-data')
+
+            // Specify the modid for data generation, where to output the resulting resource, and where to look for existing resources.
+            args '--mod', mod_id, '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+        }
+    }
+}
 
 repositories{
     maven { url "https://dist.creeper.host/Sponge/maven" }
@@ -62,67 +115,38 @@ repositories{
     maven {
         url = "https://api.modrinth.com/maven"
     }
+    maven {
+        url 'https://repo.repsy.io/mvn/trinsdar/trins-mods/'
+    }
     maven { url 'https://jitpack.io' }
 }
 
 dependencies {
-    minecraft "com.mojang:minecraft:${project.minecraft_version}"
-    mappings loom.layered() {
-        officialMojangMappings()
-        parchment("org.parchmentmc.data:parchment-${rootProject.minecraft_version}:${rootProject.mappings_version}@zip")
-    }
-
-    forge "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
-    //modImplementation fileTree(include: ['*.jar'], dir: 'libs')
-    modImplementation("curse.maven:ic2_classic-242942:5137503")
-    modImplementation("curse.maven:ic2c_additions-304040:4360883")
-    modImplementation("curse.maven:curios-309927:3871347")
-    modImplementation("curse.maven:lootr-361276:4596364")
-    modImplementation("curse.maven:applied-energistics-2-223794:4733119")
-    modImplementation(include("maven.modrinth:carbon-config:l6LTuPIs"))
+    minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
+    // Apply Mixin AP
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+    implementation(fg.deobf("curse.maven:ic2_classic-242942:5137503"))
+    implementation(fg.deobf("curse.maven:ic2c_additions-304040:4360883"))
+    implementation(fg.deobf("curse.maven:curios-309927:3871347"))
+    implementation(fg.deobf("curse.maven:lootr-361276:4596364"))
+    implementation(fg.deobf("curse.maven:applied-energistics-2-223794:4733119"))
+    implementation(fg.deobf("maven.modrinth:carbon-config:l6LTuPIs"))
 //    modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-forge:${rootProject.rei_version}"
 //    modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-plugin-compatibilities-forge:9.1.530"
-    modImplementation include('com.github.Trins-mods:PlayerAbilityLib-forge:b2d633b0ae')
-    /*deobfProvided "mezz.jei:jei_${mc_version}:${jei_version}:api"
-    runtime "mezz.jei:jei_${mc_version}:${jei_version}"
-    runtime("org.spongepowered:mixin:0.8-SNAPSHOT"){
-        exclude module: "asm-commons"
-        exclude module: "asm-tree"
-        exclude module: "launchwrapper"
-        exclude module: "guava"
-        exclude module: "log4j-core"
-        exclude module: "gson"
-        exclude module: "commons-io"
+    implementation fg.deobf('io.github.trinsdar:PlayerAbilityLib:1.6.0')
+    jarJar('io.github.trinsdar:PlayerAbilityLib:1.6.0'){
+        jarJar.ranged(it, "[1.6.0,)")
     }
-    compile "curse.maven:baubles-227083:2518667"
-    compile "curse.maven:ic2_classic-242942:3076009"
-    compileOnly "curse.maven:better_pipes-402834:3050661"
-    runtime "curse.maven:better_pipes-402834:3050661"
-    compileOnly "curse.maven:ic2c_extras-302906:3057114"
-    runtime "curse.maven:ic2c_extras-302906:3057114"
-    runtime "curse.maven:gtclassic-324021:3059975"
-    deobfProvided("RebornCore:RebornCore-${mc_version}:${reborn_core_version}:universal") {
-        transitive = false
+    jarJar("maven.modrinth:carbon-config:mJxg4ZgM") {
+        jarJar.ranged(it, "[1.19.2-1.2.6,)")
     }
-    runtime("RebornCore:RebornCore-${mc_version}:${reborn_core_version}:universal") {
-        transitive = false
-    }
-    runtime("TechReborn:TechReborn-${mc_version}:${tech_reborn_version}:universal") {
-        transitive = false
-    }
-    runtime("TechReborn:TechReborn-ModCompatibility-${mc_version}:${tr_modcompatibility_version}:universal") {
-        transitive = false
-    }
-    deobfProvided "com.mod-buildcraft:buildcraft-api:7.99.19"
-    runtime "com.mod-buildcraft:buildcraft:7.99.19"
-    deobfProvided ("mrtjp:ProjectRed:${mc_version}-4.9.3.118:all") {
-        transitive = false
-    }
-    deobfProvided ("cofh:CoFHCore:${mc_version}-${cofhcore_version}:universal") {
-        exclude group: 'mezz.jei'
-    }
-    compile 'org.jetbrains:annotations:16.0.2'*/
+}
 
+mixin {
+    add sourceSets.main, 'gravisuit.mixins.refmap.json'
+    config 'gravisuit.mixins.json'
+    debug.verbose = true
+    debug.export = true
 }
 
 processResources {
@@ -132,4 +156,25 @@ processResources {
     filesMatching("META-INF/mods.toml") {
         expand "version": project.mod_version
     }
+}
+tasks.named('jarJar', Jar).configure {
+   archiveClassifier.set("")
+}
+
+tasks.named('jar', Jar).configure {
+    manifest {
+        attributes([
+                'Specification-Title'     : mod_id,
+                'Specification-Vendor'    : "Trinsdar",
+                'Specification-Version'   : '1', // We are version 1 of ourselves
+                'Implementation-Title'    : project.name,
+                'Implementation-Version'  : project.jar.archiveVersion,
+                'Implementation-Vendor'   : "Trinsdar",
+                'Implementation-Timestamp': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+        ])
+    }
+
+    // This is the preferred method to reobfuscate your jar file
+    finalizedBy 'reobfJar'
+    archiveClassifier.set "thin"
 }
