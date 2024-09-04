@@ -91,6 +91,25 @@ public class ItemToolVajra extends DrillTool {
         return super.use(worldIn, playerIn, handIn);
     }
 
+    @Override
+    public Map<Enchantment, Integer> getAllEnchantments(ItemStack stack) {
+        Map<Enchantment, Integer> allEnchantments = super.getAllEnchantments(stack);
+        if (stack.getTag() != null && stack.getTag().getBoolean("silkTouch")) {
+            allEnchantments.put(Enchantments.SILK_TOUCH, 1);
+        }
+        return allEnchantments;
+    }
+
+    @Override
+    public int getEnchantmentLevel(ItemStack stack, Enchantment enchantment) {
+        if (enchantment == Enchantments.SILK_TOUCH) {
+            if (stack.getTag() != null && stack.getTag().getBoolean("silkTouch")) {
+                return 1;
+            }
+        }
+        return super.getEnchantmentLevel(stack, enchantment);
+    }
+
     private boolean shouldBreak(Player playerIn, Level worldIn, BlockPos pos) {
         BlockState blockState = worldIn.getBlockState(pos);
         if (blockState.getMaterial() == Material.AIR) {
@@ -142,16 +161,7 @@ public class ItemToolVajra extends DrillTool {
                 return false;
             }
             if (dropBlock) {
-                Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(item);
-                if (tag != null && tag.getBoolean("silkTouch")){
-                    enchantments.put(Enchantments.SILK_TOUCH, 1);
-                    EnchantmentHelper.setEnchantments(enchantments, item);
-                }
                 Block.dropResources(blockstate, level, pos, blockentity, entity, item);
-                if (tag != null && tag.getBoolean("silkTouch")){
-                    enchantments.remove(Enchantments.SILK_TOUCH);
-                    EnchantmentHelper.setEnchantments(enchantments, item);
-                }
             }
 
             boolean flag = level.setBlock(pos, fluidstate.createLegacyBlock(), 3, 512);

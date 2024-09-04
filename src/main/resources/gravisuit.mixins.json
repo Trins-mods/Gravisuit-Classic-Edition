@@ -13,8 +13,7 @@
     "IC2ModularElectricArmorMixin",
     "ElectricPackArmorMixin",
     "CurioPluginMixin",
-    "CurioModuleMixin",
-    "BlockMixin"
+    "CurioModuleMixin"
   ],
   "minVersion": "0.8",
   "refmap": "gravisuit.mixins.refmap.json"
