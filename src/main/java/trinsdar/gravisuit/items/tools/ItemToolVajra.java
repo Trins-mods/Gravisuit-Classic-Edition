@@ -41,6 +41,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.level.BlockEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import trinsdar.gravisuit.GravisuitClassic;
 import trinsdar.gravisuit.util.GravisuitConfig;
 import trinsdar.gravisuit.util.GravisuitLang;
@@ -204,15 +205,13 @@ public class ItemToolVajra extends DrillTool {
         helper.addKeybindingTooltip(this.buildKeyDescription(KeyHelper.MODE_KEY, GravisuitLang.vajraSilktouchToggle));
     }
 
-    /*public void setTier(int tier){
-        this.tier = tier;
+    @SubscribeEvent
+    public static void blockBreakEvent(BlockEvent.BreakEvent event){
+        ItemStack stack = event.getPlayer().getMainHandItem();
+        if (stack.getItem() == Registry.VAJRA){
+            if (stack.getTag() != null && stack.getTag().getBoolean("silkTouch")){
+                event.setExpToDrop(0);
+            }
+        }
     }
-
-    public void setMaxCharge(int storage){
-        this.maxCharge = storage;
-    }
-
-    public void setMaxTransfer(int maxTransfer) {
-        this.transferLimit = maxTransfer;
-    }*/
 }
