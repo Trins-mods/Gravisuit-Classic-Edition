@@ -6,14 +6,15 @@
     "KeyboardClientMixin"
   ],
   "mixins": [
-    "PlayerHandlerMixin",
     "CompactedJetpackMixin",
     "CompactedNuclearJetpackMixin",
+    "CurioModuleMixin",
+    "CurioPluginMixin",
+    "ElectricPackArmorMixin",
     "IC2ElectricJetpackBaseMixin",
     "IC2ModularElectricArmorMixin",
-    "ElectricPackArmorMixin",
-    "CurioPluginMixin",
-    "CurioModuleMixin"
+    "MixinBlock",
+    "PlayerHandlerMixin"
   ],
   "minVersion": "0.8",
   "refmap": "gravisuit.mixins.refmap.json"

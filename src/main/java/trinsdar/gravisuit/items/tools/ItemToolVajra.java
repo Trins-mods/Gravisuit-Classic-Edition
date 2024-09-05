@@ -153,7 +153,6 @@ public class ItemToolVajra extends DrillTool {
                 level.levelEvent(2001, pos, Block.getId(blockstate));
             }
 
-            CompoundTag tag = item.getTag();
             BlockEntity blockentity = blockstate.hasBlockEntity() ? level.getBlockEntity(pos) : null;
             BlockEvent.BreakEvent event = new BlockEvent.BreakEvent(level, pos, blockstate, entity instanceof Player player ? player : null);
             MinecraftForge.EVENT_BUS.post(event);

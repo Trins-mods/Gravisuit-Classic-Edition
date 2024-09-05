@@ -19,6 +19,7 @@ import trinsdar.gravisuit.items.armor.ItemAdvancedLappack;
 import trinsdar.gravisuit.items.armor.ItemAdvancedNuclearJetpack;
 import trinsdar.gravisuit.items.armor.ItemGravitationJetpack;
 import trinsdar.gravisuit.items.armor.ItemNuclearGravitationJetpack;
+import trinsdar.gravisuit.items.tools.ItemMagnet;
 import trinsdar.gravisuit.items.tools.ItemRelocator;
 import trinsdar.gravisuit.items.tools.ItemToolGravitool;
 import trinsdar.gravisuit.items.tools.ItemToolVajra;
@@ -35,6 +36,7 @@ public class Registry {
     public static final ItemToolGravitool GRAVITOOL = new ItemToolGravitool();
     public static final ItemToolVajra VAJRA = new ItemToolVajra();
     public static final ItemRelocator RELOCATOR = new ItemRelocator();
+    public static final ItemMagnet MAGNET = new ItemMagnet();
     public static final ItemComponents SUPER_CONDUCTOR_COVER = new ItemComponents("super_conductor_cover");
     public static final ItemComponents SUPER_CONDUCTOR = new ItemComponents("super_conductor");
     public static final ItemComponents COOLING_CORE = new ItemComponents("cooling_core");
