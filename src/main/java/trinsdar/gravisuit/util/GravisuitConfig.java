@@ -25,6 +25,7 @@ public class GravisuitConfig {
 
     public static ConfigEntry.BoolValue ADVANCED_JETPACK_PROVIDE_ENERGY, ADVANCED_N_JETPACK_PROVIDE_ENERGY, COMPACTED_JETPACK_PROVIDE_ENERGY, COMPACTED_N_JETPACK_PROVIDE_ENERGY,
             GRAVITATION_JETPACK_PROVIDE_ENERGY, GRAVITATION_N_JETPACK_PROVIDE_ENERGY;
+    public static ConfigEntry.IntValue MAGNET_RANGE;
     static ConfigHandler CONFIG;
 
     public static void createConfig(){
@@ -60,6 +61,7 @@ public class GravisuitConfig {
         COMPACTED_N_JETPACK_PROVIDE_ENERGY = misc.addBool("compacted_n_jetpack_provide_energy", true, "Enables the Compacted Nuclear jetpack charging items. Default: true");
         GRAVITATION_JETPACK_PROVIDE_ENERGY = misc.addBool("gravitation_jetpack_provide_energy", false, "Enables the Gravitation jetpack charging items. Default: false");
         GRAVITATION_N_JETPACK_PROVIDE_ENERGY = misc.addBool("gravitation_n_jetpack_provide_energy", true, "Enables the Gravitation Nuclear jetpack charging items. Default: true");
+        MAGNET_RANGE = misc.addInt("magnet_range", 8).setMin(1).setMax(16);
         CONFIG = CarbonConfig.CONFIGS.createConfig(config);
         CONFIG.register();
         Path configFile = Path.of(FMLPaths.CONFIGDIR.get().toString(),  "gravisuit-client.toml");
