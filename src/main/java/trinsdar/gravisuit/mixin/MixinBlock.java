@@ -26,6 +26,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotResult;
+import trinsdar.gravisuit.items.tools.ItemMagnet;
 import trinsdar.gravisuit.util.Registry;
 
 import javax.annotation.Nullable;
@@ -42,7 +43,7 @@ public class MixinBlock {
         Entity entity = lootContextBuilder.getOptionalParameter(LootContextParams.THIS_ENTITY);
         if (entity instanceof Player player){
             ItemStack magnet = findStack(Registry.MAGNET, player);
-            if (!magnet.isEmpty()){
+            if (!magnet.isEmpty() && ItemMagnet.getMagnetMode(magnet) == ItemMagnet.MagnetMode.INSTANT_PICKUP){
                 ServerLevel serverlevel = lootContextBuilder.getLevel();
                 BlockPos blockpos = new BlockPos(lootContextBuilder.getParameter(LootContextParams.ORIGIN));
 
@@ -64,7 +65,7 @@ public class MixinBlock {
     private static void injectDropResources(BlockState state, Level level, BlockPos pos, BlockEntity blockEntity, Entity entity, ItemStack stack, CallbackInfo ci) {
         if (level instanceof ServerLevel serverLevel && entity instanceof Player player) {
             ItemStack magnet = findStack(Registry.MAGNET, player);
-            if (!magnet.isEmpty()){
+            if (!magnet.isEmpty() && ItemMagnet.getMagnetMode(magnet) == ItemMagnet.MagnetMode.INSTANT_PICKUP){
                 getDrops(state, serverLevel, pos, blockEntity, entity, stack).forEach((itemStack) -> {
                     if (!ElectricItem.MANAGER.canUse(magnet, 10) || !player.addItem(itemStack)){
                         popResource(serverLevel, pos, itemStack);

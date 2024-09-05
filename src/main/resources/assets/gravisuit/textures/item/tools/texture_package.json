@@ -1,5 +1,6 @@
 {
   "vajra": "gravisuit:item/tools/vajra",
   "relocator": "gravisuit:item/tools/relocator",
-  "magnet": "gravisuit:item/tools/magnet"
+  "magnet": "gravisuit:item/tools/magnet",
+  "voider": "gravisuit:item/tools/voider"
 }

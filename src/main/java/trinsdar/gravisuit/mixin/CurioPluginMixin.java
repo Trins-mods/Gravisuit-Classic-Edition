@@ -31,5 +31,6 @@ public abstract class CurioPluginMixin {
 
 		if (i == Registry.ADVANCED_ELECTRIC_JETPACK || i == Registry.ADVANCED_NUCLEAR_JETPACK || i == Registry.GRAVITATION_JETPACK || i == Registry.NUCLEAR_GRAVITATION_JETPACK) info.setReturnValue(new TickingCurio(stack, false, true, true));
 		if (i == Registry.ADVANCED_LAPPACK || i == Registry.ULTIMATE_LAPPACK) info.setReturnValue(new TickingCurio(stack, false, false, true));
+		if (i == Registry.MAGNET) info.setReturnValue(new TickingCurio(stack, false, true, true));
 	}
 }
