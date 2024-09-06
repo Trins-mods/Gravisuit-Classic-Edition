@@ -48,9 +48,8 @@
   "message.advancedDrillBigHoles" : "Set Mode to Big Holes",
   "message.advancedDrillMediumHoles" : "Set Mode to Medium Holes",
   "message.advancedDrillTunnelHoles" : "Set Mode to Tunnel Holes",
-  "message.relocatorPersonal" : "Set Mode to Personal",
-  "message.relocatorPortal" : "Set Mode to Portal",
-  "message.relocatorTranslocator" : "Set Mode to Translocator",
+
+  "message.relocator": "Set Mode to %s",
   "message.relocatorAddTeleport" : "%s added to teleport list",
   "message.relocatorMaxTeleport" : "Can't add point. Memory is full.",
   "message.relocatorRemoveTeleport" : "%s removed from teleport list",
@@ -67,6 +66,9 @@
   "message.text.mode.none": "None",
   "message.text.mode.instant_pickup": "Instant Pickup",
   "message.text.mode.attraction": "Attraction",
+  "message.text.mode.personal" : "Personal",
+  "message.text.mode.portal" : "Portal",
+  "message.text.mode.translocator" : "Translocator",
 
   "message.info.on": "On",
   "message.info.off": "Off",
