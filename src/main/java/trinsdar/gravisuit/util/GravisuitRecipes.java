@@ -3,6 +3,7 @@ package trinsdar.gravisuit.util;
 
 import com.google.gson.JsonObject;
 import ic2.api.recipes.registries.IAdvancedCraftingManager;
+import ic2.core.IC2;
 import ic2.core.platform.recipes.mods.IRecipeModifier;
 import ic2.core.platform.registries.IC2Blocks;
 import ic2.core.platform.registries.IC2Items;
@@ -53,6 +54,7 @@ public class GravisuitRecipes {
         registry.addShapedRecipe(new ResourceLocation(GravisuitClassic.MODID, "relocator"), new ItemStack(Registry.RELOCATOR), "MEM", "ETE", "MEM", 'M', IC2Items.MEMORY_STICK, 'E', Items.ENDER_PEARL, 'T', IC2Items.PORTABLE_TELEPORTER);
         registry.addShapedRecipe(new ResourceLocation(GravisuitClassic.MODID, "magnet"), new ItemStack(Registry.MAGNET), "IRr", "T  ", "IRL", 'I', Tags.Items.INGOTS_IRON, 'R', IC2Tags.INGOT_REFINED_IRON, 'r', Tags.Items.DUSTS_REDSTONE, 'T', IC2Blocks.TESLA_COIL, 'L', Tags.Items.GEMS_LAPIS);
         registry.addShapedRecipe(new ResourceLocation(GravisuitClassic.MODID, "voider"), new ItemStack(Registry.VOIDER), "CLC", "LOL", "CLC", 'C', IC2Items.ADVANCED_CIRCUIT, 'L', IC2Items.CELL_LAVA, 'O', IC2Items.SCANNER_OD);
+        registry.addShapedIC2Recipe("advanced_drill", new ItemStack(IC2Items.DRILL_ADVANCED), "ODO", "COC", 'O', new ItemStack(IC2Items.OVERCLOCKER_UPGRADE, 2), 'D', IC2Items.DRILL_DIAMOND, 'C', IC2Items.ADVANCED_CIRCUIT);
     }
 
     public static class TreetapModifier implements IRecipeModifier {
