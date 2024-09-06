@@ -52,6 +52,7 @@ public class GravisuitRecipes {
         registry.addShapedRecipe(new ResourceLocation(GravisuitClassic.MODID, "vajra"), new ItemStack(Registry.VAJRA), "IMI", "DVC", "ALA", 'I', IC2Items.PLATE_IRIDIUM, 'M', IC2Items.MINING_LASER, 'D', IC2Items.DRILL_ADVANCED, 'V', Registry.VAJRA_CORE, 'C', IC2Items.CHAINSAW_ADVANCED, 'A', IC2Items.PLATE_ADVANCED_ALLOY, 'L', IC2Items.LAPATRON_CRYSTAL);
         registry.addShapedRecipe(new ResourceLocation(GravisuitClassic.MODID, "relocator"), new ItemStack(Registry.RELOCATOR), "MEM", "ETE", "MEM", 'M', IC2Items.MEMORY_STICK, 'E', Items.ENDER_PEARL, 'T', IC2Items.PORTABLE_TELEPORTER);
         registry.addShapedRecipe(new ResourceLocation(GravisuitClassic.MODID, "magnet"), new ItemStack(Registry.MAGNET), "IRr", "T  ", "IRL", 'I', Tags.Items.INGOTS_IRON, 'R', IC2Tags.INGOT_REFINED_IRON, 'r', Tags.Items.DUSTS_REDSTONE, 'T', IC2Blocks.TESLA_COIL, 'L', Tags.Items.GEMS_LAPIS);
+        registry.addShapedRecipe(new ResourceLocation(GravisuitClassic.MODID, "voider"), new ItemStack(Registry.VOIDER), "CLC", "LOL", "CLC", 'C', IC2Items.ADVANCED_CIRCUIT, 'L', IC2Items.CELL_LAVA, 'O', IC2Items.SCANNER_OD);
     }
 
     public static class TreetapModifier implements IRecipeModifier {

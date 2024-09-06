@@ -23,6 +23,7 @@ import trinsdar.gravisuit.items.tools.ItemMagnet;
 import trinsdar.gravisuit.items.tools.ItemRelocator;
 import trinsdar.gravisuit.items.tools.ItemToolGravitool;
 import trinsdar.gravisuit.items.tools.ItemToolVajra;
+import trinsdar.gravisuit.items.tools.ItemVoider;
 
 import java.util.Map;
 public class Registry {
@@ -37,6 +38,7 @@ public class Registry {
     public static final ItemToolVajra VAJRA = new ItemToolVajra();
     public static final ItemRelocator RELOCATOR = new ItemRelocator();
     public static final ItemMagnet MAGNET = new ItemMagnet();
+    public static final ItemVoider VOIDER = new ItemVoider();
     public static final ItemComponents SUPER_CONDUCTOR_COVER = new ItemComponents("super_conductor_cover");
     public static final ItemComponents SUPER_CONDUCTOR = new ItemComponents("super_conductor");
     public static final ItemComponents COOLING_CORE = new ItemComponents("cooling_core");
