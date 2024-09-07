@@ -34,11 +34,10 @@ import trinsdar.gravisuit.util.Registry;
 import java.util.function.Supplier;
 
 import static net.minecraft.world.level.block.Block.getDrops;
-import static net.minecraft.world.level.block.Block.popResource;
 
 @Debug(export = true)
 @Mixin(Block.class)
-public abstract class MixinBlock {
+public abstract class BlockMixin {
 
     @Shadow public abstract void playerDestroy(Level pLevel, Player pPlayer, BlockPos pPos, BlockState pState, @Nullable BlockEntity pBlockEntity, ItemStack pTool);
 

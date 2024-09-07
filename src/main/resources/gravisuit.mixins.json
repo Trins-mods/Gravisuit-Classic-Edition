@@ -15,7 +15,7 @@
     "ElectricPackArmorMixin",
     "IC2ElectricJetpackBaseMixin",
     "IC2ModularElectricArmorMixin",
-    "MixinBlock",
+    "BlockMixin",
     "PlayerHandlerMixin"
   ],
   "minVersion": "0.8",
