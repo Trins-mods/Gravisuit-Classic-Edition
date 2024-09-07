@@ -7,6 +7,7 @@ import ic2.core.IC2;
 import ic2.core.item.tool.electric.DrillTool;
 import ic2.core.platform.player.KeyHelper;
 import ic2.core.platform.rendering.IC2Textures;
+import ic2.core.utils.helpers.StackUtil;
 import ic2.core.utils.helpers.Tool;
 import ic2.core.utils.tooltips.ToolTipHelper;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -75,16 +76,11 @@ public class ItemToolVajra extends DrillTool {
     public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
         if (IC2.KEYBOARD.isModeSwitchKeyDown(playerIn)){
             ItemStack stack = playerIn.getItemInHand(handIn);
-            CompoundTag nbt = stack.getOrCreateTag();
+            CompoundTag nbt = StackUtil.getNbtData(stack);
             boolean silkTouch = nbt.getBoolean("silkTouch");
             if (IC2.PLATFORM.isSimulating()) {
-                if (silkTouch){
-                    nbt.putBoolean("silkTouch", false);
-                    playerIn.displayClientMessage(this.translate(GravisuitLang.silkTouchOff), false);
-                }else {
-                    nbt.putBoolean("silkTouch", true);
-                    playerIn.displayClientMessage(this.translate(GravisuitLang.silkTouchOn), false);
-                }
+                nbt.putBoolean("silkTouch", !silkTouch);
+                playerIn.displayClientMessage(this.translate("message.silk_touch." + (!silkTouch ? "on" : "off")), true);
                 return InteractionResultHolder.success(stack);
             }
         }
