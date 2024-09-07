@@ -80,7 +80,7 @@ public class ItemToolVajra extends DrillTool {
             boolean silkTouch = nbt.getBoolean("silkTouch");
             if (IC2.PLATFORM.isSimulating()) {
                 nbt.putBoolean("silkTouch", !silkTouch);
-                playerIn.displayClientMessage(this.translate("message.silk_touch." + (!silkTouch ? "on" : "off")), true);
+                playerIn.displayClientMessage(this.translate("message.silk_touch." + (!silkTouch ? "on" : "off")), false);
                 return InteractionResultHolder.success(stack);
             }
         }
@@ -200,14 +200,10 @@ public class ItemToolVajra extends DrillTool {
 
     @Override
     public void addToolTip(ItemStack stack, Player player, TooltipFlag type, ToolTipHelper helper) {
-        CompoundTag nbt = stack.getOrCreateTag();
+        CompoundTag nbt = StackUtil.getNbtData(stack);
         boolean silkTouch = nbt.getBoolean("silkTouch");
-        if (silkTouch){
-            helper.addSimpleToolTip(GravisuitLang.silkMode, this.translate(GravisuitLang.vajraSilktouchOn));
-        }else{
-            helper.addSimpleToolTip(GravisuitLang.silkMode, this.translate(GravisuitLang.vajraSilktouchOff));
-        }
-        helper.addKeybindingTooltip(this.buildKeyDescription(KeyHelper.MODE_KEY, GravisuitLang.vajraSilktouchToggle));
+        helper.addSimpleToolTip("item_info.silk_mode", this.translate("item_info." + (silkTouch ? "enabled" : "disabled")));
+        helper.addKeybindingTooltip(this.buildKeyDescription(KeyHelper.MODE_KEY, "item_info.silktouch_toggle"));
     }
 
     @SubscribeEvent

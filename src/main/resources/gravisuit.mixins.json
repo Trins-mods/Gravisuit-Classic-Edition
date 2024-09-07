@@ -6,6 +6,7 @@
     "KeyboardClientMixin"
   ],
   "mixins": [
+    "AdvancedChainsawMixin",
     "AdvancedDrillMixin",
     "CompactedJetpackMixin",
     "CompactedNuclearJetpackMixin",
