@@ -75,8 +75,8 @@ public class AdvancedChainsawMixin extends ChainsawTool {
         helper.addSimpleToolTip("item_info.tree_chopping_mode", this.translate("item_info." + (treeChopping ? "enabled" : "disabled")));
         boolean shearing = nbt.getBoolean("shearing");
         helper.addSimpleToolTip("item_info.shearing_mode", this.translate("item_info." + (shearing ? "enabled" : "disabled")));
-        helper.addKeybindingTooltip(this.buildKeyDescription(KeyHelper.MODE_KEY, "item_info.tree_chopping_toggle"));
-        helper.addKeybindingTooltip(this.buildKeyDescription(KeyHelper.SNEAK_KEY, "item_info.shear_toggle"));
+        helper.addKeybindingTooltip(this.buildKeyDescription(KeyHelper.MODE_KEY, KeyHelper.RIGHT_CLICK, "item_info.tree_chopping_toggle"));
+        helper.addKeybindingTooltip(this.buildKeyDescription(KeyHelper.SNEAK_KEY, KeyHelper.RIGHT_CLICK, "item_info.shear_toggle"));
         super.addToolTip(stack, player, type, helper);
         helper.addSimpleToolTip(Component.translatable("item_info.modified_by_gravisuit").withStyle(ChatFormatting.RED));
     }
