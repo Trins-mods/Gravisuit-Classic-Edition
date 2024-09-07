@@ -76,7 +76,7 @@ public class ItemToolVajra extends DrillTool {
     public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
         if (IC2.KEYBOARD.isModeSwitchKeyDown(playerIn)){
             ItemStack stack = playerIn.getItemInHand(handIn);
-            CompoundTag nbt = StackUtil.getNbtData(stack);
+            CompoundTag nbt = stack.getOrCreateTag();
             boolean silkTouch = nbt.getBoolean("silkTouch");
             if (IC2.PLATFORM.isSimulating()) {
                 nbt.putBoolean("silkTouch", !silkTouch);
