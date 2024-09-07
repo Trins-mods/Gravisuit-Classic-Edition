@@ -18,6 +18,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -30,6 +31,8 @@ import trinsdar.gravisuit.GravisuitClassic;
 import trinsdar.gravisuit.util.GravisuitConfig;
 import trinsdar.gravisuit.util.GravisuitSounds;
 import trinsdar.gravisuit.util.Registry;
+
+import java.util.List;
 
 public class ItemMagnet extends IC2ElectricItem implements ISimpleItemModel {
     public ItemMagnet() {
@@ -79,7 +82,11 @@ public class ItemMagnet extends IC2ElectricItem implements ISimpleItemModel {
         if (getMagnetMode(stack) == MagnetMode.ATTRACT && ElectricItem.MANAGER.canUse(stack, 1)){
             int range = GravisuitConfig.MAGNET_RANGE.get();
             AABB box = new AABB(player.getX() - range, player.getY() - range, player.getZ() - range, player.getX() + range, player.getY() + range, player.getZ() + range);
-            for (ItemEntity itemEntity : level.getEntitiesOfClass(ItemEntity.class, box)){
+            List<ItemEntity> drops = level.getEntities(EntityType.ITEM, box,
+                    item -> item.isAlive() && (!level.isClientSide || item.tickCount > 1) &&
+                            (item.getThrower() == null || !item.getThrower().equals(player.getUUID()) || !item.hasPickUpDelay()) &&
+                            !item.getItem().isEmpty() && !item.getPersistentData().contains("PreventRemoteMovement"));
+            for (ItemEntity itemEntity : drops){
                 if (ElectricItem.MANAGER.canUse(stack, 1)){
                     itemEntity.playerTouch(player);
                     ElectricItem.MANAGER.use(stack, 1, player);
