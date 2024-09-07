@@ -76,7 +76,7 @@ public class ItemMagnet extends IC2ElectricItem implements ISimpleItemModel {
     }
 
     private void tick(ItemStack stack, Level level, Player player) {
-        if (getMagnetMode(stack) == MagnetMode.ATTRACTION && ElectricItem.MANAGER.canUse(stack, 1)){
+        if (getMagnetMode(stack) == MagnetMode.ATTRACT && ElectricItem.MANAGER.canUse(stack, 1)){
             int range = GravisuitConfig.MAGNET_RANGE.get();
             AABB box = new AABB(player.getX() - range, player.getY() - range, player.getZ() - range, player.getX() + range, player.getY() + range, player.getZ() + range);
             for (ItemEntity itemEntity : level.getEntitiesOfClass(ItemEntity.class, box)){
@@ -84,7 +84,7 @@ public class ItemMagnet extends IC2ElectricItem implements ISimpleItemModel {
                     itemEntity.playerTouch(player);
                     ElectricItem.MANAGER.use(stack, 1, player);
                 } else {
-                    saveMagnetMode(stack, MagnetMode.NONE);
+                    saveMagnetMode(stack, MagnetMode.OFF);
                     break;
                 }
             }
@@ -115,7 +115,7 @@ public class ItemMagnet extends IC2ElectricItem implements ISimpleItemModel {
     }
 
     public enum MagnetMode {
-        NONE(ChatFormatting.AQUA), INSTANT_PICKUP(ChatFormatting.DARK_GREEN), ATTRACTION(ChatFormatting.GOLD);
+        OFF(ChatFormatting.AQUA), ADD_TO_INVENTORY(ChatFormatting.DARK_GREEN), ATTRACT(ChatFormatting.GOLD);
 
         private static final MagnetMode[] VALUES = values();
         public final ChatFormatting color;
