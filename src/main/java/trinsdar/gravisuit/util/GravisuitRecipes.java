@@ -55,7 +55,7 @@ public class GravisuitRecipes {
         registry.addShapedRecipe(new ResourceLocation(GravisuitClassic.MODID, "magnet"), new ItemStack(Registry.MAGNET), "RrM", "T  ", "RLM", 'M', IC2Items.MAGNET, 'R', IC2Tags.INGOT_REFINED_IRON, 'r', Tags.Items.DUSTS_REDSTONE, 'T', IC2Blocks.TESLA_COIL, 'L', Tags.Items.GEMS_LAPIS);
         registry.addShapedRecipe(new ResourceLocation(GravisuitClassic.MODID, "voider"), new ItemStack(Registry.VOIDER), "CLC", "LOL", "CLC", 'C', IC2Items.ADVANCED_CIRCUIT, 'L', IC2Items.CELL_LAVA, 'O', IC2Items.SCANNER_OD);
         registry.addShapedIC2Recipe("advanced_drill", new ItemStack(IC2Items.DRILL_ADVANCED), "ODO", "COC", 'O', new ItemStack(IC2Items.OVERCLOCKER_UPGRADE, 2), 'D', IC2Items.DRILL_DIAMOND, 'C', IC2Items.ADVANCED_CIRCUIT);
-        registry.addShapedIC2Recipe("advanced_chainsaw", new ItemStack(IC2Items.CHAINSAW_ADVANCED), "ODO", "COC", 'O', new ItemStack(IC2Items.OVERCLOCKER_UPGRADE, 2), 'D', IC2Items.CHAINSAW, 'C', IC2Items.ADVANCED_CIRCUIT);
+        registry.addShapedIC2Recipe("advanced_chainsaw", new ItemStack(IC2Items.CHAINSAW_ADVANCED), " d ","ODO", "COC", 'O', new ItemStack(IC2Items.OVERCLOCKER_UPGRADE, 2), 'D', IC2Items.CHAINSAW, 'C', IC2Items.ADVANCED_CIRCUIT, 'd', Tags.Items.GEMS_DIAMOND);
     }
 
     public static class TreetapModifier implements IRecipeModifier {
