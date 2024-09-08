@@ -43,6 +43,11 @@ public class AdvancedDrillMixin extends DrillTool {
         this.tier = 2;
     }
 
+    @Override
+    public int getEnergyCost(ItemStack stack) {
+        return super.getEnergyCost(stack) * 2;
+    }
+
     @OnlyIn(Dist.CLIENT)
     @Override
     public TextureAtlasSprite getTexture() {
