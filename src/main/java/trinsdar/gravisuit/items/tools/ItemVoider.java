@@ -47,6 +47,7 @@ import trinsdar.gravisuit.util.GravisuitConfig;
 import trinsdar.gravisuit.util.GravisuitSounds;
 import trinsdar.gravisuit.util.Registry;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ItemVoider extends IC2ElectricItem implements IItemModel, IHasHeldSlotInventory {
@@ -83,6 +84,7 @@ public class ItemVoider extends IC2ElectricItem implements IItemModel, IHasHeldS
         helper.addSimpleToolTip("item_info.voider_mode", this.translate("item_info." + (active ? "enabled" : "disabled")));
         helper.addKeybindingTooltip(this.buildKeyDescription(KeyHelper.MODE_KEY, KeyHelper.RIGHT_CLICK, "item_info.voider_toggle"));
         helper.addKeybindingTooltip(this.buildKeyDescription(KeyHelper.RIGHT_CLICK, KeyHelper.SIDE_INV_KEY, "tooltip.ic2.open_item_inventory"));
+        helper.addKeybindingTooltip(this.buildKeyDescription(KeyHelper.SNEAK_KEY, KeyHelper.RIGHT_CLICK, "item_info.voider_use"));
     }
 
     @Override
@@ -99,6 +101,12 @@ public class ItemVoider extends IC2ElectricItem implements IItemModel, IHasHeldS
                 nbt.putBoolean("active", !active);
                 player.displayClientMessage(this.translate("message.voider." + (!active ? "on" : "off")), false);
                 return InteractionResultHolder.success(stack);
+            }
+            if (IC2.KEYBOARD.isSneakKeyDown(player)){
+                if (checkForItemsToVoid(player, stack, false)){
+                    player.displayClientMessage(this.translate("message.voider.void_inventory").withStyle(ChatFormatting.GOLD), false);
+                    return InteractionResultHolder.success(stack);
+                }
             }
             return InteractionResultHolder.pass(stack);
         } else {
@@ -140,18 +148,42 @@ public class ItemVoider extends IC2ElectricItem implements IItemModel, IHasHeldS
     public void onItemPickupEvent(PlayerEvent.ItemPickupEvent event) {
         Player player = event.getEntity();
         ItemStack voider = Registry.findStack(this,player);
+        checkForItemsToVoid(player, voider, true);
+    }
+
+    private boolean checkForItemsToVoid(Player player, ItemStack voider, boolean checkActive){
         if (!voider.isEmpty()) {
             CompoundTag tag = StackUtil.getNbtData(voider);
-            if (tag.getBoolean("active") && tag.contains("items", Tag.TAG_LIST)) {
-                List<ItemStack> toVoid = voidFilter(tag.getList("items", 10));
-                if (!toVoid.isEmpty()) {
-                    ItemStack drop = event.getStack();
-                    if (StackUtil.containsItemStack(toVoid, drop)){
-                        drop.setCount(0);
+            if ((tag.getBoolean("active") || !checkActive) && tag.contains("items", Tag.TAG_LIST)) {
+                List<ItemStack> filter = voidFilter(tag.getList("items", 10));
+                if (!filter.isEmpty()) {
+                    List<ItemStack> toVoid = drops(player, filter);
+                    if (!toVoid.isEmpty()) {
+                        boolean success = false;
+                        for (ItemStack drop : toVoid) {
+
+                            if (ElectricItem.MANAGER.canUse(voider, this.getEnergyCost(voider))){
+                                drop.setCount(0);
+                                ElectricItem.MANAGER.use(voider, this.getEnergyCost(voider), player);
+                                success = true;
+                            }
+                        }
+                        if (success) return true;
                     }
                 }
             }
         }
+        return false;
+    }
+
+    private List<ItemStack> drops(Player player, List<ItemStack> filter){
+        List<ItemStack> toVoid = new ArrayList<>();
+        for (ItemStack stack : player.getInventory().items) {
+            if (StackUtil.containsItemStack(filter, stack)){
+                toVoid.add(stack);
+            }
+        }
+        return toVoid;
     }
 
     private List<ItemStack> voidFilter(ListTag tag){
