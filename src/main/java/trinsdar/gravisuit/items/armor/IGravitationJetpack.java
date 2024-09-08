@@ -3,6 +3,7 @@ package trinsdar.gravisuit.items.armor;
 import ic2.api.items.electric.ElectricItem;
 import ic2.core.IC2;
 import ic2.core.item.wearable.armor.electric.QuantumSuit;
+import ic2.core.item.wearable.base.IC2JetpackBase;
 import ic2.core.item.wearable.base.IC2ModularElectricArmor;
 import ic2.core.platform.player.PlayerHandler;
 import ic2.core.utils.tooltips.ILangHelper;
@@ -47,6 +48,9 @@ public interface IGravitationJetpack extends ILangHelper, IHasOverlay {
             tag.putByte("JetpackTicker", (byte)10);
             boolean disabled = !enabled;
             tag.putBoolean("engine_on", disabled);
+            if (disabled) {
+                tag.putByte("LastUseMode", (byte) IC2JetpackBase.JetpackUseMode.NONE.getIndex());
+            }
             if (server) {
                 player.displayClientMessage(this.translate("message.gravi_engine_" + (disabled ? "on" : "off")), false);
             }
