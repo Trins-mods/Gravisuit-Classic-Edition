@@ -35,7 +35,7 @@ public enum DrillMode {
     }
 
     public static void saveDrillMode(ItemStack tool, DrillMode mode) {
-        CompoundTag tag = StackUtil.getNbtData(tool);
+        CompoundTag tag = tool.getOrCreateTag();
         tag.putByte("mode", (byte) mode.ordinal());
     }
 }

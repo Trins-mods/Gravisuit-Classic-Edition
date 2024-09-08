@@ -114,7 +114,6 @@ public class ItemMagnet extends IC2ElectricItem implements ILayeredItemModel, II
         ItemStack stack = playerIn.getItemInHand(handIn);
         if (IC2.PLATFORM.isSimulating()) {
             if (IC2.KEYBOARD.isModeSwitchKeyDown(playerIn)) {
-                IC2.AUDIO.playSound(playerIn, GravisuitSounds.toolGraviToolSound, AudioManager.SoundType.ITEM, IC2.AUDIO.getDefaultVolume(), 1.0f);
                 MagnetMode nextMode = getNextMagnetMode(stack);
                 saveMagnetMode(stack, nextMode);
                 playerIn.displayClientMessage(Component.translatable("item_info.toolMode", Component.translatable(nextMode.localeName).withStyle(nextMode.color)).withStyle(ChatFormatting.YELLOW), false);
@@ -127,7 +126,7 @@ public class ItemMagnet extends IC2ElectricItem implements ILayeredItemModel, II
 
     @Override
     public boolean isLayered(ItemStack itemStack) {
-        return getMagnetMode(itemStack) != MagnetMode.OFF;
+        return true;
     }
 
     @Override
@@ -143,7 +142,9 @@ public class ItemMagnet extends IC2ElectricItem implements ILayeredItemModel, II
     @Override
     public List<ItemStack> getModelTypes() {
         List<ItemStack> list = new ArrayList<>();
-        list.add(new ItemStack(this));
+        ItemStack off = new ItemStack(this);
+        saveMagnetMode(off, MagnetMode.OFF);
+        list.add(off);
         ItemStack addToInventory = new ItemStack(this);
         saveMagnetMode(addToInventory, MagnetMode.ADD_TO_INVENTORY);
         list.add(addToInventory);
@@ -193,7 +194,7 @@ public class ItemMagnet extends IC2ElectricItem implements ILayeredItemModel, II
     }
 
     public static void saveMagnetMode(ItemStack tool, MagnetMode mode) {
-        CompoundTag tag = StackUtil.getNbtData(tool);
+        CompoundTag tag = tool.getOrCreateTag();
         tag.putByte("mode", (byte) mode.ordinal());
     }
 }

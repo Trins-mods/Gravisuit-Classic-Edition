@@ -306,7 +306,7 @@ public class ItemToolGravitool extends ElectricWrenchTool implements ICropModifi
     }
 
     public static void saveToolMode(ItemStack tool, ToolMode mode) {
-        CompoundTag tag = StackUtil.getNbtData(tool);
+        CompoundTag tag = tool.getOrCreateTag();
         tag.putByte("mode", (byte) mode.ordinal());
     }
 }
