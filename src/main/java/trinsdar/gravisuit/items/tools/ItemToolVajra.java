@@ -203,7 +203,7 @@ public class ItemToolVajra extends DrillTool {
         CompoundTag nbt = StackUtil.getNbtData(stack);
         boolean silkTouch = nbt.getBoolean("silkTouch");
         helper.addSimpleToolTip("item_info.silk_mode", this.translate("item_info." + (silkTouch ? "enabled" : "disabled")));
-        helper.addKeybindingTooltip(this.buildKeyDescription(KeyHelper.MODE_KEY, "item_info.silktouch_toggle"));
+        helper.addKeybindingTooltip(this.buildKeyDescription(KeyHelper.MODE_KEY, KeyHelper.RIGHT_CLICK, "item_info.silktouch_toggle"));
     }
 
     @SubscribeEvent

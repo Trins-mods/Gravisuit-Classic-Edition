@@ -19,9 +19,9 @@ public class GravisuitConfig {
     public static ConfigEntry.EnumValue<HudMode> HUD_MODE;
 
     public static ConfigEntry.IntValue ADVANCED_ELECTRIC_JETPACK_STORAGE, ADVANCED_NUCLEAR_JETPACK_STORAGE, ADVANCED_LAPPACK_STORAGE, ULTIMATE_LAPPACK_STORAGE, GRAVITATION_JETPACK_STORAGE,
-            NUCLEAR_GRAVITATION_JETPACK_STORAGE, GRAVITOOL_STORAGE, VAJRA_STORAGE, RELOCATOR_STORAGE, MAGNET_STORAGE;
+            NUCLEAR_GRAVITATION_JETPACK_STORAGE, GRAVITOOL_STORAGE, VAJRA_STORAGE, RELOCATOR_STORAGE, MAGNET_STORAGE, VOIDER_STORAGE;
     public static ConfigEntry.IntValue ADVANCED_ELECTRIC_JETPACK_TRANSFER, ADVANCED_LAPPACK_TRANSFER, ULTIMATE_LAPPACK_TRANSFER, GRAVITATION_JETPACK_TRANSFER,
-            GRAVITOOL_TRANSFER, VAJRA_TRANSFER, RELOCATOR_TRANSFER, MAGNET_TRANSFER;
+            GRAVITOOL_TRANSFER, VAJRA_TRANSFER, RELOCATOR_TRANSFER, MAGNET_TRANSFER, VOIDER_TRANSFER;
 
     public static ConfigEntry.BoolValue ADVANCED_JETPACK_PROVIDE_ENERGY, ADVANCED_N_JETPACK_PROVIDE_ENERGY, COMPACTED_JETPACK_PROVIDE_ENERGY, COMPACTED_N_JETPACK_PROVIDE_ENERGY,
             GRAVITATION_JETPACK_PROVIDE_ENERGY, GRAVITATION_N_JETPACK_PROVIDE_ENERGY;
@@ -45,6 +45,7 @@ public class GravisuitConfig {
         VAJRA_STORAGE = storage.addInt("vajra_storage", 3000000).setMin(1);
         RELOCATOR_STORAGE = storage.addInt("relocator_storage", 50000000).setMin(1);
         MAGNET_STORAGE = storage.addInt("magnet_storage", 10000).setMin(1);
+        VOIDER_STORAGE = storage.addInt("voider_storage", 10000).setMin(1);
         ConfigSection transfer = powerValues.addSubSection("transfer");
         ADVANCED_ELECTRIC_JETPACK_TRANSFER = transfer.addInt("advanced_electric_jetpack_transfer", 500).setMin(1);
         ADVANCED_LAPPACK_TRANSFER = transfer.addInt("advanced_lappack_transfer", 500).setMin(1);
@@ -54,6 +55,7 @@ public class GravisuitConfig {
         VAJRA_TRANSFER = transfer.addInt("vajra_transfer", 1000).setMin(1);
         RELOCATOR_TRANSFER = transfer.addInt("relocator_transfer", 25000).setMin(1);
         MAGNET_TRANSFER = transfer.addInt("magnet_transfer", 500).setMin(1);
+        VOIDER_TRANSFER = transfer.addInt("voider_transfer", 500).setMin(1);
         ConfigSection misc = config.add("misc");
         ADVANCED_JETPACK_PROVIDE_ENERGY = misc.addBool("advanced_jetpack_provide_energy", false, "Enables the Advanced Electric jetpack charging items. Default: false");
         ADVANCED_N_JETPACK_PROVIDE_ENERGY = misc.addBool("advanced_n_jetpack_provide_energy", true, "Enables the Advanced Nuclear jetpack charging items. Default: true");
