@@ -6,6 +6,7 @@ import ic2.api.recipes.registries.IAdvancedCraftingManager;
 import ic2.core.IC2;
 import ic2.core.platform.recipes.mods.IRecipeModifier;
 import ic2.core.platform.registries.IC2Blocks;
+import ic2.core.platform.registries.IC2Fluids;
 import ic2.core.platform.registries.IC2Items;
 import ic2.core.platform.registries.IC2Tags;
 import net.minecraft.nbt.CompoundTag;
@@ -13,6 +14,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.common.Tags;
 import trinsdar.gravisuit.GravisuitClassic;
 
@@ -53,7 +55,7 @@ public class GravisuitRecipes {
         registry.addShapedRecipe(new ResourceLocation(GravisuitClassic.MODID, "vajra"), new ItemStack(Registry.VAJRA), "IMI", "DVC", "ALA", 'I', IC2Items.PLATE_IRIDIUM, 'M', IC2Items.MINING_LASER, 'D', IC2Items.DRILL_ADVANCED, 'V', Registry.VAJRA_CORE, 'C', IC2Items.CHAINSAW_ADVANCED, 'A', IC2Items.PLATE_ADVANCED_ALLOY, 'L', IC2Items.LAPATRON_CRYSTAL);
         registry.addShapedRecipe(new ResourceLocation(GravisuitClassic.MODID, "relocator"), new ItemStack(Registry.RELOCATOR), "MEM", "ETE", "MEM", 'M', IC2Items.MEMORY_STICK, 'E', Items.ENDER_PEARL, 'T', IC2Items.PORTABLE_TELEPORTER);
         registry.addShapedRecipe(new ResourceLocation(GravisuitClassic.MODID, "magnet"), new ItemStack(Registry.MAGNET), "RrM", "T  ", "RLM", 'M', IC2Items.MAGNET, 'R', IC2Tags.INGOT_REFINED_IRON, 'r', Tags.Items.DUSTS_REDSTONE, 'T', IC2Blocks.TESLA_COIL, 'L', Tags.Items.GEMS_LAPIS);
-        registry.addShapedRecipe(new ResourceLocation(GravisuitClassic.MODID, "voider"), new ItemStack(Registry.VOIDER), "CLC", "LOL", "CLC", 'C', IC2Items.ADVANCED_CIRCUIT, 'L', IC2Items.CELL_LAVA, 'O', IC2Items.SCANNER_OD);
+        registry.addShapedRecipe(new ResourceLocation(GravisuitClassic.MODID, "voider"), new ItemStack(Registry.VOIDER), "CPC", "PLP", "CPC", 'C', IC2Items.ADVANCED_CIRCUIT, 'L', Fluids.LAVA, 'P', IC2Items.PLATING_CONTAINMENT);
         registry.addShapedIC2Recipe("advanced_drill", new ItemStack(IC2Items.DRILL_ADVANCED), "ODO", "COC", 'O', new ItemStack(IC2Items.OVERCLOCKER_UPGRADE, 2), 'D', IC2Items.DRILL_DIAMOND, 'C', IC2Items.ADVANCED_CIRCUIT);
         registry.addShapedIC2Recipe("advanced_chainsaw", new ItemStack(IC2Items.CHAINSAW_ADVANCED), " d ","ODO", "COC", 'O', new ItemStack(IC2Items.OVERCLOCKER_UPGRADE, 2), 'D', IC2Items.CHAINSAW, 'C', IC2Items.ADVANCED_CIRCUIT, 'd', Tags.Items.GEMS_DIAMOND);
     }
