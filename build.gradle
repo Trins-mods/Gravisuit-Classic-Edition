@@ -125,7 +125,7 @@ dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
     // Apply Mixin AP
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
-    implementation(fg.deobf("curse.maven:ic2_classic-242942:5137503"))
+    implementation(fg.deobf("curse.maven:ic2_classic-242942:5612597"))
     implementation(fg.deobf("curse.maven:ic2c_additions-304040:4360883"))
     implementation(fg.deobf("curse.maven:curios-309927:3871347"))
     implementation(fg.deobf("curse.maven:lootr-361276:4596364"))
@@ -141,6 +141,8 @@ dependencies {
     jarJar("maven.modrinth:carbon-config:mJxg4ZgM") {
         jarJar.ranged(it, "[1.19.2-1.2.6,)")
     }
+    //implementation fg.deobf("curse.maven:sophisticated-backpacks-422301:5194759")
+    implementation fg.deobf("curse.maven:sophisticated-core-618298:5296313")
 }
 
 mixin {
