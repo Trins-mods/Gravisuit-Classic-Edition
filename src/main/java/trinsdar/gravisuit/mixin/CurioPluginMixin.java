@@ -22,7 +22,7 @@ public abstract class CurioPluginMixin {
 	@Inject(method = "loadIMC", at = @At("TAIL"), remap = false)
 	private void injectLoadIMC(InterModEnqueueEvent mod, CallbackInfo info) {
 		InterModComms.sendTo(GravisuitClassic.MODID, "curios", SlotTypeMessage.REGISTER_TYPE, () -> SlotTypePreset.BACK.getMessageBuilder().build());
-		InterModComms.sendTo(GravisuitClassic.MODID, "curios", SlotTypeMessage.REGISTER_TYPE, () -> SlotTypePreset.CHARM.getMessageBuilder().build());
+		InterModComms.sendTo(GravisuitClassic.MODID, "curios", SlotTypeMessage.REGISTER_TYPE, () -> SlotTypePreset.CHARM.getMessageBuilder().size(2).build());
 	}
 
 	@Inject(method = "createForItem", at = @At("TAIL"), remap = false, cancellable = true)

@@ -8,7 +8,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
@@ -17,7 +16,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
-import net.minecraftforge.fml.ModList;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Debug;
 import org.spongepowered.asm.mixin.Mixin;
@@ -27,7 +25,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import trinsdar.gravisuit.GravisuitClassic;
 import trinsdar.gravisuit.items.tools.ItemMagnet;
-import trinsdar.gravisuit.util.CuriosUtil;
 import trinsdar.gravisuit.util.Registry;
 
 import java.util.function.Supplier;
@@ -48,7 +45,7 @@ public abstract class BlockMixin {
     private static void injectDropResources(BlockState state, LootContext.Builder lootContextBuilder, CallbackInfo ci) {
         Entity entity = lootContextBuilder.getOptionalParameter(LootContextParams.THIS_ENTITY);
         if (entity instanceof Player player){
-            ItemStack magnet = findStack(Registry.MAGNET, player);
+            ItemStack magnet = Registry.findStack(Registry.MAGNET, player);
             if (!magnet.isEmpty() && ItemMagnet.getMagnetMode(magnet) == ItemMagnet.MagnetMode.ADD_TO_INVENTORY){
                 ServerLevel serverlevel = lootContextBuilder.getLevel();
                 BlockPos blockpos = new BlockPos(lootContextBuilder.getParameter(LootContextParams.ORIGIN));
@@ -70,7 +67,7 @@ public abstract class BlockMixin {
     @Inject(method = "dropResources(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/entity/BlockEntity;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/item/ItemStack;)V", at = @At("HEAD"), cancellable = true)
     private static void injectDropResources(BlockState state, Level level, BlockPos pos, BlockEntity blockEntity, Entity entity, ItemStack stack, CallbackInfo ci) {
         if (level instanceof ServerLevel serverLevel && entity instanceof Player player) {
-            ItemStack magnet = findStack(Registry.MAGNET, player);
+            ItemStack magnet = Registry.findStack(Registry.MAGNET, player);
             if (!magnet.isEmpty() && ItemMagnet.getMagnetMode(magnet) == ItemMagnet.MagnetMode.ADD_TO_INVENTORY){
                 getDrops(state, serverLevel, pos, blockEntity, entity, stack).forEach((itemStack) -> {
                     if (!ElectricItem.MANAGER.canUse(magnet, 10)){
@@ -112,21 +109,6 @@ public abstract class BlockMixin {
             return leftover.getCount() != pStack.getCount() || itementity.isRemoved();
         }
         return false;
-    }
-
-    private static ItemStack findStack(Item filter, Player player){
-        if (ModList.get().isLoaded("curios")){
-            ItemStack curios = CuriosUtil.getCuriosItem(filter, player);
-            if (!curios.isEmpty()){
-                return curios;
-            }
-        }
-        for (ItemStack slot : player.getInventory().items) {
-            if (slot.getItem() == filter){
-                return slot;
-            }
-        }
-        return ItemStack.EMPTY;
     }
 
 }

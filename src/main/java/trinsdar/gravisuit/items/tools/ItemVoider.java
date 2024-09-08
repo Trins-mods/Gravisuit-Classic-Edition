@@ -19,6 +19,8 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
@@ -34,6 +36,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import org.jetbrains.annotations.Nullable;
 import trinsdar.gravisuit.GravisuitClassic;
 import trinsdar.gravisuit.items.container.ItemInventoryRelocator;
@@ -48,6 +53,7 @@ public class ItemVoider extends IC2ElectricItem implements IItemModel, IHasHeldS
     public ItemVoider() {
         super("voider");
         Registry.REGISTRY.put(new ResourceLocation(GravisuitClassic.MODID, "voider"), this);
+        MinecraftForge.EVENT_BUS.register(this);
     }
 
     @Override
@@ -128,5 +134,33 @@ public class ItemVoider extends IC2ElectricItem implements IItemModel, IHasHeldS
 
     public int getModelIndexForStack(ItemStack stack, @Nullable LivingEntity livingEntity) {
         return StackUtil.getNbtData(stack).getBoolean("active") ? 1 : 0;
+    }
+
+    @SubscribeEvent
+    public void onItemPickupEvent(PlayerEvent.ItemPickupEvent event) {
+        Player player = event.getEntity();
+        ItemStack voider = Registry.findStack(this,player);
+        if (!voider.isEmpty()) {
+            CompoundTag tag = StackUtil.getNbtData(voider);
+            if (tag.getBoolean("active") && tag.contains("items", Tag.TAG_LIST)) {
+                List<ItemStack> toVoid = voidFilter(tag.getList("items", 10));
+                if (!toVoid.isEmpty()) {
+                    ItemStack drop = event.getStack();
+                    if (StackUtil.containsItemStack(toVoid, drop)){
+                        drop.setCount(0);
+                    }
+                }
+            }
+        }
+    }
+
+    private List<ItemStack> voidFilter(ListTag tag){
+        List<ItemStack> items = new ObjectArrayList<>();
+        tag.forEach(tag1 -> {
+            if (tag1 instanceof CompoundTag nbt) {
+                items.add(ItemStack.of(nbt));
+            }
+        });
+        return items;
     }
 }

@@ -5,10 +5,13 @@ import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraftforge.fml.ModList;
 import trinsdar.gravisuit.GravisuitClassic;
 import trinsdar.gravisuit.block.BlockEntityPlasmaPortal;
 import trinsdar.gravisuit.block.BlockPlasmaPortal;
@@ -53,5 +56,21 @@ public class Registry {
 
     public static final BlockEntityType<?> PLASMA_PORTAL_BLOCK_ENTITY = BlockEntityType.Builder.of(BlockEntityPlasmaPortal::new, PLASMA_PORTAL).build(null);
     public static void init(){
+    }
+
+    public static ItemStack findStack(Item filter, Player player){
+        if (ModList.get().isLoaded("curios")){
+            ItemStack curios = CuriosUtil.getCuriosItem(filter, player);
+            if (!curios.isEmpty()){
+                return curios;
+            }
+        }
+        for (int i = 0; i < 9; i++) {
+            ItemStack slot = player.getInventory().getItem(i);
+            if (slot.getItem() == filter){
+                return slot;
+            }
+        }
+        return ItemStack.EMPTY;
     }
 }
