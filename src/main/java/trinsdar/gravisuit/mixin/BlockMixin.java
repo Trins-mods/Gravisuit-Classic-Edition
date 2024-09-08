@@ -25,10 +25,9 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import top.theillusivec4.curios.api.CuriosApi;
-import top.theillusivec4.curios.api.SlotResult;
 import trinsdar.gravisuit.GravisuitClassic;
 import trinsdar.gravisuit.items.tools.ItemMagnet;
+import trinsdar.gravisuit.util.CuriosUtil;
 import trinsdar.gravisuit.util.Registry;
 
 import java.util.function.Supplier;
@@ -107,7 +106,7 @@ public abstract class BlockMixin {
             itementity.setNoPickUpDelay();
             itementity.playerTouch(player);
             ItemStack leftover = itementity.getItem();
-            if (itementity.isRemoved()){
+            if (!itementity.isRemoved()){
                 pLevel.addFreshEntity(itementity);
             }
             return leftover.getCount() != pStack.getCount() || itementity.isRemoved();
@@ -117,7 +116,7 @@ public abstract class BlockMixin {
 
     private static ItemStack findStack(Item filter, Player player){
         if (ModList.get().isLoaded("curios")){
-            ItemStack curios = getCuriosItem(filter, player);
+            ItemStack curios = CuriosUtil.getCuriosItem(filter, player);
             if (!curios.isEmpty()){
                 return curios;
             }
@@ -130,7 +129,4 @@ public abstract class BlockMixin {
         return ItemStack.EMPTY;
     }
 
-    private static ItemStack getCuriosItem(Item filter, Player player){
-        return CuriosApi.getCuriosHelper().findFirstCurio(player, filter).map(SlotResult::stack).orElse(ItemStack.EMPTY);
-    }
 }
