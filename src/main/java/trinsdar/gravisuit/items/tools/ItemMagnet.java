@@ -88,8 +88,12 @@ public class ItemMagnet extends IC2ElectricItem implements ISimpleItemModel {
                             !item.getItem().isEmpty() && !item.getPersistentData().contains("PreventRemoteMovement"));
             for (ItemEntity itemEntity : drops){
                 if (ElectricItem.MANAGER.canUse(stack, 1)){
+                    ItemStack beforeStack = itemEntity.getItem().copy();
                     itemEntity.playerTouch(player);
-                    ElectricItem.MANAGER.use(stack, 1, player);
+                    ItemStack afterStack = itemEntity.getItem().copy();
+                    if (itemEntity.isRemoved() || beforeStack.getCount() != afterStack.getCount()) {
+                        ElectricItem.MANAGER.use(stack, 1, player);
+                    }
                 } else {
                     saveMagnetMode(stack, MagnetMode.OFF);
                     break;
