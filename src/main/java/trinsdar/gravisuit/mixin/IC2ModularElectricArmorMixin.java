@@ -1,6 +1,7 @@
 package trinsdar.gravisuit.mixin;
 
 import ic2.core.item.wearable.armor.electric.ElectricPackArmor;
+import ic2.core.item.wearable.base.IC2ElectricJetpackBase;
 import ic2.core.item.wearable.base.IC2JetpackBase;
 import ic2.core.item.wearable.base.IC2ModularElectricArmor;
 import ic2.core.utils.collection.NBTListWrapper;
@@ -12,6 +13,9 @@ import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Debug;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import trinsdar.gravisuit.items.armor.IHasOverlay;
 
 import java.util.Iterator;
@@ -20,6 +24,13 @@ import java.util.Iterator;
 @Mixin(IC2ModularElectricArmor.class)
 public abstract class IC2ModularElectricArmorMixin implements IHasOverlay {
     @Shadow public abstract IC2JetpackBase getJetpack(ItemStack stack);
+
+    @Inject(method = "canProvideEnergy", at = @At("HEAD"), cancellable = true, remap = false)
+    private void injectCanProvideEnergy(ItemStack stack, CallbackInfoReturnable<Boolean> cir){
+        if (getJetpack(stack) instanceof IC2ElectricJetpackBase base && base.canProvideEnergy(stack)){
+            cir.setReturnValue(true);
+        }
+    }
 
     @Override
     public boolean isEnabled(ItemStack stack) {
