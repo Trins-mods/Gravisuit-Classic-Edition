@@ -2,6 +2,7 @@
   "vajra": "gravisuit:item/tools/vajra",
   "relocator": "gravisuit:item/tools/relocator",
   "magnet": "gravisuit:item/tools/magnet",
+  "magnet_active": "gravisuit:item/tools/magnet_active",
   "voider": "gravisuit:item/tools/voider",
   "voider_active": "gravisuit:item/tools/voider_active",
   "advanced_drill": "gravisuit:item/tools/advanced_drill",

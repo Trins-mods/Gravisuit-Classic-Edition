@@ -7,6 +7,8 @@ import ic2.core.audio.AudioManager;
 import ic2.core.item.base.IC2ElectricItem;
 import ic2.core.platform.player.KeyHelper;
 import ic2.core.platform.rendering.IC2Textures;
+import ic2.core.platform.rendering.features.item.IItemModel;
+import ic2.core.platform.rendering.features.item.ILayeredItemModel;
 import ic2.core.platform.rendering.features.item.ISimpleItemModel;
 import ic2.core.utils.helpers.StackUtil;
 import ic2.core.utils.tooltips.ToolTipHelper;
@@ -34,7 +36,7 @@ import trinsdar.gravisuit.util.Registry;
 
 import java.util.List;
 
-public class ItemMagnet extends IC2ElectricItem implements ISimpleItemModel {
+public class ItemMagnet extends IC2ElectricItem implements ILayeredItemModel {
     public ItemMagnet() {
         super("magnet");
         Registry.REGISTRY.put(new ResourceLocation(GravisuitClassic.MODID, "magnet"), this);
@@ -60,11 +62,6 @@ public class ItemMagnet extends IC2ElectricItem implements ISimpleItemModel {
         return GravisuitConfig.MAGNET_TRANSFER.get();
     }
 
-    @OnlyIn(Dist.CLIENT)
-    @Override
-    public TextureAtlasSprite getTexture() {
-        return IC2Textures.getMappedEntriesItem(GravisuitClassic.MODID, "tools").get("magnet");
-    }
 
     @Override
     public void onArmorTick(ItemStack stack, Level level, Player player) {
@@ -123,6 +120,21 @@ public class ItemMagnet extends IC2ElectricItem implements ISimpleItemModel {
         } else {
             return InteractionResultHolder.fail(stack);
         }
+    }
+
+    @Override
+    public boolean isLayered(ItemStack itemStack) {
+        return true;
+    }
+
+    @Override
+    public int getLayerCount(ItemStack itemStack) {
+        return getMagnetMode(itemStack) == MagnetMode.OFF ? 1 : 2;
+    }
+
+    @Override
+    public TextureAtlasSprite getSpriteForLayer(ItemStack itemStack, int i) {
+        return IC2Textures.getMappedEntriesItem(GravisuitClassic.MODID, "tools").get("magnet" + (i == 0 ? "" : "_active"));
     }
 
     public enum MagnetMode {
