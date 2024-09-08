@@ -21,6 +21,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -29,14 +30,16 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import org.jetbrains.annotations.Nullable;
 import trinsdar.gravisuit.GravisuitClassic;
 import trinsdar.gravisuit.util.GravisuitConfig;
 import trinsdar.gravisuit.util.GravisuitSounds;
 import trinsdar.gravisuit.util.Registry;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class ItemMagnet extends IC2ElectricItem implements ILayeredItemModel {
+public class ItemMagnet extends IC2ElectricItem implements ILayeredItemModel, IItemModel {
     public ItemMagnet() {
         super("magnet");
         Registry.REGISTRY.put(new ResourceLocation(GravisuitClassic.MODID, "magnet"), this);
@@ -124,7 +127,7 @@ public class ItemMagnet extends IC2ElectricItem implements ILayeredItemModel {
 
     @Override
     public boolean isLayered(ItemStack itemStack) {
-        return true;
+        return getMagnetMode(itemStack) != MagnetMode.OFF;
     }
 
     @Override
@@ -135,6 +138,29 @@ public class ItemMagnet extends IC2ElectricItem implements ILayeredItemModel {
     @Override
     public TextureAtlasSprite getSpriteForLayer(ItemStack itemStack, int i) {
         return IC2Textures.getMappedEntriesItem(GravisuitClassic.MODID, "tools").get("magnet" + (i == 0 ? "" : "_active"));
+    }
+
+    @Override
+    public List<ItemStack> getModelTypes() {
+        List<ItemStack> list = new ArrayList<>();
+        list.add(new ItemStack(this));
+        ItemStack addToInventory = new ItemStack(this);
+        saveMagnetMode(addToInventory, MagnetMode.ADD_TO_INVENTORY);
+        list.add(addToInventory);
+        ItemStack attract = new ItemStack(this);
+        saveMagnetMode(attract, MagnetMode.ATTRACT);
+        list.add(attract);
+        return list;
+    }
+
+    @Override
+    public TextureAtlasSprite getSprite(ItemStack itemStack) {
+        return IC2Textures.getMappedEntriesItem(GravisuitClassic.MODID, "tools").get("magnet");
+    }
+
+    @Override
+    public int getModelIndexForStack(ItemStack itemStack, @Nullable LivingEntity livingEntity) {
+        return getMagnetMode(itemStack).ordinal();
     }
 
     public enum MagnetMode {
