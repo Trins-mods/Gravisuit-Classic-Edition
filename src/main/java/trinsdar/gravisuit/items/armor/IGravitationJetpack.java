@@ -106,7 +106,7 @@ public interface IGravitationJetpack extends ILangHelper, IHasOverlay {
                     tag.remove("ResetFlying");
                     tag.putBoolean("engine_on", false);
                     if (server && !player.isCreative() && !player.isSpectator()){
-                        player.displayClientMessage(this.translate("message.gravi_engine_off"), false);
+                        player.displayClientMessage(this.translate("message.gravi_engine_off").withStyle(ChatFormatting.RED), false);
                         player.displayClientMessage(this.translate("message.gravi_engine_low_power").withStyle(ChatFormatting.RED), false);
                         SOURCE.revokeFrom(player, VanillaAbilities.ALLOW_FLYING);
                     }
