@@ -12,6 +12,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.MinecraftForge;
 import trinsdar.gravisuit.GravisuitClassic;
 import trinsdar.gravisuit.util.GravisuitConfig;
 import trinsdar.gravisuit.util.Registry;
@@ -20,6 +21,7 @@ public class ItemNuclearGravitationJetpack extends NuclearJetpack implements IGr
     public ItemNuclearGravitationJetpack() {
         super("nuclear_gravitation_jetpack");
         Registry.REGISTRY.put(new ResourceLocation(GravisuitClassic.MODID,"nuclear_gravitation_jetpack"), this);
+        MinecraftForge.EVENT_BUS.register(this);
     }
 
     @Override
