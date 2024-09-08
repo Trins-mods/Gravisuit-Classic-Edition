@@ -25,11 +25,14 @@ public class GravisuitWiki {
     }
 
     public static void createWiki(IChapterBuilder builder){
-        builder.startBuildChapter("gravisuit", "items");
-        builder.addSimplePage(new HeaderObj("wiki.gravisuit.header.main"), new TextObj("wiki.gravisuit.preview.gravisuit_main.desc"));
+        builder.startBuildChapter("gravisuit", "tools");
+        builder.addSimplePage(new HeaderObj("wiki.gravisuit.header.tools"), new TextObj("wiki.gravisuit.preview.gravisuit_tools.desc"));
         builder.addSubPages(Registry.GRAVITOOL);
         builder.addSimplePage(new HeaderObj(Registry.RELOCATOR.getDescriptionId()), new CraftObj(Registry.RELOCATOR), new PreviewObj(Registry.RELOCATOR), new TextObj("wiki.gravisuit.preview.relocator.desc"), new DoublePageEndObj());
-        builder.addSubPages(Registry.VAJRA, Registry.MAGNET);
+        builder.addSubPages(Registry.VAJRA, Registry.MAGNET, Registry.VOIDER);
+        builder.finishBuildChapter(true);
+        builder.startBuildChapter("gravisuit", "armor");
+        builder.addSimplePage(new HeaderObj("wiki.gravisuit.header.armor"), new TextObj("wiki.gravisuit.preview.gravisuit_armor.desc"));
         builder.addSimplePage(createItemList(Registry.ADVANCED_LAPPACK, Registry.ULTIMATE_LAPPACK));
         builder.addSimplePage(createItemList(Registry.ADVANCED_ELECTRIC_JETPACK, Registry.ADVANCED_NUCLEAR_JETPACK));
         builder.addSimplePage(createItemList(Registry.GRAVITATION_JETPACK, Registry.NUCLEAR_GRAVITATION_JETPACK));
