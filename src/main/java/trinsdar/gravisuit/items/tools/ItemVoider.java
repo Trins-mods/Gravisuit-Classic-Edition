@@ -4,6 +4,9 @@ import com.google.common.base.CaseFormat;
 import ic2.api.items.electric.ElectricItem;
 import ic2.core.IC2;
 import ic2.core.audio.AudioManager;
+import ic2.core.inventory.base.IHasHeldGui;
+import ic2.core.inventory.base.IHasHeldSlotInventory;
+import ic2.core.inventory.base.IPortableInventory;
 import ic2.core.item.base.IC2ElectricItem;
 import ic2.core.platform.player.KeyHelper;
 import ic2.core.platform.rendering.IC2Textures;
@@ -20,6 +23,7 @@ import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
@@ -27,11 +31,13 @@ import net.minecraft.world.phys.AABB;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import trinsdar.gravisuit.GravisuitClassic;
+import trinsdar.gravisuit.items.container.ItemInventoryRelocator;
+import trinsdar.gravisuit.items.container.ItemInventoryVoider;
 import trinsdar.gravisuit.util.GravisuitConfig;
 import trinsdar.gravisuit.util.GravisuitSounds;
 import trinsdar.gravisuit.util.Registry;
 
-public class ItemVoider extends IC2ElectricItem implements ISimpleItemModel {
+public class ItemVoider extends IC2ElectricItem implements ISimpleItemModel, IHasHeldSlotInventory {
     public ItemVoider() {
         super("voider");
         Registry.REGISTRY.put(new ResourceLocation(GravisuitClassic.MODID, "voider"), this);
@@ -70,20 +76,29 @@ public class ItemVoider extends IC2ElectricItem implements ISimpleItemModel {
         helper.addKeybindingTooltip(this.buildKeyDescription(KeyHelper.MODE_KEY, KeyHelper.RIGHT_CLICK, Component.translatable("item_info.multiModes").withStyle(ChatFormatting.GRAY)));
     }
 
-    @Override
+    /*@Override
     public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
         ItemStack stack = playerIn.getItemInHand(handIn);
         if (IC2.PLATFORM.isSimulating()) {
-            /*if (IC2.KEYBOARD.isModeSwitchKeyDown(playerIn)) {
+            *//*if (IC2.KEYBOARD.isModeSwitchKeyDown(playerIn)) {
                 IC2.AUDIO.playSound(playerIn, GravisuitSounds.toolGraviToolSound, AudioManager.SoundType.ITEM, IC2.AUDIO.getDefaultVolume(), 1.0f);
                 MagnetMode nextMode = getNextMagnetMode(stack);
                 saveMagnetMode(stack, nextMode);
                 playerIn.displayClientMessage(Component.translatable("item_info.toolMode", Component.translatable(nextMode.localeName).withStyle(nextMode.color)).withStyle(ChatFormatting.YELLOW), false);
-            }*/
+            }*//*
             return InteractionResultHolder.success(stack);
         } else {
             return InteractionResultHolder.fail(stack);
         }
+    }*/
+
+    @Override
+    public IPortableInventory getInventory(Player player, InteractionHand interactionHand, ItemStack itemStack) {
+        return new ItemInventoryVoider(player, this, itemStack, null).load(itemStack);
     }
 
+    @Override
+    public IPortableInventory getInventory(Player player, ItemStack itemStack, Slot slot) {
+        return new ItemInventoryVoider(player, this, itemStack, slot).load(itemStack);
+    }
 }
