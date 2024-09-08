@@ -3,5 +3,7 @@
   "relocator": "gravisuit:item/tools/relocator",
   "magnet": "gravisuit:item/tools/magnet",
   "voider": "gravisuit:item/tools/voider",
-  "voider_active": "gravisuit:item/tools/voider_active"
+  "voider_active": "gravisuit:item/tools/voider_active",
+  "advanced_drill": "gravisuit:item/tools/advanced_drill",
+  "advanced_chainsaw": "gravisuit:item/tools/advanced_chainsaw"
 }

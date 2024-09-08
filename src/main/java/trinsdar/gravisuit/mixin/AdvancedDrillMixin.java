@@ -7,9 +7,11 @@ import ic2.core.audio.AudioManager;
 import ic2.core.item.tool.electric.AdvancedDrill;
 import ic2.core.item.tool.electric.DrillTool;
 import ic2.core.platform.player.KeyHelper;
+import ic2.core.platform.rendering.IC2Textures;
 import ic2.core.utils.helpers.StackUtil;
 import ic2.core.utils.tooltips.ToolTipHelper;
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
@@ -19,12 +21,15 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import trinsdar.gravisuit.GravisuitClassic;
 import trinsdar.gravisuit.items.tools.DrillMode;
 import trinsdar.gravisuit.items.tools.ItemToolGravitool;
 import trinsdar.gravisuit.util.GravisuitSounds;
@@ -36,6 +41,12 @@ public class AdvancedDrillMixin extends DrillTool {
     @Inject(method = "<init>", at = @At("TAIL"))
     private void injectInit(CallbackInfo ci) {
         this.tier = 2;
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    @Override
+    public TextureAtlasSprite getTexture() {
+        return IC2Textures.getMappedEntriesItem(GravisuitClassic.MODID, "tools").get("advanced_drill");
     }
 
     @Override

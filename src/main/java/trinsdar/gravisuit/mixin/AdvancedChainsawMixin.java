@@ -4,9 +4,11 @@ import ic2.core.IC2;
 import ic2.core.item.tool.electric.AdvancedChainsaw;
 import ic2.core.item.tool.electric.ChainsawTool;
 import ic2.core.platform.player.KeyHelper;
+import ic2.core.platform.rendering.IC2Textures;
 import ic2.core.utils.helpers.StackUtil;
 import ic2.core.utils.tooltips.ToolTipHelper;
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -16,12 +18,15 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import org.spongepowered.asm.mixin.Debug;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import trinsdar.gravisuit.GravisuitClassic;
 
 @Debug(export = true)
 @Mixin(AdvancedChainsaw.class)
@@ -41,6 +46,12 @@ public class AdvancedChainsawMixin extends ChainsawTool {
 
     public boolean isMultiMining(ItemStack stack) {
         return StackUtil.getNbtData(stack).getBoolean("treeChopping");
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    @Override
+    public TextureAtlasSprite getTexture() {
+        return IC2Textures.getMappedEntriesItem(GravisuitClassic.MODID, "tools").get("advanced_chainsaw");
     }
 
     @Override
