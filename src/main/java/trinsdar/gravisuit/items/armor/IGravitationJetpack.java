@@ -48,8 +48,7 @@ public interface IGravitationJetpack extends ILangHelper, IHasOverlay {
             boolean disabled = !enabled;
             tag.putBoolean("engine_on", disabled);
             if (server) {
-                String lang = disabled ? GravisuitLang.graviEngineOn : GravisuitLang.graviEngineOff;
-                player.displayClientMessage(this.translate(lang), false);
+                player.displayClientMessage(this.translate("message.gravi_engine_" + (disabled ? "on" : "off")), false);
             }
             if (server && enabled && !player.isCreative() && !player.isSpectator()){
                 SOURCE.revokeFrom(player, VanillaAbilities.ALLOW_FLYING);
@@ -101,7 +100,10 @@ public interface IGravitationJetpack extends ILangHelper, IHasOverlay {
             }else {
                 if (tag.contains("ResetFlying")) {
                     tag.remove("ResetFlying");
+                    tag.putBoolean("engine_on", false);
                     if (server && !player.isCreative() && !player.isSpectator()){
+                        player.displayClientMessage(this.translate("message.gravi_engine_off"), false);
+                        player.displayClientMessage(this.translate("message.gravi_engine_low_power").withStyle(ChatFormatting.RED), false);
                         SOURCE.revokeFrom(player, VanillaAbilities.ALLOW_FLYING);
                     }
                 }
