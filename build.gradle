@@ -135,14 +135,21 @@ dependencies {
 //    modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-forge:${rootProject.rei_version}"
 //    modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-plugin-compatibilities-forge:9.1.530"
     implementation fg.deobf('io.github.trinsdar:PlayerAbilityLib:1.6.0')
+    implementation('io.github.trinsdar:trins-wiki-lib:1.0.0-pre1'){
+        transitive = false
+    }
     jarJar('io.github.trinsdar:PlayerAbilityLib:1.6.0'){
         jarJar.ranged(it, "[1.6.0,)")
+    }
+    jarJar('io.github.trinsdar:trins-wiki-lib:1.0.0-pre1'){
+        jarJar.ranged(it, "[1.0.0-pre1,)")
     }
     jarJar("maven.modrinth:carbon-config:mJxg4ZgM") {
         jarJar.ranged(it, "[1.19.2-1.2.6,)")
     }
     //implementation fg.deobf("curse.maven:sophisticated-backpacks-422301:5194759")
     implementation fg.deobf("curse.maven:sophisticated-core-618298:5296313")
+    implementation fg.deobf("curse.maven:advanced-solars-classic-314835:5693305")
 }
 
 mixin {
