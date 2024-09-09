@@ -26,11 +26,14 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.entity.living.LivingEvent;
+import net.minecraftforge.fml.ModList;
 import trinsdar.gravisuit.GravisuitClassic;
+import trinsdar.gravisuit.util.CuriosUtil;
 import trinsdar.gravisuit.util.GravisuitKeys;
 import trinsdar.gravisuit.util.GravisuitLang;
 import trinsdar.gravisuit.util.IGravisuitPlayerHandler;
 
+import java.util.List;
 import java.util.Map;
 import java.util.WeakHashMap;
 
@@ -153,7 +156,18 @@ public interface IGravitationJetpack extends ILangHelper, IHasOverlay {
     default void onLivingTickEvent(LivingEvent.LivingTickEvent event){
         if (event.getEntity() instanceof Player player && !player.level.isClientSide) {
             ItemStack stack = player.getItemBySlot(EquipmentSlot.CHEST);
-            boolean flight = isStackGravisuit(stack) && isJetpackEnabled(stack);
+            boolean jetpack = isStackGravisuit(stack);
+            boolean enabled = isJetpackEnabled(stack);
+            if (!jetpack && ModList.get().isLoaded("curios")){
+                List<ItemStack> list = CuriosUtil.getCuriosBackItems(player);
+                if (!list.isEmpty()){
+                    for (ItemStack back : list){
+                        jetpack = jetpack | isStackGravisuit(back);
+                        enabled = enabled | isJetpackEnabled(back);
+                    }
+                }
+            }
+            boolean flight = jetpack && enabled;
             if (!playersWithFlight.containsKey(player)) {
                 playersWithFlight.put(player, false);
             }
