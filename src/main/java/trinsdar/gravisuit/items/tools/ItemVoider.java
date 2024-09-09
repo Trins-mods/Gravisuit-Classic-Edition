@@ -77,6 +77,7 @@ public class ItemVoider extends IC2ElectricItem implements IItemModel, IHasHeldS
         return GravisuitConfig.VOIDER_TRANSFER.get();
     }
 
+    @OnlyIn(Dist.CLIENT)
     @Override
     public void addToolTip(ItemStack stack, Player player, TooltipFlag type, ToolTipHelper helper) {
         CompoundTag nbt = StackUtil.getNbtData(stack);

@@ -54,6 +54,7 @@ public class AdvancedDrillMixin extends DrillTool {
         return IC2Textures.getMappedEntriesItem(GravisuitClassic.MODID, "tools").get("advanced_drill");
     }
 
+    @OnlyIn(Dist.CLIENT)
     @Override
     public void addToolTip(ItemStack stack, Player player, TooltipFlag type, ToolTipHelper helper) {
         DrillMode mode = getDrillMode(stack);

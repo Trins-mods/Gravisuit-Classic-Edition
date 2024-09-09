@@ -51,7 +51,6 @@ public class GravisuitClassic {
     public GravisuitClassic(){
         FMLJavaModLoadingContext.get().getModEventBus().register(this);
         IC2.EVENT_BUS.register(GravisuitWiki.class);
-        MinecraftForge.EVENT_BUS.register(ItemToolVajra.class);
         if (!FMLEnvironment.production){
             System.setProperty("ic2workspace", "true");
         }

@@ -60,6 +60,7 @@ public class ItemToolVajra extends DrillTool {
         this.capacity = 3000000;
         this.transferLimit = 1000;
         this.tier = 3;
+        MinecraftForge.EVENT_BUS.register(this);
     }
 
     @Override
@@ -198,6 +199,7 @@ public class ItemToolVajra extends DrillTool {
         return super.hurtEnemy(stack, target, attacker);
     }
 
+    @OnlyIn(Dist.CLIENT)
     @Override
     public void addToolTip(ItemStack stack, Player player, TooltipFlag type, ToolTipHelper helper) {
         CompoundTag nbt = StackUtil.getNbtData(stack);
@@ -207,7 +209,7 @@ public class ItemToolVajra extends DrillTool {
     }
 
     @SubscribeEvent
-    public static void blockBreakEvent(BlockEvent.BreakEvent event){
+    public void blockBreakEvent(BlockEvent.BreakEvent event){
         ItemStack stack = event.getPlayer().getMainHandItem();
         if (stack.getItem() == Registry.VAJRA){
             if (stack.getTag() != null && stack.getTag().getBoolean("silkTouch")){

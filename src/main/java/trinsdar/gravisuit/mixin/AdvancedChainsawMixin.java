@@ -79,6 +79,7 @@ public class AdvancedChainsawMixin extends ChainsawTool {
         return super.use(worldIn, playerIn, handIn);
     }
 
+    @OnlyIn(Dist.CLIENT)
     @Override
     public void addToolTip(ItemStack stack, Player player, TooltipFlag type, ToolTipHelper helper) {
         CompoundTag nbt = StackUtil.getNbtData(stack);
