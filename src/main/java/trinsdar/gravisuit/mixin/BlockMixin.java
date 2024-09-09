@@ -31,7 +31,6 @@ import java.util.function.Supplier;
 
 import static net.minecraft.world.level.block.Block.getDrops;
 
-@Debug(export = true)
 @Mixin(Block.class)
 public abstract class BlockMixin {
 

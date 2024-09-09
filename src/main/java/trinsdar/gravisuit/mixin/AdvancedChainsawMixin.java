@@ -28,7 +28,6 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import trinsdar.gravisuit.GravisuitClassic;
 
-@Debug(export = true)
 @Mixin(AdvancedChainsaw.class)
 public class AdvancedChainsawMixin extends ChainsawTool {
     @Inject(method = "<init>", at = @At("TAIL"))

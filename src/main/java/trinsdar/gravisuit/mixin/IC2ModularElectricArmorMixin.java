@@ -20,7 +20,6 @@ import trinsdar.gravisuit.items.armor.IHasOverlay;
 
 import java.util.Iterator;
 
-@Debug(export = true)
 @Mixin(IC2ModularElectricArmor.class)
 public abstract class IC2ModularElectricArmorMixin implements IHasOverlay {
     @Shadow public abstract IC2JetpackBase getJetpack(ItemStack stack);
