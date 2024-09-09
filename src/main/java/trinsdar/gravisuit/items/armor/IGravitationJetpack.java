@@ -132,7 +132,8 @@ public interface IGravitationJetpack extends ILangHelper, IHasOverlay {
     CompoundTag nbtData(ItemStack stack, boolean create);
 
     default boolean isJetpackEnabled(ItemStack stack){
-        CompoundTag tag = this.nbtData(stack, false);
+        IGravitationJetpack jetpack = stack.getItem() instanceof IGravitationJetpack graviJetpack ? graviJetpack : this;
+        CompoundTag tag = jetpack.nbtData(stack, false);
         if (tag == null) return false;
         return tag.getBoolean("engine_on");
     }

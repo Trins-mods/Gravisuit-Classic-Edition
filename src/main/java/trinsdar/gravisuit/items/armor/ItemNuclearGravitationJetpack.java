@@ -21,7 +21,7 @@ public class ItemNuclearGravitationJetpack extends NuclearJetpack implements IGr
     public ItemNuclearGravitationJetpack() {
         super("nuclear_gravitation_jetpack");
         Registry.REGISTRY.put(new ResourceLocation(GravisuitClassic.MODID,"nuclear_gravitation_jetpack"), this);
-        MinecraftForge.EVENT_BUS.register(this);
+        //MinecraftForge.EVENT_BUS.register(this);
     }
 
     @Override
