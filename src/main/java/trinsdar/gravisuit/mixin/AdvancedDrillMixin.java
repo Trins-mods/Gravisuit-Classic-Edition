@@ -34,6 +34,7 @@ import trinsdar.gravisuit.items.tools.DrillMode;
 import trinsdar.gravisuit.items.tools.ItemToolGravitool;
 import trinsdar.gravisuit.util.GravisuitSounds;
 
+import static trinsdar.gravisuit.items.tools.DrillMode.NORMAL;
 import static trinsdar.gravisuit.items.tools.DrillMode.saveDrillMode;
 
 @Mixin(AdvancedDrill.class)
@@ -45,7 +46,7 @@ public class AdvancedDrillMixin extends DrillTool {
 
     @Override
     public int getEnergyCost(ItemStack stack) {
-        return super.getEnergyCost(stack) * 2;
+        return getDrillMode(stack) == NORMAL ? 160 : 80;
     }
 
     @OnlyIn(Dist.CLIENT)
