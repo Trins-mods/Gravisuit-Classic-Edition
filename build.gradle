@@ -131,7 +131,7 @@ dependencies {
     implementation(fg.deobf("curse.maven:lootr-361276:4596364"))
     implementation(fg.deobf("curse.maven:applied-energistics-2-223794:4733119"))
     implementation fg.deobf("curse.maven:jei-238222:4712866")
-    implementation(fg.deobf("maven.modrinth:carbon-config:l6LTuPIs"))
+    implementation(fg.deobf("maven.modrinth:carbon-config:mJxg4ZgM"))
 //    modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-forge:${rootProject.rei_version}"
 //    modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-plugin-compatibilities-forge:9.1.530"
     implementation fg.deobf('io.github.trinsdar:PlayerAbilityLib:1.6.0')
@@ -142,6 +142,7 @@ dependencies {
         jarJar.ranged(it, "[1.6.0,)")
     }
     jarJar('io.github.trinsdar:trins-wiki-lib:1.0.0'){
+        transitive = false
         jarJar.ranged(it, "[1.0.0,)")
     }
     jarJar("maven.modrinth:carbon-config:mJxg4ZgM") {
