@@ -26,7 +26,7 @@ description='''Gravitation Suite for ic2 classic.'''
 [[dependencies.gravisuit]]
     modId="ic2"
     mandatory=true
-    versionRange="[1.19.2-2.0.7,)"
+    versionRange="[1.19.2-2.1.3,)"
     ordering="AFTER"
     side="BOTH"
 [[dependencies.gravisuit]]
