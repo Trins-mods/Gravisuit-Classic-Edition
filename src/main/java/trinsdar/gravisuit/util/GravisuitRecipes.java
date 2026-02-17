@@ -43,8 +43,8 @@ public class GravisuitRecipes {
 
         //lappacks
         registry.addShapedRecipe(new ResourceLocation(GravisuitClassic.MODID, "ultimate_lappack"), new ItemStack(Registry.ULTIMATE_LAPPACK), "LIL", "LQL", "LSL", 'L', IC2Items.GLOWTRONIC_CRYSTAL, 'I', IC2Items.PLATE_IRIDIUM, 'Q', IC2Items.QUANTUM_PACK, 'S', Registry.SUPER_CONDUCTOR);
-        registry.addShapedRecipe(new ResourceLocation(GravisuitClassic.MODID, "advanced_lappack"), new ItemStack(Registry.ADVANCED_LAPPACK), "L", "A", "C", 'L', IC2Items.LAP_PACK, 'A', IC2Items.ADVANCED_CIRCUIT, 'C', IC2Items.LAPATRON_CRYSTAL);
-        registry.addShapedIC2Recipe("quantum_pack", new ItemStack(IC2Items.QUANTUM_PACK), " X ", "YCY", " V ", 'Y', IC2Items.PLATE_IRIDIUM, 'X', IC2Items.ADVANCED_CIRCUIT, 'C', Registry.ADVANCED_LAPPACK, 'V', IC2Items.LAPATRON_CRYSTAL);
+        registry.addShapedRecipe(new ResourceLocation(GravisuitClassic.MODID, "advanced_lappack"), new ItemStack(Registry.ADVANCED_LAPPACK), "L", "A", "C", 'L', IC2Items.LAP_PACK, 'A', IC2Items.ADVANCED_CIRCUIT, 'C', IC2Items.LAPOTRON_CRYSTAL);
+        registry.addShapedIC2Recipe("quantum_pack", new ItemStack(IC2Items.QUANTUM_PACK), " X ", "YCY", " V ", 'Y', IC2Items.PLATE_IRIDIUM, 'X', IC2Items.ADVANCED_CIRCUIT, 'C', Registry.ADVANCED_LAPPACK, 'V', IC2Items.LAPOTRON_CRYSTAL);
 
         //tools
         ItemStack importTreeTap = new ItemStack(Registry.GRAVITOOL);
@@ -52,7 +52,7 @@ public class GravisuitRecipes {
         nbt_import.putBoolean("inv_import", true);
         registry.addShapelessRecipe(new ResourceLocation(GravisuitClassic.MODID, "gravitool_upgrade"), importTreeTap, Registry.GRAVITOOL, Items.HOPPER, IC2Items.IMPORT_UPGRADE_SIMPLE);
         registry.addShapedRecipe(new ResourceLocation(GravisuitClassic.MODID, "gravitool"), new ItemStack(Registry.GRAVITOOL), "CHC", "AEA", "WaT", new TreetapModifier(), 'C', IC2Items.CARBON_PLATE, 'H', IC2Items.ELECTRIC_HOE, 'A', IC2Items.PLATE_ADVANCED_ALLOY, 'E', IC2Items.ENERGY_CRYSTAL, 'W', IC2Items.PRECISION_WRENCH, 'a', IC2Items.ADVANCED_CIRCUIT, 'T', IC2Items.ELECTRIC_TREETAP);
-        registry.addShapedRecipe(new ResourceLocation(GravisuitClassic.MODID, "vajra"), new ItemStack(Registry.VAJRA), "IMI", "DVC", "ALA", 'I', IC2Items.PLATE_IRIDIUM, 'M', IC2Items.MINING_LASER, 'D', IC2Items.DRILL_ADVANCED, 'V', Registry.VAJRA_CORE, 'C', IC2Items.CHAINSAW_ADVANCED, 'A', IC2Items.PLATE_ADVANCED_ALLOY, 'L', IC2Items.LAPATRON_CRYSTAL);
+        registry.addShapedRecipe(new ResourceLocation(GravisuitClassic.MODID, "vajra"), new ItemStack(Registry.VAJRA), "IMI", "DVC", "ALA", 'I', IC2Items.PLATE_IRIDIUM, 'M', IC2Items.MINING_LASER, 'D', IC2Items.DRILL_ADVANCED, 'V', Registry.VAJRA_CORE, 'C', IC2Items.CHAINSAW_ADVANCED, 'A', IC2Items.PLATE_ADVANCED_ALLOY, 'L', IC2Items.LAPOTRON_CRYSTAL);
         registry.addShapedRecipe(new ResourceLocation(GravisuitClassic.MODID, "relocator"), new ItemStack(Registry.RELOCATOR), "MEM", "ETE", "MEM", 'M', IC2Items.MEMORY_STICK, 'E', Items.ENDER_PEARL, 'T', IC2Items.PORTABLE_TELEPORTER);
         registry.addShapedRecipe(new ResourceLocation(GravisuitClassic.MODID, "magnet"), new ItemStack(Registry.MAGNET), "RrM", "T  ", "RLM", 'M', IC2Items.MAGNET, 'R', IC2Tags.INGOT_REFINED_IRON, 'r', Tags.Items.DUSTS_REDSTONE, 'T', IC2Blocks.TESLA_COIL, 'L', Tags.Items.GEMS_LAPIS);
         registry.addShapedRecipe(new ResourceLocation(GravisuitClassic.MODID, "voider"), new ItemStack(Registry.VOIDER), "CPC", "PLP", "CPC", 'C', IC2Items.ADVANCED_CIRCUIT, 'L', Fluids.LAVA, 'P', IC2Items.PLATING_CONTAINMENT);

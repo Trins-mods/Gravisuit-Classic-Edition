@@ -103,7 +103,7 @@ public class ItemToolGravitool extends ElectricWrenchTool implements ICropModifi
         ItemStack stack = playerIn.getItemInHand(handIn);
         if (IC2.PLATFORM.isSimulating()) {
             if (IC2.KEYBOARD.isModeSwitchKeyDown(playerIn)) {
-                IC2.AUDIO.playSound(playerIn, GravisuitSounds.toolGraviToolSound, AudioManager.SoundType.ITEM, IC2.AUDIO.getDefaultVolume(), 1.0f);
+                IC2.AUDIO.playSound(playerIn, GravisuitSounds.toolGraviToolSound, AudioManager.SoundType.ITEM, IC2.AUDIO.getMasterVolume(), 1.0f);
                 ToolMode nextMode = getNextToolMode(stack);
                 saveToolMode(stack, nextMode);
                 playerIn.displayClientMessage(Component.translatable("item_info.toolMode", Component.translatable(nextMode.localeName).withStyle(nextMode.color)).withStyle(ChatFormatting.YELLOW), false);
