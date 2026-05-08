@@ -1,10 +1,8 @@
 import org.gradle.api.tasks.bundling.Jar
 
 plugins {
-    id 'net.minecraftforge.gradle' version '[6.0,6.2)'
     id 'maven-publish'
-    id 'org.spongepowered.mixin' version '0.7.+'
-    id 'org.parchmentmc.librarian.forgegradle' version '1.+'
+    id "net.neoforged.moddev.legacyforge" version "2.0.141"
 }
 apply plugin: "java"
 
@@ -16,58 +14,33 @@ base {
     archivesName = "gravisuit"
 }
 
-jarJar.enable()
 
 version = "${mod_version}"
 group = "trinsdar.gravisuit" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 
-minecraft {
-    mappings channel: "parchment", version: "${rootProject.mappings_version}-${rootProject.minecraft_version}"
 
-    copyIdeResources = true
+legacyForge {
+    version = "${project.minecraft_version}-${project.forge_version}"
+    parchment {
+        minecraftVersion = project.minecraft_version
+        mappingsVersion = project.mappings_version
+    }
 
     runs {
-        // applies to all the run configs below
-        configureEach {
-            workingDirectory project.file('run')
-            property 'forge.logging.markers', 'REGISTRIES'
-            property 'forge.logging.console.level', 'debug'
-            property 'mixin.env.remapRefMap', 'true'
-            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
-
-            // Comma-separated list of namespaces to load gametests from. Empty = all namespaces.
-            property 'forge.enabledGameTestNamespaces', mod_id
-
-            mods {
-                "${mod_id}" {
-                    source sourceSets.main
-                }
-            }
-        }
-
         client {
-            property 'forge.enabledGameTestNamespaces', mod_id
+            client()
         }
-
-        server {
-            workingDirectory project.file('run/server')
-            property 'forge.enabledGameTestNamespaces', mod_id
-            args '--nogui'
-        }
-
-        // This run config launches GameTestServer and runs all registered gametests, then exits.
-        // By default, the server will crash when no gametests are provided.
-        // The gametest system is also enabled by default for other run configs under the /test command.
-        gameTestServer {
-            property 'forge.enabledGameTestNamespaces', mod_id
-        }
-
         data {
-            // example of overriding the workingDirectory set in configureEach above
-            workingDirectory project.file('run-data')
-
-            // Specify the modid for data generation, where to output the resulting resource, and where to look for existing resources.
-            args '--mod', mod_id, '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+            data()
+        }
+        server {
+            server()
+            gameDirectory = project.file('run/server')
+        }
+    }
+    mods {
+        "${mod_id}" {
+            sourceSet sourceSets.main
         }
     }
 }
@@ -122,42 +95,31 @@ repositories{
 }
 
 dependencies {
-    minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
     // Apply Mixin AP
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
-    implementation(fg.deobf("curse.maven:ic2_classic-242942:7637948"))
-    implementation(fg.deobf("curse.maven:ic2c_additions-304040:4360883"))
-    implementation(fg.deobf("curse.maven:curios-309927:3871347"))
-    implementation(fg.deobf("curse.maven:lootr-361276:4596364"))
-    implementation(fg.deobf("curse.maven:applied-energistics-2-223794:4733119"))
-    implementation fg.deobf("curse.maven:jei-238222:4712866")
-    implementation(fg.deobf("maven.modrinth:carbon-config:mJxg4ZgM"))
+    modImplementation("curse.maven:ic2_classic-242942:8010709")
+    modImplementation("curse.maven:ic2c_additions-304040:4360883")
+    modImplementation("curse.maven:curios-309927:3871347")
+    modImplementation("curse.maven:lootr-361276:4596364")
+    modImplementation("curse.maven:applied-energistics-2-223794:4733119")
+    modImplementation("curse.maven:jei-238222:4712866")
+    modImplementation("maven.modrinth:carbon-config:HMD2FUea")
 //    modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-forge:${rootProject.rei_version}"
 //    modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-plugin-compatibilities-forge:9.1.530"
-    implementation fg.deobf('io.github.trinsdar:PlayerAbilityLib:1.6.0.1')
+    modImplementation('io.github.trinsdar:PlayerAbilityLib:1.6.0.1')
     implementation('io.github.trinsdar:trins-wiki-lib:1.0.0'){
         transitive = false
     }
-    jarJar('io.github.trinsdar:PlayerAbilityLib:1.6.0.1'){
-        jarJar.ranged(it, "[1.6.0.1,)")
-    }
-    jarJar('io.github.trinsdar:trins-wiki-lib:1.0.0'){
-        transitive = false
-        jarJar.ranged(it, "[1.0.0,)")
-    }
-    jarJar("maven.modrinth:carbon-config:mJxg4ZgM") {
-        jarJar.ranged(it, "[1.19.2-1.2.6,)")
-    }
+    jarJar('io.github.trinsdar:PlayerAbilityLib:1.6.0.1')
+    jarJar('io.github.trinsdar:trins-wiki-lib:1.0.0')
     //implementation fg.deobf("curse.maven:sophisticated-backpacks-422301:5194759")
-    implementation fg.deobf("curse.maven:sophisticated-core-618298:5296313")
-    implementation fg.deobf("curse.maven:advanced-solars-classic-314835:5693305")
+    modImplementation("curse.maven:sophisticated-core-618298:5296313")
+    modImplementation("curse.maven:advanced-solars-classic-314835:5693305")
 }
 
 mixin {
     add sourceSets.main, 'gravisuit.mixins.refmap.json'
     config 'gravisuit.mixins.json'
-    debug.verbose = true
-    debug.export = true
 }
 
 processResources {
@@ -168,11 +130,8 @@ processResources {
         expand "version": project.mod_version
     }
 }
-tasks.named('jarJar', Jar).configure {
-   archiveClassifier.set("")
-}
 
-tasks.named('jar', Jar).configure {
+jar{
     manifest {
         attributes([
                 'Specification-Title'     : mod_id,
@@ -181,11 +140,8 @@ tasks.named('jar', Jar).configure {
                 'Implementation-Title'    : project.name,
                 'Implementation-Version'  : project.jar.archiveVersion,
                 'Implementation-Vendor'   : "Trinsdar",
-                'Implementation-Timestamp': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+                'Implementation-Timestamp': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
+                "MixinConfigs":"gravisuit.mixins.json"
         ])
     }
-
-    // This is the preferred method to reobfuscate your jar file
-    finalizedBy 'reobfJar'
-    archiveClassifier.set "thin"
 }
